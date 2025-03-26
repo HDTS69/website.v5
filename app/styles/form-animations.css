@@ -50,9 +50,9 @@
   transition-delay: calc(var(--index) * .05s);
 }
 
-.wave-group .input:focus ~ label .label-char,
-.wave-group .input:valid ~ label .label-char,
-.wave-group .input:not(:placeholder-shown) ~ label .label-char {
+.wave-group .input:focus ~ .label .label-char,
+.wave-group .input:valid ~ .label .label-char,
+.wave-group .input:not(:placeholder-shown) ~ .label .label-char {
   transform: translateY(-20px);
   font-size: 14px;
   color: #1CD4A7;

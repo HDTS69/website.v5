@@ -15,12 +15,16 @@ const config: PlaywrightTestConfig = {
     actionTimeout: 0,
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
+    javaScriptEnabled: true,
+    viewport: { width: 1280, height: 720 },
+    deviceScaleFactor: 2,
   },
   projects: [
     {
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
+        deviceScaleFactor: 2,
       },
     },
     {
@@ -33,6 +37,21 @@ const config: PlaywrightTestConfig = {
       name: 'webkit',
       use: {
         ...devices['Desktop Safari'],
+        deviceScaleFactor: 2,
+      },
+    },
+    {
+      name: 'Mobile Chrome',
+      use: {
+        ...devices['Pixel 5'],
+        deviceScaleFactor: 3,
+      },
+    },
+    {
+      name: 'Mobile Safari',
+      use: {
+        ...devices['iPhone 13'],
+        deviceScaleFactor: 3,
       },
     },
   ],

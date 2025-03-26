@@ -50,7 +50,11 @@ module.exports = {
         'star-movement-bottom': 'star-movement-bottom 6s linear infinite alternate',
         "scroll": "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
         scroll: 'scroll var(--scroll-duration) linear infinite',
-        'scroll-reverse': 'scroll-reverse var(--scroll-duration) linear infinite'
+        'scroll-reverse': 'scroll-reverse var(--scroll-duration) linear infinite',
+        'gradient-x': 'gradient-x 15s ease infinite',
+        'mobile-fade-in': 'fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+        'mobile-fade-up': 'fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'mobile-scale': 'scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       },
       keyframes: {
         "in": {
@@ -148,6 +152,14 @@ module.exports = {
         'scroll-reverse': {
           '0%': { transform: 'translateY(var(--scroll-height))' },
           '100%': { transform: 'translateY(0)' }
+        },
+        'gradient-x': {
+          '0%, 100%': {
+            'background-position': '0% 50%',
+          },
+          '50%': {
+            'background-position': '100% 50%',
+          },
         }
       },
       backgroundImage: {

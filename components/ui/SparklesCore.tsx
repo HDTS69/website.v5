@@ -1,36 +1,11 @@
 "use client";
-import React, { useId, useMemo, useRef } from "react";
+import React, { useId, useMemo } from "react";
 import { useEffect, useState } from "react";
-import Particles, { initParticlesEngine } from "@tsparticles/react";
-import type { Container, SingleOrMultiple, Engine } from "@tsparticles/engine";
+import { Particles, initParticlesEngine } from "@tsparticles/react";
+import type { Container, SingleOrMultiple } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 import { cn } from "@/lib/utils";
 import { motion, useAnimation } from "framer-motion";
-
-// Initialize particles engine once for the entire app
-let engineInitialized = false;
-let initializationPromise: Promise<void> | null = null;
-
-const initializeParticlesEngine = async (): Promise<void> => {
-  if (engineInitialized) return;
-  
-  if (!initializationPromise) {
-    // Add a small delay before initializing to improve initial page load
-    await new Promise(resolve => setTimeout(resolve, 300));
-    
-    initializationPromise = initParticlesEngine(async (engine: Engine) => {
-      await loadSlim(engine);
-    }).then(() => {
-      engineInitialized = true;
-    }).catch((error) => {
-      console.error("Failed to initialize particles:", error);
-      // Reset so we can try again
-      initializationPromise = null;
-    });
-  }
-  
-  return initializationPromise;
-};
 
 type ParticlesProps = {
   id?: string;
@@ -57,50 +32,32 @@ export const SparklesCore = (props: ParticlesProps) => {
   } = props;
   
   const [init, setInit] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const controls = useAnimation();
   const generatedId = useId();
-  const containerRef = useRef<Container | null>(null);
   
   useEffect(() => {
-    let mounted = true;
+    // Check if we're on a mobile device
+    setIsMobile(window.innerWidth < 768 || 
+                'ontouchstart' in window || 
+                navigator.maxTouchPoints > 0);
+                
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => {
+      setInit(true);
+      controls.start({ opacity: 1 });
+    });
     
-    const initialize = async () => {
-      try {
-        await initializeParticlesEngine();
-        if (mounted) {
-          setInit(true);
-          controls.start({ opacity: 1 });
-        }
-      } catch (error) {
-        console.error("Failed to initialize particles:", error);
-      }
+    // Add resize listener to adjust for orientation changes
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
     };
-
-    initialize();
     
-    return () => {
-      mounted = false;
-      // Clean up particles when component unmounts
-      if (containerRef.current) {
-        containerRef.current.destroy();
-        containerRef.current = null;
-      }
-    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, [controls]);
 
-  const particlesLoaded = async (container?: Container) => {
-    if (container) {
-      containerRef.current = container;
-      await controls.start({
-        opacity: 1,
-        transition: {
-          duration: 0.2,
-        },
-      });
-    }
-  };
-
-  // Memoize options to prevent unnecessary re-renders
   const options = useMemo(() => ({
     background: {
       color: {
@@ -111,24 +68,18 @@ export const SparklesCore = (props: ParticlesProps) => {
       enable: false,
       zIndex: 1,
     },
-    fpsLimit: 30, // Reduced from 60 to 30 for better performance
+    fpsLimit: isMobile ? 30 : 60,
     interactivity: {
       events: {
         onClick: {
-          enable: false, // Disabled for better performance
-          mode: "push",
+          enable: false,
         },
         onHover: {
-          enable: false, // Disabled hover for better performance
+          enable: false,
         },
         resize: {
           enable: true,
           delay: 0.5,
-        },
-      },
-      modes: {
-        push: {
-          quantity: 4,
         },
       },
     },
@@ -140,26 +91,28 @@ export const SparklesCore = (props: ParticlesProps) => {
         direction: "none" as const,
         enable: true,
         outModes: {
-          default: "out" as const,
+          default: "bounce" as const,
         },
-        random: false,
-        speed: speed || 2,
+        random: true,
+        speed: isMobile ? (speed ? speed * 0.7 : 1.4) : (speed || 2),
         straight: false,
         warp: false,
       },
       number: {
-        value: particleDensity || 30, // Reduced from 40 to 30
+        value: isMobile ? 
+               (particleDensity ? Math.floor(particleDensity * 0.6) : 48) : 
+               (particleDensity || 80),
         density: {
           enable: true,
-          area: 800
+          area: isMobile ? 600 : 800
         }
       },
       opacity: {
-        value: 0.5,
+        value: { min: 0.3, max: 0.9 },
         animation: {
           enable: true,
-          speed: 0.5,
-          minimumValue: 0.1
+          speed: isMobile ? 0.3 : 0.5,
+          minimumValue: 0.3
         }
       },
       shape: {
@@ -168,38 +121,35 @@ export const SparklesCore = (props: ParticlesProps) => {
       size: {
         value: { min: minSize || 1, max: maxSize || 3 },
       },
-      // Reduce complexity for better performance
-      reduceDuplicates: true,
-      life: {
-        count: 1,
-      },
     },
-    detectRetina: false, // Disabled for better performance
-  }), [background, minSize, maxSize, speed, particleColor, particleDensity]);
-  
-  // Don't render anything if not initialized
-  if (!init) {
-    return null;
-  }
+    detectRetina: true,
+  }), [background, minSize, maxSize, speed, particleColor, particleDensity, isMobile]);
   
   return (
     <motion.div 
       initial={{ opacity: 0 }}
       animate={controls}
-      className={cn("opacity-0 transform-gpu", className)}
+      className={cn("w-full h-full", className)}
       style={{
         willChange: 'transform, opacity',
         backfaceVisibility: 'hidden'
       }}
     >
-      <Particles
-        id={id || generatedId}
-        className={cn("h-full w-full")}
-        particlesLoaded={particlesLoaded}
-        options={options}
-      />
+      {init && (
+        <Particles
+          id={id || generatedId}
+          className={cn("h-full w-full")}
+          particlesLoaded={async (container) => {
+            if (container) {
+              await controls.start({
+                opacity: 1,
+                transition: { duration: 0.2 }
+              });
+            }
+          }}
+          options={options}
+        />
+      )}
     </motion.div>
   );
-};
-
-export default { SparklesCore }; 
+}; 

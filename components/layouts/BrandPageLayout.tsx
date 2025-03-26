@@ -4,12 +4,13 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
 import { AnimatedButton } from '../ui/AnimatedButton';
-import { SparklesCore } from '../ui/sparkles';
+import { SparklesCore } from '../ui/SparklesCore';
 import { BookingForm } from '../ui/BookingForm';
 import { NavBar } from '@/components/navigation/DesktopNavigation';
 import { Calendar, Phone, Home, Wrench, Info, Building2, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { navigationItems, actionItems } from '@/lib/navigation';
+import { getImageLoadingProps, ImagePriority } from '@/utils/imageLoading';
 
 interface Feature {
   title: string;
@@ -27,7 +28,6 @@ interface Testimonial {
 interface BrandPageProps {
   brandName: string;
   brandLogo: string;
-  vanImage: string;
   expertImage: string;
   description: string;
   features: Feature[];
@@ -58,7 +58,6 @@ interface BrandPageProps {
 export function BrandPageLayout({
   brandName,
   brandLogo,
-  vanImage,
   expertImage,
   description,
   features,
@@ -142,10 +141,28 @@ export function BrandPageLayout({
               <div className="grid lg:grid-cols-2 gap-12 items-center">
                 <div className="relative h-[400px]">
                   <div className="absolute inset-0 bg-gradient-to-br from-[#00E6CA]/5 to-transparent rounded-lg border border-[#00E6CA]/10" />
+                  <Image
+                    src={expertImage}
+                    alt={`${brandName} expert technician`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover rounded-lg"
+                    {...getImageLoadingProps(ImagePriority.LOW)}
+                  />
                 </div>
                 <div>
                   <div className="w-48 h-24 relative mb-6">
                     <div className="absolute inset-0 bg-gradient-to-br from-[#00E6CA]/5 to-transparent rounded-lg border border-[#00E6CA]/10" />
+                    {brandLogo && (
+                      <Image
+                        src={brandLogo}
+                        alt={`${brandName} logo`}
+                        fill
+                        sizes="(max-width: 768px) 33vw, 25vw"
+                        className="object-contain p-4"
+                        {...getImageLoadingProps(ImagePriority.HIGH)}
+                      />
+                    )}
                   </div>
                   <h2 className="text-3xl font-bold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[#00E6CA] via-white to-[#00E6CA]">
                     {brandName} Experts
@@ -184,6 +201,14 @@ export function BrandPageLayout({
                     </div>
                     <div className={`relative h-[300px] ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
                       <div className="absolute inset-0 bg-gradient-to-br from-[#00E6CA]/5 to-transparent rounded-lg border border-[#00E6CA]/10" />
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover rounded-lg"
+                        {...getImageLoadingProps(ImagePriority.LOW)}
+                      />
                     </div>
                   </div>
                 ))}

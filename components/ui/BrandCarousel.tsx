@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import Image from "next/image";
-import { SparklesCore } from "@/components/ui/sparkles";
+import { SparklesCore } from "@/components/ui/SparklesCore";
 import Marquee from 'react-fast-marquee';
+import { BackgroundSparkles } from "@/components/ui/BackgroundSparkles";
 
 interface BrandLogo {
   src: string;
@@ -42,10 +43,9 @@ const allLogos: BrandLogo[] = [
 const manufacturerLogos = allLogos.slice(0, 12); // First 12 logos (Manufacturers)
 const supplierLogos = allLogos.slice(12); // Remaining logos (Suppliers and Certifications)
 
-const BrandLogoSlide: React.FC<BrandLogo & { isMobile: boolean }> = ({ src, alt, isMobile }) => {
+const BrandLogoSlide: React.FC<BrandLogo> = ({ src, alt }) => {
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [isHovered, setIsHovered] = React.useState(false);
-  const [imageError, setImageError] = React.useState(false);
 
   const preventInteraction = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -54,10 +54,7 @@ const BrandLogoSlide: React.FC<BrandLogo & { isMobile: boolean }> = ({ src, alt,
 
   return (
     <div 
-      className={`
-        relative mx-4 flex items-center justify-center select-none
-        ${isMobile ? 'w-[120px] h-[80px]' : 'w-[200px] h-[120px]'}
-      `}
+      className="relative w-[200px] h-[120px] mx-4 flex items-center justify-center select-none"
       onContextMenu={preventInteraction}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -69,12 +66,12 @@ const BrandLogoSlide: React.FC<BrandLogo & { isMobile: boolean }> = ({ src, alt,
         `}
       >
         <Image
-          src={imageError ? `https://via.placeholder.com/200x120?text=${alt.replace(/\s+/g, '+')}` : src}
+          src={src}
           alt={alt}
           fill
-          sizes="(max-width: 640px) 120px, (max-width: 1024px) 180px, 200px"
+          sizes="(max-width: 640px) 160px, (max-width: 1024px) 180px, 200px"
           quality={90}
-          priority={false}
+          priority={true}
           className={`
             object-contain
             transition-[filter,opacity] duration-300
@@ -86,12 +83,7 @@ const BrandLogoSlide: React.FC<BrandLogo & { isMobile: boolean }> = ({ src, alt,
             pointer-events-none
           `}
           onLoad={() => setIsLoaded(true)}
-          onError={(e) => {
-            console.error(`Failed to load ${src}`);
-            setImageError(true);
-            // Try to load anyway to show the placeholder
-            setIsLoaded(true);
-          }}
+          onError={() => console.error(`Failed to load ${src}`)}
           draggable={false}
           style={{ 
             userSelect: 'none', 
@@ -109,25 +101,9 @@ const BrandLogoSlide: React.FC<BrandLogo & { isMobile: boolean }> = ({ src, alt,
 };
 
 export function BrandCarousel() {
-  const [isMobile, setIsMobile] = React.useState(false);
-  
-  // Check if mobile on client side
-  React.useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-    };
-  }, []);
-  
   // Common marquee settings
   const marqueeSettings = {
-    speed: isMobile ? 80 : 40,
+    speed: 40,
     gradient: false,
     pauseOnHover: true,
     className: "overflow-hidden"
@@ -135,21 +111,17 @@ export function BrandCarousel() {
 
   return (
     <section className="relative py-12 md:py-16 lg:py-24 bg-black overflow-hidden">
-      <div className="absolute inset-0 opacity-50">
-        <SparklesCore
-          background="transparent"
-          minSize={1}
-          maxSize={2}
-          particleDensity={30}
-          className="w-full h-full"
-          particleColor="#1CD4A7"
-          speed={0.3}
-        />
+      <div className="absolute inset-0">
+        <BackgroundSparkles useFixed={false} zIndex={5} />
       </div>
 
       <div className="text-center mb-12 relative z-20">
-        <h2 className="standard-header">Trusted by Leading Brands</h2>
-        <p className="standard-subheader">
+        <span className="text-sm font-semibold text-[#00E6CA] uppercase tracking-wider block text-center mb-2">TRUSTED PARTNERS</span>
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 relative">
+          Brands We Trust
+          <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"></div>
+        </h2>
+        <p className="text-gray-300 text-lg max-w-3xl mx-auto mt-6">
           We partner with industry-leading manufacturers and suppliers to deliver excellence
         </p>
       </div>
@@ -159,7 +131,7 @@ export function BrandCarousel() {
         <div className="w-full">
           <Marquee {...marqueeSettings}>
             {manufacturerLogos.map((brand, index) => (
-              <BrandLogoSlide key={`brand-1-${index}`} {...brand} isMobile={isMobile} />
+              <BrandLogoSlide key={`brand-1-${index}`} {...brand} />
             ))}
           </Marquee>
         </div>
@@ -168,7 +140,7 @@ export function BrandCarousel() {
         <div className="w-full">
           <Marquee {...marqueeSettings} direction="right">
             {supplierLogos.map((brand, index) => (
-              <BrandLogoSlide key={`brand-2-${index}`} {...brand} isMobile={isMobile} />
+              <BrandLogoSlide key={`brand-2-${index}`} {...brand} />
             ))}
           </Marquee>
         </div>

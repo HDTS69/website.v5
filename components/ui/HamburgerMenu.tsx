@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatedBookNowButton } from './AnimatedBookNowButton'
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -75,7 +76,7 @@ const otherLinks = [
   { name: 'Special Offers', path: '/special-offers' },
   { name: 'Reviews', path: '/reviews' },
   { name: '24/7 Emergency', path: '/emergency' },
-  { name: 'Payment Options', path: '/payment-options' },
+  { name: 'Finance Options', path: '/finance-options' },
 ];
 
 function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
@@ -176,13 +177,13 @@ function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
             {/* Book Now Button */}
             <div className="mt-8">
-              <Link
+              <AnimatedBookNowButton
                 href="/book"
                 onClick={onClose}
-                className="block w-full py-3 px-4 bg-gradient-to-r from-[#00E6CA] to-[#00C7AE] text-black font-semibold text-center rounded-full hover:opacity-90 transition-opacity"
+                className="w-full"
               >
-                Book Now
-              </Link>
+                Book Online
+              </AnimatedBookNowButton>
             </div>
           </div>
         </motion.div>

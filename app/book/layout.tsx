@@ -1,5 +1,5 @@
-
 import type { Metadata } from 'next';
+import ClientBookingLayout from '@/components/book/ClientBookingLayout';
 
 export const metadata: Metadata = {
   title: 'Book Online - HD Trade Services',
@@ -11,5 +11,5 @@ export default function BookingLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return <ClientBookingLayout>{children}</ClientBookingLayout>;
 } 

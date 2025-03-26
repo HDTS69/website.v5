@@ -1,0 +1,9 @@
+{
+  "provider": "google",
+  "allowed_payment_methods": ["CARD", "TOKENIZED_CARD"],
+  "capabilities": {
+    "tokenization": true,
+    "pan_only": true,
+    "cryptogram_3ds": true
+  }
+} 

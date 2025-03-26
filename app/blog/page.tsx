@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { SparklesCore } from '@/components/ui/sparkles';
+import { SparklesCore } from '@/components/ui/SparklesCore';
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles';
 
 const blogPosts = [
   {
@@ -75,17 +76,7 @@ export default function BlogPage() {
   return (
     <div className="pt-32 pb-16 min-h-screen">
       {/* Background Effects */}
-      <div className="fixed inset-0 -z-10">
-        <SparklesCore
-          background="transparent"
-          minSize={0.4}
-          maxSize={2}
-          particleDensity={100}
-          className="w-full h-full"
-          particleColor="#1CD4A7"
-          speed={0.3}
-        />
-      </div>
+      <BackgroundSparkles zIndex={5} />
 
       <div className="container mx-auto px-4">
         {/* Header */}
@@ -146,6 +137,7 @@ export default function BlogPage() {
                     src={post.image}
                     alt={post.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60" />

@@ -43,6 +43,10 @@ next-env.d.ts
 
 # contentlayer
 .contentlayer
+.netlify/plugins/node_modules/puppeteer/
 
-# Local Netlify folder
-.netlify
+# Large files and Netlify/Puppeteer related
+.netlify/
+**/*Chromium Framework*
+**/*.app/
+**/*.framework/

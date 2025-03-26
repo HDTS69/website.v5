@@ -1,22 +1,69 @@
-import Link from "next/link";
+'use client';
 
-export default function Logo() {
-  return (
-    <Link href="/" className="inline-flex" aria-label="Cruip">
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-        <path
-          className="fill-blue-500"
-          fillRule="evenodd"
-          d="M15.052 0c6.914.513 12.434 6.033 12.947 12.947h-5.015a7.932 7.932 0 0 1-7.932-7.932V0Zm-2.105 22.985V28C6.033 27.487.513 21.967 0 15.053h5.015a7.932 7.932 0 0 1 7.932 7.932Z"
-          clipRule="evenodd"
-        />
-        <path
-          className="fill-blue-300"
-          fillRule="evenodd"
-          d="M0 12.947C.513 6.033 6.033.513 12.947 0v5.015a7.932 7.932 0 0 1-7.932 7.932H0Zm22.984 2.106h5.015C27.486 21.967 21.966 27.487 15.052 28v-5.015a7.932 7.932 0 0 1 7.932-7.932Z"
-          clipRule="evenodd"
-        />
-      </svg>
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { RiveLogo } from './RiveLogo';
+
+export interface LogoProps {
+  width?: number | string;
+  height?: number | string;
+  className?: string;
+  mobileTextOnly?: boolean;
+}
+
+export function Logo({
+  width = 100,
+  height = 100,
+  className = '',
+  mobileTextOnly = false,
+}: LogoProps) {
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
+
+  const logoContent = (
+    <>
+      <div className="flex items-center">
+        {!mobileTextOnly && (
+          <RiveLogo 
+            width={typeof width === 'number' ? width : 100} 
+            height={typeof height === 'number' ? height : 100}
+          />
+        )}
+        <div className="relative h-10 w-56 ml-4 hidden sm:block">
+          <Image
+            src="/images/text-logo.webp"
+            alt="HD Trade Services"
+            fill
+            style={{ objectFit: 'contain', objectPosition: 'left' }}
+            loading="lazy"
+            sizes="(max-width: 768px) 100vw, 224px"
+          />
+        </div>
+        <div className="sm:hidden">
+          <Image
+            src="/images/text-logo.webp"
+            alt="HD Trade Services"
+            width={150}
+            height={32}
+            style={{ objectFit: 'contain' }}
+            loading="lazy"
+            sizes="150px"
+          />
+        </div>
+      </div>
+    </>
+  );
+
+  return isHomePage ? (
+    <button className={`flex items-center ${className}`}>
+      {logoContent}
+    </button>
+  ) : (
+    <Link href="/" className={`flex items-center ${className}`}>
+      {logoContent}
     </Link>
   );
 }
+
+export default Logo;

@@ -30,6 +30,13 @@ export function DatePicker({
   onToggle,
   ...props
 }: DatePickerProps) {
+  const [isClient, setIsClient] = React.useState(false);
+  
+  // Check if we are on the client-side
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
   const today = startOfToday();
   const [currentDate, setCurrentDate] = React.useState(value ? new Date(value) : today);
   const selectedDate = value ? new Date(value) : undefined;
@@ -133,6 +140,7 @@ export function DatePicker({
         id={`${name}-input`}
         defaultValue={defaultValue}
         aria-label={`Selected date: ${value ? format(new Date(value), "dd MMMM yyyy") : "No date selected"}`}
+        suppressHydrationWarning
       />
       
       {/* Trigger Button */}
@@ -144,6 +152,7 @@ export function DatePicker({
         aria-controls={`${name}-calendar`}
         aria-haspopup="dialog"
         disabled={pending}
+        suppressHydrationWarning
         className={cn(
           "w-full flex justify-between items-center rounded-md border border-gray-700 bg-[#141821] px-4 text-sm text-gray-300 shadow-sm hover:border-teal-500 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 h-10 dropdown-trigger",
           pending && "opacity-50 cursor-not-allowed",
@@ -157,8 +166,8 @@ export function DatePicker({
           }
         }}
       >
-        <span className="text-gray-300">
-          {value ? (() => {
+        <span className="text-gray-300" suppressHydrationWarning>
+          {isClient ? (value ? (() => {
             const selectedDate = new Date(value);
             const today = new Date();
             const nextWeek = new Date(today);
@@ -182,7 +191,7 @@ export function DatePicker({
               return `Next Week (${format(startOfNextWeek, 'MMM d')} - ${format(endOfNextWeek, 'MMM d')})`;
             }
             return format(selectedDate, "dd MMMM yyyy");
-          })() : placeholder}
+          })() : placeholder) : placeholder}
         </span>
         <CalendarIcon className="h-4 w-4 text-gray-400 hover:text-teal-500 transition-colors" aria-hidden="true" />
       </button>
@@ -284,7 +293,7 @@ export function DatePicker({
               >
                 <ChevronLeft className="h-4 w-4" data-testid="chevron-left" aria-hidden="true" />
               </button>
-              <div className="text-gray-300 font-medium" role="heading" aria-live="polite" aria-atomic="true">
+              <div className="text-gray-300 font-medium" role="heading" aria-level={2} aria-live="polite" aria-atomic="true">
                 {months[currentDate.getMonth()]} {currentDate.getFullYear()}
               </div>
               <button

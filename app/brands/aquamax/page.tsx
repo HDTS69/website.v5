@@ -2,9 +2,10 @@
 
 import { BrandPageLayout } from '@/components/layouts/BrandPageLayout';
 import { Clock, Shield, Wrench } from 'lucide-react';
-import { SparklesCore } from '@/components/ui/sparkles';
+import { SparklesCore } from '@/components/ui/SparklesCore';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles';
 
 const features = [
   {
@@ -152,24 +153,13 @@ export default function AquamaxPage() {
   return (
     <div className="relative pt-32">
       {/* Background Effects */}
-      <div className="fixed inset-0 -z-10">
-        <SparklesCore
-          background="transparent"
-          minSize={0.8}
-          maxSize={2}
-          particleDensity={100}
-          className="w-full h-full"
-          particleColor="#1CD4A7"
-          speed={0.3}
-        />
-      </div>
+      <BackgroundSparkles zIndex={5} />
 
       {/* Brand Page Content */}
       <div className="relative z-10">
         <BrandPageLayout
           brandName="AquaMAX"
           brandLogo="/images/brands/aquamax/logo.png"
-          vanImage="/images/van.png"
           expertImage="/images/expert.jpg"
           description="AquaMAX is a leading Australian manufacturer of high-quality hot water systems. With over 30 years of experience, AquaMAX delivers reliable, energy-efficient solutions for homes and businesses."
           features={features}

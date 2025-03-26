@@ -4,6 +4,7 @@ import { SparklesCore } from '../ui/SparklesCore';
 import { Cover } from '../ui/cover';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AnimatedButton } from '../ui/AnimatedButton';
+import { BackgroundSparkles } from '../ui/BackgroundSparkles';
 
 export function Hero() {
   const [isLoaded, setIsLoaded] = React.useState(false);
@@ -18,17 +19,14 @@ export function Hero() {
 
   return (
     <div className="relative min-h-[100dvh] flex flex-col bg-black opacity-0 animate-fade-in animation-delay-200 overflow-x-hidden overflow-y-auto pb-24 pt-16">
+      {/* Background Effects */}
+      <div className="absolute inset-0 z-[1]">
+        <BackgroundSparkles useFixed={false} zIndex={5} />
+      </div>
+
       {/* Sparkles Animation */}
       <div className="absolute inset-0 z-[2] pointer-events-none">
-        <SparklesCore
-          background="transparent"
-          minSize={0.8}
-          maxSize={2}
-          particleDensity={100}
-          className="w-full h-full"
-          particleColor="#1CD4A7"
-          speed={0.3}
-        />
+        <BackgroundSparkles useFixed={false} zIndex={2} />
       </div>
 
       {/* Hero Images Container - Absolute position (fixed to hero section) */}
@@ -59,7 +57,6 @@ export function Hero() {
                     alt="Professional Technician"
                     fill
                     sizes="55vw"
-                    priority
                     style={{ 
                       objectFit: 'contain', 
                       objectPosition: 'left bottom',
@@ -68,6 +65,8 @@ export function Hero() {
                       filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.5))'
                     }}
                     className="select-none"
+                    priority
+                    loading="eager"
                   />
                 </div>
               </motion.div>

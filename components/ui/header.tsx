@@ -6,6 +6,9 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import { getImageLoadingProps, IMAGE_SIZES, ImagePriority } from '@/utils/imageLoading';
+import { OpenNowIndicator } from './OpenNowIndicator';
+import DesktopLogo from './DesktopLogo';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -32,74 +35,6 @@ export default function Header() {
     };
   }, []);
 
-  const LogoButton = () => {
-    if (isHomePage) {
-      return (
-        <button 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="flex items-center gap-3"
-          aria-label="Return to top"
-          style={{ touchAction: 'pan-x pan-y' }}
-        >
-          <div className="relative w-12 h-12 md:w-16 md:h-16">
-            <Image
-              src="/images/icon-logo.png"
-              alt="Return to top"
-              fill
-              sizes="(max-width: 768px) 48px, 64px"
-              className="object-contain"
-              priority
-              draggable="false"
-            />
-          </div>
-          <div className="relative h-8 w-[160px] md:h-10 md:w-[200px]">
-            <Image
-              src="/images/text-logo.png"
-              alt="Company Name"
-              fill
-              sizes="(max-width: 768px) 160px, 200px"
-              className="object-contain"
-              priority
-              draggable="false"
-            />
-          </div>
-        </button>
-      );
-    }
-
-    return (
-      <Link 
-        href="/"
-        className="flex items-center gap-3"
-        aria-label="Return to homepage"
-        style={{ touchAction: 'pan-x pan-y' }}
-      >
-        <div className="relative w-12 h-12 md:w-16 md:h-16">
-          <Image
-            src="/images/icon-logo.png"
-            alt="Return to homepage"
-            fill
-            sizes="(max-width: 768px) 48px, 64px"
-            className="object-contain"
-            priority
-            draggable="false"
-          />
-        </div>
-        <div className="relative h-8 w-[160px] md:h-10 md:w-[200px]">
-          <Image
-            src="/images/text-logo.png"
-            alt="Company Name"
-            fill
-            sizes="(max-width: 768px) 160px, 200px"
-            className="object-contain"
-            priority
-            draggable="false"
-          />
-        </div>
-      </Link>
-    );
-  };
-
   return (
     <header 
       className={cn(
@@ -111,28 +46,33 @@ export default function Header() {
         // Hide on mobile
         "hidden md:block"
       )}
-      style={{ touchAction: 'pan-x pan-y' }}
+      style={{ touchAction: 'auto' }}
     >
-      <div className="container mx-auto px-4">
-        {isVisible ? (
-          <motion.div 
-            className="flex items-center justify-between h-24"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 260,
-              damping: 20,
-              duration: 0.8
-            }}
-          >
-            {/* Logo Section */}
-            <LogoButton />
-          </motion.div>
-        ) : (
-          <div className="h-24 opacity-0"></div>
-        )}
-      </div>
+      {isVisible ? (
+        <motion.div 
+          className="flex items-center justify-between w-full h-24"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 260,
+            damping: 20,
+            duration: 0.8
+          }}
+        >
+          {/* Logo Section */}
+          <div className="flex justify-start pl-0">
+            <DesktopLogo width={60} height={60} />
+          </div>
+          
+          {/* Open Now Indicator */}
+          <div className="flex justify-end pr-8">
+            <OpenNowIndicator className="mr-4" />
+          </div>
+        </motion.div>
+      ) : (
+        <div className="h-10 w-full opacity-0"></div>
+      )}
     </header>
   );
 }

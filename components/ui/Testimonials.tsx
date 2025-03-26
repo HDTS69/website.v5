@@ -1,10 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { SparklesCore } from "./SparklesCore";
-import MobileTestimonialsNew from "../mobile/MobileTestimonialsNew";
 
 // Interfaces for type safety
 interface Review {
@@ -275,18 +273,27 @@ const StarRating = ({ rating }: { rating: number }) => (
 
 const TestimonialCard = ({ review }: { review: Review }) => (
   <motion.div
-    className="bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-800 hover:border-gray-700 transition-all duration-300 hover:relative hover:z-10"
+    className="relative bg-black/60 p-6 rounded-xl shadow-lg border border-gray-800 hover:border-[#00E6CA]/20 transition-all duration-300 hover:relative hover:z-10 backdrop-blur-md overflow-hidden group"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
-    whileHover={{ scale: 1.02, boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)" }}
+    whileHover={{ 
+      scale: 1.02,
+      boxShadow: "0 8px 16px rgba(0, 0, 0, 0.4)",
+    }}
   >
-    <div className="flex items-center mb-4">
-      <div className="flex-1">
-        <h3 className="text-white font-medium text-lg mb-1">{review.name}</h3>
-        <StarRating rating={review.rating} />
+    {/* Gradient overlay */}
+    <div className="absolute inset-0 bg-gradient-to-br from-[#00E6CA]/5 via-transparent to-black/40 opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
+    
+    {/* Content with relative positioning */}
+    <div className="relative z-10">
+      <div className="flex items-center mb-4">
+        <div className="flex-1">
+          <h3 className="text-white font-medium text-lg mb-1">{review.name}</h3>
+          <StarRating rating={review.rating} />
+        </div>
       </div>
+      <p className="text-gray-300 text-sm leading-relaxed">{review.text}</p>
     </div>
-    <p className="text-gray-400 text-sm leading-relaxed">{review.text}</p>
   </motion.div>
 );
 
@@ -348,6 +355,18 @@ const TestimonialColumn = ({ reviews, direction = "up", duration }: {
     };
   }, []);
 
+  const pauseScrolling = () => {
+    if (columnRef.current) {
+      columnRef.current.style.setProperty("--play-state", "paused");
+    }
+  };
+
+  const resumeScrolling = () => {
+    if (columnRef.current) {
+      columnRef.current.style.setProperty("--play-state", "running");
+    }
+  };
+
   return (
     <div 
       className="relative h-full overflow-hidden group" 
@@ -361,19 +380,14 @@ const TestimonialColumn = ({ reviews, direction = "up", duration }: {
         className="flex flex-col gap-6"
         style={{
           ...animationStyle,
-          // Pause animation on hover
+          // Pause animation on hover/touch
           ...{ animationPlayState: "var(--play-state, running)" },
         }}
-        onMouseEnter={() => {
-          if (columnRef.current) {
-            columnRef.current.style.setProperty("--play-state", "paused");
-          }
-        }}
-        onMouseLeave={() => {
-          if (columnRef.current) {
-            columnRef.current.style.setProperty("--play-state", "running");
-          }
-        }}
+        onMouseEnter={pauseScrolling}
+        onMouseLeave={resumeScrolling}
+        onTouchStart={pauseScrolling}
+        onTouchEnd={resumeScrolling}
+        onTouchCancel={resumeScrolling}
       >
         {/* Double the reviews to create a seamless loop */}
         {[...reviews, ...reviews].map((review, index) => (
@@ -381,6 +395,30 @@ const TestimonialColumn = ({ reviews, direction = "up", duration }: {
         ))}
       </div>
     </div>
+  );
+};
+
+// Mobile Testimonials Component - Single Column with scrolling animation
+export const MobileTestimonials = () => {
+  return (
+    <section className="relative py-16">
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-12">
+          <span className="text-sm font-semibold text-[#00E6CA] uppercase tracking-wider block text-center mb-2">CLIENT TESTIMONIALS</span>
+          <h2 className="text-4xl font-bold text-white mt-2 mb-4 relative">
+            People Love HD Trade Services
+            <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"></div>
+          </h2>
+          <p className="text-base text-gray-300 max-w-3xl mx-auto mt-6">
+            Real stories from real customers who experienced our exceptional service and craftsmanship firsthand.
+          </p>
+        </div>
+        
+        <div className="relative overflow-hidden max-w-md mx-auto h-[500px]">
+          <TestimonialColumn reviews={reviews} direction="up" duration={150} />
+        </div>
+      </div>
+    </section>
   );
 };
 
@@ -407,10 +445,10 @@ export const Testimonials = () => {
 
   // If mobile, render the mobile version
   if (isMobile) {
-    return <MobileTestimonialsNew />;
+    return <MobileTestimonials />;
   }
 
-  // Desktop version (existing code)
+  // Desktop version with animated columns
   // Split reviews into three roughly equal groups
   const columnSize = Math.ceil(reviews.length / 3);
   const column1 = reviews.slice(0, columnSize);
@@ -418,30 +456,23 @@ export const Testimonials = () => {
   const column3 = reviews.slice(columnSize * 2);
 
   return (
-    <section className="py-16 bg-black relative overflow-hidden hidden md:block" aria-label="Customer testimonials section">
-      <div className="container max-w-7xl mx-auto px-4">
-        {/* Header */}
-        <header className="text-center mb-12 relative z-10">
-          <h2 className="text-4xl font-bold text-white mb-4">
-            What Our Customers Say
+    <section className="relative py-20">
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-12">
+          <span className="text-sm font-semibold text-[#00E6CA] uppercase tracking-wider block text-center mb-2">CLIENT TESTIMONIALS</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 relative">
+            People Love HD Trade Services
+            <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"></div>
           </h2>
-        </header>
-
-        {/* Testimonials grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[600px] relative z-10">
-          <TestimonialColumn reviews={column1} direction="up" duration={50} />
-          <TestimonialColumn reviews={column2} direction="down" duration={50} />
-          <TestimonialColumn reviews={column3} direction="up" duration={50} />
+          <p className="text-lg text-gray-300 max-w-3xl mx-auto mt-6">
+            Real stories from real customers who experienced our exceptional service and craftsmanship firsthand.
+          </p>
         </div>
 
-        {/* Sparkles effect */}
-        <div className="absolute bottom-0 left-0 w-full h-32 z-0">
-          <SparklesCore
-            className="w-full h-full"
-            particleColor="#1CD4A7"
-            particleDensity={100}
-            aria-hidden="true"
-          />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto h-[800px]">
+          <TestimonialColumn reviews={column1} direction="up" duration={120} />
+          <TestimonialColumn reviews={column2} direction="down" duration={100} />
+          <TestimonialColumn reviews={column3} direction="up" duration={80} />
         </div>
       </div>
     </section>

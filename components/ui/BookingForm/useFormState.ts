@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import type { Service } from './types';
 
-export interface FormData {
+export interface FormStateData {
   name: string;
   email: string;
   phone: string;
@@ -19,9 +19,10 @@ export interface FormData {
   files: File[];
   newsletter: boolean;
   termsAccepted: boolean;
+  isGoogleAddress: boolean;
 }
 
-const initialFormData: FormData = {
+const initialFormData: FormStateData = {
   name: '',
   email: '',
   phone: '',
@@ -37,10 +38,11 @@ const initialFormData: FormData = {
   files: [],
   newsletter: true,
   termsAccepted: false,
+  isGoogleAddress: false,
 };
 
 export const useFormState = () => {
-  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [formData, setFormData] = useState<FormStateData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [showThankYou, setShowThankYou] = useState(false);

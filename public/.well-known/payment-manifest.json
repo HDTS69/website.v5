@@ -1,0 +1,5 @@
+{
+  "default_applications": ["https://pay.google.com/about/redirect/"],
+  "supported_origins": ["https://hdtradeservices.com.au"],
+  "supported_methods": ["https://google.com/pay"]
+} 

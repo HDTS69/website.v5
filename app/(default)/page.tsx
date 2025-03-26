@@ -6,8 +6,10 @@ import { Testimonials } from '@/components/ui/Testimonials';
 import ServiceTabs from '@/components/services/ServiceTabs';
 import { BrandCarousel } from '@/components/ui/BrandCarousel';
 import { FAQ } from '@/components/ui/FAQ';
-import { InstagramFeed } from '@/components/ui/InstagramFeed';
 import { SparklesCore } from '@/components/ui/SparklesCore';
+import { AboutUs } from '@/components/ui/AboutUs';
+import { OurProcess } from '@/components/ui/OurProcess';
+import { FoundersMessage } from '@/components/ui/FoundersMessage';
 import type { Metadata } from 'next';
 import { ClientOnly } from '@/components/ui/ClientOnly';
 
@@ -39,8 +41,17 @@ export default function Home() {
       {/* Testimonials Section */}
       <Testimonials />
       
+      {/* About Us Section */}
+      <AboutUs />
+      
+      {/* Our Process Section */}
+      <OurProcess />
+      
+      {/* Brand Carousel Section */}
       <BrandCarousel />
-      <InstagramFeed />
+      
+      {/* Founder's Message Section */}
+      <FoundersMessage imageSrc="/images/hayden-hero-fixed.webp" />
       
       {/* Booking Section */}
       <section id="book" className="relative bg-black py-20 overflow-hidden">
@@ -50,11 +61,11 @@ export default function Home() {
             id="tsparticlesfullpage-booking"
             background="transparent"
             minSize={0.4}
-            maxSize={2}
+            maxSize={1}
             particleDensity={100}
             className="w-full h-full"
             particleColor="#1CD4A7"
-            speed={0.3}
+            speed={0.2}
           />
         </div>
 

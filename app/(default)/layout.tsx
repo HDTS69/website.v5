@@ -13,7 +13,6 @@ import { MobileHeader } from "@/components/mobile";
 import Footer from "@/components/ui/footer";
 import { Navigation } from "@/components/ui/Navigation";
 import { navigationItems, actionItems } from "@/lib/navigation";
-import { BannerCTA } from "@/components/BannerCTA";
 
 // Dynamically import LoadingScreen as it's only needed occasionally
 const LoadingScreen = dynamic(() => import("@/components/ui/LoadingScreen"), {
@@ -100,15 +99,16 @@ function DefaultLayoutInner({
     <>
       {isLoading && <LoadingScreen />}
       <div 
-        className={`min-h-screen ${
+        className={`min-h-screen touch-auto ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
+        style={{ touchAction: 'manipulation' }}
       >
         <Header />
+        <MobileHeader />
         <Navigation items={navigationItems} actionItems={actionItems} />
-        <main className="pb-[72px] md:pb-0">{children}</main>
+        <main className="pb-[72px] md:pb-0 touch-auto" style={{ touchAction: 'manipulation' }}>{children}</main>
         <Footer />
-        <BannerCTA />
       </div>
     </>
   );

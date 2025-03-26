@@ -6,7 +6,7 @@ import { MobileNavigation } from '@/components/mobile';
 import { Building2, Home, MapPin, Wrench, Calendar, Phone, Info } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { NavItem, BaseNavigationProps } from '@/types/navigation/types';
+import type { NavItem, BaseNavigationProps } from '@/types/navigation/types';
 import { motion } from 'framer-motion';
 
 // Default navigation items if none are provided
@@ -36,13 +36,19 @@ const defaultNavigationItems: NavItem[] = [
       },
       {
         name: 'Gas',
-        url: '/services/gas',
+        url: '/services/gas-fitting',
         subItems: [
-          { name: 'Gas Fitting', url: '/services/gas/gas-fitting' },
-          { name: 'Gas Leak Detection', url: '/services/gas/leak-detection' },
-          { name: 'Gas Appliance Installation', url: '/services/gas/appliance-installation' },
-          { name: 'Gas Heater Services', url: '/services/gas/heater-services' },
-          { name: 'Gas Compliance Certificates', url: '/services/gas/compliance-certificates' },
+          { name: 'Emergency Gas Repairs', url: '/services/gas-fitting/emergency-gas-repairs' },
+          { name: 'Gas Leak Detection Service', url: '/services/gas-fitting/gas-leak-detection' },
+          { name: 'Gas Line Inspections', url: '/services/gas-fitting/gas-line-inspections' },
+          { name: 'Gas Pipe Repair', url: '/services/gas-fitting/gas-pipe-repair' },
+          { name: 'Gas System Installation', url: '/services/gas-fitting/gas-system-installation' },
+          { name: 'Gas Appliance Installation & Repairs', url: '/services/gas-fitting/gas-appliance-installation' },
+          { name: 'Gas Cooktop Installation', url: '/services/gas-fitting/gas-cooktop-installation' },
+          { name: 'Gas BBQ Installation and Repair', url: '/services/gas-fitting/gas-bbq-installation' },
+          { name: 'Gas Hot Water System Installation and Maintenance', url: '/services/gas-fitting/gas-hot-water-installation' },
+          { name: 'Commercial Gas Appliance Installation', url: '/services/gas-fitting/commercial-gas-installation' },
+          { name: 'Gas Compliance Certificates', url: '/services/gas-fitting/gas-compliance-certificates' },
         ],
       },
       {
@@ -55,6 +61,7 @@ const defaultNavigationItems: NavItem[] = [
           { name: 'Solar Hot Water', url: '/services/hot-water/solar' },
           { name: 'Hot Water Repairs', url: '/services/hot-water/repairs' },
           { name: 'Hot Water Replacement', url: '/services/hot-water/replacement' },
+          { name: 'Hot Water System Buyers Guide', url: '/services/hot-water/buyers-guide' },
         ],
       },
       {
@@ -78,53 +85,6 @@ const defaultNavigationItems: NavItem[] = [
           { name: 'AC Maintenance', url: '/services/air-conditioning/maintenance' },
           { name: 'Split System Installation', url: '/services/air-conditioning/split-system' },
           { name: 'Ducted Systems', url: '/services/air-conditioning/ducted-systems' },
-        ],
-      },
-    ],
-  },
-  {
-    name: 'Brands',
-    url: '/brands',
-    icon: Building2,
-    dropdownItems: [
-      {
-        name: 'Plumbing Brands',
-        url: '/brands/plumbing',
-        subItems: [
-          { name: 'Caroma', url: '/brands/caroma' },
-          { name: 'Reece', url: '/brands/reece' },
-          { name: 'Methven', url: '/brands/methven' },
-          { name: 'Dorf', url: '/brands/dorf' },
-          { name: 'Grohe', url: '/brands/grohe' },
-        ],
-      },
-      {
-        name: 'Hot Water Brands',
-        url: '/brands/hot-water',
-        subItems: [
-          { name: 'Rheem', url: '/brands/rheem' },
-          { name: 'Rinnai', url: '/brands/rinnai' },
-          { name: 'Bosch', url: '/brands/bosch' },
-          { name: 'Dux', url: '/brands/dux' },
-          { name: 'Thermann', url: '/brands/thermann' },
-          { name: 'Vulcan', url: '/brands/vulcan' },
-          { name: 'Aquamax', url: '/brands/aquamax' },
-          { name: 'Chromagen', url: '/brands/chromagen' },
-          { name: 'Everhot', url: '/brands/everhot' },
-          { name: 'Stiebel Eltron', url: '/brands/stiebel-eltron' },
-        ],
-      },
-      {
-        name: 'Air Conditioning Brands',
-        url: '/brands/air-conditioning',
-        subItems: [
-          { name: 'Daikin', url: '/brands/daikin' },
-          { name: 'Fujitsu', url: '/brands/fujitsu' },
-          { name: 'Mitsubishi', url: '/brands/mitsubishi' },
-          { name: 'Samsung', url: '/brands/samsung' },
-          { name: 'Gree', url: '/brands/gree' },
-          { name: 'Panasonic', url: '/brands/panasonic' },
-          { name: 'LG', url: '/brands/lg' },
         ],
       },
     ],
@@ -199,6 +159,53 @@ const defaultNavigationItems: NavItem[] = [
     ],
   },
   {
+    name: 'Brands',
+    url: '/brands',
+    icon: Building2,
+    dropdownItems: [
+      {
+        name: 'Plumbing Brands',
+        url: '/brands/plumbing',
+        subItems: [
+          { name: 'Caroma', url: '/brands/caroma' },
+          { name: 'Reece', url: '/brands/reece' },
+          { name: 'Methven', url: '/brands/methven' },
+          { name: 'Dorf', url: '/brands/dorf' },
+          { name: 'Grohe', url: '/brands/grohe' },
+        ],
+      },
+      {
+        name: 'Hot Water Brands',
+        url: '/brands/hot-water',
+        subItems: [
+          { name: 'Rheem', url: '/brands/rheem' },
+          { name: 'Rinnai', url: '/brands/rinnai' },
+          { name: 'Bosch', url: '/brands/bosch' },
+          { name: 'Dux', url: '/brands/dux' },
+          { name: 'Thermann', url: '/brands/thermann' },
+          { name: 'Vulcan', url: '/brands/vulcan' },
+          { name: 'Aquamax', url: '/brands/aquamax' },
+          { name: 'Chromagen', url: '/brands/chromagen' },
+          { name: 'Everhot', url: '/brands/everhot' },
+          { name: 'Stiebel Eltron', url: '/brands/stiebel-eltron' },
+        ],
+      },
+      {
+        name: 'Air Conditioning Brands',
+        url: '/brands/air-conditioning',
+        subItems: [
+          { name: 'Daikin', url: '/brands/daikin' },
+          { name: 'Fujitsu', url: '/brands/fujitsu' },
+          { name: 'Mitsubishi', url: '/brands/mitsubishi' },
+          { name: 'Samsung', url: '/brands/samsung' },
+          { name: 'Gree', url: '/brands/gree' },
+          { name: 'Panasonic', url: '/brands/panasonic' },
+          { name: 'LG', url: '/brands/lg' },
+        ],
+      },
+    ],
+  },
+  {
     name: 'About Us',
     url: '/about',
     icon: Info,
@@ -263,59 +270,20 @@ const defaultActionItems: NavItem[] = [
   },
 ];
 
-export function Navigation({ items = defaultNavigationItems, actionItems = defaultActionItems }: BaseNavigationProps) {
+export function Navigation({ items: propItems = defaultNavigationItems, actionItems = [] }: BaseNavigationProps) {
   const pathname = usePathname();
-  const isMobile = useMediaQuery('(max-width: 768px)');
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-  
-  useEffect(() => {
-    // Set navigation visible after a short delay for entrance animation
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 800); // Longer delay after header animation
-    
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
-  
-  // Separate navigation items from action items
-  const mainNavItems = items.filter(item => 
-    item.name !== 'Call Now' && item.name !== 'Book Online' && (pathname === '/' ? item.name !== 'Home' : true)
-  );
-  
-  const actionButtons = actionItems;
-  
-  // For mobile, we now want to show all navigation items, same as desktop
-  const mobileNavItems = items.filter(item => 
-    item.name !== 'Call Now' && item.name !== 'Book Online'
-  );
+  const isDesktop = useMediaQuery('(min-width: 768px)');
   
   return (
     <>
       {/* Desktop Navigation */}
-      <div className="hidden md:block">
-        {isVisible ? (
-          <motion.div
-            initial={{ opacity: 0, scale: 0, y: 50 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{
-              type: "spring",
-              stiffness: 260,
-              damping: 20,
-              duration: 0.8
-            }}
-          >
-            <NavBar items={mainNavItems} actionItems={actionButtons} />
-          </motion.div>
-        ) : (
-          <div className="h-16 opacity-0"></div>
-        )}
+      <div className="hidden md:block touch-auto" style={{ touchAction: 'manipulation' }}>
+        <NavBar items={propItems} actionItems={actionItems} />
       </div>
       
       {/* Mobile Navigation */}
-      <div className="block md:hidden">
-        <MobileNavigation items={mobileNavItems} actionItems={actionButtons} />
+      <div className="block md:hidden touch-auto" style={{ touchAction: 'manipulation' }}>
+        <MobileNavigation items={propItems} actionItems={actionItems} />
       </div>
     </>
   );

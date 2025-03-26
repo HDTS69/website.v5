@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { SparklesCore } from "@/components/ui/SparklesCore";
+import { BackgroundSparkles } from "@/components/ui/BackgroundSparkles";
 
 export default function PrivacyPage() {
   useEffect(() => {
@@ -22,15 +22,7 @@ export default function PrivacyPage() {
     <div className="relative min-h-screen bg-black">
       {/* Sparkles Animation */}
       <div className="absolute inset-0 z-[1]">
-        <SparklesCore
-          background="transparent"
-          minSize={1}
-          maxSize={2}
-          particleDensity={100}
-          className="w-full h-full"
-          particleColor="#1CD4A7"
-          speed={0.3}
-        />
+        <BackgroundSparkles useFixed={false} zIndex={5} />
       </div>
 
       <div className="relative z-[2] max-w-6xl mx-auto px-4 sm:px-6">
@@ -193,7 +185,7 @@ export default function PrivacyPage() {
                 </p>
                 <div className="mt-4 text-gray-300">
                   <p>Email: privacy@hdtradeservices.com.au</p>
-                  <p>Phone: 1300 420 911</p>
+                  <p>Phone: <a href="tel:1300420911" className="text-[#1CD4A7] hover:underline">1300 420 911</a></p>
                   <p>Address: Brisbane, QLD</p>
                 </div>
               </div>

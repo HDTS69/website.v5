@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { SparklesCore } from "@/components/ui/SparklesCore";
+import { BackgroundSparkles } from "@/components/ui/BackgroundSparkles";
 
 export default function TermsPage() {
   useEffect(() => {
@@ -22,15 +22,7 @@ export default function TermsPage() {
     <div className="relative min-h-screen bg-black">
       {/* Sparkles Animation */}
       <div className="absolute inset-0 z-[1]">
-        <SparklesCore
-          background="transparent"
-          minSize={1}
-          maxSize={2}
-          particleDensity={100}
-          className="w-full h-full"
-          particleColor="#1CD4A7"
-          speed={0.3}
-        />
+        <BackgroundSparkles useFixed={false} zIndex={5} />
       </div>
 
       <div className="relative z-[2] max-w-6xl mx-auto px-4 sm:px-6">

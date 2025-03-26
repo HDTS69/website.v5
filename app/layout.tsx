@@ -1,7 +1,15 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import type { Metadata, Viewport } from "next";
-import { ScrollToTop } from "@/components/ui/ScrollToTop";
+import type { Metadata, Viewport } from 'next';
+import { ClientComponents } from './components/ClientComponents';
+import ClientBackground from './components/ClientBackground';
+import Script from 'next/script';
+import { Providers } from '../components/providers';
+import { cn } from '@/lib/utils';
+import 'swiper/css';
+import { RiveDebug } from '../components/debug/RiveDebug';
+import { RiveDebugInitializer } from '../components/debug/RiveDebugInitializer';
+import { RiveInitializer } from '../components/ui/RiveInitializer';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -9,59 +17,12 @@ const inter = Inter({
   display: "swap",
   preload: true,
   adjustFontFallback: true,
-  weight: ['400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
-  title: "Brisbane 24/7 Emergency Repairs | HD Trade Services",
-  description: "Professional plumbing, gas, roofing & air conditioning services in Brisbane. 24/7 emergency repairs by licensed technicians.",
-  keywords: "plumbing, gas fitting, roof repairs, air conditioning, Brisbane, emergency repairs, 24/7 service",
-  authors: [{ name: "HD Trade Services" }],
-  creator: "HD Trade Services",
-  publisher: "HD Trade Services",
-  formatDetection: {
-    telephone: true,
-    email: true,
-    address: true,
-  },
-  metadataBase: new URL("https://hdtradeservices.com.au"),
-  alternates: {
-    canonical: "/",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  openGraph: {
-    type: "website",
-    locale: "en_AU",
-    url: "https://hdtradeservices.com.au",
-    title: "Brisbane 24/7 Emergency Repairs | HD Trade Services",
-    description: "Professional plumbing, gas, roofing & air conditioning services in Brisbane. 24/7 emergency repairs by licensed technicians.",
-    siteName: "HD Trade Services",
-    images: [
-      {
-        url: "/images/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "HD Trade Services",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Brisbane 24/7 Emergency Repairs | HD Trade Services",
-    description: "Professional plumbing, gas, roofing & air conditioning services in Brisbane. 24/7 emergency repairs by licensed technicians.",
-    images: ["/images/og-image.jpg"],
-  },
-};
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 5,
-  userScalable: true,
-  themeColor: "#000000",
+  title: "Plumber | 24/7 Emergency Plumbing Services",
+  description: "Professional plumbing services. Get fast, reliable plumbing services from our licensed experts. Available 24/7 for emergencies.",
+  metadataBase: new URL('https://hdtradeservices.com.au'),
 };
 
 export default function RootLayout({
@@ -70,88 +31,66 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} dark`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} dark touch-auto overscroll-none`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              :root {
+                color-scheme: dark;
+                touch-action: manipulation;
+                overscroll-behavior: none;
+              }
+              
+              @media (max-width: 768px) {
+                html, body {
+                  overscroll-behavior: none;
+                  -webkit-overflow-scrolling: touch;
+                  scroll-behavior: smooth;
+                }
+                
+                .optimize-performance {
+                  will-change: transform;
+                  transform: translateZ(0);
+                  backface-visibility: hidden;
+                }
+              }
+            `,
+          }}
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, minimum-scale=1.0, viewport-fit=cover" />
         
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         
-        <link rel="preload" href="/images/hayden-hero-1.webp" as="image" />
-        
-        <style dangerouslySetInnerHTML={{ __html: `
-          :root {
-            color-scheme: dark;
-            touch-action: pan-x pan-y;
-          }
-          
-          html {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            touch-action: pan-x pan-y;
-            -ms-content-zooming: none;
-            -ms-touch-action: pan-x pan-y;
-          }
-
-          body {
-            background-color: rgb(0, 0, 0);
-            min-height: 100%;
-            margin: 0;
-            padding: 0;
-            -webkit-overflow-scrolling: touch;
-            touch-action: pan-x pan-y;
-          }
-
-          * {
-            box-sizing: border-box;
-          }
-
-          input, textarea {
-            background-color: rgb(0, 0, 0) !important;
-            -webkit-text-fill-color: #f3f4f6 !important;
-            color: #f3f4f6 !important;
-            transition: none !important;
-          }
-
-          input:-webkit-autofill,
-          input:-webkit-autofill:hover,
-          input:-webkit-autofill:focus,
-          input:-webkit-autofill:active,
-          textarea:-webkit-autofill {
-            -webkit-text-fill-color: #f3f4f6 !important;
-            -webkit-box-shadow: 0 0 0 30px rgb(0, 0, 0) inset !important;
-            box-shadow: 0 0 0 30px rgb(0, 0, 0) inset !important;
-            background-color: rgb(0, 0, 0) !important;
-            caret-color: #f3f4f6 !important;
-            transition: none !important;
-          }
-          
-          @media (max-width: 767px) {
-            html, body {
-              position: relative;
-              height: 100%;
-              overflow-y: auto;
-              overflow-x: hidden;
-              overscroll-behavior: none;
-            }
-          }
-          
-          .content-visibility-auto {
-            content-visibility: auto;
-            contain-intrinsic-size: 1px 5000px;
-          }
-        ` }} />
+        {/* Lordicon Script */}
+        <script src="https://cdn.lordicon.com/lordicon.js"></script>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body
-        className="font-inter antialiased bg-black"
-        suppressHydrationWarning
-      >
-        <div className="flex min-h-screen flex-col bg-black">
-          {children}
-          <ScrollToTop />
-        </div>
+      <body className="font-inter antialiased bg-black touch-auto isolate" suppressHydrationWarning>
+        <Providers>
+          {/* Initialize Rive and preload WASM */}
+          <RiveInitializer />
+          
+          {/* Sparkles background - directly importing client component */}
+          <ClientBackground />
+          
+          {/* Main Content Wrapper */}
+          <div className="relative z-10 min-h-screen flex flex-col touch-auto">
+            {children}
+          </div>
+          
+          {/* Debug component with URL-based activation */}
+          {process.env.NODE_ENV !== 'production' && (
+            <div className="fixed bottom-0 left-0 z-50">
+              <RiveDebugInitializer />
+            </div>
+          )}
+        </Providers>
+        <ClientComponents />
       </body>
     </html>
   );
