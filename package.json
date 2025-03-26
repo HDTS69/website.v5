@@ -10,7 +10,7 @@
     "security:audit": "npm audit && npm audit fix",
     "security:audit:prod": "npm audit --production",
     "security:deps": "npx snyk test",
-    "security:lint": "NODE_OPTIONS=--no-experimental-fetch eslint . --ext .ts,.tsx --config .eslintrc.json",
+    "security:lint": "next lint --max-warnings 0",
     "security:check": "npm run security:audit && npm run security:lint",
     "preview": "npx serve out"
   },
