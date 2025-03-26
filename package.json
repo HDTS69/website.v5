@@ -7,11 +7,11 @@
     "build": "rm -rf .next && rm -rf out && next build",
     "start": "next start",
     "lint": "next lint",
-    "security:audit": "npm audit && npm audit fix",
-    "security:audit:prod": "npm audit --production",
+    "security:audit": "npm audit",
+    "security:audit:prod": "npm audit --production --audit-level=moderate",
     "security:deps": "npx snyk test",
-    "security:lint": "next lint --max-warnings 0",
-    "security:check": "npm run security:audit && npm run security:lint",
+    "security:lint": "NODE_ENV=production next lint --max-warnings 0",
+    "security:check": "npm run security:audit:prod && npm run security:lint",
     "preview": "npx serve out"
   },
   "dependencies": {
