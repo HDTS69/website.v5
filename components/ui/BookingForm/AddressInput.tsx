@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { WaveInput } from './WaveInput';
 import { cn } from '@/lib/utils';
 import { FaMapMarkerAlt } from 'react-icons/fa';
@@ -62,6 +62,18 @@ export function AddressInput({
     setIsBrowser(true);
   }, []);
 
+  // Add this function near the top of the component
+  const handlePlaceSelection = (formattedAddress: string) => {
+    // Handle address update
+    if (addressRef.current) {
+      addressRef.current.value = formattedAddress;
+      const changeEvent = new Event('change', { bubbles: true });
+      addressRef.current.dispatchEvent(changeEvent);
+    }
+    
+    setIsGoogleAddress(true);
+  };
+
   // Initialize Google Places Autocomplete
   const initializeAutocomplete = () => {
     if (!addressRef.current || manualEntry || !isBrowser || (isBrowser && (!window.google || !window.google.maps || !window.google.maps.places))) {
@@ -86,51 +98,7 @@ export function AddressInput({
         () => {
           const place = autocompleteRef.current.getPlace();
           if (place && place.formatted_address) {
-            // Create a synthetic event to update the form
-            const event = {
-              target: {
-                name: 'address',
-                value: place.formatted_address
-              }
-            } as React.ChangeEvent<HTMLInputElement>;
-            
-            onChange(event);
-            setIsGoogleAddress(true);
-            
-            // Update the isGoogleAddress flag in the form
-            const isGoogleAddressEvent = new Event('change', {
-              bubbles: true,
-              cancelable: true,
-            }) as unknown as React.ChangeEvent<HTMLInputElement>;
-            Object.defineProperties(isGoogleAddressEvent, {
-              target: {
-                value: {
-                  name: 'isGoogleAddress',
-                  value: 'true',
-                  type: 'checkbox',
-                  checked: true,
-                }
-              }
-            });
-            
-            onChange(isGoogleAddressEvent);
-            
-            // Trigger validation with the flag to identify this as a Google address
-            const blurEvent = new FocusEvent('blur', {
-              bubbles: true,
-              cancelable: true,
-            }) as unknown as React.FocusEvent<HTMLInputElement>;
-            Object.defineProperties(blurEvent, {
-              target: {
-                value: {
-                  name: 'address',
-                  value: place.formatted_address,
-                  dataset: { isGoogleAddress: 'true' },
-                }
-              }
-            });
-            
-            onBlur?.(blurEvent);
+            handlePlaceSelection(place.formatted_address);
           }
         }
       );
@@ -228,43 +196,90 @@ export function AddressInput({
     setIsGoogleAddress(false);
     
     // Update the isGoogleAddress flag when manually typing in the address field
-    const isGoogleAddressEvent = new Event('change', {
-      bubbles: true,
-      cancelable: true,
-    }) as unknown as React.ChangeEvent<HTMLInputElement>;
-    Object.defineProperties(isGoogleAddressEvent, {
+    const isGoogleAddressEvent = {
       target: {
-        value: {
-          name: 'isGoogleAddress',
-          value: 'false',
-          type: 'checkbox',
-          checked: false,
-        }
+        name: 'isGoogleAddress',
+        value: false,
+        type: 'checkbox',
+        checked: false
       }
-    });
+    } as unknown as React.ChangeEvent<HTMLInputElement>;
     
     onChange(isGoogleAddressEvent);
-  };
 
-  const validateAddress = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (!manualEntry && !isGoogleAddress) {
-      const event = new FocusEvent('blur', {
-        bubbles: true,
-        cancelable: true,
-      }) as unknown as React.FocusEvent<HTMLInputElement>;
-      Object.defineProperties(event, {
-        target: {
-          value: {
+    // Always validate on input change if not in manual entry mode
+    if (!manualEntry && e.target.value) {
+      const isValid = validateAddressFormat(e.target.value);
+      if (!isValid) {
+        const validationEvent = {
+          target: {
             name: 'address',
             value: e.target.value,
-            validationMessage: 'Please select an address from the suggestions or check manual entry'
+            validationMessage: 'Select from suggestions or use manual entry'
           }
-        }
-      });
-      onBlur?.(event);
-    } else {
-      onBlur?.(e as React.FocusEvent<HTMLInputElement>);
+        } as unknown as React.ChangeEvent<HTMLInputElement>;
+        onChange(validationEvent);
+      }
     }
+  };
+
+  // Separate validation function for reuse
+  const validateAddressFormat = (addressValue: string): boolean => {
+    if (!manualEntry && !isGoogleAddress) {
+      const hasStreetNumber = /^\d+\s+\w+/.test(addressValue);
+      const hasStreetName = /\s+(?:Street|St|Road|Rd|Avenue|Ave|Drive|Dr|Court|Ct|Place|Pl|Lane|Ln|Way|Parade|Pde|Circuit|Cct|Crescent|Cres)\b/i.test(addressValue);
+      const hasSuburb = /,\s*[A-Za-z\s]+,/.test(addressValue);
+      const hasPostcode = /\b\d{4}\b/.test(addressValue);
+      const hasState = /\b(?:NSW|VIC|QLD|SA|WA|TAS|NT|ACT)\b/i.test(addressValue);
+
+      const isValid = hasStreetNumber && hasStreetName && hasSuburb && hasPostcode && hasState;
+
+      if (!isValid) {
+        const event = {
+          target: {
+            name: 'address',
+            value: addressValue,
+            validationMessage: 'Use suggestions or manual entry'
+          }
+        } as unknown as React.ChangeEvent<HTMLInputElement>;
+        onChange(event);
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const validateAddress = (e: React.FocusEvent<HTMLInputElement>) => {
+    const addressValue = e.target.value;
+    
+    if (!addressValue) {
+      setIsFloating(false);
+      const event = {
+        target: {
+          name: 'address',
+          value: '',
+          validationMessage: 'Address is required'
+        }
+      } as unknown as React.FocusEvent<HTMLInputElement>;
+      onBlur?.(event);
+      return;
+    }
+
+    if (!manualEntry && !isGoogleAddress) {
+      const isValid = validateAddressFormat(addressValue);
+      if (!isValid) {
+        const event = {
+          target: {
+            name: 'address',
+            value: addressValue,
+            validationMessage: 'Select from suggestions or use manual entry'
+          }
+        } as unknown as React.FocusEvent<HTMLInputElement>;
+        onBlur?.(event);
+        return;
+      }
+    }
+    onBlur?.(e);
   };
 
   return (
@@ -277,8 +292,10 @@ export function AddressInput({
           border-radius: 0.375rem;
           margin-top: 4px;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-          z-index: 9999;
+          z-index: 40;
           font-family: inherit;
+          position: relative;
+          padding-top: 28px;
           ${manualEntry ? 'display: none !important;' : ''}
         }
         .pac-item {
@@ -308,49 +325,87 @@ export function AddressInput({
         .pac-logo:after {
           display: none;
         }
+        /* Add exit button styles */
+        .pac-container:before {
+          content: "×";
+          position: absolute;
+          top: 4px;
+          right: 8px;
+          width: 20px;
+          height: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #666;
+          font-size: 20px;
+          cursor: pointer;
+          background: transparent;
+          border: none;
+          padding: 0;
+          transition: color 0.2s;
+        }
+        .pac-container:hover:before {
+          color: #00E6CA;
+        }
       `}</style>
 
       <div className="relative">
-        <WaveInput
-          required
-          type="text"
-          id="address"
-          name="address"
-          ref={addressRef}
-          value={value}
-          onChange={handleInputChange}
-          onBlur={(e) => {
-            if (!e.target.value) setIsFloating(false);
-            validateAddress(e);
-          }}
-          onFocus={onFocus}
-          label="Address"
-          error={error}
-          autoComplete={manualEntry ? "on" : "off"}
-          disabled={!manualEntry && (!isBrowser || (isBrowser && !window.google))}
-        />
-        {showManualEntry && (
-          <motion.div 
-            ref={manualEntryRef}
-            data-manual-entry
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-full right-0 pt-2 pb-2"
-          >
-            <label className="flex items-center space-x-2 text-sm whitespace-nowrap cursor-pointer">
-              <input
-                type="checkbox"
-                name="manualEntry"
-                checked={manualEntry}
-                onChange={onManualEntryChange}
-                className="accent-[#00E6CA] rounded border-gray-700 cursor-pointer"
-              />
-              <span className="text-teal-500 transition-colors duration-200">Manual Entry</span>
-            </label>
-          </motion.div>
-        )}
+        <div className="relative z-[41]">
+          <WaveInput
+            required
+            type="text"
+            id="address"
+            name="address"
+            ref={addressRef}
+            value={value}
+            onChange={handleInputChange}
+            onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
+              if (!e.target.value) setIsFloating(false);
+              validateAddress(e);
+            }}
+            onFocus={onFocus}
+            label="Address"
+            error={error}
+            autoComplete={manualEntry ? "on" : "off"}
+            disabled={!manualEntry && (!isBrowser || (isBrowser && !window.google))}
+          />
+        </div>
+        
+        <AnimatePresence>
+          {showManualEntry && (
+            <motion.div 
+              ref={manualEntryRef}
+              data-manual-entry
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ 
+                duration: 0.15,
+                ease: "easeOut"
+              }}
+              className={cn(
+                "absolute right-0 z-[42]",
+                "pt-2",
+                error ? "top-[calc(100%+2px)]" : "top-full"
+              )}
+            >
+              <motion.label 
+                className="flex items-center space-x-2 text-sm whitespace-nowrap cursor-pointer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <input
+                  type="checkbox"
+                  checked={manualEntry}
+                  onChange={(e) => onManualEntryChange(e)}
+                  className="accent-[#00E6CA] rounded border-gray-700 cursor-pointer"
+                  aria-label="Enable manual address entry"
+                />
+                <span className="text-teal-500 hover:text-[#00E6CA] transition-colors duration-200">Manual Entry</span>
+              </motion.label>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );

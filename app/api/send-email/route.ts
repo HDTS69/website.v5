@@ -1,7 +1,4 @@
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
-
-export const dynamic = 'force-static';
 
 export async function POST(request: Request) {
   try {

@@ -6,8 +6,9 @@ const exampleCards = [
   {
     title: "Emergency Service",
     description: "24/7 emergency service available for urgent repairs and maintenance.",
+    href: "/services/emergency",
     lordIcon: {
-      src: "/icons/Siren Hover Pinch Icon.json",
+      src: "https://cdn.lordicon.com/xqgancly.json",
       trigger: "hover",
       colors: {
         primary: "#00E6CA",
@@ -18,8 +19,9 @@ const exampleCards = [
   {
     title: "Maintenance",
     description: "Regular maintenance services to keep your systems running smoothly.",
+    href: "/services/maintenance",
     lordIcon: {
-      src: "/icons/Wired Flat Maintenance Icon.json",
+      src: "https://cdn.lordicon.com/nkmsrxys.json",
       trigger: "hover",
       colors: {
         primary: "#00E6CA",
@@ -30,8 +32,9 @@ const exampleCards = [
   {
     title: "Installation",
     description: "Professional installation services for all your needs.",
+    href: "/services/installation",
     lordIcon: {
-      src: "/icons/Wired Flat Installation Icon.json",
+      src: "https://cdn.lordicon.com/gmzxduhd.json",
       trigger: "hover",
       colors: {
         primary: "#00E6CA",

@@ -1,6 +1,6 @@
 export const serviceFeatureIcons = {
   emergency: {
-    src: "https://cdn.lordicon.com/xqgancly.json",
+    src: "/icons/Siren Hover Pinch Icon.json",
     trigger: "hover",
     colors: {
       primary: "#00E6CA",
@@ -8,7 +8,7 @@ export const serviceFeatureIcons = {
     }
   },
   clock: {
-    src: "https://cdn.lordicon.com/qznlhdss.json",
+    src: "/icons/Wired Flat Speed Hover Pinch.json",
     trigger: "hover",
     colors: {
       primary: "#00E6CA",
@@ -16,7 +16,7 @@ export const serviceFeatureIcons = {
     }
   },
   license: {
-    src: "https://cdn.lordicon.com/nkmsrxys.json",
+    src: "/icons/Graduation Scroll Icon.json",
     trigger: "hover",
     colors: {
       primary: "#00E6CA",
@@ -24,7 +24,7 @@ export const serviceFeatureIcons = {
     }
   },
   van: {
-    src: "https://cdn.lordicon.com/gmzxduhd.json",
+    src: "/icons/Van Hover Pinch Icon.json",
     trigger: "hover",
     colors: {
       primary: "#00E6CA",
@@ -32,7 +32,7 @@ export const serviceFeatureIcons = {
     }
   },
   pricing: {
-    src: "https://cdn.lordicon.com/uecgmesg.json",
+    src: "/icons/Flat Price Tag Icon.json",
     trigger: "hover",
     colors: {
       primary: "#00E6CA",
@@ -40,7 +40,7 @@ export const serviceFeatureIcons = {
     }
   },
   satisfaction: {
-    src: "https://cdn.lordicon.com/ihyatngg.json",
+    src: "/icons/Emoji Smile Hover Icon.json",
     trigger: "hover",
     colors: {
       primary: "#00E6CA",

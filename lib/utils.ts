@@ -1,16 +1,17 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs))
 }
 
-export function scrollToElement(elementId: string) {
+export function scrollToElement(elementId: string, offset: number = 0) {
   const element = document.getElementById(elementId);
   if (element) {
-    element.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
+    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({
+      top: elementPosition - offset,
+      behavior: 'smooth'
     });
   }
-} 
+}

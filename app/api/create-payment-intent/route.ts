@@ -1,8 +1,5 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { createClient } from '@supabase/supabase-js';
-
-export const dynamic = 'force-static';
 
 // Initialize Stripe with the latest API version
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -10,38 +7,18 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   typescript: true,
 });
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
 export async function POST(req: Request) {
   try {
-    const { amount, booking_id, email } = await req.json();
+    const { amount } = await req.json();
 
-    if (!amount || !booking_id || !email) {
+    if (!amount || typeof amount !== 'number') {
       return NextResponse.json(
-        { error: 'Missing required parameters' },
+        { error: 'Invalid amount provided' },
         { status: 400 }
       );
     }
 
-    // Verify booking exists and belongs to this email
-    const { data: booking, error: bookingError } = await supabase
-      .from('bookings')
-      .select('id')
-      .eq('booking_id', booking_id)
-      .eq('email', email)
-      .single();
-
-    if (bookingError || !booking) {
-      return NextResponse.json(
-        { error: 'Invalid booking ID or email' },
-        { status: 404 }
-      );
-    }
-
-    // Create payment intent
+    // Create a PaymentIntent with the specified amount
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency: 'aud',
@@ -49,18 +26,16 @@ export async function POST(req: Request) {
         enabled: true,
       },
       metadata: {
-        booking_id,
+        type: 'attendance_fee',
       },
-      receipt_email: email,
     });
 
-    return NextResponse.json({
-      clientSecret: paymentIntent.client_secret,
-    });
-  } catch (error) {
-    console.error('Error creating payment intent:', error);
+    return NextResponse.json({ clientSecret: paymentIntent.client_secret });
+  } catch (err) {
+    console.error('Error creating payment intent:', err);
+    const error = err as Error;
     return NextResponse.json(
-      { error: 'Failed to create payment intent' },
+      { error: error.message || 'Error creating payment intent' },
       { status: 500 }
     );
   }

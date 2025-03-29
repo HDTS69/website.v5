@@ -50,3 +50,5 @@ next-env.d.ts
 **/*Chromium Framework*
 **/*.app/
 **/*.framework/
+
+certificates

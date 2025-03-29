@@ -1,15 +1,8 @@
-import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 import type { FormData } from '@/components/ui/BookingForm/types';
 
-export const dynamic = 'force-static';
-
 const resend = new Resend(process.env.RESEND_API_KEY);
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
 
 export async function POST(request: Request) {
   try {
@@ -17,22 +10,6 @@ export async function POST(request: Request) {
 
     // Format services array into a readable string
     const servicesString = formData.services.join(', ');
-
-    // Get the booking ID from Supabase
-    const { data: booking } = await supabase
-      .from('bookings')
-      .select('booking_id')
-      .eq('email', formData.email)
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single();
-
-    if (!booking) {
-      throw new Error('Booking not found');
-    }
-
-    const websiteUrl = process.env.NEXT_PUBLIC_WEBSITE_URL || 'https://hdtradeservices.com.au';
-    const paymentEmailUrl = `${websiteUrl}/api/send-payment-email?booking_id=${booking.booking_id}`;
     
     // Admin email HTML template
     const adminEmailHtml = `
@@ -196,10 +173,6 @@ export async function POST(request: Request) {
               <td class="label">Newsletter Subscription</td>
               <td class="value">${formData.newsletter ? 'Yes' : 'No'}</td>
             </tr>
-            <tr>
-              <td class="label">Booking ID</td>
-              <td class="value">${booking.booking_id}</td>
-            </tr>
           </table>
           
           ${formData.message ? `
@@ -211,13 +184,6 @@ export async function POST(request: Request) {
           
           <div class="highlight-box">
             <p>Please contact the customer as soon as possible to confirm their booking.</p>
-          </div>
-
-          <div style="margin-top: 20px; text-align: center;">
-            <a href="${paymentEmailUrl}"
-               style="display: inline-block; background-color: #00E6CA; color: black; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">
-              Send Attendance Fee Email
-            </a>
           </div>
         </div>
         <div class="email-footer">
@@ -378,10 +344,6 @@ export async function POST(request: Request) {
             <tr>
               <td class="label">Address</td>
               <td class="value">${formData.address}</td>
-            </tr>
-            <tr>
-              <td class="label">Booking ID</td>
-              <td class="value">${booking.booking_id}</td>
             </tr>
           </table>
           

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from "@/lib/utils";
-import { LordIcon } from "@/components/ui/lord-icon";
+import LordIcon from "@/app/components/LordIcon";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface IconCard {
@@ -57,7 +57,8 @@ export function IconCardsGrid({ cards, className, columns = { sm: 1, md: 3, lg: 
                 <LordIcon
                   src={card.lordIcon.src}
                   trigger={card.lordIcon.trigger || "hover"}
-                  colors={card.lordIcon.colors}
+                  colors={card.lordIcon.colors ? `primary:${card.lordIcon.colors.primary},secondary:${card.lordIcon.colors.secondary}` : undefined}
+                  size={64}
                 />
               </div>
             ) : (

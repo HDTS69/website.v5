@@ -24,14 +24,9 @@ setInterval(() => {
 }, 5 * 60 * 1000)
 
 export async function middleware(request: NextRequest) {
-  // Force HTTPS in development
-  if (isDev && request.headers.get('x-forwarded-proto') !== 'https') {
-    const httpsUrl = `https://${request.headers.get('host')}${request.nextUrl.pathname}${request.nextUrl.search}`
-    return NextResponse.redirect(httpsUrl, 301)
-  }
-
+  // Remove HTTPS force in development
   const response = NextResponse.next()
-
+  
   // Get client IP from headers
   const forwardedFor = request.headers.get('x-forwarded-for')
   const ip = forwardedFor ? forwardedFor.split(',')[0] : 'unknown'

@@ -12,11 +12,6 @@ interface UseFormSubmissionProps {
   resetForm: () => void;
 }
 
-// Helper function to generate UUID using Web Crypto API
-function generateUUID(): string {
-  return crypto.randomUUID();
-}
-
 export const useFormSubmission = ({
   formData,
   setIsSubmitting,
@@ -36,7 +31,7 @@ export const useFormSubmission = ({
         email: formData.email,
         phone: formData.phone,
         address: formData.address,
-        services: formData.services.map(service => service.toString()),
+        services: formData.services,
         preferred_time: formData.preferredTime,
         urgency: formData.urgency,
         preferred_date: formData.preferredDate ? new Date(formData.preferredDate).toISOString().split('T')[0] : null,
@@ -45,10 +40,7 @@ export const useFormSubmission = ({
         message: formData.message,
         newsletter: formData.newsletter,
         terms_accepted: formData.termsAccepted,
-        status: 'pending',
-        booking_id: generateUUID(),
-        payment_status: 'pending',
-        invoice_url: null
+        status: 'pending'
       };
 
       console.log('Saving to Supabase:', supabaseData);
@@ -71,10 +63,7 @@ export const useFormSubmission = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...formData,
-          booking_id: supabaseData.booking_id
-        }),
+        body: JSON.stringify(formData),
       });
 
       if (!emailResponse.ok) {

@@ -10,7 +10,6 @@ import {
 } from '@stripe/react-stripe-js';
 import { type Appearance } from '@stripe/stripe-js';
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles';
-import { createClient } from '@supabase/supabase-js';
 
 // Initialize Stripe outside of component to prevent multiple instances
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!, {
@@ -19,12 +18,6 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
     stripeAccount: process.env.NEXT_PUBLIC_STRIPE_ACCOUNT_ID
   } : {})
 });
-
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 // Define Stripe appearance configuration
 const appearance: Appearance = {
@@ -66,12 +59,7 @@ const appearance: Appearance = {
   },
 };
 
-interface PaymentFormProps {
-  booking_id: string | null;
-  customerEmail: string | null;
-}
-
-const PaymentForm = ({ booking_id, customerEmail }: PaymentFormProps) => {
+const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -81,7 +69,7 @@ const PaymentForm = ({ booking_id, customerEmail }: PaymentFormProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!stripe || !elements || !booking_id) {
+    if (!stripe || !elements) {
       return;
     }
 
@@ -93,11 +81,6 @@ const PaymentForm = ({ booking_id, customerEmail }: PaymentFormProps) => {
         elements,
         confirmParams: {
           return_url: `${window.location.origin}/attendance-fee/success`,
-          payment_method_data: {
-            billing_details: {
-              email: customerEmail || undefined,
-            },
-          },
         },
       });
 
@@ -138,7 +121,7 @@ const PaymentForm = ({ booking_id, customerEmail }: PaymentFormProps) => {
 
       <button
         type="submit"
-        disabled={!stripe || isProcessing || !booking_id}
+        disabled={!stripe || isProcessing}
         className="w-full bg-[#00E6CA] text-black font-semibold py-4 px-6 rounded-lg 
                  disabled:opacity-50 disabled:cursor-not-allowed
                  transition-all duration-200"
@@ -153,48 +136,22 @@ const PaymentForm = ({ booking_id, customerEmail }: PaymentFormProps) => {
   );
 };
 
-interface AttendanceFeeFormProps {
-  booking_id: string | null;
-}
-
-const StripePaymentForm = ({ booking_id }: AttendanceFeeFormProps) => {
+const StripePaymentForm = () => {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [elementsKey, setElementsKey] = useState<number>(0);
-  const [customerEmail, setCustomerEmail] = useState<string | null>(null);
 
   useEffect(() => {
     const initializePayment = async () => {
       try {
         setIsLoading(true);
         setError(null);
-
-        if (!booking_id) {
-          throw new Error('No booking ID provided');
-        }
-
-        // Get customer email from booking
-        const { data: booking, error: bookingError } = await supabase
-          .from('bookings')
-          .select('email')
-          .eq('booking_id', booking_id)
-          .single();
-
-        if (bookingError || !booking) {
-          throw new Error('Booking not found');
-        }
-
-        setCustomerEmail(booking.email);
         
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            amount: 12000,
-            booking_id,
-            email: booking.email
-          }),
+          body: JSON.stringify({ amount: 12000 }), // Amount in cents
         });
         
         if (!response.ok) {
@@ -218,23 +175,7 @@ const StripePaymentForm = ({ booking_id }: AttendanceFeeFormProps) => {
     };
 
     initializePayment();
-  }, [booking_id]);
-
-  if (!booking_id) {
-    return (
-      <div className="relative">
-        <div className="absolute inset-0">
-          <BackgroundSparkles useFixed={false} zIndex={5} />
-        </div>
-        <div className="relative z-10 bg-gray-900/80 backdrop-blur-sm rounded-xl p-8 shadow-xl border border-gray-800">
-          <div className="text-center text-red-500">
-            <h2 className="text-xl font-semibold mb-4">Invalid Request</h2>
-            <p className="text-gray-400">No booking ID provided. Please use the payment link sent to your email.</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  }, []);
 
   if (error) {
     return (
@@ -296,7 +237,7 @@ const StripePaymentForm = ({ booking_id }: AttendanceFeeFormProps) => {
         </div>
 
         <Elements key={elementsKey} stripe={stripePromise} options={options}>
-          <PaymentForm booking_id={booking_id} customerEmail={customerEmail} />
+          <PaymentForm />
         </Elements>
       </div>
     </div>

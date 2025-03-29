@@ -82,6 +82,12 @@ export function HeroBookingForm() {
             ? [...prev.services, service]
             : prev.services.filter(s => s !== service)
         }));
+      } else if (name === 'manualEntry') {
+        setFormData(prev => ({
+          ...prev,
+          manualEntry: checked,
+          isGoogleAddress: false // Reset Google address flag when switching to manual entry
+        }));
       } else {
         setFormData(prev => ({
           ...prev,
@@ -178,6 +184,21 @@ export function HeroBookingForm() {
       console.log('Address validation failed');
       newErrors.address = 'Address is required';
       hasErrors = true;
+    }
+
+    // Strict address validation when not using manual entry
+    if (!formData.manualEntry && !formData.isGoogleAddress && formData.address) {
+      const hasStreetNumber = /^\d+\s+\w+/.test(formData.address);
+      const hasStreetName = /\s+(?:Street|St|Road|Rd|Avenue|Ave|Drive|Dr|Court|Ct|Place|Pl|Lane|Ln|Way|Parade|Pde|Circuit|Cct|Crescent|Cres)\b/i.test(formData.address);
+      const hasSuburb = /,\s*[A-Za-z\s]+,/.test(formData.address);
+      const hasPostcode = /\b\d{4}\b/.test(formData.address);
+      const hasState = /\b(?:NSW|VIC|QLD|SA|WA|TAS|NT|ACT)\b/i.test(formData.address);
+
+      if (!hasStreetNumber || !hasStreetName || !hasSuburb || !hasPostcode || !hasState) {
+        console.log('Address format validation failed');
+        newErrors.address = 'Select from suggestions or use manual entry';
+        hasErrors = true;
+      }
     }
     
     // Additional validation for email and phone formats
@@ -372,7 +393,6 @@ export function HeroBookingForm() {
           {/* Add Google Maps Script */}
           <GoogleMapsScript onLoadError={() => {
             console.error('Error loading Google Maps API script');
-            // Enable manual entry as fallback if script fails to load
             if (!formData.manualEntry) {
               setFormData(prev => ({
                 ...prev,
@@ -420,251 +440,143 @@ export function HeroBookingForm() {
             />
           </div>
           
-          <div className="relative">
-            <AddressInput
-              value={formData.address}
-              onChange={handleChange}
-              onBlur={(e) => validateField('address', e.target.value, e)}
-              onFocus={() => setShowManualEntry(true)}
-              error={hasAttemptedSubmit ? errors.address : undefined}
-              manualEntry={formData.manualEntry}
-              onManualEntryChange={handleChange}
-              showManualEntry={showManualEntry}
-            />
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div>
-              <div className="relative" ref={servicesRef}>
-                <Dropdown
-                  value={
-                    formData.services.length > 0 
-                      ? `${formData.services.length} service${formData.services.length > 1 ? 's' : ''} selected`
-                      : 'Services Required'
-                  }
-                  placeholder="Services Required"
-                  isOpen={showServices}
-                  onToggle={() => setShowServices(!showServices)}
-                />
-                
-                <AnimatePresence>
-                  {showServices && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                      transition={{ duration: 0.2, ease: "easeOut" }}
-                      className="absolute z-50 w-full mt-1 rounded-md border border-gray-700 bg-[#0C0C0C]/95 py-1 shadow-lg backdrop-blur-sm dropdown-content max-h-48 overflow-y-auto"
-                    >
-                      {SERVICES.map((category) => (
-                        <div key={category.name} className="border-b border-gray-700/50 last:border-0">
-                          <div className="flex items-center justify-between px-3 py-2 hover:bg-gray-800/50 cursor-pointer">
-                            <label className="flex items-center w-full text-sm font-medium text-gray-200 cursor-pointer">
-                              <input
-                                type="checkbox"
-                                name={`services.${category.name}`}
-                                checked={formData.services.includes(category.name as Service)}
-                                onChange={handleChange}
-                                className="accent-[#00E6CA] mr-2 rounded border-gray-700 cursor-pointer"
-                              />
-                              {category.name}
-                            </label>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                toggleCategory(category.name);
-                              }}
-                              className="text-gray-400 hover:text-white p-1 focus:outline-none"
-                              aria-label={expandedCategories[category.name] ? "Collapse" : "Expand"}
-                            >
-                              <svg 
-                                className={`w-4 h-4 transition-transform duration-200 ${expandedCategories[category.name] ? 'rotate-180' : ''}`} 
-                                fill="none" 
-                                stroke="currentColor" 
-                                viewBox="0 0 24 24"
-                              >
-                                <path 
-                                  strokeLinecap="round" 
-                                  strokeLinejoin="round" 
-                                  strokeWidth="2" 
-                                  d="M19 9l-7 7-7-7" 
-                                />
-                              </svg>
-                            </button>
-                          </div>
-                          
-                          {expandedCategories[category.name] && (
-                            <div className="pl-4 pb-1 pt-1 bg-gray-900/30">
-                              {category.services.map((service) => (
-                                <label
-                                  key={service.name}
-                                  className="flex items-center px-3 py-1.5 text-sm text-gray-300 hover:bg-gray-800/50 cursor-pointer"
-                                >
-                                  <input
-                                    type="checkbox"
-                                    name={`services.${service.name}`}
-                                    checked={formData.services.includes(service.name as Service)}
-                                    onChange={handleChange}
-                                    className="accent-[#00E6CA] mr-2 rounded border-gray-700 cursor-pointer"
-                                  />
-                                  {service.name}
-                                </label>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-                {errors.services && hasAttemptedSubmit && (
-                  <div className="text-red-500 text-xs mt-1">{errors.services}</div>
-                )}
-              </div>
-            </div>
-            <div>
-              <div className="relative" ref={timeRef}>
-                <Dropdown
-                  value={formData.preferredTime}
-                  placeholder="Preferred Time"
-                  isOpen={showTime}
-                  onToggle={() => setShowTime(!showTime)}
-                />
-                
-                {showTime && (
-                  <div className="absolute z-50 w-full mt-1 rounded-md border border-gray-700 bg-gray-900/95 py-1 shadow-lg dropdown-content dropdown-backdrop">
-                    {PREFERRED_TIMES.map((time) => (
-                      <label
-                        key={time}
-                        className="flex items-center px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 cursor-pointer"
-                      >
-                        <input
-                          type="radio"
-                          name="preferredTime"
-                          value={time}
-                          checked={formData.preferredTime === time}
-                          onChange={handleChange}
-                          className="accent-[#00E6CA] mr-2 rounded-full border-gray-700"
-                        />
-                        {time}
-                      </label>
-                    ))}
-                  </div>
-                )}
-                {errors.preferredTime && hasAttemptedSubmit && (
-                  <div className="text-red-500 text-xs mt-1">{errors.preferredTime}</div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-            <div>
-              <div className="relative" ref={urgencyRef}>
-                <Dropdown
-                  value={formData.urgency}
-                  placeholder="How Urgent Is This?"
-                  isOpen={showUrgency}
-                  onToggle={() => setShowUrgency(!showUrgency)}
-                />
-                
-                {showUrgency && (
-                  <div className="absolute z-50 w-full mt-1 rounded-md border border-gray-700 bg-gray-900/95 py-1 shadow-lg dropdown-content dropdown-backdrop">
-                    {URGENCY_OPTIONS.map((urgency) => (
-                      <label
-                        key={urgency}
-                        className="flex items-center px-3 py-2 text-sm text-gray-300 hover:bg-gray-800 cursor-pointer"
-                      >
-                        <input
-                          type="radio"
-                          name="urgency"
-                          value={urgency}
-                          checked={formData.urgency === urgency}
-                          onChange={handleChange}
-                          className="accent-[#00E6CA] mr-2 rounded-full border-gray-700"
-                        />
-                        {urgency}
-                      </label>
-                    ))}
-                  </div>
-                )}
-                {errors.urgency && hasAttemptedSubmit && (
-                  <div className="text-red-500 text-xs mt-1">{errors.urgency}</div>
-                )}
-              </div>
-            </div>
-            <div>
-              <div className="relative" ref={dateRef}>
-                <DatePicker
-                  name="preferredDate"
-                  value={formData.preferredDate}
-                  isOpen={showDate}
-                  onToggle={() => setShowDate(!showDate)}
-                  onDateSelect={(value) => {
-                    setFormData(prev => ({
-                      ...prev,
-                      preferredDateType: 'specific',
-                      preferredDateRange: null,
-                      preferredDate: value
-                    }));
-                  }}
-                  min={new Date().toISOString().split('T')[0]}
-                  placeholder="Preferred Date"
-                />
-                {errors.preferredDate && hasAttemptedSubmit && (
-                  <div className="text-red-500 text-xs mt-1">{errors.preferredDate}</div>
-                )}
-              </div>
-            </div>
-          </div>
-          
-          {/* Updated WaveInput for Message with fixed SVG path */}
-          <div className="relative mt-3">
-              <WaveInput
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={(e) => {
-                  handleChange(e);
-                  e.target.style.height = 'inherit';
-                  e.target.style.height = `${e.target.scrollHeight}px`;
-                }}
-                label="Message"
-                isTextArea
-              />
-
-            {/* File-upload button in top-right corner of WaveInput */}
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="
-                absolute 
-                top-2 
-                right-2 
-                text-gray-300 
-                hover:text-teal-500 
-                transition-colors 
-                p-2
-              "
-              aria-label="Upload files"
+          <div className="space-y-4">
+            {/* Address Section */}
+            <motion.div 
+              className="relative"
+              layout
+              transition={{ duration: 0.2, ease: "easeInOut" }}
             >
-              <svg 
-                className="w-5 h-5" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth="2" 
-                  d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
-                />
-              </svg>
-            </button>
+              <AddressInput
+                value={formData.address}
+                onChange={handleChange}
+                onBlur={(e) => validateField('address', e.target.value, e)}
+                onFocus={() => setShowManualEntry(true)}
+                error={hasAttemptedSubmit ? errors.address : undefined}
+                manualEntry={formData.manualEntry}
+                onManualEntryChange={(e) => {
+                  const event = {
+                    target: {
+                      name: 'manualEntry',
+                      type: 'checkbox',
+                      checked: e.target.checked
+                    }
+                  } as unknown as React.ChangeEvent<HTMLInputElement>;
+                  handleChange(event);
+                }}
+                showManualEntry={showManualEntry}
+              />
+            </motion.div>
+
+            {/* Dropdowns Section */}
+            <motion.div 
+              className="space-y-4 mt-8"
+              layout
+              initial={false}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+            >
+              {/* First Row: Services and Time */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="relative">
+                  <div className="relative" ref={servicesRef}>
+                    <Dropdown
+                      value={
+                        formData.services.length > 0 
+                          ? `${formData.services.length} service${formData.services.length > 1 ? 's' : ''} selected`
+                          : 'Services Required'
+                      }
+                      placeholder="Services Required"
+                      isOpen={showServices}
+                      onToggle={() => setShowServices(!showServices)}
+                    />
+                  </div>
+                </div>
+                <div className="relative">
+                  <div className="relative" ref={timeRef}>
+                    <Dropdown
+                      value={formData.preferredTime}
+                      placeholder="Preferred Time"
+                      isOpen={showTime}
+                      onToggle={() => setShowTime(!showTime)}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Second Row: Urgency and Date */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="relative">
+                  <div className="relative" ref={urgencyRef}>
+                    <Dropdown
+                      value={formData.urgency}
+                      placeholder="How Urgent Is This?"
+                      isOpen={showUrgency}
+                      onToggle={() => setShowUrgency(!showUrgency)}
+                    />
+                  </div>
+                </div>
+                <div className="relative">
+                  <div className="relative" ref={dateRef}>
+                    <DatePicker
+                      name="preferredDate"
+                      value={formData.preferredDate}
+                      isOpen={showDate}
+                      onToggle={() => setShowDate(!showDate)}
+                      onDateSelect={(value) => {
+                        setFormData(prev => ({
+                          ...prev,
+                          preferredDateType: 'specific',
+                          preferredDateRange: null,
+                          preferredDate: value
+                        }));
+                      }}
+                      min={new Date().toISOString().split('T')[0]}
+                      placeholder="Preferred Date"
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
+          
+          <div className="relative mt-3">
+                <WaveInput
+                  required
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={(e) => {
+                    handleChange(e);
+                    e.target.style.height = 'inherit';
+                    e.target.style.height = `${e.target.scrollHeight}px`;
+                  }}
+                  label="Message"
+                  isTextArea
+                />
+                
+                <div className="absolute right-0 top-0">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="p-2 text-gray-300 hover:text-teal-500 transition-colors"
+                    aria-label="Upload files"
+                  >
+                    <svg 
+                      className="w-5 h-5" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth="2" 
+                        d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" 
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
 
           <input
             ref={fileInputRef}

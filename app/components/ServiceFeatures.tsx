@@ -1,5 +1,7 @@
-import { IconCardsGrid } from "@/app/components/IconCardsGrid";
-import { serviceFeatureIcons } from "@/public/icons/service-features";
+'use client';
+
+import { IconCardsGrid } from './IconCardsGrid';
+import { serviceFeatureIcons } from '@/public/icons/service-features';
 
 const serviceFeatures = [
   {

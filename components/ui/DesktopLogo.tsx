@@ -22,15 +22,15 @@ export function DesktopLogo({
     <>
       <div className="flex items-center">
         {/* Static Icon Logo */}
-        <div className="flex-shrink-0 w-[60px] h-[60px]">
+        <div className="flex-shrink-0">
           <Image 
             src="/images/icon-logo.webp" 
             alt="HD Trade Services Icon" 
-            width={60}
-            height={60}
-            className="w-full h-full object-contain"
+            width={typeof width === 'number' ? width : 60}
+            height={typeof height === 'number' ? height : 60}
+            className="h-full w-full"
             priority
-            sizes="60px"
+            sizes={`${width}px`}
           />
         </div>
         
@@ -42,7 +42,7 @@ export function DesktopLogo({
             fill
             style={{ objectFit: 'contain', objectPosition: 'left' }}
             loading="lazy"
-            sizes="176px"
+            sizes="(max-width: 768px) 100vw, 176px"
           />
         </div>
       </div>

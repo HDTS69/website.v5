@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -145,6 +145,8 @@ export function ServiceDetailLayout({
   trustFactors = [],
   callToAction = 'Book Now',
 }: ServiceDetailProps) {
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+
   return (
     <main className="relative w-full">
       <style jsx global>{customButtonStyles}</style>
@@ -165,9 +167,21 @@ export function ServiceDetailLayout({
                 <motion.div 
                   className="absolute -bottom-3 sm:-bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"
                   initial={{ scaleX: 0, opacity: 0 }}
-                  animate={{ scaleX: 1, opacity: [0, 1, 1, 0.8] }}
-                  transition={{ duration: 1.5 }}
-                  style={{ transformOrigin: "center" }}
+                  animate={{ 
+                    scaleX: 1, 
+                    opacity: [0, 1, 1, 0.8],
+                  }}
+                  transition={{ 
+                    duration: 1.5,
+                    opacity: {
+                      times: [0, 0.3, 0.7, 1],
+                      duration: 1.5
+                    },
+                    ease: "easeOut"
+                  }}
+                  style={{
+                    transformOrigin: "center"
+                  }}
                 />
               </motion.h1>
               
@@ -189,7 +203,7 @@ export function ServiceDetailLayout({
                 <GoogleReviews />
               </motion.div>
               
-            <motion.div
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -235,7 +249,6 @@ export function ServiceDetailLayout({
               </motion.h2>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                {/* Featured Card - Spans 2 columns on md+ screens */}
                 {bentoGrid.map((item, index) => {
                   if (item.type === "featured") {
                     return (
@@ -245,6 +258,8 @@ export function ServiceDetailLayout({
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
+                        onMouseEnter={() => setHoveredCard(`featured-${index}`)}
+                        onMouseLeave={() => setHoveredCard(null)}
                       >
                         <div className="relative z-10 flex flex-col h-full">
                           <div className="flex items-center justify-between mb-4">
@@ -253,8 +268,8 @@ export function ServiceDetailLayout({
                               <LordIcon 
                                 src={item.icon}
                                 size={48}
-                                trigger="hover"
-                                state="hover-once"
+                                forceTrigger={hoveredCard === `featured-${index}`}
+                                state="loop-on-hover"
                               />
                             )}
                           </div>
@@ -279,6 +294,8 @@ export function ServiceDetailLayout({
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
+                        onMouseEnter={() => setHoveredCard(`standard-${index}`)}
+                        onMouseLeave={() => setHoveredCard(null)}
                       >
                         <div className="relative z-10">
                           <div className="flex justify-center mb-4 sm:mb-6">
@@ -286,8 +303,8 @@ export function ServiceDetailLayout({
                               <LordIcon 
                                 src={item.icon}
                                 size={56}
-                                trigger="hover"
-                                state="hover-once"
+                                forceTrigger={hoveredCard === `standard-${index}`}
+                                state="loop-on-hover"
                               />
                             )}
                           </div>
@@ -317,6 +334,8 @@ export function ServiceDetailLayout({
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
+                        onMouseEnter={() => setHoveredCard(`list-${index}`)}
+                        onMouseLeave={() => setHoveredCard(null)}
                       >
                         <div className="border-b border-[#00E6CA]/20 pb-3 sm:pb-4 mb-3 sm:mb-4">
                           <h3 className="text-lg sm:text-xl font-bold text-white">{item.title}</h3>
@@ -353,6 +372,8 @@ export function ServiceDetailLayout({
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.3 }}
+                        onMouseEnter={() => setHoveredCard(`payment-${index}`)}
+                        onMouseLeave={() => setHoveredCard(null)}
                       >
                         <div className="relative z-10">
                           <div className="flex items-center justify-between mb-4">
@@ -360,8 +381,8 @@ export function ServiceDetailLayout({
                             <LordIcon 
                               src="/icons/Flat Price Tag Icon.json"
                               size={40}
-                              trigger="hover"
-                              state="hover-once"
+                              forceTrigger={hoveredCard === `payment-${index}`}
+                              state="loop-on-hover"
                             />
                           </div>
                           <div className="space-y-4">
@@ -460,14 +481,16 @@ export function ServiceDetailLayout({
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
+                        onMouseEnter={() => setHoveredCard(`guarantee-${index}`)}
+                        onMouseLeave={() => setHoveredCard(null)}
                       >
                         <div className="relative z-10">
                           <div className="absolute top-0 right-0">
                             <LordIcon 
                               src="/icons/Shield Security Icon.json"
                               size={48}
-                              trigger="hover"
-                              state="hover-once"
+                              forceTrigger={hoveredCard === `guarantee-${index}`}
+                              state="loop-on-hover"
                             />
                           </div>
                           <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
@@ -532,11 +555,48 @@ export function ServiceDetailLayout({
                 </motion.div>
               ))}
             </div>
+
+            {/* Feature Cards Grid */}
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              {[
+                { icon: '/icons/Siren Hover Pinch Icon.json', text: '24/7 Emergency Response' },
+                { icon: '/icons/Wired Flat Speed Hover Pinch.json', text: 'Fast Arrival Times' },
+                { icon: '/icons/Graduation Scroll Icon.json', text: 'Fully Licensed Technicians' },
+                { icon: '/icons/Van Hover Pinch Icon.json', text: 'Fully Stocked Service Vans' },
+                { icon: '/icons/Wired Flat Handshake Deal Icon.json', text: 'Upfront Transparent Pricing' },
+                { icon: '/icons/Emoji Smile Hover Icon.json', text: '100% Satisfaction Guarantee' },
+              ].map((item, index) => (
+                <motion.div 
+                  key={index}
+                  className="flex items-center bg-black/40 p-4 rounded-xl border border-[#00E6CA]/20"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.2 + (index * 0.1) }}
+                  onMouseEnter={() => setHoveredCard(`feature-${index}`)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                >
+                  <div className="mr-4 w-12 h-12">
+                    <LordIcon 
+                      src={item.icon}
+                      size={48}
+                      forceTrigger={hoveredCard === `feature-${index}`}
+                      state="loop-on-hover"
+                    />
+                  </div>
+                  <span className="text-white font-medium">{item.text}</span>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
         </div>
       </BackgroundWrapper>
 
-      {/* Common Issues Section */}
+      {/* Common Issues Section - Enhanced styling */}
       {commonIssues.length > 0 && (
         <BackgroundWrapper className="py-20">
           <div className="container mx-auto px-4">
@@ -551,9 +611,21 @@ export function ServiceDetailLayout({
                 <motion.div 
                   className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"
                   initial={{ scaleX: 0, opacity: 0 }}
-                  animate={{ scaleX: 1, opacity: [0, 1, 1, 0.8] }}
-                  transition={{ duration: 1.5 }}
-                  style={{ transformOrigin: "center" }}
+                  animate={{ 
+                    scaleX: 1, 
+                    opacity: [0, 1, 1, 0.8],
+                  }}
+                  transition={{ 
+                    duration: 1.5,
+                    opacity: {
+                      times: [0, 0.3, 0.7, 1],
+                      duration: 1.5
+                    },
+                    ease: "easeOut"
+                  }}
+                  style={{
+                    transformOrigin: "center"
+                  }}
                 />
               </motion.h2>
               
@@ -561,18 +633,20 @@ export function ServiceDetailLayout({
                 {commonIssues.map((issue, index) => (
                   <motion.div 
                     key={index}
-                    className="bg-black/40 backdrop-blur-sm rounded-2xl border border-[#00E6CA]/20 p-8"
+                    className="bg-black/40 backdrop-blur-sm rounded-2xl border border-[#00E6CA]/20 p-8 hover:border-[#00E6CA]/40 transition-all duration-300"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 + (index * 0.1) }}
+                    onMouseEnter={() => setHoveredCard(`issue-${index}`)}
+                    onMouseLeave={() => setHoveredCard(null)}
                   >
                     <div className="flex items-center gap-3 mb-4">
                       {issue.icon && (
                         <LordIcon 
                           src={issue.icon}
                           size={40}
-                          trigger="hover"
-                          state="hover-once"
+                          forceTrigger={hoveredCard === `issue-${index}`}
+                          state="loop-on-hover"
                         />
                       )}
                       <h3 className="text-2xl font-bold text-white">{issue.title}</h3>
@@ -580,7 +654,7 @@ export function ServiceDetailLayout({
                     <p className="text-gray-300 mb-6" dangerouslySetInnerHTML={{ __html: issue.description }}></p>
                     <ul className="space-y-2">
                       {issue.bullets.map((bullet, bIndex) => (
-                        <li key={bIndex} className="flex items-start text-gray-300">
+                        <li key={bIndex} className="flex items-start text-gray-300 group-hover:translate-x-1 transition-transform">
                           <span className="text-[#00E6CA] mr-2">•</span>
                           <span>{bullet}</span>
                         </li>
@@ -634,7 +708,7 @@ export function ServiceDetailLayout({
         </BackgroundWrapper>
       )}
 
-      {/* Trust Factors Section */}
+      {/* Trust Factors Section - Enhanced styling */}
       {trustFactors.length > 0 && (
         <BackgroundWrapper className="py-20">
           <div className="container mx-auto px-4">
@@ -649,9 +723,21 @@ export function ServiceDetailLayout({
                 <motion.div
                   className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"
                   initial={{ scaleX: 0, opacity: 0 }}
-                  animate={{ scaleX: 1, opacity: [0, 1, 1, 0.8] }}
-                  transition={{ duration: 1.5 }}
-                  style={{ transformOrigin: "center" }}
+                  animate={{ 
+                    scaleX: 1, 
+                    opacity: [0, 1, 1, 0.8],
+                  }}
+                  transition={{ 
+                    duration: 1.5,
+                    opacity: {
+                      times: [0, 0.3, 0.7, 1],
+                      duration: 1.5
+                    },
+                    ease: "easeOut"
+                  }}
+                  style={{
+                    transformOrigin: "center"
+                  }}
                 />
               </motion.h2>
               
@@ -659,18 +745,20 @@ export function ServiceDetailLayout({
                 {trustFactors.map((factor, index) => (
                   <motion.div 
                     key={index}
-                    className="bg-black/40 backdrop-blur-sm rounded-2xl border border-[#00E6CA]/20 p-6 text-center"
+                    className="bg-black/40 backdrop-blur-sm rounded-2xl border border-[#00E6CA]/20 p-6 text-center hover:border-[#00E6CA]/40 transition-all duration-300 group"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1 + (index * 0.1) }}
+                    onMouseEnter={() => setHoveredCard(`trust-${index}`)}
+                    onMouseLeave={() => setHoveredCard(null)}
                   >
                     <div className="flex justify-center mb-4">
-                      <div className="bg-[#00E6CA]/20 rounded-full p-4">
+                      <div className="bg-[#00E6CA]/20 rounded-full p-4 group-hover:bg-[#00E6CA]/30 transition-colors duration-300">
                         <LordIcon 
                           src={factor.icon}
                           size={48}
-                          trigger="hover"
-                          state="hover-once"
+                          forceTrigger={hoveredCard === `trust-${index}`}
+                          state="loop-on-hover"
                         />
                       </div>
                     </div>

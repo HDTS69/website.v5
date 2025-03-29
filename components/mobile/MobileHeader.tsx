@@ -4,12 +4,15 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Phone, Calendar } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { OpenNowIndicator } from '../ui/OpenNowIndicator';
-import { RiveLogo } from '../ui/RiveLogo';
-import { Logo } from '../ui/logo';
+import { Navigation } from './MobileNavigation';
+import { AnimatedBookNowButton } from '../ui/AnimatedBookNowButton';
+import { navigationItems } from '@/lib/navigation';
 
 export function MobileHeader() {
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === '/';
   const openNowRef = useRef<HTMLDivElement>(null);
@@ -85,62 +88,66 @@ export function MobileHeader() {
     };
   }, []);
 
-  const LogoButton = () => {
-    const buttonContent = (
-      <div className="flex items-center w-full relative">
-        {/* Main Logo Section with logos */}
-        <div className="w-full flex items-center justify-between px-0 relative">
-          {/* Left-aligned Icon Logo */}
-          <div className="flex-shrink-0 pl-0 w-[60px] h-[60px]">
-            <RiveLogo width={60} height={60} />
-          </div>
-          
-          {/* Centered Text Logo */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 flex justify-center items-center">
-            <div className="relative w-[176px] h-[38px]">
-              <Image
-                src="/images/text-logo.webp"
-                alt="HD Trade Services"
-                fill
-                style={{ objectFit: 'contain' }}
-                priority
-                sizes="176px"
-              />
-            </div>
-          </div>
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial scroll position
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const LogoContent = () => (
+    <div className="flex items-center w-full relative">
+      {/* Main Logo Section with logos */}
+      <div className="w-full flex items-center justify-between px-0 relative">
+        {/* Left-aligned Icon Logo */}
+        <div className="flex-shrink-0 pl-0">
+          <Image
+            src="/images/icon-logo.webp"
+            alt="HD Trade Services Logo"
+            width={64}
+            height={64}
+            className="w-16 h-16"
+            priority
+            sizes="64px"
+          />
+        </div>
+        
+        {/* Centered Text Logo */}
+        <div className="absolute left-1/2 transform -translate-x-1/2 flex justify-center items-center">
+          <Image
+            src="/images/text-logo.webp"
+            alt="HD Trade Services"
+            width={600}
+            height={130}
+            style={{ objectFit: 'contain' }}
+            className="max-h-[130px] w-auto"
+            sizes="(max-width: 768px) 80vw, 600px"
+            loading="eager"
+          />
         </div>
       </div>
-    );
+    </div>
+  );
 
-    if (isHomePage) {
-      return (
-        <div 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="w-full cursor-pointer"
-          aria-label="Return to top"
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-          }}
-        >
-          {buttonContent}
-        </div>
-      );
+  // Define action items for the navigation
+  const actionItems = [
+    {
+      name: "Call Now",
+      url: "tel:1300000000",
+      icon: Phone,
+      isHighlighted: true,
+    },
+    {
+      name: "Book Online",
+      url: "/book-now",
+      icon: Calendar,
+      isHighlighted: true,
     }
-
-    return (
-      <Link 
-        href="/"
-        className="w-full"
-        aria-label="Return to homepage"
-      >
-        {buttonContent}
-      </Link>
-    );
-  };
+  ];
 
   return (
     <>
@@ -151,7 +158,7 @@ export function MobileHeader() {
         className="md:hidden shadow-md"
         style={{ 
           paddingTop: 'env(safe-area-inset-top)',
-          position: 'absolute',
+          position: 'fixed',
           top: 0,
           left: 0,
           right: 0,
@@ -173,9 +180,11 @@ export function MobileHeader() {
       <header 
         ref={mainHeaderRef}
         id="mobile-main-header"
-        className="md:hidden shadow-md"
+        className={cn(
+          'fixed md:hidden shadow-md',
+          'transition-all duration-300 ease-in-out'
+        )}
         style={{ 
-          position: 'absolute',
           top: openNowRef.current ? openNowRef.current.offsetHeight + 'px' : '24px',
           left: 0,
           right: 0,
@@ -186,9 +195,35 @@ export function MobileHeader() {
         }}
       >
         <div className="py-3">
-          <LogoButton />
+          {isHomePage ? (
+            <div 
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="w-full cursor-pointer"
+              aria-label="Return to top"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+            >
+              <LogoContent />
+            </div>
+          ) : (
+            <Link 
+              href="/"
+              className="w-full"
+              aria-label="Return to homepage"
+            >
+              <LogoContent />
+            </Link>
+          )}
         </div>
       </header>
+
+      {/* Navigation */}
+      <Navigation items={navigationItems} actionItems={actionItems} />
     </>
   );
 } 

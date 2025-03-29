@@ -6,6 +6,24 @@ import Image from 'next/image';
 // Declare the lord-icon-element module
 declare module 'lord-icon-element';
 
+// Add lottie type declaration
+declare global {
+  interface Window {
+    RiveCanvas?: any;
+    lottie?: {
+      setQuality: (quality: string) => void;
+      loadAnimation: (config: {
+        container: HTMLElement;
+        renderer: string;
+        loop: boolean;
+        autoplay: boolean;
+        path: string;
+        name: string;
+      }) => void;
+    };
+  }
+}
+
 interface LordIconProps {
   src: string;
   trigger?: string;
@@ -26,7 +44,7 @@ export interface LordIconRef {
 
 const LordIcon = forwardRef<LordIconRef, LordIconProps>(({
   src,
-  trigger = 'none',
+  trigger = 'hover',
   colors,
   style,
   className,
@@ -38,89 +56,52 @@ const LordIcon = forwardRef<LordIconRef, LordIconProps>(({
 }, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const elementRef = useRef<HTMLElement | null>(null);
-  const [isLordIconLoaded, setIsLordIconLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [attemptCount, setAttemptCount] = useState(0);
+  const [isReady, setIsReady] = useState(false);
 
-  // Effect to load lord-icon element script
   useEffect(() => {
-    if (typeof window === 'undefined' || hasError) return;
-    
-    const loadLordIconElement = async () => {
+    const loadLordIcon = async () => {
       try {
-        if (!customElements.get('lord-icon')) {
-          // Check if script already exists to avoid duplicate loading
-          const existingScript = document.querySelector('script[src="https://cdn.lordicon.com/lordicon.js"]');
-          
-          if (!existingScript) {
-            const script = document.createElement('script');
-            script.src = 'https://cdn.lordicon.com/lordicon.js';
-            script.async = true;
-            
-            // Add proper error and load handling
-            script.onload = () => {
-              setIsLordIconLoaded(true);
-            };
-            
-            script.onerror = () => {
-              console.error('Failed to load LordIcon script');
-              setHasError(true);
-            };
-            
-            document.body.appendChild(script);
-          } else {
-            // Script exists but might not be loaded yet
-            setIsLordIconLoaded(true);
-          }
-        } else {
-          setIsLordIconLoaded(true);
+        // Wait for the lord-icon script to be loaded
+        let attempts = 0;
+        const maxAttempts = 50;
+        
+        while (!customElements.get('lord-icon') && attempts < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, 100));
+          attempts++;
         }
+
+        if (!customElements.get('lord-icon')) {
+          console.error('Lord Icon custom element not loaded after maximum attempts');
+          setHasError(true);
+          return;
+        }
+
+        setIsReady(true);
       } catch (error) {
-        console.error('Error loading lord-icon element:', error);
+        console.error('Error loading Lord Icon:', error);
         setHasError(true);
       }
     };
 
-    loadLordIconElement();
-    
-    // Add fallback timeout
-    const fallbackTimer = setTimeout(() => {
-      if (!isLordIconLoaded && attemptCount < 2) {
-        setAttemptCount(prev => prev + 1);
-      } else if (!isLordIconLoaded) {
-        setHasError(true);
-      }
-    }, 2000);
-    
-    return () => clearTimeout(fallbackTimer);
-  }, [hasError, isLordIconLoaded, attemptCount]);
+    loadLordIcon();
+  }, []);
 
-  // Effect to create the lord-icon element
   useEffect(() => {
-    if (!containerRef.current || !isLordIconLoaded || hasError) return;
+    if (!containerRef.current || !isReady || hasError) return;
     
     try {
-      // Clear container first
       containerRef.current.innerHTML = '';
       
       const iconElement = document.createElement('lord-icon');
+      iconElement.style.opacity = '0';
       iconElement.setAttribute('src', src);
       iconElement.setAttribute('trigger', forceTrigger ? 'loop' : trigger);
-      
-      if (colors) {
-        iconElement.setAttribute('colors', colors);
-      }
-      
-      if (state) {
-        iconElement.setAttribute('state', state);
-      }
-      
-      if (target) {
-        iconElement.setAttribute('target', target);
-      }
+      iconElement.setAttribute('colors', colors || 'primary:#ffffff,secondary:#28DF99');
       
       iconElement.style.width = `${size}px`;
       iconElement.style.height = `${size}px`;
+      iconElement.style.transition = 'opacity 0.3s ease-in-out';
       
       if (style) {
         Object.entries(style).forEach(([key, value]) => {
@@ -128,9 +109,13 @@ const LordIcon = forwardRef<LordIconRef, LordIconProps>(({
         });
       }
       
-      // Add error handling for the icon itself
-      iconElement.addEventListener('error', () => {
+      iconElement.addEventListener('error', (e) => {
+        console.error('Error loading icon:', src, e);
         setHasError(true);
+      });
+
+      iconElement.addEventListener('load', () => {
+        iconElement.style.opacity = '1';
       });
       
       if (className) {
@@ -143,9 +128,8 @@ const LordIcon = forwardRef<LordIconRef, LordIconProps>(({
       console.error('Error creating lord-icon element:', error);
       setHasError(true);
     }
-  }, [src, colors, style, size, className, trigger, forceTrigger, state, target, isLordIconLoaded, hasError]);
+  }, [src, colors, style, size, className, forceTrigger, trigger, isReady]);
 
-  // Expose methods via ref
   useImperativeHandle(ref, () => ({
     element: elementRef.current,
     setTrigger: (newTrigger: string) => {
@@ -155,45 +139,39 @@ const LordIcon = forwardRef<LordIconRef, LordIconProps>(({
     }
   }));
 
-  // Handle forceTrigger changes
-  useEffect(() => {
-    if (elementRef.current && isLordIconLoaded && !hasError) {
-      if (forceTrigger) {
-        elementRef.current.setAttribute('trigger', 'loop');
-      } else {
-        elementRef.current.setAttribute('trigger', trigger);
-      }
-    }
-  }, [forceTrigger, trigger, isLordIconLoaded, hasError]);
-
-  // If there's an error, show the fallback image
-  if (hasError) {
+  if (hasError || !isReady) {
     return (
-      <div ref={containerRef} className={`flex items-center justify-center ${className}`} style={{ width: size, height: size, ...style }}>
+      <div 
+        ref={containerRef} 
+        className={`flex items-center justify-center ${className}`} 
+        style={{ 
+          width: size, 
+          height: size,
+          opacity: 1,
+          transition: 'opacity 0.3s ease-in-out',
+          ...style 
+        }}
+      >
         <Image
           src={fallbackImage}
-          alt="Icon"
+          alt=""
           width={size}
           height={size}
-          style={{ objectFit: 'contain' }}
+          className="w-full h-full object-contain"
         />
       </div>
     );
   }
 
-  // Show loading or the actual lord-icon container
   return (
     <div 
       ref={containerRef} 
       className={className} 
-      style={{ 
-        width: size, 
+      style={{
+        width: size,
         height: size,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         ...style
-      }}
+      }} 
     />
   );
 });
