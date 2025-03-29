@@ -24,15 +24,16 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
   },
   reactStrictMode: true,
-  // Enable static export for production only
-  ...(process.env.NODE_ENV === 'production' ? {
-    output: 'export',
-    distDir: 'out',
-  } : {}),
+  // Remove conditional static export for production
+  // ...(process.env.NODE_ENV === 'production' ? {
+  //   output: 'export',
+  //   distDir: 'out',
+  // } : {}),
   experimental: {
     appDocumentPreloading: false,
     optimizePackageImports: ['framer-motion'],
-    optimizeFonts: true,
+    // Remove unrecognized optimizeFonts option
+    // optimizeFonts: true, 
     scrollRestoration: true,
   },
   compiler: {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from 'framer-motion';
@@ -14,11 +14,25 @@ import { useFormSubmission } from './useFormSubmission';
 import { AddressInput } from './AddressInput';
 import { PREFERRED_TIMES, URGENCY_OPTIONS } from './constants';
 import type { BookingFormProps, Service } from './types';
-import { SERVICES } from '@/config/services';
-import type { ServiceCategory } from '@/config/services';
+import { SERVICES, ServiceCategory } from '@/config/services';
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles';
 import { GoogleMapsScript } from './GoogleMapsScript';
 import { PHONE_PATTERNS, EMAIL_PATTERNS } from '@/utils/security';
+
+interface ConfigService {
+  name: string;
+  description?: string;
+  path?: string;
+}
+
+// Define the keys that have specific validation rules in useFormValidation
+const validationKeys = ['name', 'email', 'phone', 'address'] as const;
+type ValidationKey = typeof validationKeys[number]; // Type: 'name' | 'email' | 'phone' | 'address'
+
+// Type guard to check if a key is one of the validation keys
+function isValidationKey(key: string): key is ValidationKey {
+  return validationKeys.includes(key as ValidationKey);
+}
 
 export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
   const {
@@ -32,7 +46,7 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
     setShowThankYou,
     hasAttemptedSubmit,
     setHasAttemptedSubmit,
-    handleChange,
+    handleChange: originalHandleChange,
     resetForm,
   } = useFormState();
 
@@ -46,29 +60,56 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
   });
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [showManualEntry, setShowManualEntry] = React.useState(false);
-  const [showServices, setShowServices] = React.useState(false);
-  const [showTime, setShowTime] = React.useState(false);
-  const [showUrgency, setShowUrgency] = React.useState(false);
-  const [showDate, setShowDate] = React.useState(false);
-  const [expandedCategories, setExpandedCategories] = React.useState<Record<string, boolean>>({});
+  const [showManualEntry, setShowManualEntry] = useState(false);
+  const [showServices, setShowServices] = useState(false);
+  const [showTime, setShowTime] = useState(false);
+  const [showUrgency, setShowUrgency] = useState(false);
+  const [showDate, setShowDate] = useState(false);
+  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
   const servicesRef = useRef<HTMLDivElement>(null);
   const timeRef = useRef<HTMLDivElement>(null);
   const urgencyRef = useRef<HTMLDivElement>(null);
   const dateRef = useRef<HTMLDivElement>(null);
 
-  const toggleCategory = (category: string) => {
+  const toggleCategory = useCallback((category: string) => {
     setExpandedCategories(prev => ({
       ...prev,
       [category]: !prev[category]
     }));
-  };
+  }, []);
 
-  React.useEffect(() => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    originalHandleChange(e);
+    const { name, value } = e.target;
+    if (hasAttemptedSubmit && isValidationKey(name)) {
+      validateField(name, value, e);
+    }
+  }, [originalHandleChange, validateField, hasAttemptedSubmit]);
+
+  const handleServiceChange = useCallback((serviceName: string) => {
+    setFormData(prev => {
+      const currentServices: Service[] = prev.services || []; 
+      const isSelected = currentServices.includes(serviceName);
+      const newServices = isSelected
+        ? currentServices.filter(sName => sName !== serviceName)
+        : [...currentServices, serviceName];
+      return { ...prev, services: newServices };
+    });
+  }, [setFormData]);
+
+  const handleDropdownSelection = useCallback((name: keyof Omit<typeof formData, 'services' | 'files'>, value: string) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (name === 'preferredTime') setShowTime(false);
+    if (name === 'urgency') setShowUrgency(false);
+    if (hasAttemptedSubmit && isValidationKey(name)) {
+      validateField(name, value);
+    }
+  }, [setFormData, validateField, hasAttemptedSubmit]);
+
+  useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       const target = event.target as HTMLElement;
       
-      // Handle dropdowns
       if (servicesRef.current && !servicesRef.current.contains(target)) {
         setShowServices(false);
       }
@@ -90,18 +131,15 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
   }, []);
 
   React.useEffect(() => {
-    // Call the onStateChange callback when showThankYou changes
     if (onStateChange) {
       console.log('BookingForm: calling onStateChange with', showThankYou);
       onStateChange(showThankYou);
     }
   }, [showThankYou, onStateChange]);
 
-  // Reset the form when the component unmounts
   React.useEffect(() => {
     return () => {
       if (showThankYou) {
-        // Don't reset if we're showing the thank you message
         return;
       }
       resetForm();
@@ -152,12 +190,10 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
   return (
     <div className="w-full relative py-16">
       <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 px-4 relative">
-        {/* Add Background Sparkles */}
         <div className="absolute inset-0 z-0">
           <BackgroundSparkles useFixed={false} zIndex={5} />
         </div>
         
-        {/* Left Column - Description and Benefits */}
         <div className="space-y-8">
           <div>
             <br></br>
@@ -216,7 +252,6 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
           </div>
         </div>
 
-        {/* Right Column - Booking Form */}
         <div className="bg-black rounded-2xl p-8 backdrop-blur-sm border border-gray-800/50">
           {showThankYou ? (
             <div className="text-center space-y-6 py-12">
@@ -240,7 +275,6 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-8" noValidate>
-              {/* First Row - Name */}
               <WaveInput
                 required
                 id="name"
@@ -252,7 +286,6 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                 error={errors.name}
               />
 
-              {/* Second Row - Phone and Email */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <WaveInput
                   required
@@ -282,7 +315,6 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
               </div>
 
               <div className="space-y-4">
-                {/* Third Row - Address Section */}
                 <motion.div 
                   className="relative"
                   layout
@@ -309,27 +341,63 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                   />
                 </motion.div>
 
-                {/* Dropdowns Section */}
                 <motion.div 
                   className="space-y-4 mt-8"
                   layout
                   initial={false}
                   transition={{ duration: 0.2, ease: "easeInOut" }}
                 >
-                  {/* First Row: Services and Time */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="relative">
                       <div className="relative" ref={servicesRef}>
                         <Dropdown
                           value={
                             formData.services.length > 0 
-                              ? `${formData.services.length} service${formData.services.length > 1 ? 's' : ''} selected`
-                              : 'Services Required'
+                              ? `${formData.services.length} selected`
+                              : ''
                           }
                           placeholder="Services Required"
                           isOpen={showServices}
                           onToggle={() => setShowServices(!showServices)}
                         />
+                        <AnimatePresence>
+                          {showServices && (
+                            <motion.div
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -10 }}
+                              className="absolute z-20 mt-1 w-full rounded-md bg-gray-800 shadow-lg border border-gray-700 max-h-60 overflow-y-auto"
+                            >
+                              {SERVICES.map((category: ServiceCategory) => (
+                                <div key={category.name}>
+                                  <button 
+                                    type="button"
+                                    onClick={() => toggleCategory(category.name)}
+                                    className="w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 flex justify-between items-center"
+                                  >
+                                    {category.name}
+                                    <svg className={cn("w-4 h-4 transition-transform", expandedCategories[category.name] ? "rotate-180" : "")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                                  </button>
+                                  {expandedCategories[category.name] && (
+                                    <div className="pl-4">
+                                      {category.services.map((service: ConfigService) => (
+                                        <label key={service.name} className="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 cursor-pointer">
+                                          <input
+                                            type="checkbox"
+                                            checked={formData.services.includes(service.name)}
+                                            onChange={() => handleServiceChange(service.name)}
+                                            className="mr-2 accent-[#00E6CA]"
+                                          />
+                                          {service.name} 
+                                        </label>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
                     </div>
                     <div className="relative">
@@ -344,7 +412,6 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                     </div>
                   </div>
 
-                  {/* Second Row: Urgency and Date */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="relative">
                       <div className="relative" ref={urgencyRef}>
@@ -364,12 +431,8 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                           isOpen={showDate}
                           onToggle={() => setShowDate(!showDate)}
                           onDateSelect={(value) => {
-                            setFormData(prev => ({
-                              ...prev,
-                              preferredDateType: 'specific',
-                              preferredDateRange: null,
-                              preferredDate: value
-                            }));
+                            handleDropdownSelection('preferredDate', value);
+                            setShowDate(false);
                           }}
                           min={new Date().toISOString().split('T')[0]}
                           placeholder="Preferred Date"
@@ -392,6 +455,7 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                     }}
                     label="Message"
                     isTextArea
+                    error={errors.message}
                   />
                   
                   <div className="absolute right-0 top-0">

@@ -28,14 +28,14 @@ export function DesktopLogo({
             alt="HD Trade Services Icon" 
             width={typeof width === 'number' ? width : 60}
             height={typeof height === 'number' ? height : 60}
-            className="h-full w-full"
+            className="h-12 w-auto"
             priority
-            sizes={`${width}px`}
+            sizes="48px"
           />
         </div>
         
         {/* Text Logo */}
-        <div className="relative h-8 w-44 ml-3 hidden sm:block">
+        <div className="relative h-10 w-44 ml-3 hidden sm:block">
           <Image
             src="/images/text-logo.webp"
             alt="HD Trade Services"
