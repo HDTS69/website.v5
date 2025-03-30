@@ -194,7 +194,7 @@ export function Hero() {
                     width={80} 
                     height={80}
                     className="object-contain"
-                    loading="lazy"
+                    priority
                   />
                 </motion.div>
               ))}

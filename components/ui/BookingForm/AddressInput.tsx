@@ -64,14 +64,33 @@ export function AddressInput({
 
   // Add this function near the top of the component
   const handlePlaceSelection = (formattedAddress: string) => {
-    // Handle address update
+    // Create a synthetic event to pass back to the parent form's onChange
+    const syntheticEvent = {
+      target: {
+        name: 'address', // Ensure the name is correct for the parent state
+        value: formattedAddress,
+        dataset: { isGoogleAddress: 'true' } // Add custom attribute
+      },
+      currentTarget: {
+        name: 'address',
+        value: formattedAddress,
+        dataset: { isGoogleAddress: 'true' }
+      },
+      preventDefault: () => {},
+      stopPropagation: () => {},
+      // Add other necessary event properties if required by onChange type
+    } as unknown as React.ChangeEvent<HTMLInputElement>; 
+    
+    // Call the parent's onChange with the synthetic event
+    onChange(syntheticEvent);
+    
+    // Also set internal state if needed (though less critical now)
+    setIsGoogleAddress(true);
+    
+    // Optional: Manually update the input ref value if onChange doesn't trigger it
     if (addressRef.current) {
       addressRef.current.value = formattedAddress;
-      const changeEvent = new Event('change', { bubbles: true });
-      addressRef.current.dispatchEvent(changeEvent);
     }
-    
-    setIsGoogleAddress(true);
   };
 
   // Initialize Google Places Autocomplete

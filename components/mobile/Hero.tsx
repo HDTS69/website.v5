@@ -180,7 +180,7 @@ export function Hero() {
                     width={64} // Mobile size
                     height={64} 
                     className="object-contain"
-                    loading="lazy"
+                    priority
                   />
                 </motion.div>
               ))}
