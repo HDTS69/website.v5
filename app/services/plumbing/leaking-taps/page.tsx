@@ -48,19 +48,19 @@ export default function LeakingTapsPage() {
             type: "featured",
             title: "Complete Tap Repair Solutions",
             description: "From simple washer replacements to complex mixer tap repairs, our experienced plumbers provide <span class=\"font-bold text-white\">permanent solutions for all types of leaking taps</span>. We diagnose the exact cause of your leak and implement quality repairs using industry-leading components.",
-            icon: "/icons/Wired Flat Sink Hover Pinch.json"
+            icon: "/icons/sink.json"
           },
           {
             type: "standard",
             title: "Same-Day Service",
             description: "Don't let that annoying drip continue. Our prompt response service means your leaking tap can be fixed today, saving water and preventing further damage.",
-            icon: "/icons/Wired Flat Speed Hover Pinch.json"
+            icon: "/icons/speedometer.json"
           },
           {
             type: "standard",
             title: "Quality Components",
             description: "We use only premium washers, ceramic discs, cartridges, and seals from trusted manufacturers to ensure your repair lasts for years to come.",
-            icon: "/icons/Wired Flat 409 Tool Hover Oscillate.json"
+            icon: "/icons/tool.json"
           },
           {
             type: "list",
@@ -118,7 +118,7 @@ export default function LeakingTapsPage() {
               "Spindle and jumper valve repairs",
               "Complete sealing system restoration"
             ],
-            icon: "/icons/Wired Flat Sink Hover Pinch.json"
+            icon: "/icons/sink.json"
           },
           {
             title: "Mixer Tap Problems",
@@ -130,7 +130,7 @@ export default function LeakingTapsPage() {
               "Spout seal replacement",
               "Water temperature adjustment"
             ],
-            icon: "/icons/Wired Flat Shower Icon.json"
+            icon: "/icons/shower.json"
           },
           {
             title: "Tap Base & Connection Leaks",
@@ -142,7 +142,41 @@ export default function LeakingTapsPage() {
               "Flexible hose replacement",
               "Water supply line repairs"
             ],
-            icon: "/icons/Wired Flat Hose Icon.json"
+            icon: "/icons/sink.json"
+          },
+          {
+            title: "Worn Washers & Seals",
+            description: "Worn washers and seals can lead to leaks from various parts of the tap, including the handle, spout, or base. Our plumbers specialize in identifying and replacing worn components to stop leaks.",
+            bullets: [
+              "Water leaks from handle, spout, or base",
+              "Dripping tap when turned off",
+              "Reduced water flow or spitting"
+            ],
+            icon: "/icons/tool.json"
+          },
+          {
+            title: "Full Tap Replacement",
+            description: "Supply and installation of new, high-quality taps for kitchens, bathrooms, and laundries, improving aesthetics and function.",
+            bullets: [],
+            icon: "/icons/sink.json"
+          },
+          {
+            title: "Fast & Efficient Repairs",
+            description: "Quick identification of the leak source and efficient repair or replacement of faulty components to stop drips fast.",
+            bullets: [],
+            icon: "/icons/speedometer.json"
+          },
+          {
+            title: "Quality Parts & Materials",
+            description: "Use of durable, high-quality washers, seals, cartridges, and replacement taps for long-lasting results.",
+            bullets: [],
+            icon: "/icons/tool.json"
+          },
+          {
+            title: "Cracked or damaged tap body",
+            description: "A cracked or damaged tap body can lead to leaks. Our plumbers specialize in repairing or replacing damaged tap bodies.",
+            bullets: [],
+            icon: "/icons/sink.json"
           }
         ]}
         whyChooseUs={[
@@ -157,6 +191,10 @@ export default function LeakingTapsPage() {
           {
             title: "Water-Saving Expertise",
             description: "Beyond just fixing the leak, we can advise on water-efficient options, flow restrictors, and modern fixtures that can significantly reduce your water consumption."
+          },
+          {
+            title: "Prompt Service",
+            description: "We respond quickly to fix your leaking taps."
           }
         ]}
         paymentOptions={[
@@ -176,12 +214,12 @@ export default function LeakingTapsPage() {
             description: "Our plumbers are fully licensed professionals with specific training in all types of tap repair techniques and systems."
           },
           {
-            icon: "/icons/Wired Flat Handshake Deal Icon.json",
+            icon: "/icons/handshake-deal.json",
             title: "No-Drip Guarantee",
             description: "We stand behind our work with a comprehensive guarantee: if your repaired tap continues to leak, we'll return to fix it at no additional cost."
           },
           {
-            icon: "/icons/Wired Flat Speed Hover Pinch.json",
+            icon: "/icons/speedometer.json",
             title: "Fast Response Times",
             description: "Leaks wait for no one. Our responsive service means we can often repair your leaking taps the same day you call, preventing further water waste and damage."
           }

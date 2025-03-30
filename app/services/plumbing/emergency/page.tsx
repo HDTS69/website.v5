@@ -219,7 +219,7 @@ function BentoGridSection() {
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xl sm:text-2xl font-bold text-white">24/7 Emergency Response</h3>
                   <LordIcon 
-                    src="/icons/Siren Hover Pinch Icon.json"
+                    src="/icons/siren.json"
                     size={48}
                     trigger="hover"
                   />
@@ -246,7 +246,7 @@ function BentoGridSection() {
               <div className="relative z-10">
                 <div className="flex justify-center mb-4 sm:mb-6">
                   <LordIcon 
-                    src="/icons/Flat Price Tag Icon.json"
+                    src="/icons/price-tag.json"
                     size={56}
                     trigger="hover"
                   />
@@ -320,7 +320,7 @@ function BentoGridSection() {
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xl font-bold text-white whitespace-nowrap">Payments Made Easy</h3>
                   <LordIcon 
-                    src="/icons/Wired Flat Piggy Bank Icon.json"
+                    src="/icons/piggy-bank.json"
                     size={40}
                     trigger="hover"
                   />
@@ -435,7 +435,7 @@ function BentoGridSection() {
               <div className="relative z-10">
                 <div className="absolute top-0 right-0">
                   <LordIcon 
-                    src="/icons/Star Flat Smile Icon.json"
+                    src="/icons/star-smile.json"
                     size={48}
                     trigger="hover"
                   />
@@ -520,12 +520,12 @@ function EmergencyIntroSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             {[
-              { icon: '/icons/Siren Hover Pinch Icon.json', text: '24/7 Emergency Response' },
-              { icon: '/icons/Wired Flat Speed Hover Pinch.json', text: 'Fast Arrival Times' },
-              { icon: '/icons/Graduation Scroll Icon.json', text: 'Fully Licensed Technicians' },
-              { icon: '/icons/Van Hover Pinch Icon.json', text: 'Fully Stocked Service Vans' },
-              { icon: '/icons/Wired Flat Handshake Deal Icon.json', text: 'Upfront Transparent Pricing' },
-              { icon: '/icons/Emoji Smile Hover Icon.json', text: '100% Satisfaction Guarantee' },
+              { icon: '/icons/siren.json', text: '24/7 Emergency Response' },
+              { icon: '/icons/speedometer.json', text: 'Fast Arrival Times' },
+              { icon: '/icons/graduation-scroll.json', text: 'Fully Licensed Technicians' },
+              { icon: '/icons/van.json', text: 'Fully Stocked Service Vans' },
+              { icon: '/icons/handshake-deal.json', text: 'Upfront Transparent Pricing' },
+              { icon: '/icons/emoji-smile.json', text: '100% Satisfaction Guarantee' },
             ].map((item, index) => (
               <motion.div 
                 key={index}
@@ -578,7 +578,7 @@ function EmergencyIssuesSection() {
       bullets: [
         'Smell of rotten eggs or sulfur',
         'Turn off gas at the meter and open windows',
-        'Evacuate the premises until professionals arrive'
+        'Evacuate the premises until professionals arrive',
       ]
     }
   ];
@@ -742,9 +742,9 @@ function CTASection() {
   return (
     <BackgroundWrapper className="py-20">
       <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto text-center"> {/* Centered content */}
           <motion.h2 
-            className="text-3xl md:text-4xl font-bold text-white mb-8 text-center relative inline-block pb-3"
+            className="text-3xl md:text-4xl font-bold text-white mb-8 relative inline-block pb-3"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -818,17 +818,17 @@ function TrustSection() {
               {
                 icon: 'M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z',
                 title: 'Honest Pricing',
-                description: 'No hidden fees, upfront quotes. We\'re transparent with our pricing from the beginning.'
+                description: `<span class="font-bold text-white">No hidden fees</span>, upfront quotes. We're transparent with our pricing from the beginning.`
               },
               {
                 icon: 'M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z',
                 title: 'Committed to Quality',
-                description: 'Fully licensed professionals with top-tier workmanship guaranteed on every job.'
+                description: '<span class="font-bold text-white">Fully licensed professionals</span> with top-tier workmanship <span class="font-bold text-white">guaranteed</span> on every job.'
               },
               {
                 icon: 'M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z',
                 title: 'Professional & Friendly',
-                description: 'We respect your home and arrive on time, treating every job with care and courtesy.'
+                description: 'We <span class="font-bold text-white">respect your home</span> and <span class="font-bold text-white">arrive on time</span>, treating every job with care and courtesy.'
               }
             ].map((item, index) => (
               <motion.div 
@@ -846,15 +846,7 @@ function TrustSection() {
                   </div>
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                <p className="text-gray-300">
-                  {item.title === 'Honest Pricing' ? (
-                    <><span className="font-bold text-white">No hidden fees</span>, upfront quotes. We're transparent with our pricing from the beginning.</>
-                  ) : item.title === 'Committed to Quality' ? (
-                    <><span className="font-bold text-white">Fully licensed professionals</span> with top-tier workmanship <span className="font-bold text-white">guaranteed</span> on every job.</>
-                  ) : (
-                    <>We <span className="font-bold text-white">respect your home</span> and <span className="font-bold text-white">arrive on time</span>, treating every job with care and courtesy.</>
-                  )}
-                </p>
+                <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: item.description }}></p>
               </motion.div>
             ))}
           </div>
@@ -909,10 +901,8 @@ function TestimonialsSection() {
   );
 }
 
-// Main page component - update with proper script loading
+// Main page component - Restored original structure
 export default function EmergencyPlumbingPage() {
-  // We no longer need to load Google Maps API here - it's loaded globally in layout.tsx
-  
   return (
     <main className="relative w-full">
       <style jsx global>{customButtonStyles}</style>

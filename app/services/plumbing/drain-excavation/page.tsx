@@ -44,21 +44,21 @@ export default function DrainExcavationPage() {
         bentoGrid={[
           {
             type: "featured",
-            title: "Expert Excavation Services",
-            description: "When repairs aren't enough, our team provides <span class=\"font-bold text-white\">complete excavation and replacement solutions</span> for damaged drains and sewer lines. We use modern equipment to minimize disruption while ensuring lasting results.",
-            icon: "/icons/Digger Hover Icon (1).json"
+            title: "Safe & Efficient Drain Excavation",
+            description: "When trenchless methods aren\'t feasible, our expert excavation safely exposes damaged drain lines for repair or replacement.",
+            icon: "/icons/digger.json"
           },
           {
             type: "standard",
-            title: "Precision Techniques",
-            description: "Our targeted excavation methods pinpoint problem areas, reducing unnecessary digging and preserving your landscape and hardscaping as much as possible.",
-            icon: "/icons/Wired Flat 409 Tool Hover Oscillate.json"
+            title: "Pipe Repair & Replacement",
+            description: "Fixing collapsed, broken, or severely damaged drain sections.",
+            icon: "/icons/tool.json"
           },
           {
             type: "standard",
-            title: "Transparent Pricing",
-            description: "Clear, upfront quotes with no hidden fees. We explain all costs before starting work so you can make informed decisions.",
-            icon: "/icons/Wired Flat Handshake Deal Icon.json"
+            title: "Site Restoration",
+            description: "Careful backfilling and restoration of the excavated area.",
+            icon: "/icons/handshake-deal.json"
           },
           {
             type: "list",
@@ -107,8 +107,8 @@ export default function DrainExcavationPage() {
         ]}
         commonIssues={[
           {
-            title: "Collapsed or Severely Damaged Pipes",
-            description: "When pipes collapse or sustain significant structural damage, excavation becomes necessary to replace the affected sections and restore proper drainage function.",
+            title: "🛠️ Severely Damaged Pipes",
+            description: "Pipes that are too broken, collapsed, or deformed for trenchless repair methods like relining.",
             bullets: [
               "Complete replacement of damaged sections for a permanent solution",
               "Upgrade to modern, more durable piping materials",
@@ -116,11 +116,11 @@ export default function DrainExcavationPage() {
               "Addresses recurrent blockages caused by structural failure",
               "Resolves sinkholes and soil subsidence caused by leaking pipes"
             ],
-            icon: "/icons/Wired Flat 409 Tool Hover Oscillate.json"
+            icon: "/icons/tool.json"
           },
           {
-            title: "Extensive Root Intrusion Damage",
-            description: "Tree roots can cause extensive damage to drain pipes, creating multiple entry points and fractures that require complete replacement rather than spot repairs.",
+            title: "🌲 Extensive Tree Root Intrusion",
+            description: "When tree roots have caused significant structural damage to the pipe, requiring section replacement.",
             bullets: [
               "Removal of pipes compromised by invasive root systems",
               "Installation of root-resistant piping and barriers",
@@ -128,7 +128,7 @@ export default function DrainExcavationPage() {
               "Comprehensive clearing of root masses from drain pathways",
               "Prevention measures to avoid future root intrusions"
             ],
-            icon: "/icons/Forest Hover Pinch Icon.json"
+            icon: "/icons/forest.json"
           },
           {
             title: "Outdated or Non-Compliant Drainage Systems",
@@ -174,14 +174,14 @@ export default function DrainExcavationPage() {
             description: "Our excavation specialists are fully licensed, insured, and experienced in handling complex drain excavation projects of all sizes."
           },
           {
-            icon: "/icons/Wired Flat Handshake Deal Icon.json",
-            title: "Transparent Process",
-            description: "We provide detailed quotes, timeline expectations, and regular updates throughout your excavation project so you're never left wondering."
+            icon: "/icons/handshake-deal.json",
+            title: "Minimal Disruption Focus",
+            description: "We plan excavations carefully to <span class='font-bold text-white'>minimize impact</span> on your landscaping and property access."
           },
           {
-            icon: "/icons/Flat Star Rating Icon.json",
-            title: "Quality Guaranteed",
-            description: "Our workmanship comes with a comprehensive warranty, giving you confidence that your new drainage system will perform reliably for years to come."
+            icon: "/icons/star-rating.json",
+            title: "Quality Pipe Materials",
+            description: "We use <span class='font-bold text-white'>durable, high-quality pipes</span> for replacements, ensuring long-term reliability."
           }
         ]}
       />

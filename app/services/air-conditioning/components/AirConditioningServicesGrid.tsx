@@ -20,56 +20,56 @@ const services: Service[] = [
     description: "Professional installation services for all types of air conditioning systems with expert setup and configuration.",
     icon: "/icons/placeholder.svg",
     href: "/services/air-conditioning/split-system-installation",
-    customIcon: "/icons/Flat 1030 Service Alt Hover Pinch.json"
+    customIcon: "/icons/service-alt.json"
   },
   {
     title: "AC Repairs",
     description: "Expert repair services for all air conditioning issues, from minor fixes to major system repairs.",
     icon: "/icons/placeholder.svg",
     href: "/services/air-conditioning/ac-repairs",
-    customIcon: "/icons/Lordicon Toolbox Hover Pinch.json"
+    customIcon: "/icons/toolbox.json"
   },
   {
     title: "AC Servicing",
     description: "Regular maintenance and servicing to keep your air conditioning system running efficiently and extend its lifespan.",
     icon: "/icons/placeholder.svg",
     href: "/services/air-conditioning/maintenance",
-    customIcon: "/icons/Wired Flat 1029 Service Hover Pinch.json"
+    customIcon: "/icons/service.json"
   },
   {
     title: "AC Cleaning",
     description: "Thorough cleaning of air conditioning systems for better air quality, improved efficiency, and system longevity.",
     icon: "/icons/placeholder.svg",
     href: "/services/air-conditioning/cleaning",
-    customIcon: "/icons/Wired Flat Cleaning Surface Hover Pinch.json"
+    customIcon: "/icons/cleaning-surface.json"
   },
   {
     title: "AC Diagnostics",
     description: "Comprehensive diagnostic services to identify and troubleshoot air conditioning issues with precision.",
     icon: "/icons/placeholder.svg",
     href: "/services/air-conditioning/ac-diagnostics",
-    customIcon: "/icons/Lordicon Interface Settings Hover Pinch.json"
+    customIcon: "/icons/interface-settings.json"
   },
   {
     title: "Split System AC",
     description: "Complete solutions for split system air conditioning, including installation, repairs, and maintenance.",
     icon: "/icons/placeholder.svg",
     href: "/services/air-conditioning/split-system-installation",
-    customIcon: "/icons/Wired Flat Air Conditioner Icon.json"
+    customIcon: "/icons/air-conditioner.json"
   },
   {
     title: "Ducted AC",
     description: "Expert services for ducted air conditioning systems, providing whole-home comfort solutions.",
     icon: "/icons/placeholder.svg",
     href: "/services/air-conditioning/ducted-systems",
-    customIcon: "/icons/Wired Flat Wind Hover Pinch.json"
+    customIcon: "/icons/wind.json"
   },
   {
     title: "Air Con Sizing Calculator",
     description: "Professional sizing services to determine the perfect air conditioning capacity for your space.",
     icon: "/icons/placeholder.svg",
     href: "/services/air-conditioning/system-optimization",
-    customIcon: "/icons/Flat Calculator Icon.json"
+    customIcon: "/icons/calculator.json"
   }
 ];
 

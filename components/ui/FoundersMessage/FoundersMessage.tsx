@@ -106,7 +106,7 @@ export function FoundersMessage({ className, imageSrc = '/images/founder-placeho
                   }}
                 >
                   <LordIcon
-                    src="/icons/Wired Flat Speed Hover Pinch.json"
+                    src="/icons/speedometer.json"
                     size={24}
                     trigger="hover"
                     className={cn(

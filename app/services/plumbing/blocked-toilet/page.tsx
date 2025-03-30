@@ -57,13 +57,13 @@ export default function BlockedToiletPage() {
             type: "featured",
             title: "24/7 Emergency Toilet Unblocking",
             description: "A blocked toilet can't wait. Our <span class=\"font-bold text-white\">emergency response team</span> is available 24/7 with fully equipped service vehicles ready to clear any toilet blockage, any time of day or night.",
-            icon: "/icons/Siren Hover Pinch Icon.json"
+            icon: "/icons/siren.json"
           },
           {
             type: "standard",
             title: "Transparent Pricing",
             description: "No hidden fees or surprises. Get upfront quotes before we start any work.",
-            icon: "/icons/Wired Flat Handshake Deal Icon.json"
+            icon: "/icons/handshake-deal.json"
           },
           {
             type: "list",
@@ -123,7 +123,7 @@ export default function BlockedToiletPage() {
               "Water rising when flushed then draining slowly",
               "Preventative maintenance to avoid future blockages"
             ],
-            icon: "/icons/Toilet Paper Icon.json"
+            icon: "/icons/toilet-paper.json"
           },
           {
             title: "Foreign Objects & Children's Toys",
@@ -133,7 +133,7 @@ export default function BlockedToiletPage() {
               "Objects visible in the toilet bowl or S-bend",
               "Child-proof toilet seat locks available for prevention"
             ],
-            icon: "/icons/Wired Flat 409 Tool Hover Oscillate.json"
+            icon: "/icons/tool.json"
           },
           {
             title: "Main Sewer Line Blockages",
@@ -143,7 +143,7 @@ export default function BlockedToiletPage() {
               "Gurgling sounds from toilets and drains",
               "Sewage odors in your home or yard"
             ],
-            icon: "/icons/Wired Flat Backyard Hover Pinch.json"
+            icon: "/icons/backyard.json"
           }
         ]}
         paymentOptions={[
@@ -158,9 +158,9 @@ export default function BlockedToiletPage() {
         ]}
         trustFactors={[
           {
-            icon: "/icons/Wired Flat Speed Hover Pinch.json",
-            title: "Fast Response Time",
-            description: 'Our <span class="font-bold text-white">local plumbers</span> arrive quickly to clear your blocked toilet, minimizing disruption and restoring functionality to your bathroom facilities.'
+            icon: "/icons/speedometer.json",
+            title: "Fast Service",
+            description: "Quick response times to resolve your toilet emergency."
           },
           {
             icon: "/icons/Wired Flat Handshake Deal Icon.json",

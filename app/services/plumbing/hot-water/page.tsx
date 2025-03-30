@@ -46,19 +46,19 @@ export default function HotWaterSystemPage() {
             type: "featured",
             title: "Complete Hot Water Solutions",
             description: "From emergency repairs to system replacements and new installations, we provide <span class=\"font-bold text-white\">comprehensive hot water services</span> for all system types. Our licensed plumbers are experts in gas, electric, solar, and heat pump technologies, ensuring you receive the perfect solution for your home and budget.",
-            icon: "/icons/Wired Flat Hot Coffee Steam Cup Icon.json"
+            icon: "/icons/thermometer.json"
           },
           {
             type: "standard",
             title: "Energy-Efficient Options",
             description: "We help you select and install energy-efficient hot water systems that reduce your utility bills while providing reliable, consistent hot water for your household.",
-            icon: "/icons/Eco Hover Spin Leaves Icon.json"
+            icon: "/icons/eco-leaves.json"
           },
           {
             type: "standard",
             title: "Emergency Service",
             description: "No hot water? Our emergency team is available 24/7 to quickly diagnose and repair your system, or provide same-day replacement if necessary.",
-            icon: "/icons/Wired Line Time Machine Alarm Icon.json"
+            icon: "/icons/siren.json"
           },
           {
             type: "list",
@@ -116,7 +116,7 @@ export default function HotWaterSystemPage() {
               "Same-day replacement options",
               "Temporary solutions if needed"
             ],
-            icon: "/icons/Wired Flat Warning Icon (1).json"
+            icon: "/icons/alert-triangle.json"
           },
           {
             title: "Inefficient & Aging Systems",
@@ -128,7 +128,7 @@ export default function HotWaterSystemPage() {
               "Rebate and incentive guidance",
               "Professional system replacement"
             ],
-            icon: "/icons/Wired Line Broken Vessel Icon.json"
+            icon: "/icons/water-pipe.json"
           },
           {
             title: "System Selection & Installation",
@@ -179,7 +179,7 @@ export default function HotWaterSystemPage() {
             description: "We guarantee our workmanship on all hot water system installations and repairs, ensuring reliable, efficient, and safe operation."
           },
           {
-            icon: "/icons/Wired Flat Happy Face Icon.json",
+            icon: "/icons/emoji-smile.json",
             title: "Customer Satisfaction Focus",
             description: "We're not happy until your hot water is working perfectly, which is why we thoroughly test all systems after installation or repair."
           }

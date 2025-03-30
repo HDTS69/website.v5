@@ -83,7 +83,7 @@ const nextConfig = {
     // Define shared CSP directives
     const baseCSP = {
       "default-src": ["'self'", "https://*.stripe.com"],
-      "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://maps.googleapis.com", "https://*.google.com", "https://*.gstatic.com", "https://cdn.lordicon.com", "https://js.stripe.com", "https://*.stripe.com"],
+      "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://maps.googleapis.com", "https://*.google.com", "https://*.gstatic.com", "https://cdn.lordicon.com", "https://js.stripe.com", "https://*.stripe.com", "https://cdn.debugbear.com"],
       "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://js.stripe.com", "https://*.stripe.com"],
       "img-src": ["'self'", "data:", "blob:", "https://*.stripe.com", "https://*.googleapis.com", "https://*.gstatic.com"],
       "font-src": ["'self'", "data:", "https://fonts.gstatic.com", "https://js.stripe.com", "https://*.stripe.com", "https://js.stripe.com/v3/", "https://js.stripe.com/type-font/", "https://js.stripe.com/v3/fonts/"],

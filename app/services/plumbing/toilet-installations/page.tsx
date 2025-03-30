@@ -142,7 +142,7 @@ export default function ToiletInstallationsPage() {
               "Secure mounting to prevent movement",
               "Correction of leaking water and waste connections"
             ],
-            icon: "/icons/Wired Flat Hose Icon.json"
+            icon: "/icons/toilet-bowl.json"
           }
         ]}
         whyChooseUs={[

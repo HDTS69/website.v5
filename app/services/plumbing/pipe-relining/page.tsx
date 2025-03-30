@@ -52,15 +52,15 @@ export default function PipeReliningPage() {
           },
           {
             type: "standard",
-            title: "Property Protection",
-            description: "Avoid the destruction, mess, and landscape damage caused by traditional pipe replacement. Our relining preserves your landscaping, driveways, and structures.",
-            icon: "/icons/Wired Flat Backyard Hover Pinch.json"
+            title: "Minimal Property Disruption",
+            description: "Avoids extensive digging, preserving your landscaping, driveway, and property features.",
+            icon: "/icons/hose.json"
           },
           {
             type: "standard",
-            title: "Comprehensive Solution",
-            description: "We rehabilitate all types of pipes including sewer, stormwater, and drainage pipes made from clay, concrete, PVC, cast iron, or copper.",
-            icon: "/icons/Lordicon Toolbox Hover Pinch.json"
+            title: "Versatile Application",
+            description: "Suitable for various pipe types including sewer, stormwater, and residential drains.",
+            icon: "/icons/backyard.json"
           },
           {
             type: "list",
@@ -130,7 +130,7 @@ export default function PipeReliningPage() {
               "Structural solutions that prevent future intrusions",
               "Long-term protection against recurring root problems"
             ],
-            icon: "/icons/Forest Hover Pinch Icon.json"
+            icon: "/icons/forest.json"
           },
           {
             title: "Pipe Joint Failures & Offset Pipes",
@@ -142,7 +142,7 @@ export default function PipeReliningPage() {
               "Prevention of soil infiltration and pipe collapse",
               "Structural reinforcement of weakened areas"
             ],
-            icon: "/icons/Wired Flat 409 Tool Hover Oscillate.json"
+            icon: "/icons/tool.json"
           }
         ]}
         whyChooseUs={[

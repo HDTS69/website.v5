@@ -30,8 +30,8 @@ const services: Service[] = [
     description: "Professional installation and repairs for all electric hot water systems, including storage and instantaneous units.",
     icon: "/icons/placeholder.svg",
     href: "/services/hot-water-systems/electric",
-    category: "Electric systems",
-    lordIcon: "/icons/Wired Flat Electric Power Hover Pinch.json",
+    category: "Electric hot water systems",
+    lordIcon: "/icons/electric-power.json",
     emoji: "⚡"
   },
   {
@@ -40,7 +40,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/hot-water-systems/heat-pump",
     category: "Energy efficient",
-    lordIcon: "/icons/Wired Flat Heating Radiator Icon.json",
+    lordIcon: "/icons/heating-radiator.json",
     emoji: "♨️"
   },
   {
@@ -48,8 +48,8 @@ const services: Service[] = [
     description: "Eco-friendly solar hot water system installation and repairs to reduce your energy bills and carbon footprint.",
     icon: "/icons/placeholder.svg",
     href: "/services/hot-water-systems/solar",
-    category: "Renewable energy",
-    lordIcon: "/icons/Wired Flat Sun Hover Rays.json",
+    category: "Solar hot water systems",
+    lordIcon: "/icons/sun.json",
     emoji: "☀️"
   },
   {
@@ -57,8 +57,8 @@ const services: Service[] = [
     description: "Fast, reliable repairs for all hot water system types, brands, and issues to restore your hot water quickly.",
     icon: "/icons/placeholder.svg",
     href: "/services/hot-water-systems/repairs",
-    category: "Repairs",
-    lordIcon: "/icons/Lordicon Toolbox Hover Pinch.json",
+    category: "Maintenance and repairs",
+    lordIcon: "/icons/toolbox.json",
     emoji: "🔧"
   },
   {
@@ -67,7 +67,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/hot-water-systems/installation",
     category: "Installation",
-    lordIcon: "/icons/Flat 1030 Service Alt Hover Pinch.json",
+    lordIcon: "/icons/service-alt.json",
     emoji: "🔧"
   },
   {
@@ -76,7 +76,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/hot-water-systems/replacement",
     category: "Installation",
-    lordIcon: "/icons/Flat People Exchange Arrows Icon.json",
+    lordIcon: "/icons/people-exchange-arrows.json",
     emoji: "🔄"
   },
   {
@@ -85,7 +85,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/hot-water-systems/maintenance",
     category: "Information",
-    lordIcon: "/icons/Flat 1020 Rules Book Guideline.json",
+    lordIcon: "/icons/rules-book-guideline.json",
     emoji: "📊"
   }
 ];

@@ -47,7 +47,7 @@ const services: Service[] = [
     icon: "/icons/emergency-gas.svg",
     href: "/services/gas-fitting/emergency-gas-repairs",
     category: "Emergency gas services",
-    lordIcon: "/icons/Siren Hover Pinch Icon.json"
+    lordIcon: "/icons/siren.json"
   },
   {
     title: "Gas Leak Detection Service",
@@ -55,7 +55,7 @@ const services: Service[] = [
     icon: "/icons/gas-leak.svg",
     href: "/services/gas-fitting/gas-leak-detection",
     category: "Gas safety and compliance",
-    lordIcon: "/icons/Man Search Avatar Icon.json"
+    lordIcon: "/icons/man-search-avatar.json"
   },
   {
     title: "Gas Line Inspections",
@@ -63,7 +63,7 @@ const services: Service[] = [
     icon: "/icons/gas-inspection.svg",
     href: "/services/gas-fitting/gas-safety-inspections",
     category: "Preventative maintenance",
-    lordIcon: "/icons/Flat Magnifier Zoom Icon.json"
+    lordIcon: "/icons/magnifier-zoom.json"
   },
   {
     title: "Gas Pipe Repair",
@@ -71,7 +71,7 @@ const services: Service[] = [
     icon: "/icons/gas-pipe-repair.svg",
     href: "/services/gas-fitting/gas-line-installation",
     category: "Gas line services",
-    lordIcon: "/icons/Wired Flat 409 Tool Hover Oscillate.json"
+    lordIcon: "/icons/tool.json"
   },
   {
     title: "Gas System Installation",
@@ -79,7 +79,7 @@ const services: Service[] = [
     icon: "/icons/gas-system.svg",
     href: "/services/gas-fitting/gas-line-installation",
     category: "Gas installation services",
-    lordIcon: "/icons/Lordicon Toolbox Hover Pinch.json"
+    lordIcon: "/icons/toolbox.json"
   },
   {
     title: "Gas Appliance Installation & Repairs",
@@ -87,7 +87,7 @@ const services: Service[] = [
     icon: "/icons/gas-appliance.svg",
     href: "/services/gas-fitting/gas-appliance-installation",
     category: "Gas appliance services",
-    lordIcon: "/icons/Wired Flat Gas Stove Icon.json"
+    lordIcon: "/icons/gas-stove.json"
   },
   {
     title: "Gas Cooktop Installation",
@@ -95,15 +95,15 @@ const services: Service[] = [
     icon: "/icons/gas-cooktop.svg",
     href: "/services/gas-fitting/gas-cooktop-installation",
     category: "Gas appliance services",
-    lordIcon: "/icons/Wired Flat Electric Stovetop Icon.json"
+    lordIcon: "/icons/electric-stovetop.json"
   },
   {
     title: "Gas BBQ Installation and Repair",
     description: "Professional installation and repair of gas BBQs, ensuring safe connections and optimal performance for outdoor cooking.",
     icon: "/icons/gas-bbq.svg",
-    href: "/services/gas-fitting/gas-appliance-installation",
+    href: "/services/gas-fitting/gas-bbq-installation",
     category: "Residential gas services",
-    lordIcon: "/icons/Wired Flat Backyard Hover Pinch.json"
+    lordIcon: "/icons/backyard.json"
   },
   {
     title: "Gas Hot Water System Installation and Maintenance",
@@ -111,7 +111,7 @@ const services: Service[] = [
     icon: "/icons/gas-hot-water.svg",
     href: "/services/gas-fitting/gas-hot-water-systems",
     category: "Gas appliance services",
-    lordIcon: "/icons/Burning Fuel Flame Icon.json"
+    lordIcon: "/icons/burning-fuel-flame.json"
   },
   {
     title: "Commercial Gas Appliance Installation",
@@ -119,7 +119,7 @@ const services: Service[] = [
     icon: "/icons/commercial-gas.svg",
     href: "/services/gas-fitting/gas-appliance-installation",
     category: "Commercial gas services",
-    lordIcon: "/icons/Wired Flat Bake Cooker Icon.json"
+    lordIcon: "/icons/bake-cooker.json"
   },
   {
     title: "Gas Compliance Certificates",
@@ -127,7 +127,7 @@ const services: Service[] = [
     icon: "/icons/gas-certificate.svg",
     href: "/services/gas-fitting/gas-compliance-certificates",
     category: "Gas safety and compliance",
-    lordIcon: "/icons/Lordicon Privacy Policy.json"
+    lordIcon: "/icons/privacy-policy.json"
   }
 ];
 

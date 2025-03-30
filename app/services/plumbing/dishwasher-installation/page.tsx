@@ -46,21 +46,21 @@ export default function DishwasherInstallationPage() {
         bentoGrid={[
           {
             type: "featured",
-            title: "Complete Dishwasher Installation Services",
-            description: "From freestanding to fully integrated models, our licensed plumbers provide <span class=\"font-bold text-white\">professional installation for all dishwasher types</span>. We handle every aspect from removal of your old unit to precise installation and testing of your new appliance with proper connections.",
-            icon: "/icons/Wired Flat Dishwasher Icon (1).json"
+            title: "Seamless Dishwasher Installation",
+            description: "Expert connection of your new dishwasher to water supply and drainage lines, ensuring leak-free operation.",
+            icon: "/icons/dishwasher.json"
           },
           {
             type: "standard",
             title: "Leak Prevention Technology",
             description: "Our specialized installation techniques and quality components ensure your dishwasher is connected securely with flood-safe hoses and proper seals to prevent leaks.",
-            icon: "/icons/Wired Flat Hose Icon.json"
+            icon: "/icons/hose.json"
           },
           {
             type: "standard",
             title: "Professional Setup",
             description: "Beyond just connecting pipes, we ensure proper leveling, door alignment, and complete testing to guarantee optimal dishwasher performance and longevity.",
-            icon: "/icons/Wired Flat 409 Tool Hover Oscillate.json"
+            icon: "/icons/tool.json"
           },
           {
             type: "list",
@@ -118,7 +118,7 @@ export default function DishwasherInstallationPage() {
               "Correct drainage setup to prevent backflow issues",
               "Complete testing and operation verification"
             ],
-            icon: "/icons/Wired Flat Dishwasher Icon (1).json"
+            icon: "/icons/dishwasher.json"
           },
           {
             title: "Kitchen Renovations",
@@ -130,7 +130,7 @@ export default function DishwasherInstallationPage() {
               "Adaptation to new plumbing configurations",
               "Alignment with countertops and adjacent cabinetry"
             ],
-            icon: "/icons/Flat Home Icon.json"
+            icon: "/icons/home.json"
           },
           {
             title: "Dishwasher Replacement & Upgrades",
@@ -142,7 +142,7 @@ export default function DishwasherInstallationPage() {
               "Installation of modern flood-safe hoses",
               "Update to comply with current plumbing codes"
             ],
-            icon: "/icons/Wired Flat Electric Stovetop Icon.json"
+            icon: "/icons/tool.json"
           }
         ]}
         whyChooseUs={[
@@ -176,12 +176,12 @@ export default function DishwasherInstallationPage() {
             description: "Our plumbers are fully licensed professionals with specific training in appliance installation, ensuring your dishwasher is connected in compliance with plumbing codes and manufacturer specifications."
           },
           {
-            icon: "/icons/Wired Flat Handshake Deal Icon.json",
+            icon: "/icons/handshake-deal.json",
             title: "Leak-Free Guarantee",
             description: "We stand behind our installations with a comprehensive leak-free guarantee. If your dishwasher develops any connection leaks related to our installation, we'll return to fix it at no cost."
           },
           {
-            icon: "/icons/Wired Flat Speed Hover Pinch.json",
+            icon: "/icons/speedometer.json",
             title: "Efficient Installation",
             description: "Most standard dishwasher installations can be completed in just 1-2 hours, allowing you to start enjoying your new appliance right away while ensuring no corners are cut."
           }

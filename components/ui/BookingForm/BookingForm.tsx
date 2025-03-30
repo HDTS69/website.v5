@@ -422,28 +422,66 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                             )}
                           </AnimatePresence>
                         </div>
-                        <div className="relative">
-                          <div className="relative" ref={timeRef}>
-                            <Dropdown
-                              value={formData.preferredTime}
-                              placeholder="Preferred Time"
-                              isOpen={showTime}
-                              onToggle={() => setShowTime(!showTime)}
-                            />
-                          </div>
+                        <div className="relative" ref={timeRef}>
+                          <Dropdown
+                            value={formData.preferredTime}
+                            placeholder="Preferred Time"
+                            isOpen={showTime}
+                            onToggle={() => setShowTime(!showTime)}
+                          />
+                          <AnimatePresence>
+                            {showTime && (
+                              <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="absolute z-20 mt-1 w-full rounded-md bg-gray-800 shadow-lg border border-gray-700 max-h-60 overflow-y-auto"
+                              >
+                                {PREFERRED_TIMES.map((time) => (
+                                  <button
+                                    key={time}
+                                    type="button"
+                                    onClick={() => handleDropdownSelection('preferredTime', time)}
+                                    className="block w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700"
+                                  >
+                                    {time}
+                                  </button>
+                                ))}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div className="relative">
-                          <div className="relative" ref={urgencyRef}>
-                            <Dropdown
-                              value={formData.urgency}
-                              placeholder="How Urgent Is This?"
-                              isOpen={showUrgency}
-                              onToggle={() => setShowUrgency(!showUrgency)}
-                            />
-                          </div>
+                        <div className="relative" ref={urgencyRef}>
+                          <Dropdown
+                            value={formData.urgency}
+                            placeholder="How Urgent Is This?"
+                            isOpen={showUrgency}
+                            onToggle={() => setShowUrgency(!showUrgency)}
+                          />
+                          <AnimatePresence>
+                            {showUrgency && (
+                              <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="absolute z-20 mt-1 w-full rounded-md bg-gray-800 shadow-lg border border-gray-700 max-h-60 overflow-y-auto"
+                              >
+                                {URGENCY_OPTIONS.map((urgency) => (
+                                  <button
+                                    key={urgency}
+                                    type="button"
+                                    onClick={() => handleDropdownSelection('urgency', urgency)}
+                                    className="block w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700"
+                                  >
+                                    {urgency}
+                                  </button>
+                                ))}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
                         </div>
                         <div className="relative">
                           <div className="relative" ref={dateRef}>

@@ -48,7 +48,7 @@ export default function ElectricEelPage() {
             type: "featured",
             title: "Specialized Electric Eel Technology",
             description: "Our professional-grade electric eel machines use <span class=\"font-bold text-white\">powerful rotating cables with specialized cutting heads</span> to effectively remove blockages while protecting your pipes. This mechanical solution cuts through tough obstructions that chemicals and DIY methods can't touch, including tree roots and solid debris.",
-            icon: "/icons/Wired Flat Electricity Icon.json"
+            icon: "/icons/electric-power.json"
           },
           {
             type: "standard",
@@ -60,7 +60,7 @@ export default function ElectricEelPage() {
             type: "standard",
             title: "Complete Blockage Solutions",
             description: "Beyond just punching through blockages, our electric eel service thoroughly breaks up and removes the obstruction to help prevent quick recurrence of clogs.",
-            icon: "/icons/Wired Flat Hose Icon.json"
+            icon: "/icons/hose.json"
           },
           {
             type: "list",
@@ -109,8 +109,8 @@ export default function ElectricEelPage() {
         ]}
         commonIssues={[
           {
-            title: "Stubborn Drain Blockages",
-            description: "When plungers, chemicals, or DIY methods fail to clear persistent blockages, electric eel service is often the most effective solution to restore proper flow.",
+            title: "🚨 Severe or Deep Blockages",
+            description: "When standard plunging or chemical cleaners fail, the electric eel can reach deep into pipes to clear major obstructions.",
             bullets: [
               "Powerful mechanical removal of blockages",
               "Effective on compacted debris and buildup",
@@ -118,11 +118,11 @@ export default function ElectricEelPage() {
               "Breaks apart tough blockages completely",
               "Handles pipes of various diameters"
             ],
-            icon: "/icons/Wired Flat Warning Icon (1).json"
+            icon: "/icons/alert-triangle.json"
           },
           {
-            title: "Tree Root Intrusions",
-            description: "Tree roots seeking moisture can infiltrate pipes through tiny cracks and grow into massive blockages that only professional equipment can clear effectively.",
+            title: "🌲 Tree Root Intrusion",
+            description: "The cutting heads can effectively chop through invasive tree roots that have entered the drain lines.",
             bullets: [
               "Specialized cutting heads for root removal",
               "Complete clearing of root masses",
@@ -130,11 +130,11 @@ export default function ElectricEelPage() {
               "Additional camera inspection available",
               "Preventative maintenance recommendations"
             ],
-            icon: "/icons/Forest Hover Pinch Icon.json"
+            icon: "/icons/forest.json"
           },
           {
-            title: "Recurring Blockages",
-            description: "If your drains keep clogging despite repeated attempts to clear them, our electric eel service can address the underlying obstruction causing the problem.",
+            title: "🔄 Recurring Clogs",
+            description: "If you experience frequent blockages, the electric eel can thoroughly clean the pipe walls to prevent future issues.",
             bullets: [
               "Thorough removal of buildup causing repeat clogs",
               "Identification of pipe issues contributing to blockages",
@@ -142,7 +142,7 @@ export default function ElectricEelPage() {
               "Optional camera inspection to identify hidden problems",
               "Professional advice on preventing future blockages"
             ],
-            icon: "/icons/Wired Flat Loop Icon.json"
+            icon: "/icons/tool.json"
           }
         ]}
         whyChooseUs={[
@@ -181,9 +181,9 @@ export default function ElectricEelPage() {
             description: "We take utmost care to protect your plumbing system while clearing blockages, using the appropriate equipment and techniques for your specific pipes."
           },
           {
-            icon: "/icons/Flat Magnifier Zoom Icon.json",
-            title: "Thorough Blockage Assessment",
-            description: "We don't just blindly run machines – we assess your blockage, select the right equipment, and verify successful clearing for complete satisfaction."
+            icon: "/icons/magnifier-zoom.json",
+            title: "Combined with CCTV Inspection",
+            description: "For complex issues, we often use CCTV inspection alongside the electric eel to <span class='font-bold text-white'>precisely locate and diagnose</span> the blockage."
           }
         ]}
       />

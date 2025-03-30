@@ -37,9 +37,9 @@ export default function GasLeakDetectionPage() {
         },
         {
           type: "standard",
-          title: "Same-Day Service",
-          description: "We prioritize gas leak detection calls and offer same-day service for your safety.",
-          icon: "/icons/Wired Flat Speed Hover Pinch.json"
+          title: "Fast & Accurate Detection",
+          description: "Using advanced equipment like electronic gas detectors and leak detection fluid to pinpoint leaks quickly and precisely.",
+          icon: "/icons/speedometer.json"
         },
         {
           type: "list",

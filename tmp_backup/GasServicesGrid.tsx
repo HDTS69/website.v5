@@ -45,7 +45,7 @@ const services: Service[] = [
     icon: "/icons/emergency-gas.svg",
     href: "/services/gas-fitting/emergency-gas-repairs",
     category: "Emergency gas services",
-    lordIcon: "/icons/Siren Hover Pinch Icon.json"
+    lordIcon: "/icons/siren.json"
   },
   {
     title: "Gas Leak Detection Service",
@@ -53,7 +53,7 @@ const services: Service[] = [
     icon: "/icons/gas-leak.svg",
     href: "/services/gas-fitting/gas-leak-detection",
     category: "Gas safety and compliance",
-    lordIcon: "/icons/Man Search Avatar Icon.json"
+    lordIcon: "/icons/magnifier-zoom.json"
   },
   {
     title: "Gas Line Inspections",
@@ -85,7 +85,7 @@ const services: Service[] = [
     icon: "/icons/gas-appliance.svg",
     href: "/services/gas-fitting/gas-appliance-installation-repairs",
     category: "Gas appliance services",
-    lordIcon: "/icons/Wired Flat Gas Stove Icon.json"
+    lordIcon: "/icons/gas-stove.json"
   },
   {
     title: "Gas Cooktop Installation",
@@ -93,7 +93,7 @@ const services: Service[] = [
     icon: "/icons/gas-cooktop.svg",
     href: "/services/gas-fitting/cooktop-installation",
     category: "Gas appliance services",
-    lordIcon: "/icons/Wired Flat Electric Stovetop Icon.json"
+    lordIcon: "/icons/gas-stove.json"
   },
   {
     title: "Gas BBQ Installation and Repair",
@@ -101,7 +101,7 @@ const services: Service[] = [
     icon: "/icons/gas-bbq.svg",
     href: "/services/gas-fitting/gas-bbq-installation",
     category: "Residential gas services",
-    lordIcon: "/icons/Wired Flat Backyard Hover Pinch.json"
+    lordIcon: "/icons/backyard.json"
   },
   {
     title: "Gas Hot Water System Installation and Maintenance",
@@ -109,7 +109,7 @@ const services: Service[] = [
     icon: "/icons/gas-hot-water.svg",
     href: "/services/gas-fitting/gas-hot-water-systems",
     category: "Gas appliance services",
-    lordIcon: "/icons/Burning Fuel Flame Icon.json"
+    lordIcon: "/icons/water-pipe.json"
   },
   {
     title: "Commercial Gas Appliance Installation",
@@ -125,7 +125,7 @@ const services: Service[] = [
     icon: "/icons/gas-certificate.svg",
     href: "/services/gas-fitting/gas-compliance-certificates",
     category: "Gas safety and compliance",
-    lordIcon: "/icons/Lordicon Privacy Policy.json"
+    lordIcon: "/icons/tool.json"
   }
 ];
 

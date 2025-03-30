@@ -33,13 +33,13 @@ export default function DrainCleaningPage() {
           type: "featured",
           title: "Advanced Drain Cleaning",
           description: "State-of-the-art equipment including CCTV cameras and high-pressure water jetters for thorough drain cleaning and inspection.",
-          icon: "/icons/Wired Flat Hose Icon.json"
+          icon: "/icons/hose.json"
         },
         {
           type: "standard",
           title: "24/7 Service",
           description: "Emergency drain cleaning available 24/7 to handle urgent blockages and prevent water damage.",
-          icon: "/icons/Siren Hover Pinch Icon.json"
+          icon: "/icons/siren.json"
         },
         {
           type: "list",
@@ -72,7 +72,7 @@ export default function DrainCleaningPage() {
             "Preventive treatments",
             "Pipe relining options"
           ],
-          icon: "/icons/Snake Hover Crawl Icon.json"
+          icon: "/icons/snake.json"
         },
         {
           title: "CCTV Inspection",
@@ -83,7 +83,7 @@ export default function DrainCleaningPage() {
             "Detailed reports",
             "Problem location"
           ],
-          icon: "/icons/Flat Camera Hover Flash.json"
+          icon: "/icons/camera.json"
         }
       ]}
       whyChooseUs={[
@@ -122,9 +122,9 @@ export default function DrainCleaningPage() {
           description: "We stand behind our work with a 100% satisfaction guarantee."
         },
         {
-          icon: "/icons/Wired Flat Speed Hover Pinch.json",
+          icon: "/icons/speedometer.json",
           title: "Fast Response",
-          description: "Quick response times and same-day service available."
+          description: "Quick arrival times to address your blocked drain promptly."
         }
       ]}
     />

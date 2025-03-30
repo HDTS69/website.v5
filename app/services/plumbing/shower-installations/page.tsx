@@ -53,15 +53,15 @@ export default function ShowerInstallationsPage() {
       ]}
       commonIssues={[
         {
-          title: "New Shower Installation",
-          description: "Complete installation of new showers including base, walls, screens, and all plumbing connections.",
+          title: "New Shower Installations",
+          description: "Professional installation of all types of showers, from standard enclosures to custom walk-in designs, ensuring perfect fit and function.",
           bullets: [
             "Professional waterproofing",
             "Expert tiling services",
             "Quality fixture installation",
             "Proper drainage setup"
           ],
-          icon: "/icons/Wired Flat Bathroom Shower Icon.json"
+          icon: "/icons/bathroom-shower.json"
         },
         {
           title: "Shower Replacement",

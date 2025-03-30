@@ -48,19 +48,19 @@ export default function LeakDetectionPage() {
             type: "featured",
             title: "Non-Invasive Leak Detection Technology",
             description: "Our specialized equipment locates hidden leaks <span class=\"font-bold text-white\">without destructive investigation</span>. Using advanced acoustic technology, thermal imaging, and pressure testing, we pinpoint leaks accurately before any excavation or wall removal begins.",
-            icon: "/icons/Flat Magnifier Zoom Icon.json"
+            icon: "/icons/magnifier-zoom.json"
           },
           {
             type: "standard",
             title: "Same-Day Emergency Service",
             description: "Water leaks can cause rapid damage. Our emergency leak detection teams are available 24/7 to locate and address urgent leak situations.",
-            icon: "/icons/Siren Hover Pinch Icon.json"
+            icon: "/icons/siren.json"
           },
           {
             type: "standard",
             title: "Comprehensive Detection",
             description: "We locate all types of leaks including concealed pipe leaks, slab leaks, underground water lines, and gas leaks with specialized equipment.",
-            icon: "/icons/Wired Flat Hose Icon.json"
+            icon: "/icons/hose.json"
           },
           {
             type: "list",
@@ -118,7 +118,7 @@ export default function LeakDetectionPage() {
               "Precision location minimizes necessary repair access",
               "Early detection prevents mold and structural damage"
             ],
-            icon: "/icons/Wired Flat Hose Icon.json"
+            icon: "/icons/hose.json"
           },
           {
             title: "Slab and Foundation Leaks",
@@ -142,7 +142,7 @@ export default function LeakDetectionPage() {
               "Detection of toilet, fixture, and irrigation leaks",
               "Water meter monitoring to confirm repair success"
             ],
-            icon: "/icons/Flat Price Tag Icon.json"
+            icon: "/icons/price-tag.json"
           }
         ]}
         whyChooseUs={[
@@ -171,17 +171,17 @@ export default function LeakDetectionPage() {
         ]}
         trustFactors={[
           {
-            icon: "/icons/Graduation Scroll Icon.json",
+            icon: "/icons/magnifier-zoom.json",
             title: "Certified Leak Specialists",
             description: "Our leak detection technicians hold specialized certifications in acoustic leak detection, thermal imaging, and non-destructive testing methods."
           },
           {
-            icon: "/icons/Flat Magnifier Zoom Icon.json",
+            icon: "/icons/magnifier-zoom.json",
             title: "Pinpoint Accuracy",
             description: "Our multi-method approach combines different technologies to confirm leak locations with exceptional precision, minimizing unnecessary excavation or wall opening."
           },
           {
-            icon: "/icons/Wired Flat Handshake Deal Icon.json",
+            icon: "/icons/handshake-deal.json",
             title: "Proven Success Rate",
             description: "With thousands of successful leak detections completed, our expertise has saved properties from extensive water damage and homeowners from excessive repair costs."
           }

@@ -48,19 +48,19 @@ export default function WaterPressurePage() {
             type: "featured",
             title: "Complete Pressure Management Solutions",
             description: "From comprehensive pressure testing to advanced regulation systems, we provide <span class=\"font-bold text-white\">tailored water pressure solutions</span> for every property. Our licensed plumbers optimize your system for perfect pressure at every tap, shower, and appliance.",
-            icon: "/icons/Wired Flat Hose Icon.json"
+            icon: "/icons/hose.json"
           },
           {
             type: "standard",
             title: "Pressure Boosting Systems",
             description: "Low pressure affecting your shower or multiple fixtures? Our pressure boosting solutions provide adequate flow even in multi-story homes or properties with supply challenges.",
-            icon: "/icons/Wired Flat Speed Hover Pinch.json"
+            icon: "/icons/speedometer.json"
           },
           {
             type: "standard",
             title: "Pressure Regulation",
             description: "Protect your plumbing from damaging high pressure with professional pressure reducing systems that provide optimal, consistent pressure throughout your home.",
-            icon: "/icons/Lordicon Interface Settings Hover Pinch.json"
+            icon: "/icons/interface-settings.json"
           },
           {
             type: "list",
@@ -118,7 +118,7 @@ export default function WaterPressurePage() {
               "Water main and service line evaluation",
               "Upgrading of undersized pipes that restrict flow"
             ],
-            icon: "/icons/Wired Flat Shower Icon.json"
+            icon: "/icons/shower.json"
           },
           {
             title: "Damaging High Water Pressure",
@@ -130,7 +130,7 @@ export default function WaterPressurePage() {
               "Elimination of water hammer and pipe noise",
               "Balanced pressure throughout your property"
             ],
-            icon: "/icons/Wired Flat Electric Power Hover Pinch.json"
+            icon: "/icons/speedometer.json"
           },
           {
             title: "Inconsistent or Fluctuating Pressure",
@@ -142,7 +142,7 @@ export default function WaterPressurePage() {
               "Detection of pressure-robbing leaks or restrictions",
               "Solutions for multi-level pressure consistency"
             ],
-            icon: "/icons/Wired Flat Wind Hover Pinch.json"
+            icon: "/icons/wind.json"
           }
         ]}
         whyChooseUs={[
@@ -171,9 +171,9 @@ export default function WaterPressurePage() {
         ]}
         trustFactors={[
           {
-            icon: "/icons/Flat Calculator Icon.json",
-            title: "Precise Pressure Assessment",
-            description: "Our digital pressure testing identifies exact pressure levels throughout your system, allowing us to implement precisely calibrated solutions."
+            icon: "/icons/calculator.json",
+            title: "Accurate Pressure Testing",
+            description: "We use specialized gauges to <span class='font-bold text-white'>accurately measure</span> your water pressure and identify deviations from the ideal range."
           },
           {
             icon: "/icons/Graduation Scroll Icon.json",
@@ -181,9 +181,9 @@ export default function WaterPressurePage() {
             description: "Our plumbers are specifically trained in water pressure diagnosis and regulation, with expertise in both residential and commercial pressure systems."
           },
           {
-            icon: "/icons/Wired Flat Handshake Deal Icon.json",
-            title: "Satisfaction Guaranteed",
-            description: "We guarantee measurable improvement in your water pressure issues, with solutions tailored to your specific property and water usage needs."
+            icon: "/icons/handshake-deal.json",
+            title: "Lasting Solutions",
+            description: "We don\'t just treat symptoms; we find the root cause to provide <span class='font-bold text-white'>long-term solutions</span> for consistent water pressure."
           }
         ]}
       />

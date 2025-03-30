@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} dark touch-auto overscroll-none`} suppressHydrationWarning>
       <head>
-        <style
+        {/* <style
           dangerouslySetInnerHTML={{
             __html: `
               :root {
@@ -54,7 +54,7 @@ export default function RootLayout({
               }
             `,
           }}
-        />
+        /> */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, minimum-scale=1.0, viewport-fit=cover" />
         
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />

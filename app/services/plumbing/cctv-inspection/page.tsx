@@ -46,19 +46,19 @@ export default function CCTVInspectionPage() {
             type: "featured",
             title: "Emergency CCTV Inspections Available",
             description: "Experiencing recurring blockages or slow drains? Our team is available 24/7 with <span class=\"font-bold text-white\">advanced CCTV equipment</span> to quickly identify and locate the exact cause of your drainage problems.",
-            icon: "/icons/Siren Hover Pinch Icon.json"
+            icon: "/icons/siren.json"
           },
           {
             type: "standard",
             title: "High-Definition Imaging",
             description: "Our state-of-the-art cameras provide crystal clear footage of your pipe interior, allowing us to spot even the smallest cracks, intrusions, or blockages.",
-            icon: "/icons/Flat Camera Hover Flash.json"
+            icon: "/icons/camera.json"
           },
           {
             type: "standard",
             title: "Transparent Pricing",
             description: "Clear, upfront quotes with no hidden fees. We explain all costs before starting work so you can make informed decisions.",
-            icon: "/icons/Wired Flat Handshake Deal Icon.json"
+            icon: "/icons/handshake-deal.json"
           },
           {
             type: "list",
@@ -116,7 +116,7 @@ export default function CCTVInspectionPage() {
               "Determines the most effective clearing method needed",
               "Helps prevent future blockages through targeted repairs"
             ],
-            icon: "/icons/Toilet Paper Icon.json"
+            icon: "/icons/tool.json"
           },
           {
             title: "Tree Root Intrusions",
@@ -128,7 +128,7 @@ export default function CCTVInspectionPage() {
               "Helps determine if pipe relining or replacement is needed",
               "Enables targeted root cutting without unnecessary excavation"
             ],
-            icon: "/icons/Wired Flat Backyard Hover Pinch.json"
+            icon: "/icons/backyard.json"
           },
           {
             title: "Pipe Damage & Structural Issues",
@@ -140,7 +140,7 @@ export default function CCTVInspectionPage() {
               "Detects corrosion and scale buildup inside pipes",
               "Shows improper installation issues like bellied pipes or incorrect slopes"
             ],
-            icon: "/icons/Wired Flat 409 Tool Hover Oscillate.json"
+            icon: "/icons/tool.json"
           }
         ]}
         whyChooseUs={[
@@ -169,19 +169,19 @@ export default function CCTVInspectionPage() {
         ]}
         trustFactors={[
           {
-            icon: "/icons/Wired Flat Speed Hover Pinch.json",
-            title: "Fast Response Times",
-            description: "Our technicians arrive promptly with all necessary equipment to perform thorough CCTV inspections when you need them most."
+            icon: "/icons/camera.json",
+            title: "Clear Visual Evidence",
+            description: "We provide you with the <span class='font-bold text-white'>video footage</span> of the inspection, so you see exactly what we see inside your pipes."
           },
           {
-            icon: "/icons/Wired Flat Handshake Deal Icon.json",
-            title: "Transparent Process",
-            description: "We explain our findings in clear terms and show you the actual footage, so you fully understand the condition of your pipes."
+            icon: "/icons/speedometer.json",
+            title: "Fast & Accurate Diagnosis",
+            description: "Our CCTV technology allows for <span class='font-bold text-white'>rapid identification</span> of issues, saving time and money on unnecessary digging."
           },
           {
-            icon: "/icons/Graduation Scroll Icon.json",
-            title: "Licensed Professionals",
-            description: "All our technicians are fully licensed and continuously trained on the latest CCTV inspection technology and techniques."
+            icon: "/icons/handshake-deal.json",
+            title: "Transparent Recommendations",
+            description: "Based on the inspection, we provide <span class='font-bold text-white'>clear, honest advice</span> on the best repair solutions for your specific situation."
           }
         ]}
       />

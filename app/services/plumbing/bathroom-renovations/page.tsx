@@ -48,19 +48,19 @@ export default function BathroomRenovationsPage() {
             type: "featured",
             title: "Full-Service Bathroom Renovations",
             description: "From initial concept to final touches, our team provides <span class=\"font-bold text-white\">end-to-end bathroom renovation solutions</span>. We handle all aspects including plumbing, waterproofing, tiling, fixture installation, and finishing details for a stress-free renovation experience.",
-            icon: "/icons/Wired Flat Bathroom Shower Icon.json"
+            icon: "/icons/bathroom-shower.json"
           },
           {
             type: "standard",
             title: "Expert Plumbing Integration",
             description: "Our licensed plumbers ensure all water and drainage systems are perfectly integrated into your new bathroom design, preventing future issues while maximizing functionality.",
-            icon: "/icons/Wired Flat Hose Icon.json"
+            icon: "/icons/hose.json"
           },
           {
             type: "standard",
             title: "Quality Materials & Fixtures",
             description: "We partner with premium suppliers to offer beautiful, durable fixtures and materials that enhance your bathroom's aesthetics and performance.",
-            icon: "/icons/Wired Flat Shower Icon.json"
+            icon: "/icons/shower.json"
           },
           {
             type: "list",
@@ -118,7 +118,7 @@ export default function BathroomRenovationsPage() {
               "Creation of additional storage options",
               "Improved accessibility and usability"
             ],
-            icon: "/icons/Flat Home Icon 3D Roll.json"
+            icon: "/icons/home.json"
           },
           {
             title: "Water Damage & Waterproofing Failures",
@@ -130,7 +130,7 @@ export default function BathroomRenovationsPage() {
               "High-quality tile installation with appropriate grout",
               "Moisture-resistant materials throughout"
             ],
-            icon: "/icons/Heavy Rain Icon.json"
+            icon: "/icons/heavy-rain.json"
           },
           {
             title: "Outdated Fixtures & Poor Functionality",
@@ -142,7 +142,7 @@ export default function BathroomRenovationsPage() {
               "Contemporary basins and bathtubs",
               "Stylish, functional accessories and hardware"
             ],
-            icon: "/icons/Wired Flat Sink Hover Pinch.json"
+            icon: "/icons/shower.json"
           }
         ]}
         whyChooseUs={[
@@ -176,7 +176,7 @@ export default function BathroomRenovationsPage() {
             description: "Our bathroom renovation team includes licensed plumbers, waterproofers, tilers, and electricians, ensuring all work meets or exceeds building codes and industry standards."
           },
           {
-            icon: "/icons/Wired Flat Speed Hover Pinch.json",
+            icon: "/icons/speedometer.json",
             title: "Efficient Project Timelines",
             description: "We understand bathroom renovations impact your daily life. Our efficient work scheduling and coordination minimize disruption while ensuring quality isn't compromised."
           },

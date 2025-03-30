@@ -12,6 +12,7 @@ interface Service {
   icon: string;
   href: string;
   lordIcon?: string;
+  category: string;
 }
 
 const services: Service[] = [
@@ -20,77 +21,88 @@ const services: Service[] = [
     description: "Comprehensive roof inspections to identify potential issues and maintenance needs.",
     icon: "/icons/placeholder.svg",
     href: "/services/roof-repairs/leak-investigation",
-    lordIcon: "/icons/Man Search Avatar Icon.json"
+    category: "Roof leak solutions",
+    lordIcon: "/icons/magnifier-zoom.json"
   },
   {
     title: "Roof Reports",
     description: "Detailed reports documenting roof condition, issues, and recommended solutions.",
     icon: "/icons/placeholder.svg",
     href: "/services/roof-repairs/roof-report",
-    lordIcon: "/icons/Lordicon Privacy Policy.json"
+    category: "Roof inspections",
+    lordIcon: "/icons/rules-book-guideline.json"
   },
   {
     title: "Roof Leak Detection",
     description: "Advanced leak detection services to identify and locate roof leaks with precision.",
     icon: "/icons/placeholder.svg",
     href: "/services/roof-repairs/leak-detection",
-    lordIcon: "/icons/Wired Flat Storm Hover Pinch (1).json"
+    category: "Roof leak solutions",
+    lordIcon: "/icons/magnifier-zoom.json"
   },
   {
     title: "Roof Repairs",
     description: "Expert repair services for all types of roof damage and wear.",
     icon: "/icons/placeholder.svg",
     href: "/services/roof-repairs/roof-maintenance",
-    lordIcon: "/icons/Lordicon Toolbox Hover Pinch.json"
+    category: "Preventative care",
+    lordIcon: "/icons/tool.json"
   },
   {
     title: "Roof Tile Repairs",
     description: "Specialized repair and replacement services for damaged roof tiles.",
     icon: "/icons/placeholder.svg",
     href: "/services/roof-repairs/roof-tile-repair",
-    lordIcon: "/icons/Flat Roof Rain Icon.json"
+    category: "Roof leak solutions",
+    lordIcon: "/icons/roof-rain.json"
   },
   {
     title: "Metal Roofing",
     description: "Professional metal roofing installation, repairs, and maintenance services.",
     icon: "/icons/placeholder.svg",
     href: "/services/roof-repairs/metal-roofing",
-    lordIcon: "/icons/Wired Flat Nails Icon.json"
+    category: "Roof leak solutions",
+    lordIcon: "/icons/nails.json"
   },
   {
     title: "Roof Cleaning",
     description: "Professional roof cleaning services to maintain appearance and prevent damage.",
     icon: "/icons/placeholder.svg",
     href: "/services/roof-repairs/roof-maintenance",
-    lordIcon: "/icons/Broom Hover Pinch Icon.json"
+    category: "Preventative care",
+    lordIcon: "/icons/broom.json"
   },
   {
     title: "Roof Ventilation",
     description: "Expert installation and maintenance of roof ventilation systems.",
     icon: "/icons/placeholder.svg",
     href: "/services/roof-repairs/roof-ventilation",
-    lordIcon: "/icons/Wired Flat Wind Hover Pinch.json"
+    category: "Roof health",
+    lordIcon: "/icons/wind.json"
   },
   {
     title: "Gutter Cleaning",
     description: "Thorough cleaning of gutters and downpipes to prevent blockages and water damage.",
     icon: "/icons/placeholder.svg",
     href: "/services/roof-repairs/gutters-downpipes",
-    lordIcon: "/icons/Eco Hover Spin Leaves Icon.json"
+    category: "Roof leak solutions",
+    lordIcon: "/icons/cleaning-surface.json"
   },
   {
     title: "Gutter & Downpipes",
     description: "Installation and repair services for gutters and downpipes.",
     icon: "/icons/placeholder.svg",
     href: "/services/roof-repairs/gutters-downpipes",
-    lordIcon: "/icons/Flat Home Icon 3D Roll.json"
+    category: "Roof leak solutions",
+    lordIcon: "/icons/hose.json"
   },
   {
     title: "Gutter Guard Installation",
     description: "Professional installation of gutter guards to prevent debris buildup.",
     icon: "/icons/placeholder.svg",
     href: "/services/roof-repairs/gutter-guard",
-    lordIcon: "/icons/Shield Security Icon.json"
+    category: "Gutter solutions",
+    lordIcon: "/icons/shield-security.json"
   }
 ];
 

@@ -48,19 +48,19 @@ export default function HydroJetCleaningPage() {
             type: "featured",
             title: "Advanced Hydro Jetting Technology",
             description: "Our state-of-the-art hydro jetting equipment delivers <span class=\"font-bold text-white\">up to 5,000 PSI of water pressure</span> through specialized nozzles, powerful enough to cut through tree roots, remove years of buildup, and blast away the toughest blockages while thoroughly cleaning your entire pipe system.",
-            icon: "/icons/Wired Flat Hose Icon.json"
+            icon: "/icons/hose.json"
           },
           {
             type: "standard",
             title: "Total Pipe Restoration",
             description: "Unlike snaking or chemicals that only create a hole through blockages, hydro jetting thoroughly cleans the entire pipe diameter, restoring optimal flow capacity.",
-            icon: "/icons/Wired Flat Hose Icon.json"
+            icon: "/icons/water-pipe.json"
           },
           {
             type: "standard",
             title: "Environmental Solution",
             description: "Our chemical-free approach uses only high-pressure water to clean pipes, making it environmentally friendly while delivering superior results.",
-            icon: "/icons/Eco Hover Spin Leaves Icon.json"
+            icon: "/icons/eco-leaves.json"
           },
           {
             type: "list",
@@ -118,7 +118,7 @@ export default function HydroJetCleaningPage() {
               "Powerful cleaning of pipe bends and traps",
               "Thorough cleaning of main sewer lines"
             ],
-            icon: "/icons/Wired Flat Cleaning Surface Hover Pinch.json"
+            icon: "/icons/cleaning-surface.json"
           },
           {
             title: "Grease & Fat Buildup",
@@ -130,7 +130,7 @@ export default function HydroJetCleaningPage() {
               "Elimination of odors caused by decomposing grease",
               "Preventative maintenance for commercial kitchens"
             ],
-            icon: "/icons/Wired Flat Dishwasher Icon (1).json"
+            icon: "/icons/shower.json"
           },
           {
             title: "Tree Root Intrusions",
@@ -142,7 +142,7 @@ export default function HydroJetCleaningPage() {
               "Prevention of recurring root growth",
               "Protection of pipe integrity from root damage"
             ],
-            icon: "/icons/Forest Hover Pinch Icon.json"
+            icon: "/icons/forest.json"
           }
         ]}
         whyChooseUs={[
@@ -176,14 +176,14 @@ export default function HydroJetCleaningPage() {
             description: "Our technicians are specially trained in hydro jetting techniques with certification in proper pressure settings for different pipe materials and blockage types."
           },
           {
-            icon: "/icons/Flat Magnifier Zoom Icon.json",
-            title: "Camera Verified Results",
-            description: "We use drain cameras before and after hydro jetting to assess your pipes, identify the exact problems, and verify complete removal of blockages and debris."
+            icon: "/icons/magnifier-zoom.json",
+            title: "Pre-Jetting Camera Inspection",
+            description: "We often use CCTV inspection first to <span class='font-bold text-white'>assess pipe condition</span> and confirm hydro-jetting is the appropriate solution."
           },
           {
-            icon: "/icons/Wired Flat Handshake Deal Icon.json",
-            title: "Flow Restoration Guarantee",
-            description: "We stand behind our hydro jetting service with a comprehensive guarantee that your pipes will be thoroughly cleaned with optimal flow restored."
+            icon: "/icons/handshake-deal.json",
+            title: "Experienced Technicians",
+            description: "Our trained plumbers operate hydro-jetting equipment safely and effectively, <span class='font-bold text-white'>adjusting pressure</span> based on pipe type and condition."
           }
         ]}
       />

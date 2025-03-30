@@ -1,11 +1,11 @@
 'use client';
 
-import { forwardRef, useImperativeHandle, useRef, useEffect, useState } from 'react';
+import { forwardRef, useImperativeHandle, useRef, useEffect } from 'react';
 
 // Declare the lord-icon-element module
-declare module 'lord-icon-element' {
-  export function defineElement(): void;
-}
+// declare module 'lord-icon-element' {
+//   export function defineElement(): void;
+// }
 
 interface LordIconProps {
   src: string;
@@ -38,56 +38,55 @@ const LordIcon = forwardRef<LordIconRef, LordIconProps>(({
 }, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const elementRef = useRef<HTMLElement | null>(null);
-  const [isLordIconLoaded, setIsLordIconLoaded] = useState(false);
-
-  // Effect to load lord-icon element script
-  useEffect(() => {
-    const loadLordIconElement = async () => {
-      try {
-        if (typeof window !== 'undefined' && !customElements.get('lord-icon')) {
-          // Import the module properly without assigning to the module variable
-          const lordIconModule = await import('lord-icon-element');
-          if (lordIconModule.defineElement) {
-            lordIconModule.defineElement();
-          }
-          setIsLordIconLoaded(true);
-        } else {
-          setIsLordIconLoaded(true);
-        }
-      } catch (error) {
-        console.error('Error loading lord-icon element:', error);
-      }
-    };
-
-    loadLordIconElement();
-  }, []);
 
   // Effect to create the lord-icon element
   useEffect(() => {
-    if (!containerRef.current || !isLordIconLoaded) return;
-    
-    containerRef.current.innerHTML = '';
-    
-    try {
-      const iconElement = document.createElement('lord-icon');
-      iconElement.setAttribute('src', src);
-      iconElement.setAttribute('trigger', forceTrigger ? 'loop' : trigger);
-      iconElement.style.width = `${size}px`;
-      iconElement.style.height = `${size}px`;
+    let attempts = 0;
+    const maxAttempts = 10; // Try for ~1 second (10 * 100ms)
+    const interval = 100; // Check every 100ms
+
+    function tryCreateIcon() {
+      if (!containerRef.current) return; // Container removed?
+
+      // Check if the custom element is defined before creating it
+      if (!containerRef.current || typeof customElements === 'undefined' || !customElements.get('lord-icon')) {
+        attempts++;
+        if (attempts < maxAttempts) {
+          // console.warn(`lord-icon not defined, attempt ${attempts}. Retrying in ${interval}ms...`);
+          setTimeout(tryCreateIcon, interval);
+        } else {
+          console.error('Lord Icon custom element not loaded after maximum attempts');
+        }
+        return; 
+      } 
+
+      // --- Element is defined, proceed with creation ---
       
-      const colorValue = `primary:${colors.primary}${colors.secondary ? `,secondary:${colors.secondary}` : ''}`;
-      iconElement.setAttribute('colors', colorValue);
+      containerRef.current.innerHTML = ''; // Clear previous instance if any
       
-      if (className) {
-        iconElement.classList.add(...className.split(' '));
+      try {
+        const iconElement = document.createElement('lord-icon');
+        iconElement.setAttribute('src', src);
+        iconElement.setAttribute('trigger', forceTrigger ? 'loop' : trigger);
+        iconElement.style.width = `${size}px`;
+        iconElement.style.height = `${size}px`;
+        
+        const colorValue = `primary:${colors.primary}${colors.secondary ? `,secondary:${colors.secondary}` : ''}`;
+        iconElement.setAttribute('colors', colorValue);
+        
+        if (className) {
+          iconElement.classList.add(...className.split(' '));
+        }
+        
+        containerRef.current.appendChild(iconElement);
+        elementRef.current = iconElement;
+      } catch (error) { // Keep the try-catch for robustness
+        console.error('Error creating lord-icon element:', error);
       }
-      
-      containerRef.current.appendChild(iconElement);
-      elementRef.current = iconElement;
-    } catch (error) {
-      console.error('Error creating lord-icon element:', error);
-    }
-  }, [src, colors, size, className, trigger, forceTrigger, isLordIconLoaded]);
+    } 
+    
+    tryCreateIcon(); // Initial attempt
+  }, [src, colors, size, className, trigger, forceTrigger]);
 
   // Expose methods via ref
   useImperativeHandle(ref, () => ({
@@ -101,14 +100,15 @@ const LordIcon = forwardRef<LordIconRef, LordIconProps>(({
 
   // Handle forceTrigger changes
   useEffect(() => {
-    if (elementRef.current && isLordIconLoaded) {
+    // Ensure the custom element exists before trying to set attributes
+    if (elementRef.current && customElements.get('lord-icon')) {
       if (forceTrigger) {
         elementRef.current.setAttribute('trigger', 'loop');
       } else {
         elementRef.current.setAttribute('trigger', trigger);
       }
     }
-  }, [forceTrigger, trigger, isLordIconLoaded]);
+  }, [forceTrigger, trigger]);
 
   return <div ref={containerRef} className={className} />;
 });

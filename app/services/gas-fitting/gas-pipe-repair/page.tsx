@@ -33,13 +33,19 @@ export default function GasPipeRepairPage() {
           type: "featured",
           title: "Professional Gas Pipe Repairs",
           description: "Our experienced gas fitters use industry-best practices and quality materials for all gas pipe repairs and replacements.",
-          icon: "/icons/Wired Flat Hose Icon.json"
+          icon: "/icons/tool.json"
         },
         {
           type: "standard",
-          title: "Emergency Service",
-          description: "Fast response for urgent gas pipe repairs to ensure your safety.",
-          icon: "/icons/Siren Hover Pinch Icon.json"
+          title: "Leak Detection Expertise",
+          description: "Advanced technology and techniques to accurately find and pinpoint gas leaks, even minor ones, minimizing risk.",
+          icon: "/icons/magnifier-zoom.json"
+        },
+        {
+          type: "standard",
+          title: "Compliance & Safety",
+          description: "All repairs are performed to meet strict Australian safety standards and regulations, ensuring compliance and peace of mind.",
+          icon: "/icons/Shield Security Icon.json"
         },
         {
           type: "list",
@@ -61,7 +67,7 @@ export default function GasPipeRepairPage() {
             "Joint failures",
             "Installation defects"
           ],
-          icon: "/icons/Wired Flat Warning Icon.json"
+          icon: "/icons/alert-triangle.json"
         },
         {
           title: "System Issues",
@@ -83,21 +89,21 @@ export default function GasPipeRepairPage() {
             "Compliance upgrades",
             "Capacity increases"
           ],
-          icon: "/icons/Wired Flat Speed Hover Pinch.json"
+          icon: "/icons/speedometer.json"
         }
       ]}
       whyChooseUs={[
         {
-          title: "Expert Gas Fitters",
-          description: "Our team specializes in all types of gas pipe repairs and replacements."
+          title: "Licensed Gas Fitters",
+          description: "All work is performed by certified and experienced gas fitting professionals."
         },
         {
           title: "Quality Materials",
-          description: "We use only high-quality, approved materials for all repairs."
+          description: "Only the best materials used for lasting repairs."
         },
         {
-          title: "Guaranteed Work",
-          description: "All our gas pipe repairs come with a satisfaction guarantee."
+          title: "Upfront Pricing",
+          description: "Transparent quotes provided before any repair work begins."
         }
       ]}
       paymentOptions={[
@@ -117,12 +123,12 @@ export default function GasPipeRepairPage() {
           description: "Fully licensed and insured gas fitting professionals."
         },
         {
-          icon: "/icons/Wired Flat Hose Icon.json",
+          icon: "/icons/speedometer.json",
           title: "Quality Materials",
           description: "Only the best materials used for lasting repairs."
         },
         {
-          icon: "/icons/Star Flat Smile Icon.json",
+          icon: "/icons/handshake-deal.json",
           title: "Satisfaction Guaranteed",
           description: "We stand behind all our repair work."
         }

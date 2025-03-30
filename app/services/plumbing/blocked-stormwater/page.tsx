@@ -52,15 +52,15 @@ export default function BlockedStormwaterPage() {
           },
           {
             type: "standard",
-            title: "Advanced Clearing Equipment",
-            description: "We use high-pressure water jetters, electric eels, and specialized tools to completely remove even the most stubborn blockages from your stormwater system.",
-            icon: "/icons/Wired Flat Hose Icon.json"
+            title: "Hydro Jetting Power",
+            description: "Our high-pressure water jetters effectively blast through stubborn blockages like compacted leaves, silt, and debris.",
+            icon: "/icons/hose.json"
           },
           {
             type: "standard",
-            title: "Preventative Solutions",
-            description: "Beyond clearing your current blockage, we provide recommendations and solutions to prevent future stormwater clogs, such as gutter guards and regular maintenance services.",
-            icon: "/icons/Shield Security Icon.json"
+            title: "Preventative Maintenance",
+            description: "Regular stormwater drain cleaning prevents costly flooding and water damage during heavy rain events.",
+            icon: "/icons/calendar.json"
           },
           {
             type: "list",
@@ -126,11 +126,10 @@ export default function BlockedStormwaterPage() {
             bullets: [
               "Complete removal of leaf matter",
               "Clearing of compacted debris",
-              "Gutter and downpipe cleaning",
-              "Drain pit emptying",
-              "Preventative maintenance scheduling"
+              "Gutter cleaning and downpipe clearing",
+              "Drain camera inspections to identify underlying issues"
             ],
-            icon: "/icons/Wired Flat Cleaning Surface Hover Pinch.json"
+            icon: "/icons/cleaning-surface.json"
           },
           {
             title: "Silt & Soil Accumulation",

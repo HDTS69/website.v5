@@ -32,8 +32,8 @@ export default function EmergencyGasRepairsPage() {
         {
           type: "featured",
           title: "24/7 Emergency Gas Service",
-          description: "Our emergency gas repair team is available around the clock to respond to any gas-related emergency. We arrive quickly with all necessary equipment to secure your safety.",
-          icon: "/icons/Siren Hover Pinch Icon.json"
+          description: "Immediate response for gas leaks, appliance failures, and any urgent gas-related safety concerns, available day and night.",
+          icon: "/icons/siren.json"
         },
         {
           type: "standard",
@@ -83,7 +83,7 @@ export default function EmergencyGasRepairsPage() {
             "Appliance disconnection",
             "System restoration"
           ],
-          icon: "/icons/Wired Flat Speed Hover Pinch.json"
+          icon: "/icons/speedometer.json"
         }
       ]}
       whyChooseUs={[
@@ -92,8 +92,8 @@ export default function EmergencyGasRepairsPage() {
           description: "Our emergency team is ready to respond any time, day or night."
         },
         {
-          title: "Fast Response Times",
-          description: "We prioritize gas emergencies and aim to arrive within 60 minutes."
+          title: "Fast Response Time",
+          description: "We prioritize emergency calls for rapid dispatch."
         },
         {
           title: "Licensed Professionals",
@@ -122,7 +122,7 @@ export default function EmergencyGasRepairsPage() {
           description: "Consistently rated 5 stars for our emergency gas repair service."
         },
         {
-          icon: "/icons/Wired Flat Speed Hover Pinch.json",
+          icon: "/icons/speedometer.json",
           title: "Rapid Response",
           description: "Quick response times to minimize risk and ensure your safety."
         }

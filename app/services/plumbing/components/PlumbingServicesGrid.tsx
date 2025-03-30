@@ -30,7 +30,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/emergency",
     category: "Emergency plumbing",
-    lordIcon: "/icons/Siren Hover Pinch Icon.json"
+    lordIcon: "/icons/siren.json"
   },
   {
     title: "Blocked Drains",
@@ -38,7 +38,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/drain-cleaning",
     category: "Drainage solutions",
-    lordIcon: "/icons/Flat Road Close Icon (1).json"
+    lordIcon: "/icons/road-close.json"
   },
   {
     title: "Blocked Toilet",
@@ -46,7 +46,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/toilet-repairs",
     category: "Bathroom plumbing",
-    lordIcon: "/icons/Toilet Paper Icon.json"
+    lordIcon: "/icons/toilet-paper.json"
   },
   {
     title: "CCTV Camera Inspection",
@@ -54,7 +54,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/drain-cleaning",
     category: "Drainage solutions",
-    lordIcon: "/icons/Flat Camera Hover Flash.json"
+    lordIcon: "/icons/camera.json"
   },
   {
     title: "Drain Excavation",
@@ -62,7 +62,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/drain-cleaning",
     category: "Drainage solutions",
-    lordIcon: "/icons/Digger Hover Icon (1).json"
+    lordIcon: "/icons/digger.json"
   },
   {
     title: "Hydro Jet Drain Cleaning",
@@ -70,7 +70,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/drain-cleaning",
     category: "Drainage solutions",
-    lordIcon: "/icons/Wired Flat Hose Icon.json"
+    lordIcon: "/icons/hose.json"
   },
   {
     title: "Blocked Stormwater Drains",
@@ -78,7 +78,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/sewer-stormwater",
     category: "Drainage solutions",
-    lordIcon: "/icons/Heavy Rain Icon.json"
+    lordIcon: "/icons/heavy-rain.json"
   },
   {
     title: "Sewer and Stormwater Services",
@@ -86,7 +86,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/sewer-stormwater",
     category: "Drainage solutions",
-    lordIcon: "/icons/Wired Flat Saw Pinch Icon.json"
+    lordIcon: "/icons/saw.json"
   },
   {
     title: "Pipe Relining",
@@ -94,7 +94,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/pipe-repairs",
     category: "General plumbing",
-    lordIcon: "/icons/Flat Shovel Icon.json"
+    lordIcon: "/icons/saw.json"
   },
   {
     title: "Electric Eel Drain Clearing",
@@ -102,7 +102,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/drain-cleaning",
     category: "Drainage solutions",
-    lordIcon: "/icons/Snake Hover Crawl Icon.json"
+    lordIcon: "/icons/electric-power.json"
   },
   {
     title: "Leak Detection",
@@ -110,7 +110,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/leak-detection",
     category: "General plumbing",
-    lordIcon: "/icons/Man Search Avatar Icon.json"
+    lordIcon: "/icons/magnifier-zoom.json"
   },
   {
     title: "Leaking Taps",
@@ -118,7 +118,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/fixtures-taps",
     category: "General plumbing",
-    lordIcon: "/icons/Wired Flat Sink Hover Pinch.json"
+    lordIcon: "/icons/water-pipe.json"
   },
   {
     title: "Water Pressure Solutions",
@@ -126,7 +126,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/water-pressure",
     category: "General plumbing",
-    lordIcon: "/icons/Wired Flat Shower Icon.json"
+    lordIcon: "/icons/speedometer.json"
   },
   {
     title: "Hot Water Systems",
@@ -134,7 +134,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/hot-water-systems",
     category: "Hot water services",
-    lordIcon: "/icons/Flat Thermometer Icon.json"
+    lordIcon: "/icons/water-pipe.json"
   },
   {
     title: "Dishwasher Installations",
@@ -142,7 +142,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/fixtures-taps",
     category: "General plumbing",
-    lordIcon: "/icons/Wired Flat Dishwasher Icon (1).json"
+    lordIcon: "/icons/dishwasher.json"
   },
   {
     title: "Fridge Plumbing",
@@ -150,7 +150,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/fixtures-taps",
     category: "General plumbing",
-    lordIcon: "/icons/Flat Fridge Icon.json"
+    lordIcon: "/icons/fridge.json"
   },
   {
     title: "Pipe Installations & Repairs",
@@ -158,7 +158,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/pipe-repairs",
     category: "General plumbing",
-    lordIcon: "/icons/Wired Flat Hose Icon.json"
+    lordIcon: "/icons/hose.json"
   },
   {
     title: "Toilet Installations & Repairs",
@@ -166,7 +166,7 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/toilet-repairs",
     category: "Bathroom plumbing",
-    lordIcon: "/icons/Toilet Bowl Icon.json"
+    lordIcon: "/icons/toilet-bowl.json"
   },
   {
     title: "Bathroom Renovations",
@@ -174,15 +174,15 @@ const services: Service[] = [
     icon: "/icons/placeholder.svg",
     href: "/services/plumbing/bathroom-renovations",
     category: "Bathroom plumbing",
-    lordIcon: "/icons/Toilet Room Icon.json"
+    lordIcon: "/icons/bathroom-shower.json"
   },
   {
     title: "Shower Repair and Installations",
     description: "Expert shower repairs and installations including leak fixes and complete shower replacements.",
     icon: "/icons/placeholder.svg",
-    href: "/services/plumbing/fixtures-taps",
+    href: "/services/plumbing/shower-installations",
     category: "Bathroom plumbing",
-    lordIcon: "/icons/Wired Flat Bathroom Shower Icon.json"
+    lordIcon: "/icons/bathroom-shower.json"
   }
 ];
 
