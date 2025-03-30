@@ -153,6 +153,38 @@ export function Hero() {
                 </AnimatedButton>
               </div>
             )}
+            
+            {/* MOBILE: Guarantee Badges with Floating Animation */}
+            <div className="flex md:hidden justify-center items-center gap-3 mt-8 w-full opacity-0 animate-mobile-fade-up animation-delay-800">
+              {[ /* Array of badge data */
+                { src: "/Gold Badges/Lifetime Labour Guarantee Badge Mar 30 2025_result.webp", alt: "Lifetime Labour Guarantee" },
+                { src: "/Gold Badges/Lifetime Labour Guarantee Badge Mar 30 2025 (1)_result.webp", alt: "Satisfaction Guarantee" },
+                { src: "/Gold Badges/Lifetime Guarantee Badge Design Mar 30 2025_result.webp", alt: "Lifetime Guarantee Badge Design" }
+              ].map((badge, index) => (
+                <motion.div
+                  key={badge.src}
+                  animate={{
+                    y: ["0%", "-5%", "0%"], // Move up and down
+                  }}
+                  transition={{
+                    duration: 2.5, 
+                    repeat: Infinity,
+                    repeatType: "mirror",
+                    ease: "easeInOut",
+                    delay: index * 0.3 // Stagger start times slightly
+                  }}
+                >
+                  <Image 
+                    src={badge.src}
+                    alt={badge.alt}
+                    width={64} // Mobile size
+                    height={64} 
+                    className="object-contain"
+                    loading="lazy"
+                  />
+                </motion.div>
+              ))}
+            </div>
           </div>
 
           {/* Booking Form - Conditional rendering */}

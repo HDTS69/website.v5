@@ -12,6 +12,7 @@ import { OurProcess } from '@/components/ui/OurProcess';
 import { FoundersMessage } from '@/components/ui/FoundersMessage';
 import type { Metadata } from 'next';
 import { ClientOnly } from '@/components/ui/ClientOnly';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Brisbane 24/7 Emergency Repairs & Installations',

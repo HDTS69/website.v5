@@ -457,7 +457,8 @@ export function Navigation({ items, actionItems = [], className }: BaseNavigatio
           className={cn(
             "fixed bottom-6 right-6 z-[100] w-14 h-14 rounded-full shadow-lg",
             "flex items-center justify-center bg-[#00E6CA] text-black",
-            "transform transition-transform active:scale-95"
+            "transform transition-transform active:scale-95",
+            "md:hidden"
           )}
           aria-label={showFullMenu ? "Close navigation menu" : "Open navigation menu"}
         >

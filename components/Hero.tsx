@@ -167,6 +167,38 @@ export function Hero() {
             >
               <GoogleReviews />
             </div>
+            
+            {/* DESKTOP: Guarantee Badges with Floating Animation */}
+            <div className="hidden md:flex justify-center items-center gap-4 mt-6 w-full">
+              {[ /* Array of badge data */
+                { src: "/Gold Badges/Lifetime Labour Guarantee Badge Mar 30 2025_result.webp", alt: "Lifetime Labour Guarantee" },
+                { src: "/Gold Badges/Lifetime Labour Guarantee Badge Mar 30 2025 (1)_result.webp", alt: "Satisfaction Guarantee" },
+                { src: "/Gold Badges/Lifetime Guarantee Badge Design Mar 30 2025_result.webp", alt: "Lifetime Guarantee Badge Design" }
+              ].map((badge, index) => (
+                <motion.div
+                  key={badge.src}
+                  animate={{
+                    y: ["0%", "-5%", "0%"], // Move up and down
+                  }}
+                  transition={{
+                    duration: 2.5, // Slower animation duration
+                    repeat: Infinity,
+                    repeatType: "mirror", // Smooth back and forth
+                    ease: "easeInOut",
+                    delay: index * 0.3 // Stagger start times slightly
+                  }}
+                >
+                  <Image 
+                    src={badge.src}
+                    alt={badge.alt}
+                    width={80} 
+                    height={80}
+                    className="object-contain"
+                    loading="lazy"
+                  />
+                </motion.div>
+              ))}
+            </div>
           </div>
 
           {/* Booking Form */}
