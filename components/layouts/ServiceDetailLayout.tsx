@@ -200,7 +200,7 @@ export function ServiceDetailLayout({
 
         {/* === Hero Section === */} 
         {heroData && (
-          <BackgroundWrapper className="relative mt-40 pt-4 sm:pt-20 md:pt-24 lg:pt-28 pb-16">
+          <BackgroundWrapper className="relative mt-20 pt-4 sm:pt-12 md:pt-16 lg:pt-20 pb-16">
             <div className="container mx-auto px-4">
               <div className="flex justify-center items-center">
                 <div className="max-w-4xl text-center">
@@ -260,6 +260,74 @@ export function ServiceDetailLayout({
                     >
                       Call Now
                     </AnimatedBookNowButton>
+                  </motion.div>
+
+                  {/* Golden Badges */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    className="flex justify-center gap-8 mt-8"
+                  >
+                    <motion.div
+                      animate={{
+                        y: [0, -8, 0],
+                      }}
+                      transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                      className="w-24 h-24"
+                    >
+                      <Image
+                        src="/Gold Badges/Lifetime Labour Guarantee Badge Mar 30 2025_result.webp"
+                        alt="Lifetime Labour Guarantee"
+                        width={96}
+                        height={96}
+                        className="w-full h-full object-contain"
+                      />
+                    </motion.div>
+                    <motion.div
+                      animate={{
+                        y: [0, -8, 0],
+                      }}
+                      transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: 1.3,
+                      }}
+                      className="w-24 h-24"
+                    >
+                      <Image
+                        src="/Gold Badges/Lifetime Labour Guarantee Badge Mar 30 2025 (1)_result.webp"
+                        alt="100% Satisfaction Guarantee"
+                        width={96}
+                        height={96}
+                        className="w-full h-full object-contain"
+                      />
+                    </motion.div>
+                    <motion.div
+                      animate={{
+                        y: [0, -8, 0],
+                      }}
+                      transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: 2.6,
+                      }}
+                      className="w-24 h-24"
+                    >
+                      <Image
+                        src="/Gold Badges/Lifetime Guarantee Badge Design Mar 30 2025_result.webp"
+                        alt="Fixed Right Guarantee"
+                        width={96}
+                        height={96}
+                        className="w-full h-full object-contain"
+                      />
+                    </motion.div>
                   </motion.div>
                 </div>
               </div>

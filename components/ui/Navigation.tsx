@@ -1,16 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { NavBar } from '@/components/navigation/DesktopNavigation';
-import { MobileNavigation } from '@/components/mobile';
-import { Building2, Home, MapPin, Wrench, Calendar, Phone, Info } from 'lucide-react';
+import { Building2, Home, MapPin, Wrench, Calendar, Phone } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
-import type { NavItem, BaseNavigationProps } from '@/types/navigation/types';
-import { motion } from 'framer-motion';
 
-// Default navigation items if none are provided
-const defaultNavigationItems: NavItem[] = [
+const navigationItems = [
   {
     name: 'Home',
     url: '/',
@@ -25,68 +20,94 @@ const defaultNavigationItems: NavItem[] = [
         name: 'Plumbing',
         url: '/services/plumbing',
         subItems: [
-          { name: 'Emergency Plumbing', url: '/services/plumbing/emergency' },
+          { name: 'Leaking Taps', url: '/services/plumbing/leaking-taps' },
+          { name: 'Cistern Plumbing', url: '/services/plumbing/cistern-plumbing' },
+          { name: 'Burst Pipes', url: '/services/plumbing/burst-pipes' },
           { name: 'Blocked Drains', url: '/services/plumbing/blocked-drains' },
-          { name: 'Leak Detection', url: '/services/plumbing/leak-detection' },
-          { name: 'Toilet Repairs', url: '/services/plumbing/toilet-repairs' },
-          { name: 'Tap Repairs', url: '/services/plumbing/tap-repairs' },
-          { name: 'Pipe Repairs', url: '/services/plumbing/pipe-repairs' },
+          { name: 'Blocked Toilets', url: '/services/plumbing/blocked-toilets' },
+          { name: 'Water Filters', url: '/services/plumbing/water-filters' },
+          { name: 'Toilet Installation', url: '/services/plumbing/toilet-installation' },
           { name: 'Bathroom Renovations', url: '/services/plumbing/bathroom-renovations' },
+          { name: 'Kitchen Plumbing', url: '/services/plumbing/kitchen-plumbing' },
+          { name: 'Emergency Plumbing', url: '/services/plumbing/emergency' },
         ],
       },
       {
-        name: 'Gas',
+        name: 'Gas Fitting',
         url: '/services/gas-fitting',
         subItems: [
-          { name: 'Emergency Gas Repairs', url: '/services/gas-fitting/emergency-gas-repairs' },
-          { name: 'Gas Leak Detection Service', url: '/services/gas-fitting/gas-leak-detection' },
-          { name: 'Gas Line Inspections', url: '/services/gas-fitting/gas-line-inspections' },
-          { name: 'Gas Pipe Repair', url: '/services/gas-fitting/gas-pipe-repair' },
-          { name: 'Gas System Installation', url: '/services/gas-fitting/gas-system-installation' },
-          { name: 'Gas Appliance Installation & Repairs', url: '/services/gas-fitting/gas-appliance-installation' },
+          { name: 'Gas BBQ Installation', url: '/services/gas-fitting/gas-bbq-installation' },
+          { name: 'Gas Hot Water Systems', url: '/services/gas-fitting/gas-hot-water-systems' },
+          { name: 'Gas Leak Repairs', url: '/services/gas-fitting/gas-leak-repairs' },
           { name: 'Gas Cooktop Installation', url: '/services/gas-fitting/gas-cooktop-installation' },
-          { name: 'Gas BBQ Installation and Repair', url: '/services/gas-fitting/gas-bbq-installation' },
-          { name: 'Gas Hot Water System Installation and Maintenance', url: '/services/gas-fitting/gas-hot-water-installation' },
-          { name: 'Commercial Gas Appliance Installation', url: '/services/gas-fitting/commercial-gas-installation' },
-          { name: 'Gas Compliance Certificates', url: '/services/gas-fitting/gas-compliance-certificates' },
+          { name: 'Gas Heater Installation', url: '/services/gas-fitting/gas-heater-installation' },
+          { name: 'Gas Safety Inspections', url: '/services/gas-fitting/gas-safety-inspections' },
+          { name: 'Gas Line Installation', url: '/services/gas-fitting/gas-line-installation' },
+          { name: 'Emergency Gas Services', url: '/services/gas-fitting/emergency' },
         ],
       },
       {
         name: 'Hot Water Systems',
-        url: '/services/hot-water',
+        url: '/services/hot-water-systems',
         subItems: [
-          { name: 'Gas Hot Water', url: '/services/hot-water/gas' },
-          { name: 'Electric Hot Water', url: '/services/hot-water/electric' },
-          { name: 'Heat Pump', url: '/services/hot-water/heat-pump' },
-          { name: 'Solar Hot Water', url: '/services/hot-water/solar' },
-          { name: 'Hot Water Repairs', url: '/services/hot-water/repairs' },
-          { name: 'Hot Water Replacement', url: '/services/hot-water/replacement' },
-          { name: 'Hot Water System Buyers Guide', url: '/services/hot-water/buyers-guide' },
+          { name: 'Heat Pump Hot Water', url: '/services/hot-water-systems/heat-pump' },
+          { name: 'Gas Hot Water Systems', url: '/services/hot-water-systems/gas' },
+          { name: 'Solar Hot Water Systems', url: '/services/hot-water-systems/solar' },
+          { name: 'Electric Hot Water Systems', url: '/services/hot-water-systems/electric' },
+          { name: 'Hot Water Repairs', url: '/services/hot-water-systems/repairs' },
+          { name: 'Hot Water Installation', url: '/services/hot-water-systems/installation' },
+          { name: 'Emergency Hot Water', url: '/services/hot-water-systems/emergency' },
+          { name: 'System Replacement', url: '/services/hot-water-systems/replacement' },
         ],
       },
       {
-        name: 'Roofing',
-        url: '/services/roofing',
+        name: 'Roof Repairs',
+        url: '/services/roof-repairs',
         subItems: [
-          { name: 'Roof Repairs', url: '/services/roofing/repairs' },
-          { name: 'Gutter Cleaning', url: '/services/roofing/gutter-cleaning' },
-          { name: 'Roof Restoration', url: '/services/roofing/restoration' },
-          { name: 'Roof Replacement', url: '/services/roofing/replacement' },
-          { name: 'Leak Investigation', url: '/services/roofing/leak-investigation' },
-          { name: 'Gutter & Downpipes', url: '/services/roofing/gutter-downpipes' },
+          { name: 'Leak Investigation', url: '/services/roof-repairs/leak-investigation' },
+          { name: 'Roof Report', url: '/services/roof-repairs/roof-report' },
+          { name: 'Roof Tile Repair', url: '/services/roof-repairs/tile-repair' },
+          { name: 'Metal Roof Repairs', url: '/services/roof-repairs/metal-roof-repairs' },
+          { name: 'Gutter Replacement', url: '/services/roof-repairs/gutter-replacement' },
+          { name: 'Downpipe Installation', url: '/services/roof-repairs/downpipe-installation' },
+          { name: 'Storm Damage Repair', url: '/services/roof-repairs/storm-damage' },
+          { name: 'Emergency Roof Repairs', url: '/services/roof-repairs/emergency' },
         ],
       },
       {
         name: 'Air Conditioning',
         url: '/services/air-conditioning',
         subItems: [
-          { name: 'AC Installation', url: '/services/air-conditioning/installation' },
+          { name: 'Split System Installation', url: '/services/air-conditioning/split-system-installation' },
           { name: 'AC Repairs', url: '/services/air-conditioning/repairs' },
+          { name: 'AC Diagnostics', url: '/services/air-conditioning/diagnostics' },
           { name: 'AC Maintenance', url: '/services/air-conditioning/maintenance' },
-          { name: 'Split System Installation', url: '/services/air-conditioning/split-system' },
-          { name: 'Ducted Systems', url: '/services/air-conditioning/ducted-systems' },
+          { name: 'Ducted Air Installation', url: '/services/air-conditioning/ducted-installation' },
+          { name: 'Commercial AC Services', url: '/services/air-conditioning/commercial' },
+          { name: 'AC Replacement', url: '/services/air-conditioning/replacement' },
+          { name: 'Emergency AC Repairs', url: '/services/air-conditioning/emergency' },
         ],
       },
+    ],
+  },
+  {
+    name: 'Brands',
+    url: '/brands',
+    icon: Building2,
+    dropdownItems: [
+      { name: 'Aquamax', url: '/brands/aquamax' },
+      { name: 'Bosch', url: '/brands/bosch' },
+      { name: 'Chromagen', url: '/brands/chromagen' },
+      { name: 'Dux', url: '/brands/dux' },
+      { name: 'Everhot', url: '/brands/everhot' },
+      { name: 'Rheem', url: '/brands/rheem' },
+      { name: 'Rinnai', url: '/brands/rinnai' },
+      { name: 'Stiebel Eltron', url: '/brands/stiebel-eltron' },
+      { name: 'Saxon', url: '/brands/saxon' },
+      { name: 'Thermann', url: '/brands/thermann' },
+      { name: 'Vulcan', url: '/brands/vulcan' },
+      { name: 'Mitsubishi', url: '/brands/mitsubishi' },
+      { name: 'Caroma', url: '/brands/caroma' },
     ],
   },
   {
@@ -98,11 +119,11 @@ const defaultNavigationItems: NavItem[] = [
         name: 'Brisbane',
         url: '/locations/brisbane',
         subItems: [
-          { name: 'North Brisbane', url: '/locations/brisbane/north' },
+          { name: 'Brisbane CBD', url: '/locations/brisbane/cbd' },
           { name: 'South Brisbane', url: '/locations/brisbane/south' },
+          { name: 'North Brisbane', url: '/locations/brisbane/north' },
           { name: 'East Brisbane', url: '/locations/brisbane/east' },
           { name: 'West Brisbane', url: '/locations/brisbane/west' },
-          { name: 'Brisbane CBD', url: '/locations/brisbane/cbd' },
         ],
       },
       {
@@ -114,15 +135,6 @@ const defaultNavigationItems: NavItem[] = [
           { name: 'Caboolture', url: '/locations/moreton-bay/caboolture' },
           { name: 'Strathpine', url: '/locations/moreton-bay/strathpine' },
           { name: 'Deception Bay', url: '/locations/moreton-bay/deception-bay' },
-        ],
-      },
-      {
-        name: 'Gold Coast',
-        url: '/locations/gold-coast',
-        subItems: [
-          { name: 'North Gold Coast', url: '/locations/gold-coast/north' },
-          { name: 'Central Gold Coast', url: '/locations/gold-coast/central' },
-          { name: 'South Gold Coast', url: '/locations/gold-coast/south' },
         ],
       },
       {
@@ -147,68 +159,12 @@ const defaultNavigationItems: NavItem[] = [
           { name: 'Daisy Hill', url: '/locations/logan/daisy-hill' },
         ],
       },
-      {
-        name: 'Sunshine Coast',
-        url: '/locations/sunshine-coast',
-        subItems: [
-          { name: 'Maroochydore', url: '/locations/sunshine-coast/maroochydore' },
-          { name: 'Caloundra', url: '/locations/sunshine-coast/caloundra' },
-          { name: 'Noosa', url: '/locations/sunshine-coast/noosa' },
-        ],
-      },
-    ],
-  },
-  {
-    name: 'Brands',
-    url: '/brands',
-    icon: Building2,
-    dropdownItems: [
-      {
-        name: 'Plumbing Brands',
-        url: '/brands/plumbing',
-        subItems: [
-          { name: 'Caroma', url: '/brands/caroma' },
-          { name: 'Reece', url: '/brands/reece' },
-          { name: 'Methven', url: '/brands/methven' },
-          { name: 'Dorf', url: '/brands/dorf' },
-          { name: 'Grohe', url: '/brands/grohe' },
-        ],
-      },
-      {
-        name: 'Hot Water Brands',
-        url: '/brands/hot-water',
-        subItems: [
-          { name: 'Rheem', url: '/brands/rheem' },
-          { name: 'Rinnai', url: '/brands/rinnai' },
-          { name: 'Bosch', url: '/brands/bosch' },
-          { name: 'Dux', url: '/brands/dux' },
-          { name: 'Thermann', url: '/brands/thermann' },
-          { name: 'Vulcan', url: '/brands/vulcan' },
-          { name: 'Aquamax', url: '/brands/aquamax' },
-          { name: 'Chromagen', url: '/brands/chromagen' },
-          { name: 'Everhot', url: '/brands/everhot' },
-          { name: 'Stiebel Eltron', url: '/brands/stiebel-eltron' },
-        ],
-      },
-      {
-        name: 'Air Conditioning Brands',
-        url: '/brands/air-conditioning',
-        subItems: [
-          { name: 'Daikin', url: '/brands/daikin' },
-          { name: 'Fujitsu', url: '/brands/fujitsu' },
-          { name: 'Mitsubishi', url: '/brands/mitsubishi' },
-          { name: 'Samsung', url: '/brands/samsung' },
-          { name: 'Gree', url: '/brands/gree' },
-          { name: 'Panasonic', url: '/brands/panasonic' },
-          { name: 'LG', url: '/brands/lg' },
-        ],
-      },
     ],
   },
   {
     name: 'About Us',
     url: '/about',
-    icon: Info,
+    icon: Building2,
     dropdownItems: [
       {
         name: 'Our Story',
@@ -216,43 +172,21 @@ const defaultNavigationItems: NavItem[] = [
       },
       {
         name: 'Our Team',
-        url: '/about/team',
+        url: '/about/our-team',
       },
       {
-        name: 'Testimonials',
-        url: '/about/testimonials',
+        name: 'Careers',
+        url: '/about/careers',
       },
       {
-        name: 'Blog',
-        url: '/about/blog',
+        name: 'Contact Us',
+        url: '/about/contact',
       },
     ],
   },
   {
     name: 'Call Now',
-    url: 'tel:1300420911',
-    icon: Phone,
-  },
-  {
-    name: 'Book Online',
-    url: '#book',
-    icon: Calendar,
-    isHighlighted: true,
-    onClick: (e: React.MouseEvent) => {
-      e.preventDefault();
-      const bookingForm = document.getElementById('book');
-      if (bookingForm) {
-        bookingForm.scrollIntoView({ behavior: 'smooth' });
-      }
-    },
-  },
-];
-
-// Default action items if none are provided
-const defaultActionItems: NavItem[] = [
-  {
-    name: 'Call Now',
-    url: 'tel:1300420911',
+    url: 'tel:1300000000',
     icon: Phone,
   },
   {
@@ -270,21 +204,19 @@ const defaultActionItems: NavItem[] = [
   },
 ];
 
-export function Navigation({ items: propItems = defaultNavigationItems, actionItems = [] }: BaseNavigationProps) {
+export function Navigation() {
   const pathname = usePathname();
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+  
+  // Separate navigation items from action items
+  const mainNavItems = navigationItems.filter(item => 
+    item.name !== 'Call Now' && item.name !== 'Book Online' && (pathname === '/' ? item.name !== 'Home' : true)
+  );
+  
+  const actionButtons = navigationItems.filter(item => 
+    item.name === 'Call Now' || item.name === 'Book Online'
+  );
   
   return (
-    <>
-      {/* Desktop Navigation */}
-      <div className="hidden md:block touch-auto" style={{ touchAction: 'manipulation' }}>
-        <NavBar items={propItems} actionItems={actionItems} />
-      </div>
-      
-      {/* Mobile Navigation */}
-      <div className="block md:hidden touch-auto" style={{ touchAction: 'manipulation' }}>
-        <MobileNavigation items={propItems} actionItems={actionItems} />
-      </div>
-    </>
+    <NavBar items={mainNavItems} actionItems={actionButtons} />
   );
 } 

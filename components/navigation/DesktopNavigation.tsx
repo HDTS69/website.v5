@@ -8,7 +8,7 @@ import { LucideIcon, ChevronDown, ChevronRight, Phone, Calendar } from "lucide-r
 import { cn, scrollToElement } from "@/lib/utils"
 import type { NavItem, ActionItem } from "@/types/navigation/types"
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import Logo from '@/components/ui/logo'
+import DesktopLogo from '@/components/ui/DesktopLogo'
 
 interface NavBarProps {
   items: NavItem[]
@@ -95,6 +95,7 @@ export function NavBar({ items, actionItems = [], className }: NavBarProps) {
       setActiveTab(item.name)
       setOpenDropdown(item.name)
       setIsAnyItemActive(true)
+      setHoverIntent(item.name)
     }
   }
 
@@ -109,7 +110,8 @@ export function NavBar({ items, actionItems = [], className }: NavBarProps) {
         setOpenDropdown(null)
         setOpenSubDropdown(null)
         setIsAnyItemActive(false)
-      }, 200) // Increased from 150ms to 200ms for better usability
+        setHoverIntent(null)
+      }, 100) // Reduced from 200ms to 100ms for faster response
       setCloseTimeout(timeout)
     }
   }
@@ -139,7 +141,6 @@ export function NavBar({ items, actionItems = [], className }: NavBarProps) {
 
   const handleSubItemHover = (itemName: string) => {
     if (!isMobile) {
-      // Clear any existing close timeout
       if (closeTimeout) {
         clearTimeout(closeTimeout)
         setCloseTimeout(null)
@@ -178,8 +179,9 @@ export function NavBar({ items, actionItems = [], className }: NavBarProps) {
         className
       )}
       style={{
-        top: `${Math.max(80 - scrollPosition, 10)}px`,
-        touchAction: 'manipulation'
+        top: `${Math.max(96 - scrollPosition, 10)}px`,
+        touchAction: 'manipulation',
+        zIndex: 9999 // Ensure navbar stays on top
       }}
     >
       <motion.div 
@@ -207,13 +209,12 @@ export function NavBar({ items, actionItems = [], className }: NavBarProps) {
           )}
           onMouseLeave={handleNavLeave}
         >
-          {/* Navigation Items - exclude About Us */}
+          {/* Navigation Items */}
           <div 
             className="flex items-center gap-3"
             onMouseLeave={handleNavLeave}
           >
             {items
-              .filter(item => item.name !== "About Us")
               .filter(item => !(isHomePage && item.name === "Home"))
               .map((item) => (
                 <NavItem
@@ -239,33 +240,8 @@ export function NavBar({ items, actionItems = [], className }: NavBarProps) {
               ))}
           </div>
 
-          {/* Right side with About Us and Action Buttons */}
+          {/* Action Buttons */}
           <div className="flex items-center gap-3">
-            {/* About Us Item */}
-            {items.filter(item => item.name === "About Us").map((item) => (
-              <NavItem
-                key={item.name}
-                item={item}
-                isActive={activeTab === item.name}
-                isAnyItemActive={isAnyItemActive}
-                openDropdown={openDropdown}
-                openSubDropdown={openSubDropdown}
-                isMobile={isMobile}
-                onItemClick={handleItemClick}
-                onItemHover={handleItemHover}
-                onItemLeave={handleItemLeave}
-                onSubItemClick={handleSubItemClick}
-                onSubItemHover={handleSubItemHover}
-                onDropdownHover={handleDropdownHover}
-                setOpenDropdown={setOpenDropdown}
-                setOpenSubDropdown={setOpenSubDropdown}
-                linkBaseClasses={linkBaseClasses}
-                linkActiveClasses={linkActiveClasses}
-                linkHighlightedClasses={linkHighlightedClasses}
-              />
-            ))}
-
-            {/* Action Buttons */}
             {actionItems.length > 0 && (
               <div className="flex items-center gap-3">
                 {actionItems.map((item) => (

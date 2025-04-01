@@ -93,7 +93,7 @@ const blockedDrainsData: ServiceDetailLayoutProps = {
   },
   introData: {
     title: "Understanding Blocked Drains",
-    subtitle: "Causes and Solutions", // Added subtitle for context
+    subtitle: " Causes and Solutions", // Added space before "Causes"
     paragraph1: 
       `Blocked drains are a common household nuisance, often caused by build-ups of <span class="font-bold text-white">grease, hair, food particles, tree roots</span>, or foreign objects. Ignoring a blockage can lead to more severe problems like <span class="font-bold text-white">pipe damage, water leaks</span>, and hygiene issues. Prompt action is key.`,
     paragraph2:
@@ -149,7 +149,7 @@ const blockedDrainsData: ServiceDetailLayoutProps = {
   ctaData: {
     title: "Need Drain Cleaning Urgently?",
     description: `Don't wait for a small blockage to become a <span class="font-bold text-white">major problem</span>. Call HD Trade Services now for <span class="font-bold text-white">fast and reliable</span> drain cleaning assistance.`,
-    buttonText: "Call 1300 HD TRADE",
+    buttonText: "Call Now",
     buttonLink: "tel:1300HDTRADE",
   },
   trustData: {
