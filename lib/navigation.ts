@@ -29,7 +29,7 @@ export const navigationItems: NavItem[] = [
           { name: "Leak Detection", url: "/services/plumbing/leak-detection" },
           { name: "Leaking Taps", url: "/services/plumbing/leaking-taps" },
           { name: "Water Pressure Solutions", url: "/services/plumbing/water-pressure" },
-          { name: "Hot Water Systems", url: "/services/plumbing/hot-water" },
+          { name: "Hot Water Systems", url: "/services/hot-water-systems" },
           { name: "Dishwasher Installations", url: "/services/plumbing/dishwasher-installation" },
           { name: "Fridge Plumbing", url: "/services/plumbing/fridge-plumbing" },
           { name: "Pipe Installations & Repairs", url: "/services/plumbing/pipe-installations" },
@@ -88,15 +88,16 @@ export const navigationItems: NavItem[] = [
       },
       {
         name: "Hot Water Systems",
-        url: "/services/hot-water",
+        url: "/services/hot-water-systems",
         subItems: [
-          { name: "Gas Hot Water", url: "/services/hot-water/gas" },
-          { name: "Electric Hot Water", url: "/services/hot-water/electric" },
-          { name: "Heat Pump", url: "/services/hot-water/heat-pump" },
-          { name: "Solar Hot Water", url: "/services/hot-water/solar" },
-          { name: "Hot Water Repairs", url: "/services/hot-water/repairs" },
-          { name: "Hot Water Installation", url: "/services/hot-water/installation" },
-          { name: "Hot Water System Buyers Guide", url: "/services/hot-water/buyers-guide" },
+          { name: "Gas Hot Water", url: "/services/hot-water-systems/gas" },
+          { name: "Electric Hot Water", url: "/services/hot-water-systems/electric" },
+          { name: "Heat Pump", url: "/services/hot-water-systems/heat-pump" },
+          { name: "Solar Hot Water", url: "/services/hot-water-systems/solar" },
+          { name: "Hot Water Repairs", url: "/services/hot-water-systems/repairs" },
+          { name: "Hot Water Installation", url: "/services/hot-water-systems/installation" },
+          { name: "Hot Water System Replacement", url: "/services/hot-water-systems/replacement" },
+          { name: "Buyers Guide", url: "/services/hot-water-systems/maintenance" }
         ]
       }
     ]

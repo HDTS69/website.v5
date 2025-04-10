@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { FaTools, FaCheckCircle } from 'react-icons/fa';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
+import Header from '@/components/ui/header';
+import Footer from '@/components/ui/footer';
 
 export const metadata: Metadata = {
   title: 'Air Conditioning System Optimization Brisbane | AC Performance Tuning',
@@ -168,5 +170,11 @@ export default function ACOptimizationPage() {
     }
   };
 
-  return <ServiceDetailLayout {...pageData} />;
+  return (
+    <>
+      <Header />
+      <ServiceDetailLayout {...pageData} />
+      <Footer />
+    </>
+  );
 } 

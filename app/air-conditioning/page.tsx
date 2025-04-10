@@ -4,6 +4,8 @@ import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 import { FaTools } from 'react-icons/fa';
 import Link from 'next/link';
+import Header from '@/components/ui/header';
+import Footer from '@/components/ui/footer';
 
 export default function AirConditioningPage() {
   const pageData = {
@@ -196,5 +198,11 @@ export default function AirConditioningPage() {
     }
   };
 
-  return <ServiceDetailLayout {...pageData} />;
+  return (
+    <>
+      <Header />
+      <ServiceDetailLayout {...pageData} />
+      <Footer />
+    </>
+  );
 } 

@@ -5,4 +5,5 @@ export const ICON_PATHS = {
   STAR_SMILE: '/icons/star-smile.json',
   LICENSE_BADGE: '/icons/license-badge.json',
   TOOLS_WRENCH: '/icons/tools-wrench.json',
+  SHIELD_CHECK: '/icons/shield-check.json'
 } as const; 
