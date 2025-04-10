@@ -1,11 +1,21 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
 import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 import { FaTools } from 'react-icons/fa';
+import { CONTACT_PHONE, ICON_PATHS } from '@/config/constants';
+
+// Validate icon paths at build time
+const validateIconPath = (path: string): string => {
+  if (!Object.values(ICON_PATHS).includes(path)) {
+    console.warn(`Warning: Icon path ${path} not found in constants`);
+  }
+  return path;
+};
 
 export default function RoofRepairsPage() {
   return (
@@ -21,9 +31,12 @@ export default function RoofRepairsPage() {
         heroData={{
           title: "Roof Repairs",
           subtitle: "Expert Repair Service",
-          description: `Our team provides <span class="font-bold text-white">professional roof repair services</span> with guaranteed results. We ensure <span class="font-bold text-white">lasting and effective</span> repair solutions.`,
+          description: {
+            text: "Our team provides professional roof repair services with guaranteed results. We ensure lasting and effective repair solutions.",
+            highlights: ["professional roof repair services", "lasting and effective"]
+          },
           bookOnlineLink: "#book",
-          callNowLink: "tel:1300HDTRADE"
+          callNowLink: `tel:${CONTACT_PHONE}`
         }}
         bentoGridData={{
           title: "Why Choose",
@@ -32,19 +45,19 @@ export default function RoofRepairsPage() {
             {
               type: 'featured',
               title: 'Professional Service',
-              icon: '/icons/professional.json',
+              icon: validateIconPath(ICON_PATHS.WRENCH_TOOL),
               description: 'Our experienced team delivers high-quality roof repairs with attention to detail and safety.'
             },
             {
               type: 'standard',
               title: 'Quality Service',
-              icon: '/icons/quality.json',
+              icon: validateIconPath(ICON_PATHS.STAR_SMILE),
               description: 'We use professional-grade materials and techniques for lasting repairs.'
             },
             {
               type: 'standard',
               title: 'Repair Services',
-              icon: '/icons/repair.json',
+              icon: '/icons/tools-wrench.json',
               description: 'Comprehensive repair services for all types of roof damage and issues.'
             },
             {
@@ -62,9 +75,19 @@ export default function RoofRepairsPage() {
               title: 'Flexible Payments',
               paymentItems: [
                 {
-                  title: 'Multiple Options',
-                  description: 'Various payment methods available',
-                  icons: <Image src="/icons/payment-options.svg" alt="Payment Options" width={32} height={32} />
+                  title: 'Buy Now, Pay Later',
+                  description: 'Split your payments with ease',
+                  icons: <PaymentIcons type="bnpl" />
+                },
+                {
+                  title: 'Secure Payments',
+                  description: 'All major cards accepted',
+                  icons: <PaymentIcons type="cards" />
+                },
+                {
+                  title: 'Quick Tap & Go',
+                  description: 'Fast, contactless convenience',
+                  icons: <PaymentIcons type="tap" />
                 }
               ]
             },
@@ -139,17 +162,17 @@ export default function RoofRepairsPage() {
           subtitle: 'Trust the Experts',
           factors: [
             {
-              icon: '/icons/license.json',
+              icon: '/icons/license-badge.json',
               title: 'Licensed Team',
               description: 'Our roofers are fully licensed and insured'
             },
             {
-              icon: '/icons/experience.json',
+              icon: '/icons/wrench-tool.json',
               title: 'Experienced',
               description: 'Years of professional repair experience'
             },
             {
-              icon: '/icons/guarantee.json',
+              icon: '/icons/star-smile.json',
               title: 'Guaranteed',
               description: 'Satisfaction guaranteed on all repairs'
             }

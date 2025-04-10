@@ -94,10 +94,15 @@ function BackgroundWrapper({
 
 // --- SECTION PROP INTERFACES --- 
 
+interface HeroDescription {
+  text: string;
+  highlights: string[];
+}
+
 interface HeroProps {
   title: string;
   subtitle: string;
-  description: string; // HTML content allowed
+  description: string | HeroDescription; // Support both string and structured format
   bookOnlineLink?: string;
   callNowLink?: string;
 }
@@ -369,135 +374,24 @@ export function ServiceDetailLayout({
 
         {/* === Hero Section === */} 
         {heroData && (
-          <BackgroundWrapper className="relative mt-20 pt-4 sm:pt-12 md:pt-16 lg:pt-20 pb-16">
+          <BackgroundWrapper className="py-12 sm:py-16 md:py-20">
             <div className="container mx-auto px-4">
-              <div className="flex justify-center items-center">
-                <div className="max-w-4xl text-center">
-                  <motion.h1 
-                    className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 relative tracking-tight leading-none flex flex-col items-center"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <span className="whitespace-nowrap">{heroData.title}</span>
-                    <span className="text-[0.7em] text-gray-300 font-normal mt-2">{heroData.subtitle}</span>
-                    {/* Underline Animation */}
-                    <motion.div 
-                      className="absolute -bottom-3 sm:-bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"
-                      initial={{ scaleX: 0, opacity: 0 }}
-                      animate={{ scaleX: 1, opacity: [0, 1, 1, 0.8] }}
-                      transition={{ duration: 1.5, opacity: { times: [0, 0.3, 0.7, 1], duration: 1.5 }, ease: "easeOut" }}
-                      style={{ transformOrigin: "center" }}
-                    />
-                  </motion.h1>
-                  
-                  {/* Use heroData props */} 
-                  <motion.p 
-                    className="text-base sm:text-lg text-gray-300 mb-6 max-w-2xl mx-auto mt-4 sm:mt-0"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
-                    dangerouslySetInnerHTML={{ __html: heroData.description }}
-                  />
-                  
-                  <motion.div 
-                    className="mb-8 sm:mb-6"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.15 }}
-                  >
-                    <GoogleReviews />
-                  </motion.div>
-                  
-                  {/* Use heroData props */} 
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="flex flex-row justify-center gap-3 md:gap-4 hero-buttons-container mx-auto max-w-md"
-                  >
-                    <AnimatedBookNowButton 
-                      href={heroData.bookOnlineLink || "#book"} 
-                      className="book-online-btn bg-[#00E6CA] text-white"
-                    >
-                      Book Online
-                    </AnimatedBookNowButton>
-                    <AnimatedBookNowButton 
-                      href={heroData.callNowLink || "tel:1300HDTRADE"} 
-                      className="call-now-btn bg-white text-[#00E6CA]"
-                    >
-                      Call Now
-                    </AnimatedBookNowButton>
-                  </motion.div>
-
-                  {/* Golden Badges */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    className="flex justify-center gap-8 mt-8"
-                  >
-                    <motion.div
-                      animate={{
-                        y: [0, -8, 0],
-                      }}
-                      transition={{
-                        duration: 4,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                      className="w-24 h-24"
-                    >
-                      <Image
-                        src="/Gold Badges/Lifetime Labour Guarantee Badge Mar 30 2025_result.webp"
-                        alt="Lifetime Labour Guarantee"
-                        width={96}
-                        height={96}
-                        className="w-full h-full object-contain"
-                      />
-                    </motion.div>
-                    <motion.div
-                      animate={{
-                        y: [0, -8, 0],
-                      }}
-                      transition={{
-                        duration: 4,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 1.3,
-                      }}
-                      className="w-24 h-24"
-                    >
-                      <Image
-                        src="/Gold Badges/Lifetime Labour Guarantee Badge Mar 30 2025 (1)_result.webp"
-                        alt="100% Satisfaction Guarantee"
-                        width={96}
-                        height={96}
-                        className="w-full h-full object-contain"
-                      />
-                    </motion.div>
-                    <motion.div
-                      animate={{
-                        y: [0, -8, 0],
-                      }}
-                      transition={{
-                        duration: 4,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 2.6,
-                      }}
-                      className="w-24 h-24"
-                    >
-                      <Image
-                        src="/Gold Badges/Lifetime Guarantee Badge Design Mar 30 2025_result.webp"
-                        alt="Fixed Right Guarantee"
-                        width={96}
-                        height={96}
-                        className="w-full h-full object-contain"
-                      />
-                    </motion.div>
-                  </motion.div>
-                </div>
+              <div className="max-w-4xl">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">{heroData.title}</h1>
+                <h2 className="text-2xl sm:text-3xl text-[#00E6CA] font-medium mb-6">{heroData.subtitle}</h2>
+                {typeof heroData.description === 'string' ? (
+                  <div className="text-lg sm:text-xl text-gray-300" dangerouslySetInnerHTML={{ __html: heroData.description }} />
+                ) : (
+                  <div className="text-lg sm:text-xl text-gray-300">
+                    {(heroData.description as HeroDescription).text.split(
+                      new RegExp(`(${(heroData.description as HeroDescription).highlights.join('|')})`, 'g')
+                    ).map((part, index) => (
+                      (heroData.description as HeroDescription).highlights.includes(part) ? (
+                        <span key={index} className="font-bold text-white">{part}</span>
+                      ) : part
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </BackgroundWrapper>
