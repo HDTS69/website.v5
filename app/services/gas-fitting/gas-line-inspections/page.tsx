@@ -1,132 +1,178 @@
 'use client';
 
-import ServiceDetailLayout from '@/components/layouts/ServiceDetailLayout';
+import React from 'react';
+import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
+import { ServiceSchema } from '@/components/ui/ServiceSchema';
+import Header from '@/components/ui/header';
+import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function GasLineInspectionsPage() {
   return (
-    <ServiceDetailLayout
-      title="Gas Line Inspections"
-      subtitle="Professional Gas Line Safety Inspections"
-      description="HD Trade Services provides <span class='font-bold text-white'>thorough gas line inspections</span> to ensure your gas system is safe and compliant. Our certified gas fitters perform <span class='font-bold text-white'>detailed assessments and safety checks</span> of your entire gas system."
-      features={[
-        "Comprehensive system inspection",
-        "Pressure testing",
-        "Safety compliance checks",
-        "Gas meter inspection",
-        "Connection point testing",
-        "Detailed inspection report"
-      ]}
-      benefits={[
-        "Ensure system safety",
-        "Prevent gas leaks",
-        "Compliance certification",
-        "Peace of mind",
-        "Early issue detection"
-      ]}
-      images={[
-        "/images/services/gas-fitting/gas-line-1.jpg",
-        "/images/services/gas-fitting/gas-line-2.jpg",
-        "/images/services/gas-fitting/gas-line-3.jpg"
-      ]}
-      bentoGrid={[
-        {
-          type: "featured",
-          title: "Comprehensive Gas Inspections",
-          description: "Our thorough inspection process covers every aspect of your gas system, from the meter to individual appliance connections.",
-          icon: "/icons/Wired Flat Search Icon.json"
-        },
-        {
-          type: "standard",
-          title: "Safety Certification",
-          description: "Receive a detailed inspection report and safety certification upon completion.",
-          icon: "/icons/Graduation Scroll Icon.json"
-        },
-        {
-          type: "list",
-          title: "Inspection Points",
+    <>
+      <Header />
+      <ServiceSchema 
+        serviceName="Gas Line Inspections Brisbane"
+        description="Professional gas line inspection services in Brisbane. Our licensed gas fitters provide expert inspection and safety solutions for all gas systems."
+        serviceArea="Brisbane Gas Line Inspections Local Business Queensland"
+      />
+
+      <ServiceDetailLayout
+        heroData={{
+          title: "Gas Line Inspections",
+          subtitle: "Expert Safety Service",
+          description: `Our team provides <span class="font-bold text-white">professional gas line inspection services</span> with guaranteed results. We ensure <span class="font-bold text-white">thorough and reliable</span> solutions.`,
+          bookOnlineLink: "#book",
+          callNowLink: "tel:1300HDTRADE"
+        }}
+        bentoGridData={{
+          title: "Why Choose Our Service",
+          subtitle: "Professional & Reliable",
           items: [
-            { icon: "water", text: "Gas Line Testing" },
-            { icon: "drain", text: "Connection Checks" },
-            { icon: "other", text: "Pressure Testing" }
+            {
+              type: "featured",
+              title: "Professional Service",
+              description: "Expert inspections with advanced equipment.",
+              icon: "/icons/man-search-avatar.json",
+              colSpan: 2
+            },
+            {
+              type: "standard",
+              title: "Quality Service",
+              description: "Certified inspections guaranteed.",
+              icon: "/icons/graduation-scroll.json"
+            },
+            {
+              type: "list",
+              title: "Inspection Services",
+              listItems: [
+                { icon: "pipe", text: "Line Inspections" },
+                { icon: "test", text: "Gas Testing" },
+                { icon: "meter", text: "System Checks" },
+                { icon: "safety", text: "Safety Certification" }
+              ]
+            },
+            {
+              type: "payment",
+              title: "Flexible Payments",
+              paymentItems: [
+                {
+                  title: "Buy Now, Pay Later",
+                  description: "Split your payments with ease",
+                  icons: <PaymentIcons type="bnpl" />
+                },
+                {
+                  title: "Secure Payments",
+                  description: "All major cards accepted",
+                  icons: <PaymentIcons type="cards" />
+                },
+                {
+                  title: "Quick Tap & Go",
+                  description: "Fast, contactless convenience",
+                  icons: <PaymentIcons type="tap" />
+                }
+              ]
+            },
+            {
+              type: "guarantee",
+              title: "Our Guarantees",
+              icon: "/icons/star-smile.json",
+              guaranteeItems: [
+                "Same Day Service",
+                "100% Satisfaction Guarantee",
+                "Fixed Price Upfront",
+                "Licensed & Insured Team"
+              ]
+            }
           ]
-        }
-      ]}
-      commonIssues={[
-        {
-          title: "Gas Line Issues",
-          description: "Common problems found during gas line inspections.",
-          bullets: [
-            "Corroded pipes",
-            "Loose connections",
-            "Improper installations",
-            "Non-compliant fittings"
-          ],
-          icon: "/icons/Wired Flat Warning Icon.json"
-        },
-        {
-          title: "Safety Concerns",
-          description: "Critical safety issues we check during inspections.",
-          bullets: [
-            "Gas pressure problems",
-            "Ventilation issues",
-            "Incorrect clearances",
-            "Installation compliance"
-          ],
-          icon: "/icons/Shield Security Icon.json"
-        },
-        {
-          title: "System Components",
-          description: "Key components we inspect in your gas system.",
-          bullets: [
-            "Gas meters",
-            "Shut-off valves",
-            "Pipe connections",
-            "Appliance fittings"
-          ],
-          icon: "/icons/Wired Flat Gauge Icon.json"
-        }
-      ]}
-      whyChooseUs={[
-        {
-          title: "Certified Inspectors",
-          description: "Our gas fitters are certified and experienced in comprehensive gas system inspections."
-        },
-        {
-          title: "Detailed Reports",
-          description: "Receive a thorough inspection report with findings and recommendations."
-        },
-        {
-          title: "Modern Equipment",
-          description: "We use advanced testing equipment for accurate inspection results."
-        }
-      ]}
-      paymentOptions={[
-        {
-          title: "Fixed Price Inspections",
-          description: "Clear, upfront pricing for all gas line inspection services."
-        },
-        {
-          title: "Inspection Packages",
-          description: "Choose from different inspection packages to suit your needs."
-        }
-      ]}
-      trustFactors={[
-        {
-          icon: "/icons/Shield Security Icon.json",
-          title: "Licensed Professionals",
-          description: "Fully licensed and insured gas fitting specialists."
-        },
-        {
-          icon: "/icons/Wired Flat Search Icon.json",
-          title: "Thorough Process",
-          description: "Comprehensive inspection methodology covering all aspects."
-        },
-        {
-          icon: "/icons/Graduation Scroll Icon.json",
-          title: "Certified Reports",
-          description: "Professional documentation and compliance certificates."
-        }
-      ]}
-    />
+        }}
+        introData={{
+          title: "Expert Line Inspections",
+          subtitle: "Professional Service",
+          paragraph1: `Our expert team provides <span class="font-bold text-white">comprehensive gas line inspections</span> for both residential and commercial properties. We ensure thorough and reliable solutions.`,
+          paragraph2: `Using <span class="font-bold text-white">advanced inspection equipment</span>, our licensed gas fitters deliver professional and detailed inspections.`
+        }}
+        issuesData={{
+          title: "Our Inspection Services",
+          subtitle: "Comprehensive Solutions",
+          introParagraph: "We provide professional services for all gas line inspection needs.",
+          issues: [
+            {
+              title: "Line Inspections",
+              description: "Complete inspection service.",
+              bullets: [
+                "Visual inspection",
+                "Professional testing",
+                "System checks",
+                "Safety certification"
+              ]
+            },
+            {
+              title: "System Testing",
+              description: "Expert testing solutions.",
+              bullets: [
+                "Pressure testing",
+                "Leak detection",
+                "Performance checks",
+                "Safety verification"
+              ]
+            },
+            {
+              title: "Safety Checks",
+              description: "Professional safety service.",
+              bullets: [
+                "Installation checks",
+                "System testing",
+                "Safety compliance",
+                "Final certification"
+              ]
+            }
+          ]
+        }}
+        financeData={{
+          title: "Competitive Pricing",
+          subtitle: "Flexible Payment Options",
+          description1: `We offer <span class="font-bold text-white">competitive pricing</span> for all our inspection services. Get upfront quotes with no hidden fees.`,
+          description2: `Take advantage of our <span class="font-bold text-white">flexible payment options</span> to handle your inspection needs without financial stress.`,
+          features: [
+            "Upfront Fixed Pricing",
+            "No Hidden Charges",
+            "Interest-Free Options",
+            "Senior Discounts"
+          ]
+        }}
+        ctaData={{
+          title: "Need Line Inspection?",
+          subtitle: "We're Here to Help",
+          description: `Get your gas lines inspected professionally. Our <span class="font-bold text-white">expert team</span> is ready to help with quality solutions.`,
+          buttonText: "Call Now",
+          buttonLink: "tel:1300HDTRADE"
+        }}
+        trustData={{
+          title: "Why Trust Our Team",
+          subtitle: "Licensed & Experienced",
+          factors: [
+            {
+              icon: "/icons/shield-security.json",
+              title: "Licensed Gas Fitters",
+              description: "Fully licensed and certified professionals."
+            },
+            {
+              icon: "/icons/magnifier-zoom.json",
+              title: "Quality Equipment",
+              description: "Advanced inspection technology."
+            },
+            {
+              icon: "/icons/star-smile.json",
+              title: "Guaranteed Work",
+              description: "100% satisfaction guarantee."
+            }
+          ]
+        }}
+        bookingData={{
+          title: "Book Your Service",
+          subtitle: "Fast & Easy Booking"
+        }}
+      />
+    </>
   );
 } 

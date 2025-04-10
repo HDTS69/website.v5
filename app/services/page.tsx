@@ -11,7 +11,7 @@ import { BrandCarousel } from '@/components/ui/BrandCarousel';
 import { FAQ } from '@/components/ui/FAQ';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
 import { ServiceRequestForm } from '@/components/ui/ServiceRequestForm';
-import Image from 'next/image';
+import { PaymentIcons } from '@/app/components/PaymentIcons';
 import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles';

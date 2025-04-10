@@ -55,7 +55,7 @@ const services: Service[] = [
     icon: "/icons/gas-leak.svg",
     href: "/services/gas-fitting/gas-leak-detection",
     category: "Gas safety and compliance",
-    lordIcon: "/icons/man-search-avatar.json"
+    lordIcon: "/icons/magnifier-zoom.json"
   },
   {
     title: "Gas Line Inspections",
@@ -63,7 +63,7 @@ const services: Service[] = [
     icon: "/icons/gas-inspection.svg",
     href: "/services/gas-fitting/gas-safety-inspections",
     category: "Preventative maintenance",
-    lordIcon: "/icons/magnifier-zoom.json"
+    lordIcon: "/icons/rules-book-guideline.json"
   },
   {
     title: "Gas Pipe Repair",
@@ -71,7 +71,7 @@ const services: Service[] = [
     icon: "/icons/gas-pipe-repair.svg",
     href: "/services/gas-fitting/gas-line-installation",
     category: "Gas line services",
-    lordIcon: "/icons/tool.json"
+    lordIcon: "/icons/water-pipe.json"
   },
   {
     title: "Gas System Installation",
@@ -157,13 +157,13 @@ export function GasServicesGrid() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="py-0"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="container mx-auto px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
         {services.map((service, index) => (
           <motion.div
             key={service.title}
@@ -198,7 +198,6 @@ export function GasServicesGrid() {
                     />
                   )}
                 </div>
-                
                 <div className="flex flex-col flex-grow">
                   <h3 className="text-lg font-semibold text-white mb-2">{service.title}</h3>
                   <p className="text-gray-400 text-sm mb-auto">{service.description}</p>
@@ -207,7 +206,7 @@ export function GasServicesGrid() {
             </Link>
           </motion.div>
         ))}
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 } 

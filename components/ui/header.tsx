@@ -42,9 +42,7 @@ export default function Header() {
         "relative w-full",
         // Background and transition
         "transition-all duration-300 ease-in-out",
-        isScrolled ? 'bg-black backdrop-blur-sm' : 'bg-transparent',
-        // Hide on mobile
-        "hidden md:block"
+        isScrolled ? 'bg-black backdrop-blur-sm' : 'bg-transparent'
       )}
       style={{ touchAction: 'auto' }}
     >

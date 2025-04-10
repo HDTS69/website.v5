@@ -1,6 +1,6 @@
 export const serviceFeatureIcons = {
   emergency: {
-    src: "/icons/Siren Hover Pinch Icon.json",
+    src: "/icons/siren.json",
     trigger: "hover",
     colors: {
       primary: "#00E6CA",
@@ -8,7 +8,7 @@ export const serviceFeatureIcons = {
     }
   },
   clock: {
-    src: "/icons/Wired Flat Speed Hover Pinch.json",
+    src: "/icons/speedometer.json",
     trigger: "hover",
     colors: {
       primary: "#00E6CA",
@@ -16,7 +16,7 @@ export const serviceFeatureIcons = {
     }
   },
   license: {
-    src: "/icons/Graduation Scroll Icon.json",
+    src: "/icons/graduation-scroll.json",
     trigger: "hover",
     colors: {
       primary: "#00E6CA",
@@ -24,7 +24,7 @@ export const serviceFeatureIcons = {
     }
   },
   van: {
-    src: "/icons/Van Hover Pinch Icon.json",
+    src: "/icons/van.json",
     trigger: "hover",
     colors: {
       primary: "#00E6CA",
@@ -32,7 +32,7 @@ export const serviceFeatureIcons = {
     }
   },
   pricing: {
-    src: "/icons/Flat Price Tag Icon.json",
+    src: "/icons/price-tag.json",
     trigger: "hover",
     colors: {
       primary: "#00E6CA",
@@ -40,7 +40,7 @@ export const serviceFeatureIcons = {
     }
   },
   satisfaction: {
-    src: "/icons/Emoji Smile Hover Icon.json",
+    src: "/icons/emoji-smile.json",
     trigger: "hover",
     colors: {
       primary: "#00E6CA",

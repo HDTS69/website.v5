@@ -1,191 +1,175 @@
-import React from 'react';
-import ServiceDetailLayout from '@/components/layouts/ServiceDetailLayout';
-import { ServiceSchema } from '@/components/ui/ServiceSchema';
+'use client';
 
-export const metadata = {
-  title: 'Professional Leak Detection Services | HD Trade Services',
-  description: 'Expert leak detection services using advanced technology. Our licensed plumbers locate hidden water leaks with minimal disruption to your property.',
-};
+import React from 'react';
+import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
+import { ServiceSchema } from '@/components/ui/ServiceSchema';
+import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function LeakDetectionPage() {
   return (
     <>
       <ServiceSchema 
-        serviceName="Professional Leak Detection Services"
-        description="Advanced non-invasive leak detection services by licensed plumbers. We use specialized acoustic technology, thermal imaging, and pressure testing to locate hidden water leaks with pinpoint accuracy and minimal disruption."
-        serviceArea="Australia"
+        serviceName="Leak Detection Brisbane"
+        description="Professional leak detection services in Brisbane. Our licensed plumbers use advanced equipment to locate and fix all types of leaks."
+        serviceArea="Brisbane Leak Detection Local Business Queensland"
       />
-      
+
       <ServiceDetailLayout
-        title="Leak Detection"
-        subtitle="Advanced Non-Invasive Leak Location"
-        description="Our <span class='font-semibold text-white'>professional leak detection services</span> utilize the latest technology to locate hidden water leaks with <span class='font-semibold text-white'>pinpoint accuracy</span>. Our licensed plumbers can find leaks hidden behind walls, under floors, and underground with <span class='font-semibold text-white'>minimal disruption</span> to your property, saving time and preventing costly damage."
-        features={[
-          "Acoustic leak detection equipment",
-          "Thermal imaging cameras",
-          "Pressure testing systems",
-          "Pipe and drain cameras",
-          "Moisture meters and sensors",
-          "Ground microphones for underground leaks",
-          "Gas leak detection"
-        ]}
-        benefits={[
-          "Pinpoint accuracy without unnecessary damage",
-          "Early detection prevents costly water damage",
-          "Reduces water bills from hidden leaks",
-          "Prevents mold and structural damage",
-          "Quick identification saves time and money",
-          "Minimal disruption to your property",
-          "Comprehensive detection for all types of leaks"
-        ]}
-        images={[
-          "/images/hayden-hero-1.webp",
-          "/images/hayden-hero-fixed.webp",
-          "/images/icon-logo.webp"
-        ]}
-        bentoGrid={[
-          {
-            type: "featured",
-            title: "Non-Invasive Leak Detection Technology",
-            description: "Our specialized equipment locates hidden leaks <span class=\"font-bold text-white\">without destructive investigation</span>. Using advanced acoustic technology, thermal imaging, and pressure testing, we pinpoint leaks accurately before any excavation or wall removal begins.",
-            icon: "/icons/magnifier-zoom.json"
-          },
-          {
-            type: "standard",
-            title: "Same-Day Emergency Service",
-            description: "Water leaks can cause rapid damage. Our emergency leak detection teams are available 24/7 to locate and address urgent leak situations.",
-            icon: "/icons/siren.json"
-          },
-          {
-            type: "standard",
-            title: "Comprehensive Detection",
-            description: "We locate all types of leaks including concealed pipe leaks, slab leaks, underground water lines, and gas leaks with specialized equipment.",
-            icon: "/icons/hose.json"
-          },
-          {
-            type: "list",
-            title: "Our Detection Services",
-            items: [
-              { icon: "water", text: "Under-slab leak detection" },
-              { icon: "drain", text: "Wall and ceiling leak location" },
-              { icon: "water", text: "Underground pipe detection" },
-              { icon: "water", text: "Swimming pool leak services" },
-              { icon: "drain", text: "Roof and gutter leak finding" },
-              { icon: "water", text: "Gas leak detection" }
-            ]
-          },
-          {
-            type: "payment",
-            title: "Simple Payment Options",
-            items: [
-              {
-                title: "Flexible Payment Plans",
-                description: "Affordable detection services",
-                providers: ["humm", "zip"]
-              },
-              {
-                title: "Secure Card Payments",
-                description: "Safe & trusted transactions",
-                providers: ["visa", "mastercard", "amex"]
-              },
-              {
-                title: "Contactless Payments",
-                description: "Modern, convenient options",
-                providers: ["applepay"]
-              }
-            ]
-          },
-          {
-            type: "guarantee",
-            title: "Our Detection Guarantee",
-            items: [
-              "Accurate leak identification",
-              "Detailed reporting of findings",
-              "Transparent repair recommendations",
-              "Insurance claim documentation",
-              "No leak found, no service fee option"
-            ]
-          }
-        ]}
-        commonIssues={[
-          {
-            title: "Concealed Pipe Leaks",
-            description: "Leaking pipes hidden inside walls, under floors, or in ceilings can cause significant damage before becoming visibly apparent. Our non-invasive detection methods locate these hidden problems quickly.",
-            bullets: [
-              "Specialized acoustic equipment detects the sound of leaking water",
-              "Thermal imaging cameras identify temperature differences from leaks",
-              "Moisture meters confirm suspected leak areas",
-              "Precision location minimizes necessary repair access",
-              "Early detection prevents mold and structural damage"
-            ],
-            icon: "/icons/hose.json"
-          },
-          {
-            title: "Slab and Foundation Leaks",
-            description: "Water leaks under concrete slabs or foundations are particularly problematic, potentially causing foundation movement, structural issues, and significant water waste.",
-            bullets: [
-              "Ground microphones detect underground water movement",
-              "Pressure testing identifies leaks in inaccessible pipes",
-              "Specialized equipment locates leaks without breaking concrete",
-              "Early detection prevents foundation damage",
-              "Professional documentation for insurance claims"
-            ],
-            icon: "/icons/Flat Shovel Icon.json"
-          },
-          {
-            title: "Mysterious High Water Bills",
-            description: "Unexplained increases in water bills often indicate hidden leaks that may be wasting thousands of liters of water without any visible signs.",
-            bullets: [
-              "Comprehensive water system evaluation",
-              "Isolation testing of different plumbing zones",
-              "Flow meter analysis to quantify water loss",
-              "Detection of toilet, fixture, and irrigation leaks",
-              "Water meter monitoring to confirm repair success"
-            ],
-            icon: "/icons/price-tag.json"
-          }
-        ]}
-        whyChooseUs={[
-          {
-            title: "Advanced Detection Equipment",
-            description: "We continually invest in state-of-the-art leak detection technology, ensuring we can locate even the most challenging leaks with minimal disruption to your property."
-          },
-          {
-            title: "Specialized Leak Detection Plumbers",
-            description: "Our technicians are specifically trained in leak detection techniques and technology, with experience locating leaks in residential, commercial, and industrial settings."
-          },
-          {
-            title: "Comprehensive Service",
-            description: "We don't just find your leak – we provide detailed reports, repair options, and can handle the complete repair process with our licensed plumbers."
-          }
-        ]}
-        paymentOptions={[
-          {
-            title: "Transparent Leak Detection Pricing",
-            description: "Our leak detection services are provided at <span class=\"font-bold text-white\">clear, upfront rates</span> with no hidden charges. We'll explain exactly what's involved before any work begins, and can often provide fixed-price options based on your property's size and leak indicators."
-          },
-          {
-            title: "Insurance Claim Assistance",
-            description: "Many insurance policies cover water damage from hidden leaks. We provide comprehensive documentation and evidence of leaks, including photos, reports, and repair estimates to support your insurance claim process."
-          }
-        ]}
-        trustFactors={[
-          {
-            icon: "/icons/magnifier-zoom.json",
-            title: "Certified Leak Specialists",
-            description: "Our leak detection technicians hold specialized certifications in acoustic leak detection, thermal imaging, and non-destructive testing methods."
-          },
-          {
-            icon: "/icons/magnifier-zoom.json",
-            title: "Pinpoint Accuracy",
-            description: "Our multi-method approach combines different technologies to confirm leak locations with exceptional precision, minimizing unnecessary excavation or wall opening."
-          },
-          {
-            icon: "/icons/handshake-deal.json",
-            title: "Proven Success Rate",
-            description: "With thousands of successful leak detections completed, our expertise has saved properties from extensive water damage and homeowners from excessive repair costs."
-          }
-        ]}
+        heroData={{
+          title: "Leak Detection",
+          subtitle: "Advanced Detection Solutions",
+          description: `Our team uses <span class="font-bold text-white">state-of-the-art equipment</span> to locate hidden leaks with precision. We provide <span class="font-bold text-white">non-invasive solutions</span> with guaranteed results.`,
+          bookOnlineLink: "#book",
+          callNowLink: "tel:1300HDTRADE"
+        }}
+        bentoGridData={{
+          title: "Why Choose Our Service",
+          subtitle: "Professional & Reliable",
+          items: [
+            {
+              type: "featured",
+              title: "Professional",
+              description: "Expert leak detection with advanced technology.",
+              icon: "/icons/man-search-avatar.json",
+              colSpan: 2
+            },
+            {
+              type: "standard",
+              title: "Quality Service",
+              description: "Accurate detection and effective solutions.",
+              icon: "/icons/graduation-scroll.json"
+            },
+            {
+              type: "list",
+              title: "Detection Services",
+              listItems: [
+                { icon: "pipe", text: "Water Leaks" },
+                { icon: "valve", text: "Gas Leaks" },
+                { icon: "meter", text: "Slab Leaks" },
+                { icon: "safety", text: "Pipe Leaks" }
+              ]
+            },
+            {
+              type: "payment",
+              title: "Flexible Payments",
+              paymentItems: [
+                {
+                  title: "Buy Now, Pay Later",
+                  description: "Split your payments with ease",
+                  icons: <PaymentIcons type="bnpl" />
+                },
+                {
+                  title: "Secure Payments",
+                  description: "All major cards accepted",
+                  icons: <PaymentIcons type="cards" />
+                },
+                {
+                  title: "Quick Tap & Go",
+                  description: "Fast, contactless convenience",
+                  icons: <PaymentIcons type="tap" />
+                }
+              ]
+            },
+            {
+              type: "guarantee",
+              title: "Our Guarantees",
+              icon: "/icons/star-smile.json",
+              guaranteeItems: [
+                "Advanced Detection Equipment",
+                "100% Satisfaction Guarantee",
+                "Fixed Price Upfront",
+                "Licensed & Insured Team"
+              ]
+            }
+          ]
+        }}
+        introData={{
+          title: "Leak Detection",
+          subtitle: "Professional Detection Service",
+          paragraph1: `Our expert team provides <span class="font-bold text-white">comprehensive leak detection</span> services for both residential and commercial properties. We use advanced technology to ensure accurate results.`,
+          paragraph2: `From <span class="font-bold text-white">water leaks to gas leaks</span>, our licensed plumbers deliver precise detection and effective solutions that meet all safety standards.`
+        }}
+        issuesData={{
+          title: "Detection Services",
+          subtitle: "Comprehensive Solutions",
+          introParagraph: "We provide advanced leak detection services for all types of leaks.",
+          issues: [
+            {
+              title: "Water Leak Detection",
+              description: "Non-invasive leak location.",
+              bullets: [
+                "Thermal imaging",
+                "Acoustic detection",
+                "Pressure testing",
+                "Moisture mapping"
+              ]
+            },
+            {
+              title: "Gas Leak Detection",
+              description: "Advanced gas detection.",
+              bullets: [
+                "Gas sensors",
+                "Pressure testing",
+                "System inspection",
+                "Safety checks"
+              ]
+            },
+            {
+              title: "Slab Leak Detection",
+              description: "Precise underground detection.",
+              bullets: [
+                "Ground penetrating radar",
+                "Thermal scanning",
+                "Moisture detection",
+                "Location marking"
+              ]
+            }
+          ]
+        }}
+        financeData={{
+          title: "Leak Detection",
+          subtitle: "Competitive & Transparent Pricing",
+          description1: `We offer <span class="font-bold text-white">competitive pricing</span> for all our leak detection services. Get upfront quotes with no hidden fees.`,
+          description2: `Take advantage of our <span class="font-bold text-white">flexible payment options</span> to handle your leak detection needs without financial stress.`,
+          features: [
+            "Upfront Fixed Pricing",
+            "No Hidden Charges",
+            "Interest-Free Options",
+            "Senior Discounts"
+          ]
+        }}
+        ctaData={{
+          title: "Suspect a Leak?",
+          subtitle: "Don't Wait - Call Now",
+          description: `Don't let leaks cause damage. Our <span class="font-bold text-white">expert team</span> is ready to help with advanced detection.`,
+          buttonText: "Call Now",
+          buttonLink: "tel:1300HDTRADE"
+        }}
+        trustData={{
+          title: "Why Trust Our Service",
+          subtitle: "Licensed & Experienced Team",
+          factors: [
+            {
+              icon: "/icons/shield-security.json",
+              title: "Licensed Plumbers",
+              description: "Fully licensed and certified professionals."
+            },
+            {
+              icon: "/icons/magnifier-zoom.json",
+              title: "Advanced Equipment",
+              description: "State-of-the-art detection tools."
+            },
+            {
+              icon: "/icons/star-smile.json",
+              title: "Guaranteed Work",
+              description: "100% satisfaction guarantee."
+            }
+          ]
+        }}
+        bookingData={{
+          title: "Book Your Service",
+          subtitle: "Fast & Easy Online Booking"
+        }}
       />
     </>
   );

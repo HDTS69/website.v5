@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname, useSearchParams } from "next/navigation";
 import dynamic from 'next/dynamic';
 
@@ -9,10 +9,10 @@ import "aos/dist/aos.css";
 
 // Import header and footer normally as they're critical for initial render
 import Header from "@/components/ui/header";
-import { MobileHeader } from "@/components/mobile";
 import Footer from "@/components/ui/footer";
 import { Navigation } from "@/components/ui/Navigation";
 import { navigationItems, actionItems } from "@/lib/navigation";
+import { MobileHeader } from "@/components/mobile/MobileHeader";
 
 // Dynamically import LoadingScreen as it's only needed occasionally
 const LoadingScreen = dynamic(() => import("@/components/ui/LoadingScreen"), {
@@ -25,50 +25,20 @@ function DefaultLayoutInner({
 }: {
   children: React.ReactNode;
 }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isVisible, setIsVisible] = useState(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // Handle initial mount and route changes
+  // Initialize AOS
   useEffect(() => {
-    // Initialize AOS
     AOS.init({
       once: true,
       disable: "phone",
       duration: 700,
       easing: "ease-out-cubic",
     });
+  }, []);
 
-    // Handle loading state
-    let loadingTimer: NodeJS.Timeout;
-
-    const show = () => {
-      setIsVisible(true);
-      setIsLoading(false);
-    };
-
-    if (document.readyState === 'complete') {
-      show();
-    } else {
-      loadingTimer = setTimeout(show, 800);
-    }
-
-    const handleReadyStateChange = () => {
-      if (document.readyState === 'complete') {
-        show();
-      }
-    };
-
-    document.addEventListener('readystatechange', handleReadyStateChange);
-
-    return () => {
-      clearTimeout(loadingTimer);
-      document.removeEventListener('readystatechange', handleReadyStateChange);
-    };
-  }, [pathname, searchParams]);
-
-  // Handle refresh
+  // Handle scroll position
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
@@ -96,21 +66,28 @@ function DefaultLayoutInner({
   }, []);
 
   return (
-    <>
-      {isLoading && <LoadingScreen />}
-      <div 
-        className={`min-h-screen touch-auto ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        }`}
-        style={{ touchAction: 'manipulation' }}
-      >
+    <div className="min-h-screen flex flex-col">
+      {/* Desktop Header */}
+      <div className="hidden md:block">
         <Header />
-        <MobileHeader />
-        <Navigation items={navigationItems} actionItems={actionItems} />
-        <main className="pb-[72px] md:pb-0 touch-auto" style={{ touchAction: 'manipulation' }}>{children}</main>
-        <Footer />
       </div>
-    </>
+
+      {/* Mobile Header */}
+      <div className="block md:hidden">
+        <MobileHeader />
+      </div>
+
+      {/* Desktop Navigation */}
+      <div className="hidden md:block">
+        <Navigation items={navigationItems} actionItems={actionItems} />
+      </div>
+
+      <main className="flex-grow">
+        {children}
+      </main>
+
+      <Footer />
+    </div>
   );
 }
 
@@ -119,9 +96,5 @@ export default function DefaultLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <Suspense>
-      <DefaultLayoutInner>{children}</DefaultLayoutInner>
-    </Suspense>
-  );
+  return <DefaultLayoutInner>{children}</DefaultLayoutInner>;
 }

@@ -1,6 +1,6 @@
 import { SparklesCore } from "@/components/ui/SparklesCore";
 import Link from "next/link";
-import Image from "next/image";
+import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function DuctedAC() {
   return (

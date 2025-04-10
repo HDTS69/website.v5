@@ -1,6 +1,6 @@
 import { BackgroundSparkles } from "@/components/ui/BackgroundSparkles";
 import Link from "next/link";
-import Image from "next/image";
+import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function ACCleaning() {
   return (

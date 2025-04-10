@@ -130,14 +130,16 @@ const serviceData: Record<ServiceId, ServiceContent> = {
     imagePath: "/images/placeholder-service.jpg",
     services: [
       { name: "Emergency Plumbing", href: "/services/plumbing/emergency" },
-      { name: "Blocked Drains", href: "/services/plumbing/blocked-drains" },
-      { name: "Blocked Toilet", href: "/services/plumbing/blocked-toilet" },
+      { name: "Blocked Drains", href: "/services/plumbing/drain-cleaning" },
       { name: "CCTV Camera Inspection", href: "/services/plumbing/cctv-inspection" },
       { name: "Leak Detection", href: "/services/plumbing/leak-detection" },
       { name: "Leaking Taps", href: "/services/plumbing/leaking-taps" },
-      { name: "Hot Water Systems", href: "/services/plumbing/hot-water" },
+      { name: "Hot Water Systems", href: "/hot-water" },
       { name: "Toilet Installations & Repairs", href: "/services/plumbing/toilet-installations" },
-      { name: "Bathroom Renovations", href: "/services/plumbing/bathroom-renovations" }
+      { name: "Bathroom Renovations", href: "/services/plumbing/bathroom-renovations" },
+      { name: "Water Pressure", href: "/services/plumbing/water-pressure" },
+      { name: "Sewer & Stormwater", href: "/services/plumbing/sewer-stormwater" },
+      { name: "Pipe Relining", href: "/services/plumbing/pipe-relining" }
     ]
   },
   gasFitting: {
@@ -147,13 +149,15 @@ const serviceData: Record<ServiceId, ServiceContent> = {
     imagePath: "/images/placeholder-service.jpg",
     services: [
       { name: "Emergency Gas Repairs", href: "/services/gas-fitting/emergency-gas-repairs" },
-      { name: "Gas Leak Detection Service", href: "/services/gas-fitting/gas-leak-detection" },
+      { name: "Gas Leak Detection", href: "/services/gas-fitting/gas-leak-detection" },
       { name: "Gas Line Inspections", href: "/services/gas-fitting/gas-line-inspections" },
       { name: "Gas Pipe Repair", href: "/services/gas-fitting/gas-pipe-repair" },
-      { name: "Gas Appliance Installation & Repairs", href: "/services/gas-fitting/gas-appliance-installation" },
+      { name: "Gas Appliance Installation", href: "/services/gas-fitting/gas-appliance-installation" },
       { name: "Gas Cooktop Installation", href: "/services/gas-fitting/gas-cooktop-installation" },
-      { name: "Gas Hot Water System Installation", href: "/services/gas-fitting/gas-hot-water-installation" },
-      { name: "Gas Compliance Certificates", href: "/services/gas-fitting/gas-compliance-certificates" }
+      { name: "Gas Hot Water Installation", href: "/services/gas-fitting/gas-hot-water-installation" },
+      { name: "Gas BBQ Installation", href: "/services/gas-fitting/gas-bbq-installation" },
+      { name: "Gas Compliance Certificates", href: "/services/gas-fitting/gas-compliance-certificates" },
+      { name: "Commercial Gas Installation", href: "/services/gas-fitting/commercial-gas-installation" }
     ]
   },
   roofRepairs: {
@@ -170,7 +174,7 @@ const serviceData: Record<ServiceId, ServiceContent> = {
       { name: "Metal Roofing", href: "/services/roof-repairs/metal-roofing" },
       { name: "Gutter & Downpipes", href: "/services/roof-repairs/gutter-downpipes" },
       { name: "Gutter Guard Installation", href: "/services/roof-repairs/gutter-guard" },
-      { name: "Roof Cleaning", href: "/services/roof-repairs/cleaning" }
+      { name: "Roof Ventilation", href: "/services/roof-repairs/ventilation" }
     ]
   },
   airConditioning: {
@@ -184,10 +188,10 @@ const serviceData: Record<ServiceId, ServiceContent> = {
       { name: "AC Servicing", href: "/services/air-conditioning/servicing" },
       { name: "Split System AC", href: "/services/air-conditioning/split-system" },
       { name: "Ducted AC", href: "/services/air-conditioning/ducted" },
-      { name: "Commercial AC Services", href: "/services/air-conditioning/commercial-services" },
+      { name: "Commercial AC Services", href: "/services/air-conditioning/commercial" },
       { name: "System Maintenance", href: "/services/air-conditioning/maintenance" },
       { name: "System Optimization", href: "/services/air-conditioning/system-optimization" },
-      { name: "Air Con Sizing Calculator", href: "/services/air-conditioning/air-con-sizing-calculator", isCalculator: true }
+      { name: "Air Con Sizing Calculator", href: "/services/air-conditioning/sizing-calculator", isCalculator: true }
     ]
   }
 };

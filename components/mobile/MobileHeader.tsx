@@ -4,12 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Phone, Calendar } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { OpenNowIndicator } from '../ui/OpenNowIndicator';
-import { Navigation } from './MobileNavigation';
-import { AnimatedBookNowButton } from '../ui/AnimatedBookNowButton';
-import { navigationItems } from '@/lib/navigation';
 
 export function MobileHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -133,29 +129,13 @@ export function MobileHeader() {
     </div>
   );
 
-  // Define action items for the navigation
-  const actionItems = [
-    {
-      name: "Call Now",
-      url: "tel:1300000000",
-      icon: Phone,
-      isHighlighted: true,
-    },
-    {
-      name: "Book Online",
-      url: "/book-now",
-      icon: Calendar,
-      isHighlighted: true,
-    }
-  ];
-
   return (
     <>
       {/* Open Now Indicator */}
       <div 
         ref={openNowRef}
         id="mobile-open-now"
-        className="md:hidden shadow-md"
+        className="block md:hidden shadow-md"
         style={{ 
           paddingTop: 'env(safe-area-inset-top)',
           position: 'fixed',
@@ -181,7 +161,7 @@ export function MobileHeader() {
         ref={mainHeaderRef}
         id="mobile-main-header"
         className={cn(
-          'fixed md:hidden shadow-md',
+          'fixed block md:hidden shadow-md',
           'transition-all duration-300 ease-in-out'
         )}
         style={{ 
@@ -221,9 +201,6 @@ export function MobileHeader() {
           )}
         </div>
       </header>
-
-      {/* Navigation */}
-      <Navigation items={navigationItems} actionItems={actionItems} />
     </>
   );
 } 

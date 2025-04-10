@@ -76,11 +76,14 @@ export const navigationItems: NavItem[] = [
         name: "Air Conditioning",
         url: "/services/air-conditioning",
         subItems: [
-          { name: "AC Installation", url: "/services/air-conditioning/installation" },
-          { name: "AC Repairs", url: "/services/air-conditioning/repairs" },
-          { name: "AC Servicing", url: "/services/air-conditioning/servicing" },
-          { name: "Split System AC", url: "/services/air-conditioning/split-system" },
-          { name: "Ducted AC", url: "/services/air-conditioning/ducted" },
+          { name: "Split System Installation", url: "/air-conditioning/split-system-installation" },
+          { name: "AC Repairs", url: "/air-conditioning/repairs" },
+          { name: "AC Servicing", url: "/air-conditioning/servicing" },
+          { name: "AC Cleaning", url: "/air-conditioning/cleaning" },
+          { name: "AC Diagnostics", url: "/air-conditioning/diagnostics" },
+          { name: "Ducted AC", url: "/air-conditioning/ducted" },
+          { name: "System Optimization", url: "/air-conditioning/system-optimization" },
+          { name: "Air Con Sizing Calculator", url: "/air-conditioning/sizing-calculator" }
         ]
       },
       {
@@ -197,7 +200,7 @@ export const navigationItems: NavItem[] = [
       },
       {
         name: "Our Team",
-        url: "/about/team",
+        url: "/about/our-team",
       },
       {
         name: "Testimonials",

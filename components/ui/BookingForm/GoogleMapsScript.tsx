@@ -74,13 +74,15 @@ export function GoogleMapsScript({ onLoadSuccess, onLoadError }: GoogleMapsScrip
       strategy="afterInteractive"
       dangerouslySetInnerHTML={{
         __html: `
-          try {
-            if (window.initGoogleMapsLoader) {
-              window.initGoogleMapsLoader();
+          (function() {
+            try {
+              if (typeof window !== 'undefined' && window.initGoogleMapsLoader) {
+                window.initGoogleMapsLoader();
+              }
+            } catch (error) {
+              console.error('Error loading Google Maps:', error);
             }
-          } catch (error) {
-            console.error('Error loading Google Maps:', error);
-          }
+          })();
         `
       }}
     />

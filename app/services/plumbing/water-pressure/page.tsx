@@ -1,191 +1,175 @@
-import React from 'react';
-import ServiceDetailLayout from '@/components/layouts/ServiceDetailLayout';
-import { ServiceSchema } from '@/components/ui/ServiceSchema';
+'use client';
 
-export const metadata = {
-  title: 'Professional Water Pressure Solutions | HD Trade Services',
-  description: 'Expert water pressure problem solutions by licensed plumbers. We diagnose and fix low or high water pressure issues throughout your home.',
-};
+import React from 'react';
+import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
+import { ServiceSchema } from '@/components/ui/ServiceSchema';
+import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function WaterPressurePage() {
   return (
     <>
       <ServiceSchema 
-        serviceName="Professional Water Pressure Services"
-        description="Comprehensive water pressure solutions by licensed plumbers. We diagnose and fix low or high water pressure issues, install pressure regulation systems, and ensure consistent, optimal water pressure throughout your home."
-        serviceArea="Australia"
+        serviceName="Water Pressure Solutions Brisbane"
+        description="Professional water pressure services in Brisbane. Our licensed plumbers provide expert solutions for all water pressure issues."
+        serviceArea="Brisbane Water Pressure Local Business Queensland"
       />
-      
+
       <ServiceDetailLayout
-        title="Water Pressure Solutions"
-        subtitle="Optimal Pressure Throughout Your Home"
-        description="Our <span class='font-semibold text-white'>professional water pressure services</span> diagnose and resolve all types of pressure issues in your plumbing system. Whether you're experiencing <span class='font-semibold text-white'>frustratingly low pressure</span> or damaging high pressure, our licensed plumbers deliver <span class='font-semibold text-white'>effective solutions</span> for consistent, optimal water flow throughout your home."
-        features={[
-          "Comprehensive pressure testing",
-          "Pressure reducing valve installation",
-          "Pressure boosting systems",
-          "Pipe restriction removal",
-          "Whole-house pressure regulation",
-          "Fixture-specific pressure adjustments",
-          "Water main assessment"
-        ]}
-        benefits={[
-          "Comfortable, consistent shower pressure",
-          "Extends appliance and fixture lifespan",
-          "Prevents pipe damage from excessive pressure",
-          "Reduces water waste",
-          "Improves overall plumbing system performance",
-          "Prevents annoying water hammer and pipe noise",
-          "Balanced pressure through multiple outlets"
-        ]}
-        images={[
-          "/images/hayden-hero-1.webp",
-          "/images/hayden-hero-fixed.webp",
-          "/images/icon-logo.webp"
-        ]}
-        bentoGrid={[
-          {
-            type: "featured",
-            title: "Complete Pressure Management Solutions",
-            description: "From comprehensive pressure testing to advanced regulation systems, we provide <span class=\"font-bold text-white\">tailored water pressure solutions</span> for every property. Our licensed plumbers optimize your system for perfect pressure at every tap, shower, and appliance.",
-            icon: "/icons/hose.json"
-          },
-          {
-            type: "standard",
-            title: "Pressure Boosting Systems",
-            description: "Low pressure affecting your shower or multiple fixtures? Our pressure boosting solutions provide adequate flow even in multi-story homes or properties with supply challenges.",
-            icon: "/icons/speedometer.json"
-          },
-          {
-            type: "standard",
-            title: "Pressure Regulation",
-            description: "Protect your plumbing from damaging high pressure with professional pressure reducing systems that provide optimal, consistent pressure throughout your home.",
-            icon: "/icons/interface-settings.json"
-          },
-          {
-            type: "list",
-            title: "Our Pressure Services",
-            items: [
-              { icon: "water", text: "Comprehensive pressure testing" },
-              { icon: "drain", text: "Pressure reducing valve installation" },
-              { icon: "water", text: "Pressure pump & boosting systems" },
-              { icon: "water", text: "Pipe restriction clearing" },
-              { icon: "drain", text: "Water hammer elimination" },
-              { icon: "water", text: "Multi-story pressure balancing" }
-            ]
-          },
-          {
-            type: "payment",
-            title: "Simple Payment Options",
-            items: [
-              {
-                title: "Flexible Payment Plans",
-                description: "Affordable pressure solutions",
-                providers: ["humm", "zip"]
-              },
-              {
-                title: "Secure Card Payments",
-                description: "Safe & trusted transactions",
-                providers: ["visa", "mastercard", "amex"]
-              },
-              {
-                title: "Contactless Payments",
-                description: "Modern, convenient options",
-                providers: ["applepay"]
-              }
-            ]
-          },
-          {
-            type: "guarantee",
-            title: "Our Pressure Guarantee",
-            items: [
-              "Measurable pressure improvements",
-              "Manufacturer-backed equipment warranty",
-              "Workmanship guarantee",
-              "Compliance with water authority standards",
-              "Post-installation pressure verification"
-            ]
-          }
-        ]}
-        commonIssues={[
-          {
-            title: "Frustratingly Low Water Pressure",
-            description: "Low water pressure makes daily activities like showering and washing dishes frustrating and time-consuming. Our plumbers identify and address the specific causes of your low pressure issues.",
-            bullets: [
-              "Comprehensive testing to identify pressure drop locations",
-              "Clearing of pipe restrictions and mineral buildup",
-              "Installation of pressure boosting systems where needed",
-              "Water main and service line evaluation",
-              "Upgrading of undersized pipes that restrict flow"
-            ],
-            icon: "/icons/shower.json"
-          },
-          {
-            title: "Damaging High Water Pressure",
-            description: "Excessive water pressure can damage pipes, fixtures, and appliances while wasting water and increasing your bills. Our regulation solutions protect your entire plumbing system.",
-            bullets: [
-              "Installation of pressure reducing valves",
-              "Whole-house pressure regulation systems",
-              "Protection for appliances and fixtures",
-              "Elimination of water hammer and pipe noise",
-              "Balanced pressure throughout your property"
-            ],
-            icon: "/icons/speedometer.json"
-          },
-          {
-            title: "Inconsistent or Fluctuating Pressure",
-            description: "Unpredictable water pressure that changes throughout the day or when using multiple fixtures indicates underlying issues that require professional assessment.",
-            bullets: [
-              "Diagnosis of pressure fluctuation causes",
-              "Installation of pressure balancing systems",
-              "Evaluation of supply line capacity",
-              "Detection of pressure-robbing leaks or restrictions",
-              "Solutions for multi-level pressure consistency"
-            ],
-            icon: "/icons/wind.json"
-          }
-        ]}
-        whyChooseUs={[
-          {
-            title: "Advanced Pressure Diagnostics",
-            description: "We utilize professional-grade pressure testing equipment to precisely measure and analyze your water pressure at multiple points, identifying exact causes rather than guessing."
-          },
-          {
-            title: "Complete Solution Approach",
-            description: "Rather than just treating symptoms, we identify and address the root causes of pressure problems, providing long-term solutions that improve your entire plumbing system."
-          },
-          {
-            title: "Quality Pressure Equipment",
-            description: "We install only premium pressure regulating valves, boosting systems, and balancing equipment from trusted manufacturers with proven reliability."
-          }
-        ]}
-        paymentOptions={[
-          {
-            title: "Affordable Pressure Solutions",
-            description: "Many water pressure issues can be resolved with <span class=\"font-bold text-white\">cost-effective solutions</span>. We provide honest assessments and always start with the most economical approach that will effectively solve your specific pressure problems."
-          },
-          {
-            title: "Investment in Efficiency",
-            description: "Proper water pressure regulation not only improves comfort but also reduces water waste and extends the life of your plumbing system and appliances, providing long-term cost savings."
-          }
-        ]}
-        trustFactors={[
-          {
-            icon: "/icons/calculator.json",
-            title: "Accurate Pressure Testing",
-            description: "We use specialized gauges to <span class='font-bold text-white'>accurately measure</span> your water pressure and identify deviations from the ideal range."
-          },
-          {
-            icon: "/icons/Graduation Scroll Icon.json",
-            title: "Licensed Pressure Specialists",
-            description: "Our plumbers are specifically trained in water pressure diagnosis and regulation, with expertise in both residential and commercial pressure systems."
-          },
-          {
-            icon: "/icons/handshake-deal.json",
-            title: "Lasting Solutions",
-            description: "We don\'t just treat symptoms; we find the root cause to provide <span class='font-bold text-white'>long-term solutions</span> for consistent water pressure."
-          }
-        ]}
+        heroData={{
+          title: "Water Pressure Solutions",
+          subtitle: "Expert Pressure Services",
+          description: `Our team provides <span class="font-bold text-white">professional water pressure services</span> with guaranteed results. We ensure <span class="font-bold text-white">optimal pressure</span> for your property.`,
+          bookOnlineLink: "#book",
+          callNowLink: "tel:1300HDTRADE"
+        }}
+        bentoGridData={{
+          title: "Why Choose Our Service",
+          subtitle: "Professional & Reliable",
+          items: [
+            {
+              type: "featured",
+              title: "Professional",
+              description: "Expert solutions with advanced equipment.",
+              icon: "/icons/man-search-avatar.json",
+              colSpan: 2
+            },
+            {
+              type: "standard",
+              title: "Quality Service",
+              description: "Solutions guaranteed.",
+              icon: "/icons/graduation-scroll.json"
+            },
+            {
+              type: "list",
+              title: "Pressure Services",
+              listItems: [
+                { icon: "pipe", text: "Pressure Testing" },
+                { icon: "valve", text: "Pressure Control" },
+                { icon: "meter", text: "System Optimization" },
+                { icon: "safety", text: "Maintenance" }
+              ]
+            },
+            {
+              type: "payment",
+              title: "Flexible Payments",
+              paymentItems: [
+                {
+                  title: "Buy Now, Pay Later",
+                  description: "Split your payments with ease",
+                  icons: <PaymentIcons type="bnpl" />
+                },
+                {
+                  title: "Secure Payments",
+                  description: "All major cards accepted",
+                  icons: <PaymentIcons type="cards" />
+                },
+                {
+                  title: "Quick Tap & Go",
+                  description: "Fast, contactless convenience",
+                  icons: <PaymentIcons type="tap" />
+                }
+              ]
+            },
+            {
+              type: "guarantee",
+              title: "Our Guarantees",
+              icon: "/icons/star-smile.json",
+              guaranteeItems: [
+                "Same Day Service",
+                "100% Satisfaction Guarantee",
+                "Fixed Price Upfront",
+                "Licensed & Insured Team"
+              ]
+            }
+          ]
+        }}
+        introData={{
+          title: "Water Pressure",
+          subtitle: "Professional Service",
+          paragraph1: `Our expert team provides <span class="font-bold text-white">comprehensive water pressure solutions</span> for both residential and commercial properties. We ensure optimal pressure throughout your system.`,
+          paragraph2: `Using <span class="font-bold text-white">advanced equipment</span>, our licensed plumbers deliver effective solutions for all types of pressure issues.`
+        }}
+        issuesData={{
+          title: "Pressure Services",
+          subtitle: "Comprehensive Solutions",
+          introParagraph: "We provide professional services for all water pressure needs.",
+          issues: [
+            {
+              title: "Pressure Testing",
+              description: "Complete testing service.",
+              bullets: [
+                "System assessment",
+                "Pressure measurement",
+                "Problem identification",
+                "Solution planning"
+              ]
+            },
+            {
+              title: "Pressure Control",
+              description: "Expert control solutions.",
+              bullets: [
+                "Pressure regulation",
+                "Valve installation",
+                "System balancing",
+                "Performance testing"
+              ]
+            },
+            {
+              title: "Maintenance",
+              description: "Professional maintenance service.",
+              bullets: [
+                "Regular checks",
+                "System optimization",
+                "Preventive care",
+                "Performance monitoring"
+              ]
+            }
+          ]
+        }}
+        financeData={{
+          title: "Water Pressure",
+          subtitle: "Competitive & Transparent Pricing",
+          description1: `We offer <span class="font-bold text-white">competitive pricing</span> for all our pressure services. Get upfront quotes with no hidden fees.`,
+          description2: `Take advantage of our <span class="font-bold text-white">flexible payment options</span> to handle your pressure needs without financial stress.`,
+          features: [
+            "Upfront Fixed Pricing",
+            "No Hidden Charges",
+            "Interest-Free Options",
+            "Senior Discounts"
+          ]
+        }}
+        ctaData={{
+          title: "Need Pressure Solutions?",
+          subtitle: "Don't Wait - Call Now",
+          description: `Get your water pressure optimized professionally. Our <span class="font-bold text-white">expert team</span> is ready to help with advanced solutions.`,
+          buttonText: "Call Now",
+          buttonLink: "tel:1300HDTRADE"
+        }}
+        trustData={{
+          title: "Why Trust Our Service",
+          subtitle: "Licensed & Experienced Team",
+          factors: [
+            {
+              icon: "/icons/shield-security.json",
+              title: "Licensed Plumbers",
+              description: "Fully licensed and certified professionals."
+            },
+            {
+              icon: "/icons/magnifier-zoom.json",
+              title: "Advanced Equipment",
+              description: "Latest pressure testing technology."
+            },
+            {
+              icon: "/icons/star-smile.json",
+              title: "Guaranteed Work",
+              description: "100% satisfaction guarantee."
+            }
+          ]
+        }}
+        bookingData={{
+          title: "Book Your Service",
+          subtitle: "Fast & Easy Online Booking"
+        }}
       />
     </>
   );

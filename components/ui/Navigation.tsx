@@ -4,6 +4,7 @@ import React from 'react';
 import { NavBar } from '@/components/navigation/DesktopNavigation';
 import { Building2, Home, MapPin, Wrench, Calendar, Phone } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import type { NavItem } from '@/types/navigation/types';
 
 const navigationItems = [
   {
@@ -56,8 +57,9 @@ const navigationItems = [
           { name: 'Electric Hot Water Systems', url: '/services/hot-water-systems/electric' },
           { name: 'Hot Water Repairs', url: '/services/hot-water-systems/repairs' },
           { name: 'Hot Water Installation', url: '/services/hot-water-systems/installation' },
+          { name: 'Hot Water System Replacement', url: '/services/hot-water-systems/replacement' },
           { name: 'Emergency Hot Water', url: '/services/hot-water-systems/emergency' },
-          { name: 'System Replacement', url: '/services/hot-water-systems/replacement' },
+          { name: 'Buyers Guide', url: '/services/hot-water-systems/maintenance' }
         ],
       },
       {
@@ -78,14 +80,14 @@ const navigationItems = [
         name: 'Air Conditioning',
         url: '/services/air-conditioning',
         subItems: [
-          { name: 'Split System Installation', url: '/services/air-conditioning/split-system-installation' },
-          { name: 'AC Repairs', url: '/services/air-conditioning/repairs' },
-          { name: 'AC Diagnostics', url: '/services/air-conditioning/diagnostics' },
-          { name: 'AC Maintenance', url: '/services/air-conditioning/maintenance' },
-          { name: 'Ducted Air Installation', url: '/services/air-conditioning/ducted-installation' },
-          { name: 'Commercial AC Services', url: '/services/air-conditioning/commercial' },
-          { name: 'AC Replacement', url: '/services/air-conditioning/replacement' },
-          { name: 'Emergency AC Repairs', url: '/services/air-conditioning/emergency' },
+          { name: 'Split System Installation', url: '/air-conditioning/split-system-installation' },
+          { name: 'AC Repairs', url: '/air-conditioning/repairs' },
+          { name: 'AC Servicing', url: '/air-conditioning/servicing' },
+          { name: 'AC Cleaning', url: '/air-conditioning/cleaning' },
+          { name: 'AC Diagnostics', url: '/air-conditioning/diagnostics' },
+          { name: 'Ducted AC', url: '/air-conditioning/ducted' },
+          { name: 'System Optimization', url: '/air-conditioning/system-optimization' },
+          { name: 'Air Con Sizing Calculator', url: '/air-conditioning/sizing-calculator' },
         ],
       },
     ],
@@ -204,19 +206,13 @@ const navigationItems = [
   },
 ];
 
-export function Navigation() {
-  const pathname = usePathname();
-  
-  // Separate navigation items from action items
-  const mainNavItems = navigationItems.filter(item => 
-    item.name !== 'Call Now' && item.name !== 'Book Online' && (pathname === '/' ? item.name !== 'Home' : true)
-  );
-  
-  const actionButtons = navigationItems.filter(item => 
-    item.name === 'Call Now' || item.name === 'Book Online'
-  );
-  
+interface NavigationProps {
+  items: NavItem[];
+  actionItems: NavItem[];
+}
+
+export function Navigation({ items, actionItems }: NavigationProps) {
   return (
-    <NavBar items={mainNavItems} actionItems={actionButtons} />
+    <NavBar items={items} actionItems={actionItems} />
   );
 } 

@@ -50,24 +50,47 @@ export function IconCardsGrid({ cards, className, columns = { sm: 1, md: 3, lg: 
   return (
     <div className={cn(gridCols, className)}>
       {cards.map((card, index) => (
-        <Card key={index} className="bg-white/5 border-0 hover:bg-white/10 transition-colors duration-300">
-          <CardContent className="p-6 flex flex-col items-center text-center space-y-4">
-            {card.lordIcon ? (
-              <div className="w-16 h-16">
-                <LordIcon
-                  src={card.lordIcon.src}
-                  trigger={card.lordIcon.trigger || "hover"}
-                  colors={card.lordIcon.colors ? `primary:${card.lordIcon.colors.primary},secondary:${card.lordIcon.colors.secondary}` : undefined}
-                  size={64}
-                />
-              </div>
-            ) : (
-              card.icon && <div className="w-16 h-16">{card.icon}</div>
-            )}
-            <h3 className="text-xl font-semibold text-white">{card.title}</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">{card.description}</p>
-          </CardContent>
-        </Card>
+        card.href ? (
+          <Link key={index} href={card.href} className="block">
+            <Card className="bg-white/5 border-0 hover:bg-white/10 transition-colors duration-300">
+              <CardContent className="p-6 flex flex-col items-center text-center space-y-4">
+                {card.lordIcon ? (
+                  <div className="w-16 h-16">
+                    <LordIcon
+                      src={card.lordIcon.src}
+                      trigger={card.lordIcon.trigger || "hover"}
+                      colors={card.lordIcon.colors ? `primary:${card.lordIcon.colors.primary},secondary:${card.lordIcon.colors.secondary}` : undefined}
+                      size={64}
+                    />
+                  </div>
+                ) : (
+                  card.icon && <div className="w-16 h-16">{card.icon}</div>
+                )}
+                <h3 className="text-xl font-semibold text-white">{card.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{card.description}</p>
+              </CardContent>
+            </Card>
+          </Link>
+        ) : (
+          <Card key={index} className="bg-white/5 border-0 hover:bg-white/10 transition-colors duration-300">
+            <CardContent className="p-6 flex flex-col items-center text-center space-y-4">
+              {card.lordIcon ? (
+                <div className="w-16 h-16">
+                  <LordIcon
+                    src={card.lordIcon.src}
+                    trigger={card.lordIcon.trigger || "hover"}
+                    colors={card.lordIcon.colors ? `primary:${card.lordIcon.colors.primary},secondary:${card.lordIcon.colors.secondary}` : undefined}
+                    size={64}
+                  />
+                </div>
+              ) : (
+                card.icon && <div className="w-16 h-16">{card.icon}</div>
+              )}
+              <h3 className="text-xl font-semibold text-white">{card.title}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">{card.description}</p>
+            </CardContent>
+          </Card>
+        )
       ))}
     </div>
   );

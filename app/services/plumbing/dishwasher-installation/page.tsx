@@ -1,191 +1,174 @@
-import React from 'react';
-import ServiceDetailLayout from '@/components/layouts/ServiceDetailLayout';
-import { ServiceSchema } from '@/components/ui/ServiceSchema';
+'use client';
 
-export const metadata = {
-  title: 'Professional Dishwasher Installation Services | HD Trade Services',
-  description: 'Expert dishwasher installation services by licensed plumbers. We install and connect all types and brands of dishwashers with leak-free guarantee.',
-};
+import React from 'react';
+import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
+import { ServiceSchema } from '@/components/ui/ServiceSchema';
+import { PaymentIcons } from '@/app/components/PaymentIcons';
+import { FaTools } from 'react-icons/fa';
 
 export default function DishwasherInstallationPage() {
   return (
     <>
       <ServiceSchema 
-        serviceName="Professional Dishwasher Installation Services"
-        description="Complete dishwasher installation services by licensed plumbers. We expertly install and connect all types of dishwashers, from freestanding to fully integrated models, with proper plumbing connections and leak-free guarantee."
-        serviceArea="Australia"
+        serviceName="Dishwasher Installation Brisbane"
+        description="Professional dishwasher installation services in Brisbane. Expert plumbing solutions for all dishwasher brands and models."
+        serviceArea="Brisbane Plumbing Dishwasher Installation Local Business Queensland"
       />
-      
+
       <ServiceDetailLayout
-        title="Dishwasher Installation"
-        subtitle="Expert Appliance Connection & Setup"
-        description="Our <span class='font-semibold text-white'>professional dishwasher installation services</span> ensure your new appliance is perfectly connected and operating at optimal performance. Our licensed plumbers handle all aspects of installation including <span class='font-semibold text-white'>water supply, drainage, and electrical connections</span>, providing a <span class='font-semibold text-white'>complete, code-compliant installation</span> with leak-free guarantee."
-        features={[
-          "All dishwasher types and brands installation",
-          "Freestanding dishwasher setup",
-          "Integrated dishwasher installation",
-          "Water supply connection",
-          "Proper drainage installation",
-          "Compliance with plumbing codes",
-          "Old dishwasher removal & disposal"
-        ]}
-        benefits={[
-          "Leak-free installation guarantee",
-          "Proper drainage to prevent backflow",
-          "Professional appliance leveling",
-          "Correct water pressure adjustment",
-          "Integrated look for built-in models",
-          "Compliance with manufacturer warranty",
-          "Complete testing and demonstration"
-        ]}
-        images={[
-          "/images/hayden-hero-1.webp",
-          "/images/hayden-hero-fixed.webp",
-          "/images/icon-logo.webp"
-        ]}
-        bentoGrid={[
-          {
-            type: "featured",
-            title: "Seamless Dishwasher Installation",
-            description: "Expert connection of your new dishwasher to water supply and drainage lines, ensuring leak-free operation.",
-            icon: "/icons/dishwasher.json"
-          },
-          {
-            type: "standard",
-            title: "Leak Prevention Technology",
-            description: "Our specialized installation techniques and quality components ensure your dishwasher is connected securely with flood-safe hoses and proper seals to prevent leaks.",
-            icon: "/icons/hose.json"
-          },
-          {
-            type: "standard",
-            title: "Professional Setup",
-            description: "Beyond just connecting pipes, we ensure proper leveling, door alignment, and complete testing to guarantee optimal dishwasher performance and longevity.",
-            icon: "/icons/tool.json"
-          },
-          {
-            type: "list",
-            title: "Our Installation Services",
-            items: [
-              { icon: "water", text: "Freestanding dishwasher installation" },
-              { icon: "water", text: "Under-counter integration" },
-              { icon: "drain", text: "Fully integrated cabinet fitting" },
-              { icon: "water", text: "Water & drainage connection" },
-              { icon: "drain", text: "Dishwasher relocation" },
-              { icon: "water", text: "Commercial dishwasher setup" }
-            ]
-          },
-          {
-            type: "payment",
-            title: "Simple Payment Options",
-            items: [
-              {
-                title: "Affordable Installation",
-                description: "Budget-friendly solutions",
-                providers: ["humm", "zip"]
-              },
-              {
-                title: "Secure Card Payments",
-                description: "Safe & trusted transactions",
-                providers: ["visa", "mastercard", "amex"]
-              },
-              {
-                title: "Contactless Payments",
-                description: "Modern, convenient options",
-                providers: ["applepay"]
-              }
-            ]
-          },
-          {
-            type: "guarantee",
-            title: "Our Installation Guarantee",
-            items: [
-              "Leak-free connections",
-              "Proper drainage function",
-              "Complete appliance testing",
-              "Workmanship warranty",
-              "Manufacturer warranty compliance"
-            ]
-          }
-        ]}
-        commonIssues={[
-          {
-            title: "New Dishwasher Installation",
-            description: "Installing a new dishwasher requires proper connection to water supply, drainage, and sometimes electrical systems. Our comprehensive installation ensures everything is connected correctly.",
-            bullets: [
-              "Professional unboxing and positioning",
-              "Proper leveling for optimal performance",
-              "Quality water supply connection with shut-off valve",
-              "Correct drainage setup to prevent backflow issues",
-              "Complete testing and operation verification"
-            ],
-            icon: "/icons/dishwasher.json"
-          },
-          {
-            title: "Kitchen Renovations",
-            description: "During kitchen renovations, dishwasher installation needs to integrate seamlessly with new cabinetry, countertops, and plumbing systems for a cohesive result.",
-            bullets: [
-              "Precise measurements for cabinet integration",
-              "Coordination with cabinet installers",
-              "Custom panel installation for integrated models",
-              "Adaptation to new plumbing configurations",
-              "Alignment with countertops and adjacent cabinetry"
-            ],
-            icon: "/icons/home.json"
-          },
-          {
-            title: "Dishwasher Replacement & Upgrades",
-            description: "Replacing an old dishwasher with a new model requires proper removal of the existing unit and adaptation of connections to suit the new appliance specifications.",
-            bullets: [
-              "Safe disconnection and removal of old unit",
-              "Responsible disposal of replaced appliance",
-              "Adaptation of existing connections if needed",
-              "Installation of modern flood-safe hoses",
-              "Update to comply with current plumbing codes"
-            ],
-            icon: "/icons/tool.json"
-          }
-        ]}
-        whyChooseUs={[
-          {
-            title: "Licensed Dishwasher Installation Experts",
-            description: "Our plumbers are specifically trained in modern dishwasher installation techniques, ensuring your new appliance is installed correctly while maintaining manufacturer warranty validity."
-          },
-          {
-            title: "Comprehensive Installation Service",
-            description: "We handle every aspect from positioning and leveling to water connection, drainage installation, and complete testing to ensure your dishwasher is perfectly installed and operating optimally."
-          },
-          {
-            title: "Quality Installation Components",
-            description: "We use only premium braided hoses, quality valves, and proper seals to ensure long-lasting, leak-free connections for your peace of mind."
-          }
-        ]}
-        paymentOptions={[
-          {
-            title: "Affordable Installation Pricing",
-            description: "Our dishwasher installation services are provided at <span class=\"font-bold text-white\">competitive, transparent rates</span> with no hidden charges. We'll provide a clear quote before beginning work so you know exactly what to expect."
-          },
-          {
-            title: "Package Deal Savings",
-            description: "When purchased alongside other plumbing services, we offer discounted rates on dishwasher installation, making it even more affordable to ensure professional setup of your new appliance."
-          }
-        ]}
-        trustFactors={[
-          {
-            icon: "/icons/Graduation Scroll Icon.json",
-            title: "Licensed Installation Specialists",
-            description: "Our plumbers are fully licensed professionals with specific training in appliance installation, ensuring your dishwasher is connected in compliance with plumbing codes and manufacturer specifications."
-          },
-          {
-            icon: "/icons/handshake-deal.json",
-            title: "Leak-Free Guarantee",
-            description: "We stand behind our installations with a comprehensive leak-free guarantee. If your dishwasher develops any connection leaks related to our installation, we'll return to fix it at no cost."
-          },
-          {
-            icon: "/icons/speedometer.json",
-            title: "Efficient Installation",
-            description: "Most standard dishwasher installations can be completed in just 1-2 hours, allowing you to start enjoying your new appliance right away while ensuring no corners are cut."
-          }
-        ]}
+        heroData={{
+          title: "Dishwasher",
+          subtitle: "Installation Services",
+          description: `Our team provides <span class="font-bold text-white">professional dishwasher installation</span> with guaranteed results. We handle <span class="font-bold text-white">all brands and models</span> with expert care and precision.`,
+          bookOnlineLink: "#book",
+          callNowLink: "tel:1300HDTRADE"
+        }}
+        bentoGridData={{
+          title: "Why Choose Us",
+          subtitle: "for Installation",
+          items: [
+            {
+              type: "featured",
+              title: "Professional Installation",
+              description: `Our expert team delivers <span class="font-bold text-white">reliable installation services</span> for all dishwasher brands and models, ensuring <span class="font-bold text-white">perfect operation</span>.`,
+              icon: "/icons/tools.json",
+              colSpan: 2
+            },
+            {
+              type: "standard",
+              title: "Quality Service",
+              description: `We provide <span class="font-bold text-white">professional service</span> with attention to detail for every installation.`,
+              icon: "/icons/certificate.json"
+            },
+            {
+              type: "list",
+              title: "Installation Services",
+              listItems: [
+                { icon: <FaTools className="text-blue-400"/>, text: "New Installations" },
+                { icon: <FaTools className="text-red-400"/>, text: "Replacements" },
+                { icon: <FaTools className="text-green-400"/>, text: "Water Connection" },
+                { icon: <FaTools className="text-yellow-400"/>, text: "Drainage Setup" }
+              ]
+            },
+            {
+              type: "payment",
+              title: "Flexible Payments",
+              paymentItems: [
+                {
+                  title: "Buy Now, Pay Later",
+                  description: "Split your payments with ease",
+                  icons: <PaymentIcons type="bnpl" />
+                },
+                {
+                  title: "Secure Payments",
+                  description: "All major cards accepted",
+                  icons: <PaymentIcons type="cards" />
+                },
+                {
+                  title: "Quick Tap & Go",
+                  description: "Fast, contactless convenience",
+                  icons: <PaymentIcons type="tap" />
+                }
+              ]
+            },
+            {
+              type: "guarantee",
+              title: "Our Guarantees",
+              icon: "/icons/star-smile.json",
+              guaranteeItems: [
+                "Lifetime Labour Warranty",
+                "100% Satisfaction Guarantee",
+                "Fixed Price Upfront",
+                "Licensed & Insured Team"
+              ]
+            }
+          ]
+        }}
+        introData={{
+          title: "Professional Dishwasher",
+          subtitle: "Installation Service",
+          paragraph1: `Our team specializes in <span class="font-bold text-white">professional dishwasher installations</span>. We handle all brands and models with <span class="font-bold text-white">expert care and precision</span>.`,
+          paragraph2: `Using <span class="font-bold text-white">proven techniques and quality materials</span>, we ensure your dishwasher is installed correctly. Our experienced team delivers <span class="font-bold text-white">reliable, long-lasting results</span>.`
+        }}
+        issuesData={{
+          title: "Dishwasher Installation",
+          subtitle: "Services We Provide",
+          introParagraph: `We offer comprehensive installation solutions. Here are the <span class="font-bold text-white">key services</span> we provide:`,
+          issues: [
+            {
+              title: "New Installations",
+              description: `Complete <span class="font-bold text-white">installation service</span> for all dishwasher types.`,
+              bullets: [
+                "Water connection",
+                "Drainage setup",
+                "Testing & calibration"
+              ]
+            },
+            {
+              title: "Replacements",
+              description: `Professional <span class="font-bold text-white">replacement service</span> for existing units.`,
+              bullets: [
+                "Old unit removal",
+                "New unit installation",
+                "System testing"
+              ]
+            },
+            {
+              title: "Additional Services",
+              description: `Comprehensive <span class="font-bold text-white">installation services</span> for complete solutions.`,
+              bullets: [
+                "Plumbing modifications",
+                "Leak prevention",
+                "Maintenance advice"
+              ]
+            }
+          ]
+        }}
+        financeData={{
+          title: "Affordable Solutions",
+          subtitle: "Payment Options",
+          description1: `We offer <span class="font-bold text-white">competitive pricing</span> for all dishwasher installation services. Get upfront quotes with no hidden fees and <span class="font-bold text-white">flexible payment options</span> to manage your installation costs effectively.`,
+          description2: `Take advantage of our <span class="font-bold text-white">interest-free payment plans</span> to get your installation completed without financial stress. We believe <span class="font-bold text-white">quality service</span> should be accessible to everyone.`,
+          featuresTitle: "Payment Benefits",
+          features: [
+            "Upfront Fixed Pricing",
+            "Interest-Free Options Available",
+            "No Hidden Charges",
+            "Accept All Major Payment Methods"
+          ]
+        }}
+        ctaData={{
+          title: "Need a Dishwasher",
+          subtitle: "Installation?",
+          description: `Contact our <span class="font-bold text-white">expert team</span> today to book your installation. We ensure <span class="font-bold text-white">perfect results</span>.`,
+          buttonText: "Call Now",
+          buttonLink: "tel:1300HDTRADE"
+        }}
+        trustData={{
+          title: "Your Trusted Local",
+          subtitle: "Installation Experts",
+          factors: [
+            {
+              icon: "/icons/certificate.json",
+              title: "Licensed Professionals",
+              description: `Peace of mind with <span class="font-bold text-white">fully licensed and insured</span> installation experts.`
+            },
+            {
+              icon: "/icons/tools.json",
+              title: "Quality Service",
+              description: `Expert installations using <span class="font-bold text-white">proven techniques</span> and quality materials.`
+            },
+            {
+              icon: "/icons/shield.json",
+              title: "Guaranteed Results",
+              description: `Every installation backed by our <span class="font-bold text-white">satisfaction guarantee</span>.`
+            }
+          ]
+        }}
+        bookingData={{
+          title: "Book Your",
+          subtitle: "Installation Today"
+        }}
       />
     </>
   );

@@ -39,6 +39,7 @@ export function Hero() {
         flex items-center justify-center
         bg-black
         overflow-x-hidden overflow-y-auto
+        pt-20
       "
     >
       {/* Sparkles Background */}
@@ -47,7 +48,7 @@ export function Hero() {
       </div>
 
       {/* Hero Image (absolutely positioned) */}
-      <div className="absolute inset-0 top-[80px] z-[3] transform-gpu">
+      <div className="absolute inset-0 top-[100px] z-[3] transform-gpu">
         <div className="relative h-full w-full">
           <AnimatePresence mode="wait">
             <motion.div 
@@ -85,7 +86,7 @@ export function Hero() {
       </div>
       
       {/* Main Container */}
-      <div className="relative z-[4] container mx-auto px-4 py-8">
+      <div className="relative z-[4] container mx-auto px-4 py-8 mt-8">
         <div
           className="
             grid grid-cols-12 gap-6

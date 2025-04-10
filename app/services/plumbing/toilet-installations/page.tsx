@@ -1,191 +1,175 @@
-import React from 'react';
-import ServiceDetailLayout from '@/components/layouts/ServiceDetailLayout';
-import { ServiceSchema } from '@/components/ui/ServiceSchema';
+'use client';
 
-export const metadata = {
-  title: 'Professional Toilet Installation Services | HD Trade Services',
-  description: 'Expert toilet installation and replacement services by licensed plumbers. We install all types of toilets with precision and quality workmanship.',
-};
+import React from 'react';
+import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
+import { ServiceSchema } from '@/components/ui/ServiceSchema';
+import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function ToiletInstallationsPage() {
   return (
     <>
       <ServiceSchema 
-        serviceName="Professional Toilet Installation Services"
-        description="Complete toilet installation and replacement services by licensed plumbers. We install all toilet types including standard, back-to-wall, wall-hung, and smart toilets with precision and guaranteed leak-free results."
-        serviceArea="Australia"
+        serviceName="Toilet Installation Brisbane"
+        description="Professional toilet installation services in Brisbane. Our licensed plumbers provide expert installation and repairs for all toilet systems."
+        serviceArea="Brisbane Toilet Installation Local Business Queensland"
       />
-      
+
       <ServiceDetailLayout
-        title="Toilet Installation"
-        subtitle="Expert Toilet Replacement & Installation"
-        description="Our <span class='font-semibold text-white'>professional toilet installation services</span> provide seamless replacement of your existing toilet or installation of a new toilet in any bathroom. Our licensed plumbers handle the entire process with <span class='font-semibold text-white'>precise workmanship</span>, ensuring your new toilet is <span class='font-semibold text-white'>perfectly installed</span> with leak-free connections and proper function."
-        features={[
-          "All toilet types and brands installation",
-          "Standard toilet replacement",
-          "Back-to-wall toilet installation",
-          "Wall-hung toilet systems",
-          "In-wall cistern installation",
-          "Smart toilet and bidet seat installation",
-          "Water-efficient toilet upgrades"
-        ]}
-        benefits={[
-          "Leak-free installation guarantee",
-          "Water-saving toilet options",
-          "Improved bathroom aesthetics",
-          "Enhanced comfort and functionality",
-          "Proper waste connection and venting",
-          "Expert advice on toilet selection",
-          "Complete old toilet removal and disposal"
-        ]}
-        images={[
-          "/images/hayden-hero-1.webp",
-          "/images/hayden-hero-fixed.webp",
-          "/images/icon-logo.webp"
-        ]}
-        bentoGrid={[
-          {
-            type: "featured",
-            title: "Complete Toilet Installation Services",
-            description: "From standard replacements to complex concealed cistern systems, our licensed plumbers provide <span class=\"font-bold text-white\">professional installation for all toilet types</span>. We handle every aspect from removal of your old toilet to perfect installation and testing of your new fixture.",
-            icon: "/icons/Toilet Room Icon.json"
-          },
-          {
-            type: "standard",
-            title: "Water-Efficient Options",
-            description: "Upgrade to a water-saving toilet that can reduce your water usage by thousands of liters annually while providing improved performance and comfort.",
-            icon: "/icons/Eco Hover Spin Leaves Icon.json"
-          },
-          {
-            type: "standard",
-            title: "Quality Workmanship",
-            description: "Our detailed installation process ensures perfect alignment, secure connections, and proper sealing for a toilet that functions flawlessly for years to come.",
-            icon: "/icons/Wired Flat 409 Tool Hover Oscillate.json"
-          },
-          {
-            type: "list",
-            title: "Our Installation Services",
-            items: [
-              { icon: "water", text: "Standard close-coupled toilets" },
-              { icon: "water", text: "Back-to-wall toilets" },
-              { icon: "drain", text: "Wall-hung toilet systems" },
-              { icon: "water", text: "In-wall cistern installation" },
-              { icon: "drain", text: "Smart toilets & bidet seats" },
-              { icon: "water", text: "Accessible & comfort height toilets" }
-            ]
-          },
-          {
-            type: "payment",
-            title: "Simple Payment Options",
-            items: [
-              {
-                title: "Affordable Installation",
-                description: "Budget-friendly solutions",
-                providers: ["humm", "zip"]
-              },
-              {
-                title: "Secure Card Payments",
-                description: "Safe & trusted transactions",
-                providers: ["visa", "mastercard", "amex"]
-              },
-              {
-                title: "Contactless Payments",
-                description: "Modern, convenient options",
-                providers: ["applepay"]
-              }
-            ]
-          },
-          {
-            type: "guarantee",
-            title: "Our Installation Guarantee",
-            items: [
-              "Leak-free installation promise",
-              "Perfect alignment guarantee",
-              "Workmanship warranty",
-              "Complete fixture testing",
-              "Proper connection verification"
-            ]
-          }
-        ]}
-        commonIssues={[
-          {
-            title: "Old & Inefficient Toilets",
-            description: "Older toilets often waste water, perform poorly, and develop recurring issues. Replacing your toilet can solve these problems while reducing water usage significantly.",
-            bullets: [
-              "Replacement of water-wasting older models",
-              "Installation of dual-flush efficient systems",
-              "Upgrade to more powerful flushing mechanisms",
-              "Resolution of persistent leaking problems",
-              "Improvement of overall bathroom appearance"
-            ],
-            icon: "/icons/Toilet Bowl Icon.json"
-          },
-          {
-            title: "Bathroom Renovations",
-            description: "When renovating your bathroom, a new toilet installation provides the perfect opportunity to update your fixture with a modern, efficient model that complements your new design.",
-            bullets: [
-              "Seamless integration with new bathroom design",
-              "Installation of space-saving toilet options",
-              "Concealed cistern systems for sleek aesthetics",
-              "Wall-hung toilets for easier floor cleaning",
-              "Modern toilet technologies and features"
-            ],
-            icon: "/icons/Flat Home Icon 3D Roll.json"
-          },
-          {
-            title: "Leaking & Unstable Toilets",
-            description: "Toilets that rock, leak at the base, or have persistent seal problems require proper reinstallation to prevent water damage and potential structural issues.",
-            bullets: [
-              "Correction of improper previous installations",
-              "Replacement of damaged floor flanges",
-              "Proper sealing of toilet base to floor",
-              "Secure mounting to prevent movement",
-              "Correction of leaking water and waste connections"
-            ],
-            icon: "/icons/toilet-bowl.json"
-          }
-        ]}
-        whyChooseUs={[
-          {
-            title: "Licensed Toilet Installation Experts",
-            description: "Our plumbers are specifically trained in modern toilet installation techniques, ensuring your new toilet is installed according to manufacturer specifications and plumbing codes."
-          },
-          {
-            title: "Complete Installation Service",
-            description: "We handle every aspect from removal and disposal of your old toilet to installation, sealing, connection, and thorough testing of your new fixture."
-          },
-          {
-            title: "Toilet Selection Assistance",
-            description: "Not sure which toilet is right for your bathroom? Our experts can provide guidance on models, features, and options that will best suit your space, budget, and preferences."
-          }
-        ]}
-        paymentOptions={[
-          {
-            title: "Transparent Fixed Pricing",
-            description: "Our toilet installation services are provided at <span class=\"font-bold text-white\">clear, upfront rates</span> with no hidden charges. We'll explain exactly what's included before any work begins, so you know precisely what to expect."
-          },
-          {
-            title: "Supply & Install Packages",
-            description: "We can supply quality toilets at competitive prices and offer complete supply-and-install packages that provide excellent value while ensuring you get a toilet perfectly suited to your needs."
-          }
-        ]}
-        trustFactors={[
-          {
-            icon: "/icons/Graduation Scroll Icon.json",
-            title: "Licensed Installation Specialists",
-            description: "Our plumbers are fully licensed professionals with specific training in all aspects of toilet installation, from standard replacements to complex concealed systems."
-          },
-          {
-            icon: "/icons/Wired Flat Handshake Deal Icon.json",
-            title: "Leak-Free Guarantee",
-            description: "We stand behind our installations with a comprehensive leak-free guarantee. If your new toilet develops any leaks related to our installation, we'll return to fix it at no cost."
-          },
-          {
-            icon: "/icons/Wired Flat Speed Hover Pinch.json",
-            title: "Efficient Installation",
-            description: "Most standard toilet replacements can be completed in just 1-2 hours, minimizing disruption to your home while ensuring quality installation without shortcuts."
-          }
-        ]}
+        heroData={{
+          title: "Toilet Installation",
+          subtitle: "Expert Installation Solutions",
+          description: `Our team provides <span class="font-bold text-white">professional toilet installation services</span> with guaranteed results. We ensure <span class="font-bold text-white">quality workmanship</span> for every installation.`,
+          bookOnlineLink: "#book",
+          callNowLink: "tel:1300HDTRADE"
+        }}
+        bentoGridData={{
+          title: "Why Choose Our Service",
+          subtitle: "Professional & Reliable",
+          items: [
+            {
+              type: "featured",
+              title: "Professional",
+              description: "Expert toilet installations with quality materials.",
+              icon: "/icons/man-search-avatar.json",
+              colSpan: 2
+            },
+            {
+              type: "standard",
+              title: "Quality Service",
+              description: "Long-lasting installations guaranteed.",
+              icon: "/icons/graduation-scroll.json"
+            },
+            {
+              type: "list",
+              title: "Installation Services",
+              listItems: [
+                { icon: "pipe", text: "New Toilets" },
+                { icon: "valve", text: "Toilet Repairs" },
+                { icon: "meter", text: "Cistern Setup" },
+                { icon: "safety", text: "Leak Prevention" }
+              ]
+            },
+            {
+              type: "payment",
+              title: "Flexible Payments",
+              paymentItems: [
+                {
+                  title: "Buy Now, Pay Later",
+                  description: "Split your payments with ease",
+                  icons: <PaymentIcons type="bnpl" />
+                },
+                {
+                  title: "Secure Payments",
+                  description: "All major cards accepted",
+                  icons: <PaymentIcons type="cards" />
+                },
+                {
+                  title: "Quick Tap & Go",
+                  description: "Fast, contactless convenience",
+                  icons: <PaymentIcons type="tap" />
+                }
+              ]
+            },
+            {
+              type: "guarantee",
+              title: "Our Guarantees",
+              icon: "/icons/star-smile.json",
+              guaranteeItems: [
+                "Same Day Service",
+                "100% Satisfaction Guarantee",
+                "Fixed Price Upfront",
+                "Licensed & Insured Team"
+              ]
+            }
+          ]
+        }}
+        introData={{
+          title: "Toilet Installation",
+          subtitle: "Professional Service",
+          paragraph1: `Our expert team provides <span class="font-bold text-white">comprehensive toilet installation solutions</span> for both residential and commercial properties. We ensure perfect functionality and reliability.`,
+          paragraph2: `From <span class="font-bold text-white">new installations to repairs</span>, our licensed plumbers deliver quality solutions that meet all standards.`
+        }}
+        issuesData={{
+          title: "Installation Services",
+          subtitle: "Comprehensive Solutions",
+          introParagraph: "We provide professional services for all toilet installation needs.",
+          issues: [
+            {
+              title: "New Installations",
+              description: "Complete toilet installations.",
+              bullets: [
+                "Site preparation",
+                "Quality materials",
+                "Professional installation",
+                "Final testing"
+              ]
+            },
+            {
+              title: "Toilet Repairs",
+              description: "Expert repair solutions.",
+              bullets: [
+                "Leak repairs",
+                "Cistern fixes",
+                "Flush issues",
+                "Seal replacement"
+              ]
+            },
+            {
+              title: "Maintenance",
+              description: "Professional maintenance service.",
+              bullets: [
+                "Regular checks",
+                "Part replacement",
+                "Seal inspection",
+                "Performance testing"
+              ]
+            }
+          ]
+        }}
+        financeData={{
+          title: "Toilet Installation",
+          subtitle: "Competitive & Transparent Pricing",
+          description1: `We offer <span class="font-bold text-white">competitive pricing</span> for all our toilet services. Get upfront quotes with no hidden fees.`,
+          description2: `Take advantage of our <span class="font-bold text-white">flexible payment options</span> to handle your installation needs without financial stress.`,
+          features: [
+            "Upfront Fixed Pricing",
+            "No Hidden Charges",
+            "Interest-Free Options",
+            "Senior Discounts"
+          ]
+        }}
+        ctaData={{
+          title: "Need A New Toilet?",
+          subtitle: "Don't Wait - Call Now",
+          description: `Get your toilet installation done right. Our <span class="font-bold text-white">expert team</span> is ready to help with professional solutions.`,
+          buttonText: "Call Now",
+          buttonLink: "tel:1300HDTRADE"
+        }}
+        trustData={{
+          title: "Why Trust Our Service",
+          subtitle: "Licensed & Experienced Team",
+          factors: [
+            {
+              icon: "/icons/shield-security.json",
+              title: "Licensed Plumbers",
+              description: "Fully licensed and certified professionals."
+            },
+            {
+              icon: "/icons/magnifier-zoom.json",
+              title: "Quality Materials",
+              description: "Premium toilet products and parts."
+            },
+            {
+              icon: "/icons/star-smile.json",
+              title: "Guaranteed Work",
+              description: "100% satisfaction guarantee."
+            }
+          ]
+        }}
+        bookingData={{
+          title: "Book Your Service",
+          subtitle: "Fast & Easy Online Booking"
+        }}
       />
     </>
   );

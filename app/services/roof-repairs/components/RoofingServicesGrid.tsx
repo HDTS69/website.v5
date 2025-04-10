@@ -20,15 +20,15 @@ const services: Service[] = [
     title: "Roof Inspections",
     description: "Comprehensive roof inspections to identify potential issues and maintenance needs.",
     icon: "/icons/placeholder.svg",
-    href: "/services/roof-repairs/leak-investigation",
-    category: "Roof leak solutions",
+    href: "/services/roof-repairs/inspections",
+    category: "Roof inspections",
     lordIcon: "/icons/magnifier-zoom.json"
   },
   {
     title: "Roof Reports",
     description: "Detailed reports documenting roof condition, issues, and recommended solutions.",
     icon: "/icons/placeholder.svg",
-    href: "/services/roof-repairs/roof-report",
+    href: "/services/roof-repairs/reports",
     category: "Roof inspections",
     lordIcon: "/icons/rules-book-guideline.json"
   },
@@ -44,16 +44,16 @@ const services: Service[] = [
     title: "Roof Repairs",
     description: "Expert repair services for all types of roof damage and wear.",
     icon: "/icons/placeholder.svg",
-    href: "/services/roof-repairs/roof-maintenance",
-    category: "Preventative care",
+    href: "/services/roof-repairs/repairs",
+    category: "Roof repairs",
     lordIcon: "/icons/tool.json"
   },
   {
     title: "Roof Tile Repairs",
     description: "Specialized repair and replacement services for damaged roof tiles.",
     icon: "/icons/placeholder.svg",
-    href: "/services/roof-repairs/roof-tile-repair",
-    category: "Roof leak solutions",
+    href: "/services/roof-repairs/tile-repairs",
+    category: "Roof repairs",
     lordIcon: "/icons/roof-rain.json"
   },
   {
@@ -61,14 +61,14 @@ const services: Service[] = [
     description: "Professional metal roofing installation, repairs, and maintenance services.",
     icon: "/icons/placeholder.svg",
     href: "/services/roof-repairs/metal-roofing",
-    category: "Roof leak solutions",
+    category: "Roof solutions",
     lordIcon: "/icons/nails.json"
   },
   {
     title: "Roof Cleaning",
     description: "Professional roof cleaning services to maintain appearance and prevent damage.",
     icon: "/icons/placeholder.svg",
-    href: "/services/roof-repairs/roof-maintenance",
+    href: "/services/roof-repairs/cleaning",
     category: "Preventative care",
     lordIcon: "/icons/broom.json"
   },
@@ -76,7 +76,7 @@ const services: Service[] = [
     title: "Roof Ventilation",
     description: "Expert installation and maintenance of roof ventilation systems.",
     icon: "/icons/placeholder.svg",
-    href: "/services/roof-repairs/roof-ventilation",
+    href: "/services/roof-repairs/ventilation",
     category: "Roof health",
     lordIcon: "/icons/wind.json"
   },
@@ -84,16 +84,16 @@ const services: Service[] = [
     title: "Gutter Cleaning",
     description: "Thorough cleaning of gutters and downpipes to prevent blockages and water damage.",
     icon: "/icons/placeholder.svg",
-    href: "/services/roof-repairs/gutters-downpipes",
-    category: "Roof leak solutions",
+    href: "/services/roof-repairs/gutter-cleaning",
+    category: "Gutter solutions",
     lordIcon: "/icons/cleaning-surface.json"
   },
   {
     title: "Gutter & Downpipes",
     description: "Installation and repair services for gutters and downpipes.",
     icon: "/icons/placeholder.svg",
-    href: "/services/roof-repairs/gutters-downpipes",
-    category: "Roof leak solutions",
+    href: "/services/roof-repairs/gutter-downpipes",
+    category: "Gutter solutions",
     lordIcon: "/icons/hose.json"
   },
   {

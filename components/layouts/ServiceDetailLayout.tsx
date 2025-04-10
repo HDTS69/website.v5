@@ -10,6 +10,9 @@ import { BookingForm } from '@/components/ui/BookingForm/BookingForm';
 import { GoogleReviews } from '@/components/ui/GoogleReviews';
 import { AnimatedBookNowButton } from "@/components/ui/AnimatedBookNowButton";
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles';
+import { CheckIcon } from '@heroicons/react/24/outline';
+import { FaTools } from 'react-icons/fa';
+import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 // Custom styles for the animated buttons (copied from emergency page)
 const customButtonStyles = `
@@ -104,7 +107,7 @@ interface BentoItem {
   title: string;
   icon?: string; // LordIcon src path
   description?: string; // HTML content allowed
-  listItems?: Array<{ icon: React.ReactNode; text: string }>; // Icon can be SVG ReactNode
+  listItems?: Array<{ icon: React.ReactNode; text: React.ReactNode }>; // Icon and text can be ReactNode
   paymentItems?: Array<{ title: string; description: string; icons: React.ReactNode }>; // Icons are ReactNodes (e.g., <Image>)
   guaranteeItems?: string[];
   colSpan?: number;
@@ -112,6 +115,7 @@ interface BentoItem {
 
 interface BentoGridProps {
   title: string; // e.g., "Why Choose Our Service"
+  subtitle: string;
   items: BentoItem[];
 }
 
@@ -130,12 +134,14 @@ interface IssueItem {
 
 interface IssuesProps {
   title: string; // e.g., "Common Issues We Address"
+  subtitle: string;
   introParagraph: string; // HTML content allowed
   issues: IssueItem[];
 }
 
 interface FinanceOptionsProps {
   title: string;
+  subtitle: string;
   description1: string; // HTML content allowed
   description2: string; // HTML content allowed
   featuresTitle?: string; // Title for the bullet list (e.g., "Payment Perks")
@@ -145,6 +151,7 @@ interface FinanceOptionsProps {
 
 interface CTAProps {
   title: string;
+  subtitle: string;
   description: string; // HTML content allowed
   buttonText: string;
   buttonLink?: string;
@@ -158,11 +165,13 @@ interface TrustFactorItem {
 
 interface TrustProps {
   title: string; // e.g., "Why You Can Trust Us"
+  subtitle: string;
   factors: TrustFactorItem[];
 }
 
 interface BookingProps {
   title: string; // e.g., "Book Your Service Online"
+  subtitle: string;
 }
 
 // --- MAIN LAYOUT PROPS INTERFACE --- 
@@ -177,18 +186,178 @@ export interface ServiceDetailLayoutProps {
   bookingData: BookingProps;
 }
 
+// Default content for the layout
+const defaultContent = {
+  heroData: {
+    title: "Hot Water Systems",
+    subtitle: "Expert Solutions & Service",
+    description: `Our team of <span class="font-bold text-white">licensed professionals</span> provides <span class="font-bold text-white">expert hot water solutions</span> with guaranteed workmanship. We ensure <span class="font-bold text-white">reliable, efficient</span>, and compliant installations and repairs.`,
+    bookOnlineLink: "#book",
+    callNowLink: "tel:1300HDTRADE"
+  },
+  bentoGridData: {
+    title: "Why Choose",
+    subtitle: "Our Service",
+    items: [
+      {
+        type: "featured" as const,
+        title: "24/7 Emergency Service",
+        description: `We're here when you need us most. Our team offers <span class="font-bold text-white">round-the-clock emergency hot water service</span> to handle urgent issues <span class="font-bold text-white">anytime, day or night</span>.`,
+        icon: "/icons/siren.json",
+        colSpan: 2
+      },
+      {
+        type: "standard" as const,
+        title: "Expert Solutions",
+        description: `We provide <span class="font-bold text-white">professional advice</span> and <span class="font-bold text-white">quality installations</span> for all hot water system types.`,
+        icon: "/icons/graduation-scroll.json"
+      },
+      {
+        type: "list" as const,
+        title: "Our Services",
+        listItems: [
+          { icon: <FaTools className="text-blue-400"/>, text: "System Installation" },
+          { icon: <FaTools className="text-red-400"/>, text: "Repairs & Maintenance" },
+          { icon: <FaTools className="text-green-400"/>, text: "System Replacement" },
+          { icon: <FaTools className="text-yellow-400"/>, text: "Emergency Service" }
+        ]
+      },
+      {
+        type: "payment" as const,
+        title: "Flexible Payment Options",
+        paymentItems: [
+          {
+            title: "Buy Now, Pay Later",
+            description: "Interest-free installment plans",
+            icons: <PaymentIcons type="bnpl" />
+          },
+          {
+            title: "Credit & Debit Cards",
+            description: "All major cards accepted",
+            icons: <PaymentIcons type="cards" />
+          },
+          {
+            title: "Digital Payments",
+            description: "Fast, contactless convenience",
+            icons: <PaymentIcons type="tap" />
+          }
+        ]
+      },
+      {
+        type: "guarantee" as const,
+        title: "Our Guarantees",
+        icon: "/icons/star-smile.json",
+        guaranteeItems: [
+          "Same Day Hot Water Service",
+          "Licensed & Insured Team",
+          "Fixed Price Upfront",
+          "Lifetime Workmanship Warranty"
+        ]
+      }
+    ]
+  },
+  introData: {
+    title: "Hot Water System",
+    subtitle: "Experts",
+    paragraph1: `Our team specializes in providing <span class="font-bold text-white">comprehensive hot water solutions</span>. We handle all system types including gas, electric, solar, and heat pump systems with <span class="font-bold text-white">expertise and precision</span>.`,
+    paragraph2: `From emergency repairs to new installations, we ensure your hot water needs are met with <span class="font-bold text-white">professional service</span> and <span class="font-bold text-white">lasting solutions</span>.`
+  },
+  issuesData: {
+    title: "Hot Water",
+    subtitle: "Services",
+    introParagraph: `Our experienced team handles a wide range of hot water system needs. Here are our <span class="font-bold text-white">key services</span>:`,
+    issues: [
+      {
+        title: "System Installation",
+        description: `Professional installation of <span class="font-bold text-white">all hot water system types</span>.`,
+        bullets: [
+          "Expert system selection advice",
+          "Professional installation",
+          "Compliance certification"
+        ]
+      },
+      {
+        title: "Repairs & Maintenance",
+        description: `Fast, reliable repairs for <span class="font-bold text-white">all hot water issues</span>.`,
+        bullets: [
+          "24/7 emergency repairs",
+          "Preventive maintenance",
+          "System optimization"
+        ]
+      },
+      {
+        title: "System Replacement",
+        description: `Professional guidance and installation for <span class="font-bold text-white">system upgrades</span>.`,
+        bullets: [
+          "System assessment",
+          "Energy efficiency advice",
+          "Professional replacement"
+        ]
+      }
+    ]
+  },
+  financeData: {
+    title: "Affordable Hot Water",
+    subtitle: "Solutions",
+    description1: `We believe in <span class="font-bold text-white">transparent and fair pricing</span>. Get upfront quotes with no hidden fees. We offer <span class="font-bold text-white">flexible payment options</span> to manage your hot water system costs effectively.`,
+    description2: `Take advantage of our <span class="font-bold text-white">interest-free financing</span> options to handle your hot water needs without financial stress. <span class="font-bold text-white">Quality service</span> shouldn't break the bank.`,
+    featuresTitle: "Payment Benefits",
+    features: [
+      "Upfront Fixed Pricing",
+      "Interest-Free Options Available",
+      "No Hidden Charges",
+      "Flexible Payment Plans"
+    ]
+  },
+  ctaData: {
+    title: "Hot Water",
+    subtitle: "Emergency?",
+    description: `No hot water? Don't wait! Our <span class="font-bold text-white">expert team</span> is ready to help <span class="font-bold text-white">24/7</span>.`,
+    buttonText: "Call Now",
+    buttonLink: "tel:1300HDTRADE"
+  },
+  trustData: {
+    title: "Your Trusted Hot Water",
+    subtitle: "Experts",
+    factors: [
+      {
+        icon: "/icons/graduation-scroll.json",
+        title: "Licensed Hot Water",
+        subtitle: "Specialists",
+        description: `Peace of mind with <span class="font-bold text-white">qualified and insured experts</span>.`
+      },
+      {
+        icon: "/icons/clock.json",
+        title: "Same Day",
+        subtitle: "Service",
+        description: `Fast response with <span class="font-bold text-white">same day service</span> available.`
+      },
+      {
+        icon: "/icons/star-rating.json",
+        title: "Quality",
+        subtitle: "Guaranteed",
+        description: `Every installation backed by our <span class="font-bold text-white">satisfaction guarantee</span>.`
+      }
+    ]
+  },
+  bookingData: {
+    title: "Book Your Hot Water",
+    subtitle: "Service Today"
+  }
+};
+
 // --- THE LAYOUT COMPONENT --- 
 
 export function ServiceDetailLayout({
-  heroData,
-  bentoGridData,
-  introData,
-  issuesData,
-  financeData,
-  ctaData,
-  trustData,
-  bookingData,
-}: ServiceDetailLayoutProps): React.ReactNode {
+  heroData = defaultContent.heroData,
+  bentoGridData = defaultContent.bentoGridData,
+  introData = defaultContent.introData,
+  issuesData = defaultContent.issuesData,
+  financeData = defaultContent.financeData,
+  ctaData = defaultContent.ctaData,
+  trustData = defaultContent.trustData,
+  bookingData = defaultContent.bookingData,
+}: Partial<ServiceDetailLayoutProps>): React.ReactNode {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   return (
@@ -205,14 +374,13 @@ export function ServiceDetailLayout({
               <div className="flex justify-center items-center">
                 <div className="max-w-4xl text-center">
                   <motion.h1 
-                    className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 relative inline-block tracking-tight leading-tight"
+                    className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 relative tracking-tight leading-none flex flex-col items-center"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                   >
-                    {/* Use heroData props */} 
-                    <span className="block mt-4 sm:mt-0">{heroData.title}</span>
-                    <span className="block text-[0.7em] mt-2 sm:mt-1 text-gray-300 font-normal">{heroData.subtitle}</span>
+                    <span className="whitespace-nowrap">{heroData.title}</span>
+                    <span className="text-[0.7em] text-gray-300 font-normal mt-2">{heroData.subtitle}</span>
                     {/* Underline Animation */}
                     <motion.div 
                       className="absolute -bottom-3 sm:-bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"
@@ -347,8 +515,9 @@ export function ServiceDetailLayout({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
                 >
-                  {introData.title} 
-                  {introData.subtitle && <span className="text-gray-300 font-normal">{introData.subtitle}</span>} 
+                  <span className="inline-block font-bold">{introData.title}</span>
+                  <span className="inline-block ml-2 text-[0.85em] text-gray-300 font-normal">{introData.subtitle}</span>
+                  {/* Underline Animation */}
                   <motion.div 
                     className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"
                     initial={{ scaleX: 0, opacity: 0 }}
@@ -412,14 +581,15 @@ export function ServiceDetailLayout({
           <BackgroundWrapper className="py-12 sm:py-16">
             <div className="container mx-auto px-4">
               <div className="max-w-7xl mx-auto">
-                {/* Use bentoGridData prop */}
+                {/* Title */}
                 <motion.h2 
                   className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 sm:mb-8 text-center relative inline-block pb-3"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
                 >
-                  {bentoGridData.title} 
+                  <span className="inline-block font-bold">{bentoGridData.title}</span>
+                  <span className="inline-block ml-2 text-[0.85em] text-gray-300 font-normal">{bentoGridData.subtitle}</span>
                   {/* Underline Animation */}
                   <motion.div 
                     className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"
@@ -431,7 +601,6 @@ export function ServiceDetailLayout({
                 </motion.h2>
 
                 {/* Row 1: Featured + Standard */}
-                {/* Map over bentoGridData.items */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                   {bentoGridData.items
                     .filter((item: BentoItem) => item.type === 'featured' || item.type === 'standard')
@@ -439,11 +608,12 @@ export function ServiceDetailLayout({
                     .sort((a: BentoItem, b: BentoItem) => (a.type === 'featured' ? -1 : 1))
                     .map((item: BentoItem, index: number) => {
                       const cardKey = `bento-r1-${item.type}-${index}`;
+
                       if (item.type === 'featured') {
                         return (
                           <motion.div
                             key={cardKey}
-                            className={`md:col-span-${item.colSpan || 2} bg-black/40 backdrop-blur-sm rounded-2xl border border-[#00E6CA]/20 p-5 sm:p-8 relative overflow-hidden group hover:border-[#00E6CA]/40 transition-all duration-300`}
+                            className="md:col-span-2 bg-black/40 backdrop-blur-sm rounded-2xl border border-[#00E6CA]/20 p-5 sm:p-8 relative overflow-hidden group hover:border-[#00E6CA]/40 transition-all duration-300"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: index * 0.05 }}
@@ -458,7 +628,6 @@ export function ServiceDetailLayout({
                               {item.description && (
                                 <p className="text-gray-300 mb-6 flex-grow" dangerouslySetInnerHTML={{ __html: item.description }} />
                               )}
-                              {/* Standardized button */}
                               <AnimatedBookNowButton href="#book" className="w-fit text-sm py-2 book-online-btn bg-[#00E6CA] text-white">Book Online</AnimatedBookNowButton>
                             </div>
                             <div className="absolute right-0 top-0 w-1/3 h-full opacity-10 group-hover:opacity-20 transition-opacity duration-300">
@@ -466,7 +635,7 @@ export function ServiceDetailLayout({
                             </div>
                           </motion.div>
                         );
-                      } else { // Standard card
+                      } else {
                         return (
                           <motion.div
                             key={cardKey}
@@ -494,14 +663,14 @@ export function ServiceDetailLayout({
                 </div>
 
                 {/* Row 2: List, Payment, Guarantee */}
-                {/* Map over bentoGridData.items */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {bentoGridData.items
                     .filter((item: BentoItem) => item.type === 'list' || item.type === 'payment' || item.type === 'guarantee')
                     .slice(0, 3)
                     .map((item: BentoItem, index: number) => {
                       const cardKey = `bento-r2-${item.type}-${index}`;
-                      // --- List Card ---
+
+                      // List Card
                       if (item.type === "list") {
                         return (
                           <motion.div 
@@ -518,7 +687,7 @@ export function ServiceDetailLayout({
                               {item.listItems?.map((listItem, itemIndex) => ( 
                                 <li key={itemIndex} className="flex items-center gap-3 group-hover:translate-x-1 transition-transform">
                                   <span className="flex items-center justify-center w-7 h-7 rounded-full bg-gray-900/80 border border-gray-800">
-                                    {listItem.icon} {/* Expects ReactNode SVG */} 
+                                    {listItem.icon}
                                   </span>
                                   <span>{listItem.text}</span>
                                 </li>
@@ -527,8 +696,9 @@ export function ServiceDetailLayout({
                           </motion.div>
                         );
                       }
-                      // --- Payment Card ---
-                      else if (item.type === "payment") {
+
+                      // Payment Card
+                      if (item.type === "payment") {
                         return (
                           <motion.div 
                             key={cardKey}
@@ -542,7 +712,6 @@ export function ServiceDetailLayout({
                             <div className="relative z-10">
                               <div className="flex items-center justify-between mb-4">
                                 <h3 className="text-xl font-bold text-white whitespace-nowrap">{item.title}</h3>
-                                {/* Use item.icon prop */}
                                 <LordIcon src={item.icon || "/icons/piggy-bank.json"} size={40} forceTrigger={hoveredCard === cardKey} state="loop-on-hover" />
                               </div>
                               <div className="space-y-4">
@@ -554,7 +723,7 @@ export function ServiceDetailLayout({
                                         <p className="text-gray-400 text-sm">{payItem.description}</p>
                                       </div>
                                       <div className="flex items-center gap-2">
-                                        {payItem.icons} {/* Expects ReactNode Images */} 
+                                        {payItem.icons}
                                       </div>
                                     </div>
                                   </div>
@@ -567,8 +736,9 @@ export function ServiceDetailLayout({
                           </motion.div>
                         );
                       }
-                      // --- Guarantee Card ---
-                      else if (item.type === "guarantee") {
+
+                      // Guarantee Card
+                      if (item.type === "guarantee") {
                         return (
                           <motion.div 
                             key={cardKey}
@@ -581,7 +751,6 @@ export function ServiceDetailLayout({
                           >
                             <div className="relative z-10">
                               <div className="absolute top-0 right-0">
-                                {/* Use item.icon prop */}
                                 <LordIcon src={item.icon || "/icons/star-smile.json"} size={48} forceTrigger={hoveredCard === cardKey} state="loop-on-hover" />
                               </div>
                               <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
@@ -602,6 +771,7 @@ export function ServiceDetailLayout({
                           </motion.div>
                         );
                       }
+
                       return null;
                     })}
                 </div>
@@ -615,15 +785,15 @@ export function ServiceDetailLayout({
           <BackgroundWrapper className="py-20">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
-                {/* Use issuesData prop */} 
                 <motion.h2 
                   className="text-3xl md:text-4xl font-bold text-white mb-8 text-center relative inline-block pb-3"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
                 >
-                  {issuesData.title} 
-                  {/* Underline Animation */} 
+                  <span className="inline-block font-bold">{issuesData.title}</span>
+                  <span className="inline-block ml-2 text-[0.85em] text-gray-300 font-normal">{issuesData.subtitle}</span>
+                  {/* Underline Animation */}
                   <motion.div 
                     className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"
                     initial={{ scaleX: 0, opacity: 0 }}
@@ -675,15 +845,15 @@ export function ServiceDetailLayout({
           <BackgroundWrapper className="py-20">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
-                {/* Use financeData prop */} 
                 <motion.h2 
                   className="text-3xl md:text-4xl font-bold text-white mb-8 text-center relative inline-block pb-3"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
                 >
-                  {financeData.title} 
-                  {/* Underline Animation */} 
+                  <span className="inline-block font-bold">{financeData.title}</span>
+                  <span className="inline-block ml-2 text-[0.85em] text-gray-300 font-normal">{financeData.subtitle}</span>
+                  {/* Underline Animation */}
                   <motion.div 
                     className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"
                     initial={{ scaleX: 0, opacity: 0 }}
@@ -748,13 +918,14 @@ export function ServiceDetailLayout({
               <div className="max-w-6xl mx-auto text-center"> 
                 {/* Title */} 
                 <motion.h2 
-                  className="text-3xl md:text-4xl font-bold text-white mb-8 relative inline-block pb-3"
+                  className="text-3xl md:text-4xl font-bold text-white mb-8 text-center relative inline-block pb-3"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
                 >
-                  {ctaData.title} 
-                  {/* Underline */} 
+                  <span className="inline-block font-bold">{ctaData.title}</span>
+                  <span className="inline-block ml-2 text-[0.85em] text-gray-300 font-normal">{ctaData.subtitle}</span>
+                  {/* Underline Animation */}
                   <motion.div 
                     className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"
                     initial={{ scaleX: 0, opacity: 0 }}
@@ -807,8 +978,9 @@ export function ServiceDetailLayout({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
                 >
-                  {trustData.title}
-                  {/* Underline Animation */} 
+                  <span className="inline-block font-bold">{trustData.title}</span>
+                  <span className="inline-block ml-2 text-[0.85em] text-gray-300 font-normal">{trustData.subtitle}</span>
+                  {/* Underline Animation */}
                   <motion.div 
                     className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"
                     initial={{ scaleX: 0, opacity: 0 }}
@@ -862,8 +1034,9 @@ export function ServiceDetailLayout({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
                 >
-                  {bookingData.title} 
-                  {/* Underline Animation */} 
+                  <span className="inline-block font-bold">{bookingData.title}</span>
+                  <span className="inline-block ml-2 text-[0.85em] text-gray-300 font-normal">{bookingData.subtitle}</span>
+                  {/* Underline Animation */}
                   <motion.div 
                     className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"
                     initial={{ scaleX: 0, opacity: 0 }}

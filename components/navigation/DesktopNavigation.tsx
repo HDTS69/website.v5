@@ -166,16 +166,12 @@ export function NavBar({ items, actionItems = [], className }: NavBarProps) {
   return (
     <div 
       className={cn(
-        isMobile 
-          ? "fixed bottom-0 left-0 right-0 w-full !min-w-0 px-4 pb-4 md:hidden z-[60] touch-auto" 
-          : cn(
-              "w-full",
-              isHomePage ? "max-w-[700px]" : "max-w-[800px]",
-              "mx-auto z-[60]",
-              "fixed left-0 right-0",
-              "transition-none",
-              "touch-auto"
-            ),
+        "hidden md:block w-full",
+        isHomePage ? "max-w-[700px]" : "max-w-[800px]",
+        "mx-auto z-[60]",
+        "fixed left-0 right-0",
+        "transition-none",
+        "touch-auto",
         className
       )}
       style={{
@@ -186,8 +182,7 @@ export function NavBar({ items, actionItems = [], className }: NavBarProps) {
     >
       <motion.div 
         className={cn(
-          "border border-[#00E6CA]/20 bg-black/90 backdrop-blur-md pointer-events-auto w-full",
-          isMobile ? "rounded-2xl mx-auto max-w-md mb-0" : "rounded-full",
+          "border border-[#00E6CA]/20 bg-black/90 backdrop-blur-md pointer-events-auto w-full rounded-full",
           "transition-none"
         )}
         initial={{ opacity: 0, scale: 0, y: 20 }}

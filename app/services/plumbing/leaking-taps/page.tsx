@@ -1,229 +1,175 @@
-import React from 'react';
-import ServiceDetailLayout from '@/components/layouts/ServiceDetailLayout';
-import { ServiceSchema } from '@/components/ui/ServiceSchema';
+'use client';
 
-export const metadata = {
-  title: 'Professional Leaking Tap Repair Services | HD Trade Services',
-  description: 'Expert leaking tap repair services by licensed plumbers. We fix dripping taps, mixer taps, and all types of faucets with high-quality components.',
-};
+import React from 'react';
+import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
+import { ServiceSchema } from '@/components/ui/ServiceSchema';
+import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function LeakingTapsPage() {
   return (
     <>
       <ServiceSchema 
-        serviceName="Professional Leaking Tap Repair Services"
-        description="Comprehensive tap repair services by licensed plumbers. We fix all types of leaking taps, dripping faucets, and mixer taps with quality components and guaranteed workmanship for a permanent solution."
-        serviceArea="Australia"
+        serviceName="Leaking Taps Repair Brisbane"
+        description="Professional leaking tap repair services in Brisbane. Our licensed plumbers provide expert repairs for all types of taps and faucets."
+        serviceArea="Brisbane Leaking Taps Repair Local Business Queensland"
       />
-      
+
       <ServiceDetailLayout
-        title="Leaking Tap Repairs"
-        subtitle="Professional Dripping Tap Solutions"
-        description="Our <span class='font-semibold text-white'>professional leaking tap repair services</span> provide permanent solutions for all types of dripping taps and faulty fixtures. Our licensed plumbers use <span class='font-semibold text-white'>premium quality components</span> and specialized tools to fix leaks at their source, <span class='font-semibold text-white'>saving water and preventing damage</span> to your home."
-        features={[
-          "All tap types and brands repair",
-          "Kitchen tap and sink mixer repairs",
-          "Bathroom basin tap fixing",
-          "Shower mixer and tap repairs",
-          "Laundry tap repairs",
-          "Outdoor tap and garden tap fixing",
-          "Same-day leak repair service"
-        ]}
-        benefits={[
-          "Stops water wastage immediately",
-          "Prevents water damage to cabinetry",
-          "Reduces water bills",
-          "Eliminates annoying dripping sounds",
-          "Extends the life of your fixtures",
-          "Prevents staining and mineral buildup",
-          "Guaranteed leak-free results"
-        ]}
-        images={[
-          "/images/hayden-hero-1.webp",
-          "/images/hayden-hero-fixed.webp",
-          "/images/icon-logo.webp"
-        ]}
-        bentoGrid={[
-          {
-            type: "featured",
-            title: "Complete Tap Repair Solutions",
-            description: "From simple washer replacements to complex mixer tap repairs, our experienced plumbers provide <span class=\"font-bold text-white\">permanent solutions for all types of leaking taps</span>. We diagnose the exact cause of your leak and implement quality repairs using industry-leading components.",
-            icon: "/icons/sink.json"
-          },
-          {
-            type: "standard",
-            title: "Same-Day Service",
-            description: "Don't let that annoying drip continue. Our prompt response service means your leaking tap can be fixed today, saving water and preventing further damage.",
-            icon: "/icons/speedometer.json"
-          },
-          {
-            type: "standard",
-            title: "Quality Components",
-            description: "We use only premium washers, ceramic discs, cartridges, and seals from trusted manufacturers to ensure your repair lasts for years to come.",
-            icon: "/icons/tool.json"
-          },
-          {
-            type: "list",
-            title: "Our Tap Repair Services",
-            items: [
-              { icon: "water", text: "Kitchen mixer tap repairs" },
-              { icon: "water", text: "Bathroom basin tap fixing" },
-              { icon: "water", text: "Shower mixer repairs" },
-              { icon: "water", text: "Laundry tap repairs" },
-              { icon: "drain", text: "Outdoor/garden tap repairs" },
-              { icon: "water", text: "Commercial tap solutions" }
-            ]
-          },
-          {
-            type: "payment",
-            title: "Simple Payment Options",
-            items: [
-              {
-                title: "Affordable Tap Repairs",
-                description: "Cost-effective solutions",
-                providers: ["humm", "zip"]
-              },
-              {
-                title: "Secure Card Payments",
-                description: "Safe & trusted transactions",
-                providers: ["visa", "mastercard", "amex"]
-              },
-              {
-                title: "Contactless Payments",
-                description: "Modern, convenient options",
-                providers: ["applepay"]
-              }
-            ]
-          },
-          {
-            type: "guarantee",
-            title: "Our Repair Guarantee",
-            items: [
-              "Leak-free guarantee on all repairs",
-              "Quality parts warranty",
-              "Upfront fixed pricing",
-              "No drips policy",
-              "Water bill reduction"
-            ]
-          }
-        ]}
-        commonIssues={[
-          {
-            title: "Dripping & Leaking Taps",
-            description: "A constantly dripping tap isn't just annoying—it wastes thousands of liters of water annually and can lead to staining and fixture damage. Our specialized repair services address all causes of dripping.",
-            bullets: [
-              "Worn washers and O-rings replacement",
-              "Damaged valve seat regrinding and repair",
-              "Ceramic disc cartridge replacement",
-              "Spindle and jumper valve repairs",
-              "Complete sealing system restoration"
-            ],
-            icon: "/icons/sink.json"
-          },
-          {
-            title: "Mixer Tap Problems",
-            description: "Modern mixer taps use complex cartridge systems that can develop leaks, handle problems, or flow issues. Our technicians are specialists in diagnosing and repairing all mixer tap systems.",
-            bullets: [
-              "Cartridge replacement for precise flow control",
-              "Diverter valve repairs for shower/bath mixers",
-              "Handle repair and replacement",
-              "Spout seal replacement",
-              "Water temperature adjustment"
-            ],
-            icon: "/icons/shower.json"
-          },
-          {
-            title: "Tap Base & Connection Leaks",
-            description: "Leaks around the base of taps or at connection points can cause significant damage to countertops, cabinetry, and the structure of your home if left unaddressed.",
-            bullets: [
-              "Base seal replacement and waterproofing",
-              "Flange and mounting system tightening",
-              "Connection pipe seal replacement",
-              "Flexible hose replacement",
-              "Water supply line repairs"
-            ],
-            icon: "/icons/sink.json"
-          },
-          {
-            title: "Worn Washers & Seals",
-            description: "Worn washers and seals can lead to leaks from various parts of the tap, including the handle, spout, or base. Our plumbers specialize in identifying and replacing worn components to stop leaks.",
-            bullets: [
-              "Water leaks from handle, spout, or base",
-              "Dripping tap when turned off",
-              "Reduced water flow or spitting"
-            ],
-            icon: "/icons/tool.json"
-          },
-          {
-            title: "Full Tap Replacement",
-            description: "Supply and installation of new, high-quality taps for kitchens, bathrooms, and laundries, improving aesthetics and function.",
-            bullets: [],
-            icon: "/icons/sink.json"
-          },
-          {
-            title: "Fast & Efficient Repairs",
-            description: "Quick identification of the leak source and efficient repair or replacement of faulty components to stop drips fast.",
-            bullets: [],
-            icon: "/icons/speedometer.json"
-          },
-          {
-            title: "Quality Parts & Materials",
-            description: "Use of durable, high-quality washers, seals, cartridges, and replacement taps for long-lasting results.",
-            bullets: [],
-            icon: "/icons/tool.json"
-          },
-          {
-            title: "Cracked or damaged tap body",
-            description: "A cracked or damaged tap body can lead to leaks. Our plumbers specialize in repairing or replacing damaged tap bodies.",
-            bullets: [],
-            icon: "/icons/sink.json"
-          }
-        ]}
-        whyChooseUs={[
-          {
-            title: "Specialized Tap Repair Tools",
-            description: "Our plumbers carry specialized tools designed specifically for tap repairs, including seat cutters, specialized wrenches, and professional-grade pressure testing equipment."
-          },
-          {
-            title: "Genuine Replacement Parts",
-            description: "We stock a comprehensive range of genuine parts for all major tap brands, ensuring your repair uses the correct components designed specifically for your fixtures."
-          },
-          {
-            title: "Water-Saving Expertise",
-            description: "Beyond just fixing the leak, we can advise on water-efficient options, flow restrictors, and modern fixtures that can significantly reduce your water consumption."
-          },
-          {
-            title: "Prompt Service",
-            description: "We respond quickly to fix your leaking taps."
-          }
-        ]}
-        paymentOptions={[
-          {
-            title: "Affordable Tap Repair Solutions",
-            description: "Leaking tap repairs are typically <span class=\"font-bold text-white\">quick and affordable services</span> with immediate benefits. Our fixed pricing means you'll know exactly what your repair will cost before we start work, with no hidden charges."
-          },
-          {
-            title: "Cost vs. Replacement Analysis",
-            description: "Our plumbers provide honest assessments of whether repair or replacement is more economical for your specific situation. When a new tap is the better option, we offer competitive installation pricing with a range of quality fixtures."
-          }
-        ]}
-        trustFactors={[
-          {
-            icon: "/icons/Graduation Scroll Icon.json",
-            title: "Licensed Tap Repair Specialists",
-            description: "Our plumbers are fully licensed professionals with specific training in all types of tap repair techniques and systems."
-          },
-          {
-            icon: "/icons/handshake-deal.json",
-            title: "No-Drip Guarantee",
-            description: "We stand behind our work with a comprehensive guarantee: if your repaired tap continues to leak, we'll return to fix it at no additional cost."
-          },
-          {
-            icon: "/icons/speedometer.json",
-            title: "Fast Response Times",
-            description: "Leaks wait for no one. Our responsive service means we can often repair your leaking taps the same day you call, preventing further water waste and damage."
-          }
-        ]}
+        heroData={{
+          title: "Leaking Taps Repair",
+          subtitle: "Expert Repair Solutions",
+          description: `Our team provides <span class="font-bold text-white">professional tap repair services</span> with guaranteed results. We fix all types of <span class="font-bold text-white">leaking taps and faucets</span> quickly and effectively.`,
+          bookOnlineLink: "#book",
+          callNowLink: "tel:1300HDTRADE"
+        }}
+        bentoGridData={{
+          title: "Why Choose Our Service",
+          subtitle: "Professional & Reliable",
+          items: [
+            {
+              type: "featured",
+              title: "Professional",
+              description: "Expert tap repairs with quality parts.",
+              icon: "/icons/man-search-avatar.json",
+              colSpan: 2
+            },
+            {
+              type: "standard",
+              title: "Quality Service",
+              description: "Long-lasting repairs guaranteed.",
+              icon: "/icons/graduation-scroll.json"
+            },
+            {
+              type: "list",
+              title: "Repair Services",
+              listItems: [
+                { icon: "pipe", text: "Dripping Taps" },
+                { icon: "valve", text: "Mixer Taps" },
+                { icon: "meter", text: "Outdoor Taps" },
+                { icon: "safety", text: "Tap Replacements" }
+              ]
+            },
+            {
+              type: "payment",
+              title: "Flexible Payments",
+              paymentItems: [
+                {
+                  title: "Buy Now, Pay Later",
+                  description: "Split your payments with ease",
+                  icons: <PaymentIcons type="bnpl" />
+                },
+                {
+                  title: "Secure Payments",
+                  description: "All major cards accepted",
+                  icons: <PaymentIcons type="cards" />
+                },
+                {
+                  title: "Quick Tap & Go",
+                  description: "Fast, contactless convenience",
+                  icons: <PaymentIcons type="tap" />
+                }
+              ]
+            },
+            {
+              type: "guarantee",
+              title: "Our Guarantees",
+              icon: "/icons/star-smile.json",
+              guaranteeItems: [
+                "Same Day Service",
+                "100% Satisfaction Guarantee",
+                "Fixed Price Upfront",
+                "Licensed & Insured Team"
+              ]
+            }
+          ]
+        }}
+        introData={{
+          title: "Leaking Taps Repair",
+          subtitle: "Professional Repair Service",
+          paragraph1: `Our expert team provides <span class="font-bold text-white">comprehensive tap repair</span> services for both residential and commercial properties. We ensure quick and effective solutions.`,
+          paragraph2: `From <span class="font-bold text-white">dripping taps to mixer repairs</span>, our licensed plumbers deliver quality repairs that meet all standards.`
+        }}
+        issuesData={{
+          title: "Repair Services",
+          subtitle: "Comprehensive Solutions",
+          introParagraph: "We provide professional repair services for all types of taps.",
+          issues: [
+            {
+              title: "Dripping Taps",
+              description: "Stop wasteful drips.",
+              bullets: [
+                "Washer replacement",
+                "Seal repairs",
+                "Cartridge replacement",
+                "Pressure testing"
+              ]
+            },
+            {
+              title: "Mixer Taps",
+              description: "Expert mixer repairs.",
+              bullets: [
+                "Cartridge repairs",
+                "Handle fixes",
+                "Seal replacement",
+                "Pressure balancing"
+              ]
+            },
+            {
+              title: "Tap Replacements",
+              description: "Quality new installations.",
+              bullets: [
+                "Brand selection",
+                "Style matching",
+                "Professional fitting",
+                "Quality testing"
+              ]
+            }
+          ]
+        }}
+        financeData={{
+          title: "Leaking Taps Repair",
+          subtitle: "Competitive & Transparent Pricing",
+          description1: `We offer <span class="font-bold text-white">competitive pricing</span> for all our tap repair services. Get upfront quotes with no hidden fees.`,
+          description2: `Take advantage of our <span class="font-bold text-white">flexible payment options</span> to handle your repairs without financial stress.`,
+          features: [
+            "Upfront Fixed Pricing",
+            "No Hidden Charges",
+            "Interest-Free Options",
+            "Senior Discounts"
+          ]
+        }}
+        ctaData={{
+          title: "Leaking Tap?",
+          subtitle: "Don't Wait - Call Now",
+          description: `Don't waste water with leaking taps. Our <span class="font-bold text-white">expert team</span> is ready to help with fast repairs.`,
+          buttonText: "Call Now",
+          buttonLink: "tel:1300HDTRADE"
+        }}
+        trustData={{
+          title: "Why Trust Our Service",
+          subtitle: "Licensed & Experienced Team",
+          factors: [
+            {
+              icon: "/icons/shield-security.json",
+              title: "Licensed Plumbers",
+              description: "Fully licensed and certified professionals."
+            },
+            {
+              icon: "/icons/magnifier-zoom.json",
+              title: "Quality Parts",
+              description: "Premium materials and components."
+            },
+            {
+              icon: "/icons/star-smile.json",
+              title: "Guaranteed Work",
+              description: "100% satisfaction guarantee."
+            }
+          ]
+        }}
+        bookingData={{
+          title: "Book Your Service",
+          subtitle: "Fast & Easy Online Booking"
+        }}
       />
     </>
   );

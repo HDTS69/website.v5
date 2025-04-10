@@ -1,191 +1,175 @@
-import React from 'react';
-import ServiceDetailLayout from '@/components/layouts/ServiceDetailLayout';
-import { ServiceSchema } from '@/components/ui/ServiceSchema';
+'use client';
 
-export const metadata = {
-  title: 'Electric Eel Drain Clearing Services | HD Trade Services',
-  description: 'Professional electric eel drain unblocking by licensed plumbers. We quickly clear stubborn blockages in pipes of all sizes while protecting your plumbing system.',
-};
+import React from 'react';
+import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
+import { ServiceSchema } from '@/components/ui/ServiceSchema';
+import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function ElectricEelPage() {
   return (
     <>
       <ServiceSchema 
-        serviceName="Electric Eel Drain Clearing Services"
-        description="Expert drain unblocking with electric eel machines by licensed plumbers. We effectively clear stubborn blockages in sewer lines, stormwater drains, and all household pipes while protecting your plumbing system."
-        serviceArea="Australia"
+        serviceName="Electric Eel Service Brisbane"
+        description="Professional electric eel drain cleaning services in Brisbane. Our licensed plumbers provide expert drain clearing solutions using advanced equipment."
+        serviceArea="Brisbane Electric Eel Service Local Business Queensland"
       />
-      
+
       <ServiceDetailLayout
-        title="Electric Eel Services"
-        subtitle="Powerful Blockage Removal Solutions"
-        description="Our <span class='font-semibold text-white'>professional electric eel service</span> uses specialized rotating cable machines to cut through and remove tough blockages in pipes and drains. Our licensed plumbers are experts in <span class='font-semibold text-white'>clearing blocked drains</span> while protecting your pipes from damage, quickly restoring proper flow to your <span class='font-semibold text-white'>plumbing system</span>."
-        features={[
-          "Professional drain cleaning equipment",
-          "Multiple cable sizes for different pipes",
-          "Powerful motorized cutting heads",
-          "Tree root removal capability",
-          "Sewer line cleaning",
-          "Bathroom drain clearing",
-          "Kitchen sink unblocking"
-        ]}
-        benefits={[
-          "Fast resolution of stubborn blockages",
-          "Targets blockages without chemicals",
-          "Effective on tree roots and debris",
-          "Works in pipes of many sizes",
-          "Reaches deep into pipe systems",
-          "Protects pipes from pressure damage",
-          "More thorough than plungers or DIY tools"
-        ]}
-        images={[
-          "/images/hayden-hero-1.webp",
-          "/images/hayden-hero-fixed.webp",
-          "/images/icon-logo.webp"
-        ]}
-        bentoGrid={[
-          {
-            type: "featured",
-            title: "Specialized Electric Eel Technology",
-            description: "Our professional-grade electric eel machines use <span class=\"font-bold text-white\">powerful rotating cables with specialized cutting heads</span> to effectively remove blockages while protecting your pipes. This mechanical solution cuts through tough obstructions that chemicals and DIY methods can't touch, including tree roots and solid debris.",
-            icon: "/icons/electric-power.json"
-          },
-          {
-            type: "standard",
-            title: "Expert Technicians",
-            description: "Our licensed plumbers are specifically trained in electric eel techniques to navigate your pipe system safely, effectively clearing blockages without causing damage.",
-            icon: "/icons/Graduation Scroll Icon.json"
-          },
-          {
-            type: "standard",
-            title: "Complete Blockage Solutions",
-            description: "Beyond just punching through blockages, our electric eel service thoroughly breaks up and removes the obstruction to help prevent quick recurrence of clogs.",
-            icon: "/icons/hose.json"
-          },
-          {
-            type: "list",
-            title: "Common Applications",
-            items: [
-              { icon: "drain", text: "Main sewer line blockages" },
-              { icon: "water", text: "Sink & shower drain clogs" },
-              { icon: "drain", text: "Tree root intrusions" },
-              { icon: "water", text: "Toilet blockages" },
-              { icon: "drain", text: "Floor drain clearing" },
-              { icon: "water", text: "Laundry drain unblocking" }
-            ]
-          },
-          {
-            type: "payment",
-            title: "Simple Payment Options",
-            items: [
-              {
-                title: "Emergency Service Options",
-                description: "24/7 blockage solutions",
-                providers: ["humm", "zip"]
-              },
-              {
-                title: "Secure Card Payments",
-                description: "On-site convenient payment",
-                providers: ["visa", "mastercard", "amex"]
-              },
-              {
-                title: "Contactless Payments",
-                description: "Modern, convenient options",
-                providers: ["applepay"]
-              }
-            ]
-          },
-          {
-            type: "guarantee",
-            title: "Our Service Guarantee",
-            items: [
-              "Flow restoration guarantee",
-              "Pipe protection assurance",
-              "Professional blockage removal",
-              "Full warranty on workmanship",
-              "Licensed plumbers only"
-            ]
-          }
-        ]}
-        commonIssues={[
-          {
-            title: "🚨 Severe or Deep Blockages",
-            description: "When standard plunging or chemical cleaners fail, the electric eel can reach deep into pipes to clear major obstructions.",
-            bullets: [
-              "Powerful mechanical removal of blockages",
-              "Effective on compacted debris and buildup",
-              "Reaches obstructions deep in pipe systems",
-              "Breaks apart tough blockages completely",
-              "Handles pipes of various diameters"
-            ],
-            icon: "/icons/alert-triangle.json"
-          },
-          {
-            title: "🌲 Tree Root Intrusion",
-            description: "The cutting heads can effectively chop through invasive tree roots that have entered the drain lines.",
-            bullets: [
-              "Specialized cutting heads for root removal",
-              "Complete clearing of root masses",
-              "Access to deep root intrusions",
-              "Additional camera inspection available",
-              "Preventative maintenance recommendations"
-            ],
-            icon: "/icons/forest.json"
-          },
-          {
-            title: "🔄 Recurring Clogs",
-            description: "If you experience frequent blockages, the electric eel can thoroughly clean the pipe walls to prevent future issues.",
-            bullets: [
-              "Thorough removal of buildup causing repeat clogs",
-              "Identification of pipe issues contributing to blockages",
-              "More complete clearing than DIY methods",
-              "Optional camera inspection to identify hidden problems",
-              "Professional advice on preventing future blockages"
-            ],
-            icon: "/icons/tool.json"
-          }
-        ]}
-        whyChooseUs={[
-          {
-            title: "Professional-Grade Equipment",
-            description: "We use commercial-quality electric eel machines with various cable sizes and specialized heads designed to handle different types of blockages while protecting your pipes."
-          },
-          {
-            title: "Experienced Drain Specialists",
-            description: "Our licensed plumbers have extensive experience with electric eel drain clearing, ensuring safe, effective operation that resolves your blockage without pipe damage."
-          },
-          {
-            title: "Comprehensive Service",
-            description: "Beyond simply running the machine, we conduct proper assessment, select appropriate equipment, and provide advice to prevent future blockages."
-          }
-        ]}
-        paymentOptions={[
-          {
-            title: "Upfront, Fixed Pricing",
-            description: "We provide <span class=\"font-bold text-white\">clear, upfront quotes</span> based on your specific blockage situation, with no hidden fees or unexpected charges after the work is complete."
-          },
-          {
-            title: "Preventative Maintenance Options",
-            description: "For properties with recurring blockage issues, we offer scheduled maintenance programs at preferential rates to prevent emergency situations and maintain free-flowing drains."
-          }
-        ]}
-        trustFactors={[
-          {
-            icon: "/icons/Graduation Scroll Icon.json",
-            title: "Licensed Drain Clearing Experts",
-            description: "Our technicians are fully licensed plumbers with specific training in electric eel operation and drain clearing techniques for safe, effective service."
-          },
-          {
-            icon: "/icons/Shield Security Icon.json",
-            title: "Pipe Protection Promise",
-            description: "We take utmost care to protect your plumbing system while clearing blockages, using the appropriate equipment and techniques for your specific pipes."
-          },
-          {
-            icon: "/icons/magnifier-zoom.json",
-            title: "Combined with CCTV Inspection",
-            description: "For complex issues, we often use CCTV inspection alongside the electric eel to <span class='font-bold text-white'>precisely locate and diagnose</span> the blockage."
-          }
-        ]}
+        heroData={{
+          title: "Electric Eel Service",
+          subtitle: "Advanced Drain Cleaning",
+          description: `Our team provides <span class="font-bold text-white">professional electric eel services</span> with guaranteed results. We use <span class="font-bold text-white">advanced equipment</span> to clear any blockage.`,
+          bookOnlineLink: "#book",
+          callNowLink: "tel:1300HDTRADE"
+        }}
+        bentoGridData={{
+          title: "Why Choose Our Service",
+          subtitle: "Professional & Reliable",
+          items: [
+            {
+              type: "featured",
+              title: "Professional",
+              description: "Expert drain cleaning with advanced equipment.",
+              icon: "/icons/man-search-avatar.json",
+              colSpan: 2
+            },
+            {
+              type: "standard",
+              title: "Quality Service",
+              description: "Effective blockage removal guaranteed.",
+              icon: "/icons/graduation-scroll.json"
+            },
+            {
+              type: "list",
+              title: "Drain Services",
+              listItems: [
+                { icon: "pipe", text: "Blocked Drains" },
+                { icon: "valve", text: "Root Removal" },
+                { icon: "meter", text: "Pipe Clearing" },
+                { icon: "safety", text: "CCTV Inspection" }
+              ]
+            },
+            {
+              type: "payment",
+              title: "Flexible Payments",
+              paymentItems: [
+                {
+                  title: "Buy Now, Pay Later",
+                  description: "Split your payments with ease",
+                  icons: <PaymentIcons type="bnpl" />
+                },
+                {
+                  title: "Secure Payments",
+                  description: "All major cards accepted",
+                  icons: <PaymentIcons type="cards" />
+                },
+                {
+                  title: "Quick Tap & Go",
+                  description: "Fast, contactless convenience",
+                  icons: <PaymentIcons type="tap" />
+                }
+              ]
+            },
+            {
+              type: "guarantee",
+              title: "Our Guarantees",
+              icon: "/icons/star-smile.json",
+              guaranteeItems: [
+                "Same Day Service",
+                "100% Satisfaction Guarantee",
+                "Fixed Price Upfront",
+                "Licensed & Insured Team"
+              ]
+            }
+          ]
+        }}
+        introData={{
+          title: "Electric Eel Service",
+          subtitle: "Professional Service",
+          paragraph1: `Our expert team provides <span class="font-bold text-white">comprehensive drain cleaning solutions</span> using advanced electric eel equipment. We ensure complete blockage removal and restored flow.`,
+          paragraph2: `From <span class="font-bold text-white">minor blockages to major clogs</span>, our licensed plumbers deliver effective solutions that prevent future issues.`
+        }}
+        issuesData={{
+          title: "Drain Services",
+          subtitle: "Comprehensive Solutions",
+          introParagraph: "We provide professional services for all drain cleaning needs.",
+          issues: [
+            {
+              title: "Blocked Drains",
+              description: "Complete blockage removal.",
+              bullets: [
+                "Initial inspection",
+                "Electric eel clearing",
+                "Flow testing",
+                "Preventive advice"
+              ]
+            },
+            {
+              title: "Root Removal",
+              description: "Expert root clearing solutions.",
+              bullets: [
+                "Root detection",
+                "Complete removal",
+                "Pipe inspection",
+                "Prevention methods"
+              ]
+            },
+            {
+              title: "Maintenance",
+              description: "Professional maintenance service.",
+              bullets: [
+                "Regular checks",
+                "Preventive cleaning",
+                "Flow monitoring",
+                "System assessment"
+              ]
+            }
+          ]
+        }}
+        financeData={{
+          title: "Electric Eel Service",
+          subtitle: "Competitive & Transparent Pricing",
+          description1: `We offer <span class="font-bold text-white">competitive pricing</span> for all our drain cleaning services. Get upfront quotes with no hidden fees.`,
+          description2: `Take advantage of our <span class="font-bold text-white">flexible payment options</span> to handle your drain issues without financial stress.`,
+          features: [
+            "Upfront Fixed Pricing",
+            "No Hidden Charges",
+            "Interest-Free Options",
+            "Senior Discounts"
+          ]
+        }}
+        ctaData={{
+          title: "Blocked Drain?",
+          subtitle: "Don't Wait - Call Now",
+          description: `Get your drains cleared professionally. Our <span class="font-bold text-white">expert team</span> is ready to help with advanced solutions.`,
+          buttonText: "Call Now",
+          buttonLink: "tel:1300HDTRADE"
+        }}
+        trustData={{
+          title: "Why Trust Our Service",
+          subtitle: "Licensed & Experienced Team",
+          factors: [
+            {
+              icon: "/icons/shield-security.json",
+              title: "Licensed Plumbers",
+              description: "Fully licensed and certified professionals."
+            },
+            {
+              icon: "/icons/magnifier-zoom.json",
+              title: "Advanced Equipment",
+              description: "Latest electric eel technology."
+            },
+            {
+              icon: "/icons/star-smile.json",
+              title: "Guaranteed Work",
+              description: "100% satisfaction guarantee."
+            }
+          ]
+        }}
+        bookingData={{
+          title: "Book Your Service",
+          subtitle: "Fast & Easy Online Booking"
+        }}
       />
     </>
   );

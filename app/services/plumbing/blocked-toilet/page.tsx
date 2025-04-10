@@ -1,178 +1,175 @@
 'use client';
 
 import React from 'react';
-import ServiceDetailLayout from '@/components/layouts/ServiceDetailLayout';
+import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
+import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function BlockedToiletPage() {
   return (
     <>
       <ServiceSchema 
-        serviceName="Professional Blocked Toilet Services" 
-        description="Expert blocked toilet clearing services. Our licensed plumbers quickly identify and resolve any toilet blockage, from excess toilet paper to foreign objects, ensuring your bathroom functions properly again."
-        serviceArea="Australia"
+        serviceName="Blocked Toilet Service Brisbane"
+        description="Professional blocked toilet services in Brisbane. Our licensed plumbers provide expert solutions for all toilet blockages and repairs."
+        serviceArea="Brisbane Blocked Toilet Local Business Queensland"
       />
-      
+
       <ServiceDetailLayout
-        title="Blocked Toilet"
-        subtitle="Fast & Effective Toilet Unblocking Services"
-        description='At HD Trade Services, we provide <span class="font-bold text-white">rapid response</span> blocked toilet solutions. Our <span class="font-bold text-white">licensed plumbers</span> have the expertise to diagnose and clear any toilet blockage, from <span class="font-bold text-white">excess toilet paper</span> to <span class="font-bold text-white">foreign objects</span> and deeper <span class="font-bold text-white">sewer line issues</span>, ensuring minimal disruption to your home or business.'
-        features={[
-          "Emergency same-day toilet unblocking",
-          "Excess toilet paper & waste removal",
-          "Foreign object extraction & recovery",
-          "Sewer line blockage diagnostics & clearing",
-          "Toilet cistern & flushing mechanism repairs",
-          "CCTV pipe inspection for persistent blockages",
-          "Complete toilet replacement & installation"
-        ]}
-        benefits={[
-          "24/7 emergency blocked toilet services",
-          "Guaranteed permanent solutions, not just temporary fixes",
-          "Upfront pricing with no hidden costs",
-          "Non-invasive techniques that protect your plumbing",
-          "Hygienic and thorough cleaning after service"
-        ]}
-        images={[
-          "/images/hayden-hero-1.webp",
-          "/images/hayden-hero-fixed.webp",
-          "/images/icon-logo.webp"
-        ]}
-        whyChooseUs={[
-          {
-            title: "Fast Response Times",
-            description: "We understand how disruptive a blocked toilet can be to your home or business. That's why we offer rapid response times with same-day service in most cases to get your bathroom facilities operational again as quickly as possible."
-          },
-          {
-            title: "Specialized Toilet Unblocking Equipment",
-            description: "Our plumbers come equipped with specialized tools designed specifically for toilet blockages, including high-grade toilet augers, hydro-jetters, and pipe cameras that can identify and clear even the most stubborn clogs without damaging your porcelain or pipes."
-          },
-          {
-            title: "Hygiene-Focused Service",
-            description: "We take sanitation seriously. Our plumbers follow strict hygiene protocols, wearing appropriate protective equipment and thoroughly cleaning and disinfecting the area after service to ensure your bathroom is left in pristine condition."
-          }
-        ]}
-        bentoGrid={[
-          {
-            type: "featured",
-            title: "24/7 Emergency Toilet Unblocking",
-            description: "A blocked toilet can't wait. Our <span class=\"font-bold text-white\">emergency response team</span> is available 24/7 with fully equipped service vehicles ready to clear any toilet blockage, any time of day or night.",
-            icon: "/icons/siren.json"
-          },
-          {
-            type: "standard",
-            title: "Transparent Pricing",
-            description: "No hidden fees or surprises. Get upfront quotes before we start any work.",
-            icon: "/icons/handshake-deal.json"
-          },
-          {
-            type: "list",
-            title: "Common Toilet Blockage Causes",
-            items: [
-              { 
-                icon: "water",
-                text: "Excess Toilet Paper"
-              },
-              { 
-                icon: "drain",
-                text: "Foreign Objects & Toys" 
-              },
-              { 
-                icon: "roots", 
-                text: "Sewer Line Blockages"
-              }
-            ]
-          },
-          {
-            type: "payment",
-            title: "Payments Made Easy",
-            items: [
-              {
-                title: "Stress-Free Payment Plans",
-                description: "Split your payments, no worries",
-                providers: ["humm", "zip"]
-              },
-              {
-                title: "Trusted Card Payments",
-                description: "Safe & secure transactions",
-                providers: ["visa", "mastercard", "amex"]
-              },
-              {
-                title: "Quick Tap & Go",
-                description: "Fast, contactless convenience",
-                providers: ["applepay"]
-              }
-            ]
-          },
-          {
-            type: "guarantee",
-            title: "Our Guarantee",
-            items: [
-              "Licensed plumbing specialists",
-              "Lifetime workmanship warranty",
-              "Satisfaction assured"
-            ]
-          }
-        ]}
-        commonIssues={[
-          {
-            title: "Excess Toilet Paper & Waste Materials",
-            description: "The most common cause of toilet blockages is simply using too much toilet paper or flushing inappropriate items. Our plumbers can quickly clear these blockages and provide advice on preventing future issues.",
-            bullets: [
-              "Slow-flushing or overflowing toilet",
-              "Water rising when flushed then draining slowly",
-              "Preventative maintenance to avoid future blockages"
-            ],
-            icon: "/icons/toilet-paper.json"
-          },
-          {
-            title: "Foreign Objects & Children's Toys",
-            description: "Foreign objects like toys, hygiene products, or household items accidentally dropped into toilets are a frequent cause of stubborn blockages. Our specialized retrieval tools can safely extract these items without damaging your toilet.",
-            bullets: [
-              "Complete toilet blockage that won't clear with plunging",
-              "Objects visible in the toilet bowl or S-bend",
-              "Child-proof toilet seat locks available for prevention"
-            ],
-            icon: "/icons/tool.json"
-          },
-          {
-            title: "Main Sewer Line Blockages",
-            description: "When multiple fixtures in your home are backing up, the issue may be deeper in your sewer line. Our CCTV drain cameras can identify these blockages, and our hydro-jetting equipment can clear even the most stubborn obstructions.",
-            bullets: [
-              "Multiple drains backing up simultaneously",
-              "Gurgling sounds from toilets and drains",
-              "Sewage odors in your home or yard"
-            ],
-            icon: "/icons/backyard.json"
-          }
-        ]}
-        paymentOptions={[
-          {
-            title: "Flexible Payment Options",
-            description: 'We understand that plumbing emergencies like blocked toilets are <span class="font-bold text-white">unexpected expenses</span>. That&apos;s why we offer flexible payment solutions including Zip Pay, Afterpay, and Humm, allowing you to <span class="font-bold text-white">address your toilet issues immediately</span> while spreading the cost over time.'
-          },
-          {
-            title: "Our Payment Solutions",
-            description: "Choose from a range of payment options including interest-free plans, no-deposit options, and weekly or fortnightly payment schedules. We accept all major credit cards, as well as Apple Pay for your convenience."
-          }
-        ]}
-        trustFactors={[
-          {
-            icon: "/icons/speedometer.json",
-            title: "Fast Service",
-            description: "Quick response times to resolve your toilet emergency."
-          },
-          {
-            icon: "/icons/Wired Flat Handshake Deal Icon.json",
-            title: "Transparent Pricing",
-            description: '<span class="font-bold text-white">No hidden fees</span> or surprises. We provide upfront quotes before starting any work so you know exactly what to expect.'
-          },
-          {
-            icon: "/icons/Graduation Scroll Icon.json",
-            title: "Licensed Professionals",
-            description: 'All our plumbers are <span class="font-bold text-white">fully licensed and insured</span>, with specific training in toilet repairs and blockage clearing techniques.'
-          }
-        ]}
+        heroData={{
+          title: "Blocked Toilet",
+          subtitle: "Expert Clearing Solutions",
+          description: `Our team provides <span class="font-bold text-white">professional toilet unblocking services</span> with guaranteed results. We ensure <span class="font-bold text-white">fast and effective</span> solutions.`,
+          bookOnlineLink: "#book",
+          callNowLink: "tel:1300HDTRADE"
+        }}
+        bentoGridData={{
+          title: "Why Choose Our Service",
+          subtitle: "Professional & Reliable",
+          items: [
+            {
+              type: "featured",
+              title: "Professional",
+              description: "Expert toilet solutions with quality equipment.",
+              icon: "/icons/man-search-avatar.json",
+              colSpan: 2
+            },
+            {
+              type: "standard",
+              title: "Quality Service",
+              description: "Effective unblocking guaranteed.",
+              icon: "/icons/graduation-scroll.json"
+            },
+            {
+              type: "list",
+              title: "Toilet Services",
+              listItems: [
+                { icon: "pipe", text: "Blockage Clearing" },
+                { icon: "valve", text: "Toilet Repairs" },
+                { icon: "meter", text: "Pipe Clearing" },
+                { icon: "safety", text: "CCTV Inspection" }
+              ]
+            },
+            {
+              type: "payment",
+              title: "Flexible Payments",
+              paymentItems: [
+                {
+                  title: "Buy Now, Pay Later",
+                  description: "Split your payments with ease",
+                  icons: <PaymentIcons type="bnpl" />
+                },
+                {
+                  title: "Secure Payments",
+                  description: "All major cards accepted",
+                  icons: <PaymentIcons type="cards" />
+                },
+                {
+                  title: "Quick Tap & Go",
+                  description: "Fast, contactless convenience",
+                  icons: <PaymentIcons type="tap" />
+                }
+              ]
+            },
+            {
+              type: "guarantee",
+              title: "Our Guarantees",
+              icon: "/icons/star-smile.json",
+              guaranteeItems: [
+                "Same Day Service",
+                "100% Satisfaction Guarantee",
+                "Fixed Price Upfront",
+                "Licensed & Insured Team"
+              ]
+            }
+          ]
+        }}
+        introData={{
+          title: "Blocked Toilet",
+          subtitle: "Professional Service",
+          paragraph1: `Our expert team provides <span class="font-bold text-white">comprehensive toilet solutions</span> for both residential and commercial properties. We ensure fast and effective blockage removal.`,
+          paragraph2: `From <span class="font-bold text-white">minor blockages to major clogs</span>, our licensed plumbers deliver effective solutions that prevent future issues.`
+        }}
+        issuesData={{
+          title: "Toilet Services",
+          subtitle: "Comprehensive Solutions",
+          introParagraph: "We provide professional services for all toilet blockage needs.",
+          issues: [
+            {
+              title: "Blockage Clearing",
+              description: "Complete blockage removal.",
+              bullets: [
+                "Initial inspection",
+                "Blockage removal",
+                "Flow testing",
+                "Preventive advice"
+              ]
+            },
+            {
+              title: "Toilet Repairs",
+              description: "Expert repair solutions.",
+              bullets: [
+                "Fault diagnosis",
+                "Parts replacement",
+                "System repairs",
+                "Performance testing"
+              ]
+            },
+            {
+              title: "Maintenance",
+              description: "Professional maintenance service.",
+              bullets: [
+                "Regular checks",
+                "Preventive cleaning",
+                "Flow monitoring",
+                "System assessment"
+              ]
+            }
+          ]
+        }}
+        financeData={{
+          title: "Blocked Toilet",
+          subtitle: "Competitive & Transparent Pricing",
+          description1: `We offer <span class="font-bold text-white">competitive pricing</span> for all our toilet services. Get upfront quotes with no hidden fees.`,
+          description2: `Take advantage of our <span class="font-bold text-white">flexible payment options</span> to handle your toilet issues without financial stress.`,
+          features: [
+            "Upfront Fixed Pricing",
+            "No Hidden Charges",
+            "Interest-Free Options",
+            "Senior Discounts"
+          ]
+        }}
+        ctaData={{
+          title: "Blocked Toilet?",
+          subtitle: "Don't Wait - Call Now",
+          description: `Get your toilet unblocked professionally. Our <span class="font-bold text-white">expert team</span> is ready to help with fast solutions.`,
+          buttonText: "Call Now",
+          buttonLink: "tel:1300HDTRADE"
+        }}
+        trustData={{
+          title: "Why Trust Our Service",
+          subtitle: "Licensed & Experienced Team",
+          factors: [
+            {
+              icon: "/icons/shield-security.json",
+              title: "Licensed Plumbers",
+              description: "Fully licensed and certified professionals."
+            },
+            {
+              icon: "/icons/magnifier-zoom.json",
+              title: "Quality Equipment",
+              description: "Advanced unblocking solutions."
+            },
+            {
+              icon: "/icons/star-smile.json",
+              title: "Guaranteed Work",
+              description: "100% satisfaction guarantee."
+            }
+          ]
+        }}
+        bookingData={{
+          title: "Book Your Service",
+          subtitle: "Fast & Easy Online Booking"
+        }}
       />
     </>
   );

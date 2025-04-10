@@ -1,191 +1,174 @@
-import React from 'react';
-import ServiceDetailLayout from '@/components/layouts/ServiceDetailLayout';
-import { ServiceSchema } from '@/components/ui/ServiceSchema';
+'use client';
 
-export const metadata = {
-  title: 'Professional Bathroom Renovation Services | HD Trade Services',
-  description: 'Expert bathroom renovation services by licensed plumbers. Complete bathroom makeovers with quality fixtures, waterproofing, and custom designs.',
-};
+import React from 'react';
+import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
+import { ServiceSchema } from '@/components/ui/ServiceSchema';
+import { PaymentIcons } from '@/app/components/PaymentIcons';
+import { FaTools } from 'react-icons/fa';
 
 export default function BathroomRenovationsPage() {
   return (
     <>
       <ServiceSchema 
-        serviceName="Professional Bathroom Renovation Services"
-        description="Complete bathroom renovation services delivered by licensed plumbers and renovation experts. From design to completion, we handle all plumbing, waterproofing, tiling, and fixture installation for stunning, functional bathrooms."
-        serviceArea="Australia"
+        serviceName="Bathroom Renovations Brisbane"
+        description="Professional bathroom renovation services in Brisbane. Expert solutions for complete bathroom transformations and upgrades."
+        serviceArea="Brisbane Plumbing Bathroom Renovations Local Business Queensland"
       />
-      
+
       <ServiceDetailLayout
-        title="Bathroom Renovations"
-        subtitle="Complete Bathroom Transformation Solutions"
-        description="Our <span class='font-semibold text-white'>professional bathroom renovation services</span> transform outdated bathrooms into beautiful, functional spaces. From <span class='font-semibold text-white'>concept to completion</span>, our licensed plumbers and renovation specialists handle every aspect of your project with <span class='font-semibold text-white'>meticulous attention to detail</span> and superior craftsmanship."
-        features={[
-          "Complete bathroom design services",
-          "Quality fixture selection and installation",
-          "Custom shower installations",
-          "Waterproofing and tiling",
-          "Vanity and cabinet installation",
-          "Toilet and basin replacements",
-          "Lighting and ventilation upgrades"
-        ]}
-        benefits={[
-          "One team handles your entire renovation",
-          "All work compliant with building codes and regulations",
-          "Premium products and materials used",
-          "Energy and water-efficient solutions",
-          "Transparent pricing with detailed quotes",
-          "Timely project completion",
-          "Quality workmanship guarantee"
-        ]}
-        images={[
-          "/images/hayden-hero-1.webp",
-          "/images/hayden-hero-fixed.webp",
-          "/images/icon-logo.webp"
-        ]}
-        bentoGrid={[
-          {
-            type: "featured",
-            title: "Full-Service Bathroom Renovations",
-            description: "From initial concept to final touches, our team provides <span class=\"font-bold text-white\">end-to-end bathroom renovation solutions</span>. We handle all aspects including plumbing, waterproofing, tiling, fixture installation, and finishing details for a stress-free renovation experience.",
-            icon: "/icons/bathroom-shower.json"
-          },
-          {
-            type: "standard",
-            title: "Expert Plumbing Integration",
-            description: "Our licensed plumbers ensure all water and drainage systems are perfectly integrated into your new bathroom design, preventing future issues while maximizing functionality.",
-            icon: "/icons/hose.json"
-          },
-          {
-            type: "standard",
-            title: "Quality Materials & Fixtures",
-            description: "We partner with premium suppliers to offer beautiful, durable fixtures and materials that enhance your bathroom's aesthetics and performance.",
-            icon: "/icons/shower.json"
-          },
-          {
-            type: "list",
-            title: "Our Renovation Services",
-            items: [
-              { icon: "drain", text: "Custom shower installations" },
-              { icon: "water", text: "Bath to shower conversions" },
-              { icon: "water", text: "Wet room creations" },
-              { icon: "water", text: "Accessibility modifications" },
-              { icon: "water", text: "Complete layout redesigns" },
-              { icon: "drain", text: "High-end luxury upgrades" }
-            ]
-          },
-          {
-            type: "payment",
-            title: "Renovation Financing",
-            items: [
-              {
-                title: "Flexible Payment Plans",
-                description: "Renovate now, pay over time",
-                providers: ["humm", "zip"]
-              },
-              {
-                title: "Secure Card Payments",
-                description: "Safe & trusted transactions",
-                providers: ["visa", "mastercard", "amex"]
-              },
-              {
-                title: "Contactless Payments",
-                description: "Modern, convenient options",
-                providers: ["applepay"]
-              }
-            ]
-          },
-          {
-            type: "guarantee",
-            title: "Our Renovation Guarantee",
-            items: [
-              "7-year workmanship warranty",
-              "Timely project completion",
-              "Council compliance guaranteed",
-              "Licensed trades professionals",
-              "Complete project management"
-            ]
-          }
-        ]}
-        commonIssues={[
-          {
-            title: "Outdated or Inefficient Layouts",
-            description: "Many older bathrooms have awkward layouts that waste space and make the room feel cramped. Our renovation services include thoughtful spatial planning to maximize functionality.",
-            bullets: [
-              "Reconfiguration of fixtures for improved flow",
-              "Removal of unnecessary walls or partitions",
-              "Integration of modern space-saving solutions",
-              "Creation of additional storage options",
-              "Improved accessibility and usability"
-            ],
-            icon: "/icons/home.json"
-          },
-          {
-            title: "Water Damage & Waterproofing Failures",
-            description: "Inadequate waterproofing is a common issue in older bathrooms, leading to water damage, mold, and structural problems that require comprehensive renovation.",
-            bullets: [
-              "Complete removal of damaged materials",
-              "Professional waterproofing to Australian standards",
-              "Proper drainage slope installation",
-              "High-quality tile installation with appropriate grout",
-              "Moisture-resistant materials throughout"
-            ],
-            icon: "/icons/heavy-rain.json"
-          },
-          {
-            title: "Outdated Fixtures & Poor Functionality",
-            description: "Older bathrooms often feature worn fixtures that waste water, function poorly, and detract from your home's value and appearance.",
-            bullets: [
-              "Installation of water-efficient toilets and taps",
-              "Modern shower systems with temperature control",
-              "Quality vanities with ample storage",
-              "Contemporary basins and bathtubs",
-              "Stylish, functional accessories and hardware"
-            ],
-            icon: "/icons/shower.json"
-          }
-        ]}
-        whyChooseUs={[
-          {
-            title: "End-to-End Project Management",
-            description: "We handle every aspect of your bathroom renovation, from initial design to final inspection, coordinating all trades and ensuring a smooth, efficient process throughout."
-          },
-          {
-            title: "Licensed Plumbing Expertise",
-            description: "Unlike general builders, our core expertise is in plumbing – the most critical element of any bathroom renovation. This ensures your new bathroom functions perfectly for years to come."
-          },
-          {
-            title: "Quality Craftsmanship",
-            description: "Our renovation specialists take pride in their workmanship, paying meticulous attention to every detail from precise tile cutting to perfect fixture alignment."
-          }
-        ]}
-        paymentOptions={[
-          {
-            title: "Flexible Renovation Financing",
-            description: "Transform your bathroom without financial strain. We offer <span class=\"font-bold text-white\">tailored payment solutions</span> to make your renovation affordable, including interest-free options and staged payment plans aligned with project milestones."
-          },
-          {
-            title: "Transparent Quoting Process",
-            description: "Our detailed quotes break down all costs involved in your bathroom renovation, ensuring complete transparency. We also offer tiered package options to accommodate different budgets without compromising quality."
-          }
-        ]}
-        trustFactors={[
-          {
-            icon: "/icons/Graduation Scroll Icon.json",
-            title: "Licensed Renovation Specialists",
-            description: "Our bathroom renovation team includes licensed plumbers, waterproofers, tilers, and electricians, ensuring all work meets or exceeds building codes and industry standards."
-          },
-          {
-            icon: "/icons/speedometer.json",
-            title: "Efficient Project Timelines",
-            description: "We understand bathroom renovations impact your daily life. Our efficient work scheduling and coordination minimize disruption while ensuring quality isn't compromised."
-          },
-          {
-            icon: "/icons/Shield Security Icon.json",
-            title: "Long-Term Workmanship Warranty",
-            description: "Every bathroom renovation includes our comprehensive workmanship warranty, giving you confidence that your new bathroom will remain beautiful and functional for years to come."
-          }
-        ]}
+        heroData={{
+          title: "Bathroom",
+          subtitle: "Renovation Services",
+          description: `Our team provides <span class="font-bold text-white">professional bathroom renovations</span> with stunning results. We handle <span class="font-bold text-white">complete transformations</span> with expert care and precision.`,
+          bookOnlineLink: "#book",
+          callNowLink: "tel:1300HDTRADE"
+        }}
+        bentoGridData={{
+          title: "Why Choose Us",
+          subtitle: "for Your Renovation",
+          items: [
+            {
+              type: "featured",
+              title: "Professional Solutions",
+              description: `Our expert team delivers <span class="font-bold text-white">reliable renovation services</span> using quality materials for <span class="font-bold text-white">beautiful results</span>.`,
+              icon: "/icons/tools.json",
+              colSpan: 2
+            },
+            {
+              type: "standard",
+              title: "Quality Service",
+              description: `We provide <span class="font-bold text-white">professional service</span> with attention to detail for every renovation.`,
+              icon: "/icons/certificate.json"
+            },
+            {
+              type: "list",
+              title: "Renovation Services",
+              listItems: [
+                { icon: <FaTools className="text-blue-400"/>, text: "Complete Renovations" },
+                { icon: <FaTools className="text-red-400"/>, text: "Plumbing Updates" },
+                { icon: <FaTools className="text-green-400"/>, text: "Fixture Installation" },
+                { icon: <FaTools className="text-yellow-400"/>, text: "Waterproofing" }
+              ]
+            },
+            {
+              type: "payment",
+              title: "Flexible Payments",
+              paymentItems: [
+                {
+                  title: "Buy Now, Pay Later",
+                  description: "Split your payments with ease",
+                  icons: <PaymentIcons type="bnpl" />
+                },
+                {
+                  title: "Secure Payments",
+                  description: "All major cards accepted",
+                  icons: <PaymentIcons type="cards" />
+                },
+                {
+                  title: "Quick Tap & Go",
+                  description: "Fast, contactless convenience",
+                  icons: <PaymentIcons type="tap" />
+                }
+              ]
+            },
+            {
+              type: "guarantee",
+              title: "Our Guarantees",
+              icon: "/icons/star-smile.json",
+              guaranteeItems: [
+                "Lifetime Labour Warranty",
+                "100% Satisfaction Guarantee",
+                "Fixed Price Upfront",
+                "Licensed & Insured Team"
+              ]
+            }
+          ]
+        }}
+        introData={{
+          title: "Professional Bathroom",
+          subtitle: "Renovation Service",
+          paragraph1: `Our team specializes in <span class="font-bold text-white">professional bathroom renovations</span>. We handle complete transformations with <span class="font-bold text-white">expert care and precision</span>.`,
+          paragraph2: `Using <span class="font-bold text-white">quality materials and proven techniques</span>, we ensure stunning results. Our experienced team delivers <span class="font-bold text-white">beautiful, functional bathrooms</span>.`
+        }}
+        issuesData={{
+          title: "Bathroom Renovation",
+          subtitle: "Services We Provide",
+          introParagraph: `We offer comprehensive renovation solutions. Here are the <span class="font-bold text-white">key services</span> we provide:`,
+          issues: [
+            {
+              title: "Complete Renovations",
+              description: `Full <span class="font-bold text-white">bathroom transformation</span> services.`,
+              bullets: [
+                "Design consultation",
+                "Complete demolition",
+                "Full installation"
+              ]
+            },
+            {
+              title: "Plumbing Updates",
+              description: `Professional <span class="font-bold text-white">plumbing renovation</span> services.`,
+              bullets: [
+                "Pipe replacement",
+                "Fixture updates",
+                "System upgrades"
+              ]
+            },
+            {
+              title: "Additional Services",
+              description: `Comprehensive <span class="font-bold text-white">renovation services</span> for complete solutions.`,
+              bullets: [
+                "Waterproofing",
+                "Tiling work",
+                "Electrical updates"
+              ]
+            }
+          ]
+        }}
+        financeData={{
+          title: "Affordable Solutions",
+          subtitle: "Payment Options",
+          description1: `We offer <span class="font-bold text-white">competitive pricing</span> for all bathroom renovation services. Get upfront quotes with no hidden fees and <span class="font-bold text-white">flexible payment options</span> to manage your renovation costs effectively.`,
+          description2: `Take advantage of our <span class="font-bold text-white">interest-free payment plans</span> to get your renovation completed without financial stress. We believe <span class="font-bold text-white">quality service</span> should be accessible to everyone.`,
+          featuresTitle: "Payment Benefits",
+          features: [
+            "Upfront Fixed Pricing",
+            "Interest-Free Options Available",
+            "No Hidden Charges",
+            "Accept All Major Payment Methods"
+          ]
+        }}
+        ctaData={{
+          title: "Ready to Renovate",
+          subtitle: "Your Bathroom?",
+          description: `Contact our <span class="font-bold text-white">expert team</span> today to start your renovation. We ensure <span class="font-bold text-white">stunning results</span>.`,
+          buttonText: "Call Now",
+          buttonLink: "tel:1300HDTRADE"
+        }}
+        trustData={{
+          title: "Your Trusted Local",
+          subtitle: "Renovation Experts",
+          factors: [
+            {
+              icon: "/icons/certificate.json",
+              title: "Licensed Professionals",
+              description: `Peace of mind with <span class="font-bold text-white">fully licensed and insured</span> renovation experts.`
+            },
+            {
+              icon: "/icons/tools.json",
+              title: "Quality Materials",
+              description: `Expert renovations using <span class="font-bold text-white">premium materials</span> and proven techniques.`
+            },
+            {
+              icon: "/icons/shield.json",
+              title: "Guaranteed Results",
+              description: `Every renovation backed by our <span class="font-bold text-white">satisfaction guarantee</span>.`
+            }
+          ]
+        }}
+        bookingData={{
+          title: "Book Your",
+          subtitle: "Renovation Today"
+        }}
       />
     </>
   );

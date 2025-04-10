@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+import { PaymentIcons } from '@/app/components/PaymentIcons';
 import ServiceDetailLayout from '@/components/layouts/ServiceDetailLayout';
 import type { ServiceDetailLayoutProps } from '@/components/layouts/ServiceDetailLayout';
 import { FaTools, FaMoneyBillWave, FaCertificate, FaThumbsUp } from 'react-icons/fa';
@@ -25,14 +25,14 @@ const serviceTemplateData: ServiceDetailLayoutProps = {
         type: 'featured',
         title: "Dedicated [Service Name] Specialists",
         description: `Our team focuses exclusively on providing <span class="font-bold text-white">high-quality [Service Name]</span>. We're equipped with <span class="font-bold text-white">specialized tools</span> and knowledge to handle any challenge, ensuring optimal results every time.`,
-        icon: "/icons/tools.json", // Replace with relevant LordIcon
+        icon: "/icons/toolbox.json", // Changed from tools.json
         colSpan: 2,
       },
       {
         type: 'standard',
         title: "Commitment to Quality",
         description: `We use only <span class="font-bold text-white">premium materials</span> and adhere to the <span class="font-bold text-white">highest industry standards</span> in all our work.`,
-        icon: "/icons/badge.json", // Replace with relevant LordIcon
+        icon: "/icons/star-rating.json", // Changed from badge.json
       },
       {
         type: 'list',
@@ -51,32 +51,17 @@ const serviceTemplateData: ServiceDetailLayoutProps = {
           {
             title: "Stress-Free Payment Plans",
             description: "Split your payments, no worries",
-            icons: (
-              <>
-                <div className="flex items-end h-[25px] pt-1.5"><Image src="/Payment Options/Humm_PaymentTile_OrangeSmall copy.png" alt="Humm" width={70} height={25} className="object-contain h-auto max-h-[25px]" /></div>
-                <div className="flex items-end h-[25px]"><Image src="/Payment Options/Zip Logo copy.png" alt="Zip" width={50} height={25} className="object-contain h-auto max-h-[25px]" /></div>
-              </>
-            )
+            icons: <PaymentIcons type="bnpl" />
           },
           {
             title: "Trusted Card Payments",
             description: "Safe & secure transactions",
-            icons: (
-              <>
-                <div className="flex items-end h-[30px]"><Image src="/Payment Options/visa.png" alt="Visa" width={55} height={35} className="object-contain h-auto max-h-[30px]" /></div>
-                <div className="flex items-end h-[30px]"><Image src="/Payment Options/mastercard.png" alt="Mastercard" width={55} height={35} className="object-contain h-auto max-h-[30px]" /></div>
-                <div className="flex items-end h-[30px]"><Image src="/Payment Options/AXP_BlueBoxLogo_Alternate_REGULARscale_RGB_DIGITAL_700x700_result.png" alt="Amex" width={55} height={35} className="object-contain h-auto max-h-[30px]" /></div>
-              </>
-            )
+            icons: <PaymentIcons type="cards" />
           },
           {
             title: "Quick Tap & Go",
             description: "Fast, contactless convenience",
-            icons: (
-              <>
-                <div className="flex items-end h-[30px]"><Image src="/Payment Options/apple-pay copy_result.png" alt="Apple Pay" width={70} height={35} className="object-contain h-auto max-h-[30px] brightness-200" /></div>
-              </>
-            )
+            icons: <PaymentIcons type="tap" />
           }
         ],
       },
@@ -110,7 +95,7 @@ const serviceTemplateData: ServiceDetailLayoutProps = {
       {
         title: "Issue Type 1 (e.g., Leaks)",
         description: `Description of the first common issue. We address this with <span class="font-bold text-white">specific techniques</span> and ensure a <span class="font-bold text-white">durable repair</span>.`,
-        bullets: [
+              bullets: [
           "Symptom A of Issue 1",
           "Symptom B of Issue 1",
           "Preventative Tip for Issue 1",
@@ -119,7 +104,7 @@ const serviceTemplateData: ServiceDetailLayoutProps = {
       {
         title: "Issue Type 2 (e.g., Inefficiency)",
         description: `Explanation of the second common challenge. Our diagnostics identify the root cause for <span class="font-bold text-white">optimal performance restoration</span>.`,
-        bullets: [
+              bullets: [
           "Symptom A of Issue 2",
           "Symptom B of Issue 2",
           "Benefit of Addressing Issue 2",
@@ -128,7 +113,7 @@ const serviceTemplateData: ServiceDetailLayoutProps = {
       {
         title: "Issue Type 3 (e.g., Noise)",
         description: `Details about the third frequent problem. We ensure <span class="font-bold text-white">quiet and smooth operation</span> post-service.`,
-        bullets: [
+              bullets: [
           "Symptom A of Issue 3",
           "Symptom B of Issue 3",
           "Long-term Solution for Issue 3",
@@ -163,7 +148,7 @@ const serviceTemplateData: ServiceDetailLayoutProps = {
     title: "Why Homeowners Trust HD Trade Services",
     factors: [
       { 
-        icon: "/icons/certificate.json", // Replace 
+        icon: "/icons/graduation-scroll.json", // Changed from certificate.json
         title: "Verified Professionals", 
         description: `Rest assured, our team consists of <span class="font-bold text-white">fully certified and insured</span> [Service Name] experts.` 
       },

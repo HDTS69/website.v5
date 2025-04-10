@@ -50,177 +50,31 @@ const nextConfig = {
   },
   // Configure headers for proper CORS and asset loading
   async headers() {
-    // Define the permissions policy with comma-separated directives
-    const permissionsPolicy = [
-      "accelerometer=()",
-      "autoplay=()",
-      "camera=()",
-      "clipboard-read=()",
-      "clipboard-write=()",
-      "cross-origin-isolated=()",
-      "display-capture=()",
-      "encrypted-media=()",
-      "fullscreen=()",
-      "geolocation=()",
-      "gyroscope=()",
-      "hid=()",
-      "idle-detection=()",
-      "magnetometer=()",
-      "microphone=()",
-      "midi=()",
-      "picture-in-picture=()",
-      "publickey-credentials-get=()",
-      "screen-wake-lock=()",
-      "serial=()",
-      "sync-xhr=()",
-      "usb=()",
-      "web-share=()",
-      "xr-spatial-tracking=()",
-      // Payment directive with properly quoted URLs and correct spacing for both Stripe and Google Pay
-      'payment=(self "https://js.stripe.com" "https://api.stripe.com" "https://checkout.stripe.com" "https://hooks.stripe.com" "https://pay.google.com")'
-    ].join(", ");
-
-    // Define shared CSP directives
-    const baseCSP = {
-      "default-src": ["'self'", "https://*.stripe.com"],
-      "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://maps.googleapis.com", "https://*.google.com", "https://*.gstatic.com", "https://cdn.lordicon.com", "https://js.stripe.com", "https://*.stripe.com", "https://cdn.debugbear.com"],
-      "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://js.stripe.com", "https://*.stripe.com"],
-      "img-src": ["'self'", "data:", "blob:", "https://*.stripe.com", "https://*.googleapis.com", "https://*.gstatic.com"],
-      "font-src": ["'self'", "data:", "https://fonts.gstatic.com", "https://js.stripe.com", "https://*.stripe.com", "https://js.stripe.com/v3/", "https://js.stripe.com/type-font/", "https://js.stripe.com/v3/fonts/"],
-      "connect-src": ["'self'", "https://*.stripe.com", "https://api.stripe.com", "https://*.googleapis.com", "https://*.gstatic.com", "https://*.supabase.co", "wss://*.supabase.co"],
-      "frame-src": ["'self'", "https://js.stripe.com", "https://hooks.stripe.com", "https://*.stripe.com"],
-      "worker-src": ["'self'", "blob:"],
-      "base-uri": ["'self'"],
-      "form-action": ["'self'"],
-      "frame-ancestors": ["'none'"],
-      "object-src": ["'none'"],
-      "manifest-src": ["'self'"],
-      "media-src": ["'self'"],
-      "report-to": ["csp-endpoint"],
-      "report-uri": ["/api/csp-report"],
-    };
-
-    // Helper function to convert CSP object to string
-    const buildCSP = (csp, isReportOnly = false) => {
-      const directives = Object.entries(csp)
-        .map(([key, values]) => `${key} ${values.join(' ')}`)
-        .join('; ');
-      
-      return isReportOnly ? directives : `${directives}; upgrade-insecure-requests`;
-    };
-
     return [
-      // Add .well-known route first
-      {
-        source: '/.well-known/:path*',
-        headers: [
-          {
-            key: 'Content-Type',
-            value: 'application/json'
-          },
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: '*'
-          }
-        ]
-      },
-      // Specific routes first
-      {
-        source: '/attendance-fee',
-        headers: [
-          {
-            key: 'Permissions-Policy',
-            value: permissionsPolicy
-          },
-          {
-            key: 'Content-Security-Policy',
-            value: buildCSP({
-              ...baseCSP,
-              // Ensure Stripe fonts are allowed for this route
-              "font-src": [...baseCSP["font-src"]],
-              "default-src": [...baseCSP["default-src"]]
-            })
-          },
-          {
-            key: 'Content-Security-Policy-Report-Only',
-            value: buildCSP({
-              ...baseCSP,
-              // Match the enforced policy for consistency
-              "font-src": [...baseCSP["font-src"]],
-              "default-src": [...baseCSP["default-src"]]
-            }, true)
-          },
-          {
-            key: 'Link',
-            value: '</site.webmanifest>; rel=manifest, </.well-known/payment-manifest.json>; rel=payment-method-manifest'
-          },
-          {
-            key: 'Report-To',
-            value: JSON.stringify({
-              group: 'csp-endpoint',
-              max_age: 10886400,
-              endpoints: [
-                { url: '/api/csp-report' }
-              ]
-            })
-          }
-        ],
-      },
-      // Image caching headers
-      {
-        source: '/images/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          }
-        ],
-      },
-      // Hero image optimization
-      {
-        source: '/images/hayden-hero-fixed.webp',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-          {
-            key: 'Content-Type',
-            value: 'image/webp',
-          },
-          {
-            key: 'Link',
-            value: '</images/hayden-hero-fixed.webp>; rel=preload; as=image; type=image/webp',
-          }
-        ],
-      },
-      // Global headers last
       {
         source: '/:path*',
         headers: [
           {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on'
-          },
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=31536000; includeSubDomains'
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.stripe.com https://*.googleapis.com https://cdn.lordicon.com",
+              "style-src 'self' 'unsafe-inline'",
+              "img-src 'self' data: https://*.stripe.com https://*.googleapis.com https://*.gstatic.com blob:",
+              "font-src 'self' data:",
+              "connect-src 'self' https://*.stripe.com https://*.googleapis.com https://*.google-analytics.com",
+              "frame-src 'self' https://*.stripe.com https://*.google.com",
+              "media-src 'self'",
+              "object-src 'none'"
+            ].join('; ')
           },
           {
             key: 'X-Frame-Options',
-            value: 'SAMEORIGIN'
+            value: 'DENY'
           },
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff'
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block'
           },
           {
             key: 'Referrer-Policy',
@@ -228,43 +82,10 @@ const nextConfig = {
           },
           {
             key: 'Permissions-Policy',
-            value: permissionsPolicy
-          },
-          {
-            key: 'Content-Security-Policy',
-            value: buildCSP(baseCSP)
-          },
-          {
-            key: 'Content-Security-Policy-Report-Only',
-            value: buildCSP({
-              ...baseCSP,
-              // You can add stricter policies here for testing
-            }, true)
-          },
-          {
-            key: 'Report-To',
-            value: JSON.stringify({
-              group: 'csp-endpoint',
-              max_age: 10886400,
-              endpoints: [
-                { url: '/api/csp-report' }
-              ]
-            })
-          },
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: process.env.NODE_ENV === 'production' ? 'https://hdtradeservices.com.au' : '*'
-          },
-          {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT'
-          },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-          },
+            value: 'camera=(), microphone=(), geolocation=()'
+          }
         ]
-      },
+      }
     ];
   },
   // Configure webpack

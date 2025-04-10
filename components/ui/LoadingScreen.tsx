@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function LoadingScreen() {
   return (
-    <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
       <div 
         aria-label="Orange and tan hamster running in a metal wheel" 
         role="img" 

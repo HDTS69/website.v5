@@ -1,189 +1,175 @@
 'use client';
 
 import React from 'react';
-import ServiceDetailLayout from '@/components/layouts/ServiceDetailLayout';
+import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
+import { PaymentIcons } from '@/app/components/PaymentIcons';
 
-export default function HotWaterSystemPage() {
+export default function HotWaterPage() {
   return (
     <>
       <ServiceSchema 
-        serviceName="Professional Hot Water System Services" 
-        description="Expert hot water system installation, repair and replacement services. Our licensed plumbers service all major brands of gas, electric, solar and heat pump systems with same-day service available."
-        serviceArea="Australia"
+        serviceName="Hot Water Service Brisbane"
+        description="Professional hot water system services in Brisbane. Our licensed plumbers provide expert installation, repairs, and maintenance for all hot water systems."
+        serviceArea="Brisbane Hot Water Service Local Business Queensland"
       />
-      
+
       <ServiceDetailLayout
-        title="Hot Water Systems"
-        subtitle="Installation, Repairs & Replacements"
-        description="Our <span class='font-semibold text-white'>professional hot water system service</span> provides expert solutions for all your hot water needs. Whether you need emergency repairs, system replacement, or advice on the <span class='font-semibold text-white'>most efficient system for your home</span>, our licensed plumbers work with all major brands and technologies including <span class='font-semibold text-white'>gas, electric, solar, and heat pump systems</span>."
-        features={[
-          "Hot water system installation",
-          "Emergency repair service",
-          "System replacements & upgrades",
-          "Gas hot water specialists",
-          "Electric system services",
-          "Solar hot water solutions",
-          "Heat pump installation",
-          "Tankless water heater expertise"
-        ]}
-        benefits={[
-          "24/7 emergency hot water service",
-          "Same-day installation available",
-          "Energy-efficient system options",
-          "Reduced utility bills",
-          "Extended system lifespan",
-          "Consistent hot water supply",
-          "Expert advice on best system type"
-        ]}
-        images={[
-          "/images/hayden-hero-1.webp",
-          "/images/hayden-hero-fixed.webp",
-          "/images/icon-logo.webp"
-        ]}
-        bentoGrid={[
-          {
-            type: "featured",
-            title: "Complete Hot Water Solutions",
-            description: "From emergency repairs to system replacements and new installations, we provide <span class=\"font-bold text-white\">comprehensive hot water services</span> for all system types. Our licensed plumbers are experts in gas, electric, solar, and heat pump technologies, ensuring you receive the perfect solution for your home and budget.",
-            icon: "/icons/thermometer.json"
-          },
-          {
-            type: "standard",
-            title: "Energy-Efficient Options",
-            description: "We help you select and install energy-efficient hot water systems that reduce your utility bills while providing reliable, consistent hot water for your household.",
-            icon: "/icons/eco-leaves.json"
-          },
-          {
-            type: "standard",
-            title: "Emergency Service",
-            description: "No hot water? Our emergency team is available 24/7 to quickly diagnose and repair your system, or provide same-day replacement if necessary.",
-            icon: "/icons/siren.json"
-          },
-          {
-            type: "list",
-            title: "System Types We Service",
-            items: [
-              { icon: "water", text: "Gas continuous flow systems" },
-              { icon: "drain", text: "Electric storage tanks" },
-              { icon: "water", text: "Solar hot water systems" },
-              { icon: "drain", text: "Heat pump technology" },
-              { icon: "water", text: "Tankless water heaters" },
-              { icon: "drain", text: "Gas storage systems" }
-            ]
-          },
-          {
-            type: "payment",
-            title: "Flexible Payment Options",
-            items: [
-              {
-                title: "System Financing",
-                description: "Affordable payment plans",
-                providers: ["humm", "zip"]
-              },
-              {
-                title: "Secure Card Payments",
-                description: "For repairs & installations",
-                providers: ["visa", "mastercard", "amex"]
-              },
-              {
-                title: "Contactless Payments",
-                description: "Modern, convenient options",
-                providers: ["applepay"]
-              }
-            ]
-          },
-          {
-            type: "guarantee",
-            title: "Our Hot Water Guarantee",
-            items: [
-              "Same-day service when possible",
-              "Quality workmanship warranty",
-              "Manufacturer warranties honored",
-              "Energy-efficient recommendations",
-              "Licensed professional installation"
-            ]
-          }
-        ]}
-        commonIssues={[
-          {
-            title: "No Hot Water Emergencies",
-            description: "When your hot water system fails completely, it causes significant disruption to your household. Our emergency service quickly restores hot water with repair or same-day replacement options.",
-            bullets: [
-              "24/7 emergency response",
-              "Fast diagnosis of system failure",
-              "Immediate repairs when possible",
-              "Same-day replacement options",
-              "Temporary solutions if needed"
-            ],
-            icon: "/icons/alert-triangle.json"
-          },
-          {
-            title: "Inefficient & Aging Systems",
-            description: "Older hot water systems often consume excessive energy and provide inconsistent hot water. Upgrading to modern, efficient technology can significantly reduce utility bills.",
-            bullets: [
-              "System efficiency assessment",
-              "Energy usage evaluation",
-              "Upgrade recommendations",
-              "Rebate and incentive guidance",
-              "Professional system replacement"
-            ],
-            icon: "/icons/water-pipe.json"
-          },
-          {
-            title: "System Selection & Installation",
-            description: "Choosing the right hot water system for your household needs and installing it correctly is essential for optimal performance, efficiency, and longevity.",
-            bullets: [
-              "Personalized system recommendations",
-              "Household hot water needs assessment",
-              "Professional installation",
-              "Compliance with all regulations",
-              "Full system setup and testing"
-            ],
-            icon: "/icons/Checklist Planning Icon.json"
-          }
-        ]}
-        whyChooseUs={[
-          {
-            title: "Hot Water System Specialists",
-            description: "Our plumbers have specific training and extensive experience with all types of hot water systems, ensuring expert installation, repairs, and advice."
-          },
-          {
-            title: "All System Types Serviced",
-            description: "We work with gas, electric, solar, and heat pump systems from all major manufacturers, providing comprehensive service regardless of your current setup."
-          },
-          {
-            title: "Energy Efficiency Focus",
-            description: "We help you select and install systems that minimize energy consumption and operating costs while providing reliable hot water for your specific household needs."
-          }
-        ]}
-        paymentOptions={[
-          {
-            title: "System Investment Options",
-            description: "We provide <span class=\"font-bold text-white\">flexible payment solutions</span> for new hot water systems, allowing you to invest in energy-efficient technology that delivers long-term savings on utility bills."
-          },
-          {
-            title: "Transparent Service Pricing",
-            description: "Our repair and maintenance services come with upfront, clear pricing based on a professional assessment of your specific hot water system issue."
-          }
-        ]}
-        trustFactors={[
-          {
-            icon: "/icons/Graduation Scroll Icon.json",
-            title: "Licensed Hot Water Specialists",
-            description: "Our plumbers are fully licensed and specifically trained in hot water system installation, maintenance, and repairs for all system types and brands."
-          },
-          {
-            icon: "/icons/Shield Security Icon.json",
-            title: "Quality Installation Guarantee",
-            description: "We guarantee our workmanship on all hot water system installations and repairs, ensuring reliable, efficient, and safe operation."
-          },
-          {
-            icon: "/icons/emoji-smile.json",
-            title: "Customer Satisfaction Focus",
-            description: "We're not happy until your hot water is working perfectly, which is why we thoroughly test all systems after installation or repair."
-          }
-        ]}
+        heroData={{
+          title: "Hot Water Service",
+          subtitle: "Expert Solutions & Repairs",
+          description: `Our team provides <span class="font-bold text-white">professional hot water services</span> with guaranteed results. We ensure <span class="font-bold text-white">reliable hot water</span> for your property.`,
+          bookOnlineLink: "#book",
+          callNowLink: "tel:1300HDTRADE"
+        }}
+        bentoGridData={{
+          title: "Why Choose Our Service",
+          subtitle: "Professional & Reliable",
+          items: [
+            {
+              type: "featured",
+              title: "Professional",
+              description: "Expert hot water solutions with quality materials.",
+              icon: "/icons/man-search-avatar.json",
+              colSpan: 2
+            },
+            {
+              type: "standard",
+              title: "Quality Service",
+              description: "Reliable systems guaranteed.",
+              icon: "/icons/graduation-scroll.json"
+            },
+            {
+              type: "list",
+              title: "Hot Water Services",
+              listItems: [
+                { icon: "pipe", text: "System Installation" },
+                { icon: "valve", text: "Repairs & Service" },
+                { icon: "meter", text: "System Upgrades" },
+                { icon: "safety", text: "Emergency Repairs" }
+              ]
+            },
+            {
+              type: "payment",
+              title: "Flexible Payments",
+              paymentItems: [
+                {
+                  title: "Buy Now, Pay Later",
+                  description: "Split your payments with ease",
+                  icons: <PaymentIcons type="bnpl" />
+                },
+                {
+                  title: "Secure Payments",
+                  description: "All major cards accepted",
+                  icons: <PaymentIcons type="cards" />
+                },
+                {
+                  title: "Quick Tap & Go",
+                  description: "Fast, contactless convenience",
+                  icons: <PaymentIcons type="tap" />
+                }
+              ]
+            },
+            {
+              type: "guarantee",
+              title: "Our Guarantees",
+              icon: "/icons/star-smile.json",
+              guaranteeItems: [
+                "Same Day Service",
+                "100% Satisfaction Guarantee",
+                "Fixed Price Upfront",
+                "Licensed & Insured Team"
+              ]
+            }
+          ]
+        }}
+        introData={{
+          title: "Hot Water Service",
+          subtitle: "Professional Service",
+          paragraph1: `Our expert team provides <span class="font-bold text-white">comprehensive hot water solutions</span> for both residential and commercial properties. We ensure reliable hot water supply and system efficiency.`,
+          paragraph2: `From <span class="font-bold text-white">new installations to repairs</span>, our licensed plumbers deliver quality solutions that meet all standards.`
+        }}
+        issuesData={{
+          title: "Hot Water Services",
+          subtitle: "Comprehensive Solutions",
+          introParagraph: "We provide professional services for all hot water system needs.",
+          issues: [
+            {
+              title: "System Installation",
+              description: "Complete system setup.",
+              bullets: [
+                "Site assessment",
+                "System selection",
+                "Professional installation",
+                "System testing"
+              ]
+            },
+            {
+              title: "Repairs & Service",
+              description: "Expert repair solutions.",
+              bullets: [
+                "Fault diagnosis",
+                "Parts replacement",
+                "System repairs",
+                "Performance testing"
+              ]
+            },
+            {
+              title: "Maintenance",
+              description: "Professional maintenance service.",
+              bullets: [
+                "Regular checks",
+                "System cleaning",
+                "Part inspection",
+                "Efficiency testing"
+              ]
+            }
+          ]
+        }}
+        financeData={{
+          title: "Hot Water Service",
+          subtitle: "Competitive & Transparent Pricing",
+          description1: `We offer <span class="font-bold text-white">competitive pricing</span> for all our hot water services. Get upfront quotes with no hidden fees.`,
+          description2: `Take advantage of our <span class="font-bold text-white">flexible payment options</span> to handle your hot water needs without financial stress.`,
+          features: [
+            "Upfront Fixed Pricing",
+            "No Hidden Charges",
+            "Interest-Free Options",
+            "Senior Discounts"
+          ]
+        }}
+        ctaData={{
+          title: "No Hot Water?",
+          subtitle: "Don't Wait - Call Now",
+          description: `Get your hot water system fixed right. Our <span class="font-bold text-white">expert team</span> is ready to help with professional solutions.`,
+          buttonText: "Call Now",
+          buttonLink: "tel:1300HDTRADE"
+        }}
+        trustData={{
+          title: "Why Trust Our Service",
+          subtitle: "Licensed & Experienced Team",
+          factors: [
+            {
+              icon: "/icons/shield-security.json",
+              title: "Licensed Plumbers",
+              description: "Fully licensed and certified professionals."
+            },
+            {
+              icon: "/icons/magnifier-zoom.json",
+              title: "Quality Systems",
+              description: "Premium hot water systems and parts."
+            },
+            {
+              icon: "/icons/star-smile.json",
+              title: "Guaranteed Work",
+              description: "100% satisfaction guarantee."
+            }
+          ]
+        }}
+        bookingData={{
+          title: "Book Your Service",
+          subtitle: "Fast & Easy Online Booking"
+        }}
       />
     </>
   );

@@ -30,7 +30,7 @@ export function DesktopLogo({
             height={typeof height === 'number' ? height : 60}
             className="h-12 w-auto"
             priority
-            sizes="48px"
+            sizes="(max-width: 768px) 48px, 60px"
           />
         </div>
         

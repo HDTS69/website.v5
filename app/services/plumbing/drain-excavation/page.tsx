@@ -1,189 +1,174 @@
-import React from 'react';
-import ServiceDetailLayout from '@/components/layouts/ServiceDetailLayout';
-import { ServiceSchema } from '@/components/ui/ServiceSchema';
+'use client';
 
-export const metadata = {
-  title: 'Professional Drain Excavation Services | HD Trade Services',
-  description: 'Expert drain excavation services by licensed plumbers. Precision excavation for sewer line repairs, pipe replacement, and drainage issues.',
-};
+import React from 'react';
+import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
+import { ServiceSchema } from '@/components/ui/ServiceSchema';
+import { PaymentIcons } from '@/app/components/PaymentIcons';
+import { FaTools } from 'react-icons/fa';
 
 export default function DrainExcavationPage() {
   return (
     <>
       <ServiceSchema 
-        serviceName="Professional Drain Excavation Services"
-        description="Specialized drain excavation services delivered by licensed plumbers using advanced equipment for precise excavation, pipe replacement, and sewer line repairs with minimal property disruption."
-        serviceArea="Australia"
+        serviceName="Drain Excavation Brisbane"
+        description="Professional drain excavation services in Brisbane. Expert solutions for drain repairs and replacements requiring excavation."
+        serviceArea="Brisbane Plumbing Drain Excavation Local Business Queensland"
       />
-      
+
       <ServiceDetailLayout
-        title="Drain Excavation"
-        subtitle="Precision Excavation & Pipe Replacement"
-        description="Our <span class='font-semibold text-white'>professional drain excavation services</span> provide the definitive solution when repair, replacement, or installation of underground pipes is necessary. Using <span class='font-semibold text-white'>modern equipment and techniques</span>, our licensed plumbers ensure precise excavation with <span class='font-semibold text-white'>minimal disruption</span> to your property."
-        features={[
-          "Precision excavation equipment",
-          "Complete pipe replacement",
-          "Sewer line repairs",
-          "Drain relocation services",
-          "Stormwater system installation",
-          "Backflow prevention devices"
-        ]}
-        benefits={[
-          "Permanent solutions for persistent drainage issues",
-          "Modern trenching techniques for minimal property disruption",
-          "Compliant with all local plumbing codes and regulations",
-          "Comprehensive site restoration after excavation",
-          "Long-term warranty on all excavation work",
-          "Complete project management from start to finish"
-        ]}
-        images={[
-          "/images/hayden-hero-1.webp",
-          "/images/hayden-hero-fixed.webp",
-          "/images/icon-logo.webp"
-        ]}
-        bentoGrid={[
-          {
-            type: "featured",
-            title: "Safe & Efficient Drain Excavation",
-            description: "When trenchless methods aren\'t feasible, our expert excavation safely exposes damaged drain lines for repair or replacement.",
-            icon: "/icons/digger.json"
-          },
-          {
-            type: "standard",
-            title: "Pipe Repair & Replacement",
-            description: "Fixing collapsed, broken, or severely damaged drain sections.",
-            icon: "/icons/tool.json"
-          },
-          {
-            type: "standard",
-            title: "Site Restoration",
-            description: "Careful backfilling and restoration of the excavated area.",
-            icon: "/icons/handshake-deal.json"
-          },
-          {
-            type: "list",
-            title: "Services We Provide",
-            items: [
-              { icon: "drain", text: "Sewer line replacement" },
-              { icon: "water", text: "Drain relocation" },
-              { icon: "water", text: "Root damage repairs" },
-              { icon: "water", text: "Water main installation" },
-              { icon: "water", text: "Stormwater system upgrades" },
-              { icon: "drain", text: "Complete drainage renovation" }
-            ]
-          },
-          {
-            type: "payment",
-            title: "Payments Made Easy",
-            items: [
-              {
-                title: "Stress-Free Payment Plans",
-                description: "Split your payments, no worries",
-                providers: ["humm", "zip"]
-              },
-              {
-                title: "Trusted Card Payments",
-                description: "Safe & secure transactions",
-                providers: ["visa", "mastercard", "amex"]
-              },
-              {
-                title: "Quick Tap & Go",
-                description: "Fast, contactless convenience",
-                providers: ["applepay"]
-              }
-            ]
-          },
-          {
-            type: "guarantee",
-            title: "Our Service Guarantee",
-            items: [
-              "100% satisfaction guarantee",
-              "Fully restored work areas",
-              "Council compliance guaranteed",
-              "Long-term warranty on all work",
-              "Professional project management"
-            ]
-          }
-        ]}
-        commonIssues={[
-          {
-            title: "🛠️ Severely Damaged Pipes",
-            description: "Pipes that are too broken, collapsed, or deformed for trenchless repair methods like relining.",
-            bullets: [
-              "Complete replacement of damaged sections for a permanent solution",
-              "Upgrade to modern, more durable piping materials",
-              "Correction of improper slopes and alignment issues",
-              "Addresses recurrent blockages caused by structural failure",
-              "Resolves sinkholes and soil subsidence caused by leaking pipes"
-            ],
-            icon: "/icons/tool.json"
-          },
-          {
-            title: "🌲 Extensive Tree Root Intrusion",
-            description: "When tree roots have caused significant structural damage to the pipe, requiring section replacement.",
-            bullets: [
-              "Removal of pipes compromised by invasive root systems",
-              "Installation of root-resistant piping and barriers",
-              "Strategic rerouting of drain lines away from tree root zones",
-              "Comprehensive clearing of root masses from drain pathways",
-              "Prevention measures to avoid future root intrusions"
-            ],
-            icon: "/icons/forest.json"
-          },
-          {
-            title: "Outdated or Non-Compliant Drainage Systems",
-            description: "Older properties often have drainage systems made from outdated materials like clay or concrete that deteriorate over time and may not meet current plumbing codes.",
-            bullets: [
-              "Replacement of deteriorated clay, concrete, or cast iron pipes",
-              "Upgrading to code-compliant materials and layouts",
-              "Installation of proper venting and backflow prevention",
-              "Addressing improper connections to stormwater or sewer systems",
-              "Implementation of modern access points for future maintenance"
-            ],
-            icon: "/icons/Graduation Scroll Icon.json"
-          }
-        ]}
-        whyChooseUs={[
-          {
-            title: "Specialized Excavation Equipment",
-            description: "Our team uses modern mini-excavators, vacuum excavation, and specialized trenching equipment to minimize disruption while maximizing efficiency."
-          },
-          {
-            title: "Complete Project Management",
-            description: "From initial assessment to council permits, excavation, installation, and site restoration, we handle every aspect of your drain excavation project."
-          },
-          {
-            title: "Restoration Expertise",
-            description: "We don't just repair your drains - we ensure your property is restored to its original condition with proper soil compaction, turf replacement, and hardscape reconstruction."
-          }
-        ]}
-        paymentOptions={[
-          {
-            title: "Flexible Financing for Major Works",
-            description: "Drain excavation represents a significant investment in your property's infrastructure. We offer <span class=\"font-bold text-white\">tailored financing options</span> with affordable payment plans to help manage this essential maintenance cost."
-          },
-          {
-            title: "Staged Payment Schedule",
-            description: "For larger excavation projects, we can arrange a staged payment schedule that aligns with project milestones, making it easier to budget for this necessary work while ensuring quality at every phase."
-          }
-        ]}
-        trustFactors={[
-          {
-            icon: "/icons/Graduation Scroll Icon.json",
-            title: "Licensed & Insured Experts",
-            description: "Our excavation specialists are fully licensed, insured, and experienced in handling complex drain excavation projects of all sizes."
-          },
-          {
-            icon: "/icons/handshake-deal.json",
-            title: "Minimal Disruption Focus",
-            description: "We plan excavations carefully to <span class='font-bold text-white'>minimize impact</span> on your landscaping and property access."
-          },
-          {
-            icon: "/icons/star-rating.json",
-            title: "Quality Pipe Materials",
-            description: "We use <span class='font-bold text-white'>durable, high-quality pipes</span> for replacements, ensuring long-term reliability."
-          }
-        ]}
+        heroData={{
+          title: "Drain",
+          subtitle: "Excavation Services",
+          description: `Our team provides <span class="font-bold text-white">professional drain excavation</span> with minimal disruption. We use <span class="font-bold text-white">advanced equipment</span> for precise and efficient excavation.`,
+          bookOnlineLink: "#book",
+          callNowLink: "tel:1300HDTRADE"
+        }}
+        bentoGridData={{
+          title: "Why Choose Us",
+          subtitle: "for Drain Excavation",
+          items: [
+            {
+              type: "featured",
+              title: "Professional Solutions",
+              description: `Our expert team delivers <span class="font-bold text-white">reliable excavation services</span> using advanced equipment for <span class="font-bold text-white">precise results</span>.`,
+              icon: "/icons/tools.json",
+              colSpan: 2
+            },
+            {
+              type: "standard",
+              title: "Quality Service",
+              description: `We provide <span class="font-bold text-white">professional service</span> with attention to detail for every excavation job.`,
+              icon: "/icons/certificate.json"
+            },
+            {
+              type: "list",
+              title: "Excavation Services",
+              listItems: [
+                { icon: <FaTools className="text-blue-400"/>, text: "Drain Repairs" },
+                { icon: <FaTools className="text-red-400"/>, text: "Pipe Replacement" },
+                { icon: <FaTools className="text-green-400"/>, text: "Trench Digging" },
+                { icon: <FaTools className="text-yellow-400"/>, text: "Site Restoration" }
+              ]
+            },
+            {
+              type: "payment",
+              title: "Flexible Payments",
+              paymentItems: [
+                {
+                  title: "Buy Now, Pay Later",
+                  description: "Split your payments with ease",
+                  icons: <PaymentIcons type="bnpl" />
+                },
+                {
+                  title: "Secure Payments",
+                  description: "All major cards accepted",
+                  icons: <PaymentIcons type="cards" />
+                },
+                {
+                  title: "Quick Tap & Go",
+                  description: "Fast, contactless convenience",
+                  icons: <PaymentIcons type="tap" />
+                }
+              ]
+            },
+            {
+              type: "guarantee",
+              title: "Our Guarantees",
+              icon: "/icons/star-smile.json",
+              guaranteeItems: [
+                "Lifetime Labour Warranty",
+                "100% Satisfaction Guarantee",
+                "Fixed Price Upfront",
+                "Licensed & Insured Team"
+              ]
+            }
+          ]
+        }}
+        introData={{
+          title: "Professional Drain",
+          subtitle: "Excavation Service",
+          paragraph1: `Our team specializes in <span class="font-bold text-white">professional drain excavation</span>. We use advanced equipment and techniques for <span class="font-bold text-white">precise and efficient work</span>.`,
+          paragraph2: `Using <span class="font-bold text-white">proven methods and quality equipment</span>, we ensure minimal disruption during excavation. Our experienced team delivers <span class="font-bold text-white">reliable, long-lasting results</span>.`
+        }}
+        issuesData={{
+          title: "Drain Excavation",
+          subtitle: "Services We Provide",
+          introParagraph: `We offer comprehensive excavation solutions. Here are the <span class="font-bold text-white">key services</span> we provide:`,
+          issues: [
+            {
+              title: "Drain Repairs",
+              description: `Complete <span class="font-bold text-white">excavation service</span> for drain repairs.`,
+              bullets: [
+                "Precise digging",
+                "Pipe repair",
+                "Site restoration"
+              ]
+            },
+            {
+              title: "Pipe Replacement",
+              description: `Professional <span class="font-bold text-white">excavation service</span> for pipe replacement.`,
+              bullets: [
+                "Careful excavation",
+                "New pipe installation",
+                "Quality backfill"
+              ]
+            },
+            {
+              title: "Additional Services",
+              description: `Comprehensive <span class="font-bold text-white">excavation services</span> for complete solutions.`,
+              bullets: [
+                "Site preparation",
+                "Utility location",
+                "Surface restoration"
+              ]
+            }
+          ]
+        }}
+        financeData={{
+          title: "Affordable Solutions",
+          subtitle: "Payment Options",
+          description1: `We offer <span class="font-bold text-white">competitive pricing</span> for all drain excavation services. Get upfront quotes with no hidden fees and <span class="font-bold text-white">flexible payment options</span> to manage your service costs effectively.`,
+          description2: `Take advantage of our <span class="font-bold text-white">interest-free payment plans</span> to get your excavation completed without financial stress. We believe <span class="font-bold text-white">quality service</span> should be accessible to everyone.`,
+          featuresTitle: "Payment Benefits",
+          features: [
+            "Upfront Fixed Pricing",
+            "Interest-Free Options Available",
+            "No Hidden Charges",
+            "Accept All Major Payment Methods"
+          ]
+        }}
+        ctaData={{
+          title: "Need Drain",
+          subtitle: "Excavation?",
+          description: `Contact our <span class="font-bold text-white">expert team</span> today to book your service. We ensure <span class="font-bold text-white">precise results</span>.`,
+          buttonText: "Call Now",
+          buttonLink: "tel:1300HDTRADE"
+        }}
+        trustData={{
+          title: "Your Trusted Local",
+          subtitle: "Excavation Experts",
+          factors: [
+            {
+              icon: "/icons/certificate.json",
+              title: "Licensed Professionals",
+              description: `Peace of mind with <span class="font-bold text-white">fully licensed and insured</span> excavation experts.`
+            },
+            {
+              icon: "/icons/tools.json",
+              title: "Quality Equipment",
+              description: `Expert excavation using <span class="font-bold text-white">advanced machinery</span> and proven methods.`
+            },
+            {
+              icon: "/icons/shield.json",
+              title: "Guaranteed Results",
+              description: `Every service backed by our <span class="font-bold text-white">satisfaction guarantee</span>.`
+            }
+          ]
+        }}
+        bookingData={{
+          title: "Book Your",
+          subtitle: "Excavation Today"
+        }}
       />
     </>
   );

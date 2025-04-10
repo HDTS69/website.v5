@@ -16,25 +16,11 @@ interface Service {
   customIcon?: string;
 }
 
-// Example services array - replace with actual services
-const services: Service[] = [
-  {
-    title: "Service Name 1",
-    description: "Detailed description of the service that explains what's included and its benefits.",
-    icon: "/icons/placeholder.svg",
-    href: "/services/service-category/service-1",
-    lordIcon: "/icons/placeholder.json" // Add this for animated icons
-  },
-  {
-    title: "Service Name 2",
-    description: "Detailed description of the service that explains what's included and its benefits.",
-    icon: "/icons/placeholder.svg",
-    href: "/services/service-category/service-2",
-  },
-  // Add more services as needed
-];
+interface ServiceGridTemplateProps {
+  services: Service[];
+}
 
-export function ServiceGridTemplate() {
+export function ServiceGridTemplate({ services }: ServiceGridTemplateProps) {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   return (
