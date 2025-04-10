@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { usePathname, useSearchParams } from "next/navigation";
 import dynamic from 'next/dynamic';
+import React, { Suspense } from 'react';
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -78,9 +79,9 @@ function DefaultLayoutInner({
       </div>
 
       {/* Desktop Navigation */}
-      <div className="hidden md:block">
+      <nav className="hidden md:block">
         <Navigation items={navigationItems} actionItems={actionItems} />
-      </div>
+      </nav>
 
       <main className="flex-grow">
         {children}
@@ -96,5 +97,9 @@ export default function DefaultLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <DefaultLayoutInner>{children}</DefaultLayoutInner>;
+  return (
+    <Suspense fallback={<div>Loading page...</div>}>
+      <DefaultLayoutInner>{children}</DefaultLayoutInner>
+    </Suspense>
+  );
 }

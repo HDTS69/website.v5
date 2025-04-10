@@ -11,7 +11,8 @@ import { CONTACT_PHONE, ICON_PATHS } from '@/config/constants';
 
 // Validate icon paths at build time
 const validateIconPath = (path: string): string => {
-  if (!Object.values(ICON_PATHS).includes(path)) {
+  // Use type assertion to bypass strict includes check
+  if (!Object.values(ICON_PATHS).includes(path as any)) { 
     console.warn(`Warning: Icon path ${path} not found in constants`);
   }
   return path;

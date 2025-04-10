@@ -11,8 +11,16 @@ test.describe('Home Page', () => {
     await expect(page).toHaveTitle(/HD Trade Services/);
   });
 
-  test('should have main navigation', async ({ page }) => {
-    // Check if the main navigation is present
-    await expect(page.locator('nav')).toBeVisible();
+  test('should have main navigation', async ({ page, isMobile }) => {
+    // Check if the main navigation is present and visible *only on desktop*
+    if (!isMobile) {
+      await expect(page.locator('nav')).toHaveCSS('display', 'block');
+    } else {
+      // On mobile, we expect the desktop nav wrapper to exist but be hidden
+      await expect(page.locator('nav')).toBeHidden();
+      // Optionally: Add checks for mobile-specific navigation elements here
+      // e.g., await expect(page.locator('#mobile-hamburger-button')).toBeVisible();
+      console.log('Skipping desktop nav visibility check on mobile, verified it is hidden.');
+    }
   });
 }); 

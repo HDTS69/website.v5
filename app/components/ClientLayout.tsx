@@ -6,7 +6,7 @@ import Footer from "@/components/ui/footer";
 import { MobileHeader } from "@/components/mobile";
 import { Navigation } from "@/components/ui/Navigation";
 import { navigationItems, actionItems } from "@/lib/navigation";
-import { Analytics } from '@/components/Analytics';
+import Analytics from '@/components/ui/Analytics';
 import { GoogleMapsScript } from '@/components/ui/BookingForm/GoogleMapsScript';
 
 interface ClientLayoutProps {

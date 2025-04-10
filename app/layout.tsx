@@ -17,8 +17,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Plumber | 24/7 Emergency Plumbing Services",
-  description: "Professional plumbing services. Get fast, reliable plumbing services from our licensed experts. Available 24/7 for emergencies.",
+  title: {
+    template: '%s | HD Trade Services',
+    default: 'HD Trade Services | Brisbane Plumber, Gas Fitter, Roofer & Aircon',
+  },
+  description: "Your trusted Brisbane experts for Plumbing, Gas Fitting, Roofing, and Air Conditioning services. Available 24/7 for emergencies. Contact HD Trade Services today!",
   metadataBase: new URL('https://hdtradeservices.com.au'),
 };
 

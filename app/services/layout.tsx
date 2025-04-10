@@ -24,9 +24,9 @@ export default function ServicesLayout({
       </div>
 
       {/* Desktop Navigation */}
-      <div className="hidden md:block">
+      <nav className="hidden md:block">
         <Navigation items={navigationItems} actionItems={actionItems} />
-      </div>
+      </nav>
 
       <main className="flex-grow pt-[var(--mobile-header-height)] md:pt-0">
         {children}

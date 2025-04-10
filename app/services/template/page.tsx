@@ -20,6 +20,7 @@ const serviceTemplateData: ServiceDetailLayoutProps = {
   // --- Bento Grid --- 
   bentoGridData: {
     title: "Why Entrust Us With Your [Service Name]?",
+    subtitle: "Key Features",
     items: [
       {
         type: 'featured',
@@ -90,6 +91,7 @@ const serviceTemplateData: ServiceDetailLayoutProps = {
   // --- Issues Section --- 
   issuesData: {
     title: "Common [Service Name] Challenges We Solve",
+    subtitle: "Common Problems",
     introParagraph: `Don't let common [System] issues escalate. We provide expert solutions for a wide range of problems:`,
     issues: [
       {
@@ -124,6 +126,7 @@ const serviceTemplateData: ServiceDetailLayoutProps = {
   // --- Finance Section --- 
   financeData: {
     title: "Accessible [Service Name] Financing",
+    subtitle: "Payment Options",
     description1: `We believe quality [Service Name] should be affordable. Get <span class="font-bold text-white">transparent, upfront estimates</span> with no surprises. We partner with leading providers to offer flexible payment plans tailored to your budget.`,
     description2: `Manage unexpected costs easily with <span class="font-bold text-white">interest-free options</span>. Investing in your property's [System] maintenance is now more manageable than ever.`,
     featuresTitle: "Flexible Finance Perks",
@@ -139,6 +142,7 @@ const serviceTemplateData: ServiceDetailLayoutProps = {
   // --- CTA Section --- 
   ctaData: {
     title: "Ready for Expert [Service Name]?",
+    subtitle: "Get Started Today",
     description: `Contact HD Trade Services today for a consultation or emergency call-out. Experience the difference professional care makes.`,
     buttonText: "Call Us Now: 1300 HD TRADE",
     buttonLink: "tel:1300HDTRADE",
@@ -146,6 +150,7 @@ const serviceTemplateData: ServiceDetailLayoutProps = {
   // --- Trust Section --- 
   trustData: {
     title: "Why Homeowners Trust HD Trade Services",
+    subtitle: "Why Choose HD Trade Services",
     factors: [
       { 
         icon: "/icons/graduation-scroll.json", // Changed from certificate.json
@@ -167,6 +172,7 @@ const serviceTemplateData: ServiceDetailLayoutProps = {
   // --- Booking Section --- 
   bookingData: {
     title: "Schedule Your [Service Name] Online",
+    subtitle: "Easy Online Booking"
   },
 };
 
