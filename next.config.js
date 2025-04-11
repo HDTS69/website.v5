@@ -58,11 +58,11 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.stripe.com https://*.googleapis.com https://cdn.lordicon.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.stripe.com https://*.googleapis.com https://cdn.lordicon.com https://*.supabase.co",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: https://*.stripe.com https://*.googleapis.com https://*.gstatic.com blob:",
               "font-src 'self' data:",
-              "connect-src 'self' https://*.stripe.com https://*.googleapis.com https://*.google-analytics.com",
+              "connect-src 'self' https://*.stripe.com https://*.googleapis.com https://*.google-analytics.com https://*.supabase.co",
               "frame-src 'self' https://*.stripe.com https://*.google.com",
               "media-src 'self'",
               "object-src 'none'"
