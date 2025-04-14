@@ -23,11 +23,16 @@ export const Dropdown: React.FC<DropdownProps> = ({
       type="button"
       onClick={onToggle}
       className={cn(
-        "w-full flex justify-between items-center rounded-md border border-gray-700 bg-gray-900 px-4 text-sm text-gray-300 shadow-sm hover:border-teal-500 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 h-10 dropdown-trigger",
+        "w-full flex justify-between items-center rounded-md border border-gray-700 bg-gray-900",
+        "px-2 py-1",
+        "text-xs",
+        "text-gray-300 shadow-sm whitespace-normal text-left",
+        "min-h-[2.5rem] h-auto",
+        "hover:border-teal-500 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 dropdown-trigger",
         className
       )}
     >
-      <span className="text-gray-300">
+      <span className="text-gray-300 flex-grow">
         {value || placeholder}
       </span>
       <svg
@@ -40,7 +45,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className={cn("ml-2 transition-transform duration-200", isOpen && "rotate-180")}
+        className={cn("ml-1 flex-shrink-0 transition-transform duration-200", isOpen && "rotate-180")}
       >
         <path d="m6 9 6 6 6-6"/>
       </svg>

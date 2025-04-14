@@ -37,7 +37,8 @@ export default function RootLayout({
         
         {/* DNS prefetch for analytics only */}
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        {/* Remove the DNS prefetch for googletagmanager, it's already handled by the Script component */}
+        {/* <link rel="dns-prefetch" href="https://www.googletagmanager.com" /> */}
         
         {/* Favicon and manifest */}
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

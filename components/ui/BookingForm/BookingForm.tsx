@@ -12,6 +12,7 @@ import { useFormState } from './useFormState';
 import { useFormValidation } from './useFormValidation';
 import { useFormSubmission } from './useFormSubmission';
 import { AddressInput } from './AddressInput';
+import { EnhancedAddressInput } from './EnhancedAddressInput';
 import { PREFERRED_TIMES, URGENCY_OPTIONS } from './constants';
 import type { BookingFormProps, Service } from './types';
 import { SERVICES, ServiceCategory } from '@/config/services';
@@ -130,6 +131,9 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
     function handleClickOutside(event: MouseEvent) {
       const target = event.target as HTMLElement;
       
+      // Check if click is inside the datepicker popover (even if in portal)
+      const isClickInsideDatePickerPopover = target.closest('[data-datepicker-popover]');
+
       if (servicesRef.current && !servicesRef.current.contains(target)) {
         setShowServices(false);
       }
@@ -139,7 +143,8 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
       if (urgencyRef.current && !urgencyRef.current.contains(target)) {
         setShowUrgency(false);
       }
-      if (dateRef.current && !dateRef.current.contains(target)) {
+      // Only close datepicker if click is outside its ref AND outside its popover content
+      if (dateRef.current && !dateRef.current.contains(target) && !isClickInsideDatePickerPopover) { 
         setShowDate(false);
       }
     }
@@ -148,7 +153,7 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, []); // Dependencies remain empty as refs don't change
 
   React.useEffect(() => {
     if (onStateChange) {
@@ -339,18 +344,14 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                   </div>
 
                   <div className="space-y-4">
-                    <motion.div 
-                      className="relative"
-                      layout
-                      transition={{ duration: 0.2, ease: "easeInOut" }}
-                    >
-                      <AddressInput
-                        value={formData.address}
+                    <div className="col-span-2 pb-6 relative">
+                      <EnhancedAddressInput
+                        value={formData.address || ''}
                         onChange={handleChange}
                         onBlur={(e) => validateField('address', e.target.value, e)}
                         onFocus={() => setShowManualEntry(true)}
-                        error={hasAttemptedSubmit ? errors.address : undefined}
-                        manualEntry={formData.manualEntry}
+                        error={errors.address}
+                        manualEntry={formData.manualEntry || false}
                         onManualEntryChange={(e) => {
                           const event = {
                             target: {
@@ -363,7 +364,7 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                         }}
                         showManualEntry={showManualEntry}
                       />
-                    </motion.div>
+                    </div>
 
                     <motion.div 
                       className="space-y-4 mt-8"
@@ -391,33 +392,70 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                                 exit={{ opacity: 0, y: -10 }}
                                 className="absolute z-20 mt-1 w-full rounded-md bg-gray-800 shadow-lg border border-gray-700 max-h-60 overflow-y-auto"
                               >
-                                {SERVICES.map((category: ServiceCategory) => (
-                                  <div key={category.name}>
-                                    <button 
-                                      type="button"
-                                      onClick={() => toggleCategory(category.name)}
-                                      className="w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 flex justify-between items-center"
-                                    >
-                                      {category.name}
-                                      <svg className={cn("w-4 h-4 transition-transform", expandedCategories[category.name] ? "rotate-180" : "")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                                    </button>
-                                    {expandedCategories[category.name] && (
-                                      <div className="pl-4">
-                                        {category.services.map((service: ConfigService) => (
-                                          <label key={service.name} className="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 cursor-pointer">
-                                            <input
-                                              type="checkbox"
-                                              checked={formData.services.includes(service.name)}
-                                              onChange={() => handleServiceChange(service.name)}
-                                              className="mr-2 accent-[#00E6CA]"
-                                            />
-                                            {service.name} 
-                                          </label>
-                                        ))}
+                                {SERVICES.map((category: ServiceCategory) => {
+                                  // Determine state for category checkbox
+                                  const allServicesInCategory = category.services.map(s => s.name);
+                                  const selectedServicesInCategory = formData.services.filter(s => allServicesInCategory.includes(s));
+                                  const isAllSelected = selectedServicesInCategory.length === allServicesInCategory.length;
+                                  const isIndeterminate = selectedServicesInCategory.length > 0 && !isAllSelected;
+
+                                  const handleCategoryCheckboxChange = () => {
+                                    setFormData(prev => {
+                                      const currentServices = prev.services || [];
+                                      let newServices;
+                                      if (isAllSelected) {
+                                        // Deselect all in this category
+                                        newServices = currentServices.filter(s => !allServicesInCategory.includes(s));
+                                      } else {
+                                        // Select all in this category (add missing ones)
+                                        const servicesToAdd = allServicesInCategory.filter(s => !currentServices.includes(s));
+                                        newServices = [...currentServices, ...servicesToAdd];
+                                      }
+                                      return { ...prev, services: newServices };
+                                    });
+                                  };
+
+                                  return (
+                                    <div key={category.name}>
+                                      {/* Category Header with Checkbox */}
+                                      <div 
+                                        className="w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 flex justify-between items-center cursor-pointer"
+                                        onClick={() => toggleCategory(category.name)} // Keep toggle functionality on the div
+                                      >
+                                        <label className="flex items-center flex-grow mr-2 cursor-pointer">
+                                          <input
+                                            type="checkbox"
+                                            checked={isAllSelected}
+                                            ref={el => { if (el) el.indeterminate = isIndeterminate; }} // Set indeterminate state
+                                            onChange={handleCategoryCheckboxChange}
+                                            onClick={(e) => e.stopPropagation()} // Prevent click from toggling the dropdown
+                                            className="mr-2 accent-[#00E6CA]"
+                                          />
+                                          {category.name}
+                                        </label>
+                                        {/* Chevron stays part of the toggle area */}
+                                        <svg className={cn("w-4 h-4 transition-transform", expandedCategories[category.name] ? "rotate-180" : "")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                                       </div>
-                                    )}
-                                  </div>
-                                ))}
+
+                                      {/* Sub-services (no change needed here) */}
+                                      {expandedCategories[category.name] && (
+                                        <div className="pl-4">
+                                          {category.services.map((service: ConfigService) => (
+                                            <label key={service.name} className="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 cursor-pointer">
+                                              <input
+                                                type="checkbox"
+                                                checked={formData.services.includes(service.name)}
+                                                onChange={() => handleServiceChange(service.name)}
+                                                className="mr-2 accent-[#00E6CA]"
+                                              />
+                                              {service.name}
+                                            </label>
+                                          ))}
+                                        </div>
+                                      )}
+                                    </div>
+                                  );
+                                })}
                               </motion.div>
                             )}
                           </AnimatePresence>
@@ -438,14 +476,17 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                                 className="absolute z-20 mt-1 w-full rounded-md bg-gray-800 shadow-lg border border-gray-700 max-h-60 overflow-y-auto"
                               >
                                 {PREFERRED_TIMES.map((time) => (
-                                  <button
-                                    key={time}
-                                    type="button"
-                                    onClick={() => handleDropdownSelection('preferredTime', time)}
-                                    className="block w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700"
-                                  >
+                                  <label key={time} className="flex items-center px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700/50 cursor-pointer">
+                                    <input
+                                      type="radio"
+                                      name="preferredTimeRadio"
+                                      value={time}
+                                      checked={formData.preferredTime === time}
+                                      onChange={() => handleDropdownSelection('preferredTime', time)}
+                                      className="mr-2 accent-[#00E6CA] cursor-pointer"
+                                    />
                                     {time}
-                                  </button>
+                                  </label>
                                 ))}
                               </motion.div>
                             )}
@@ -470,14 +511,17 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                                 className="absolute z-20 mt-1 w-full rounded-md bg-gray-800 shadow-lg border border-gray-700 max-h-60 overflow-y-auto"
                               >
                                 {URGENCY_OPTIONS.map((urgency) => (
-                                  <button
-                                    key={urgency}
-                                    type="button"
-                                    onClick={() => handleDropdownSelection('urgency', urgency)}
-                                    className="block w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700"
-                                  >
+                                  <label key={urgency} className="flex items-center px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700/50 cursor-pointer">
+                                    <input
+                                      type="radio"
+                                      name="urgencyRadio"
+                                      value={urgency}
+                                      checked={formData.urgency === urgency}
+                                      onChange={() => handleDropdownSelection('urgency', urgency)}
+                                      className="mr-2 accent-[#00E6CA] cursor-pointer"
+                                    />
                                     {urgency}
-                                  </button>
+                                  </label>
                                 ))}
                               </motion.div>
                             )}

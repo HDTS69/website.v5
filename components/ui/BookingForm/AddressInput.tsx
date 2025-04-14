@@ -96,6 +96,9 @@ export function AddressInput({
   // Initialize Google Places Autocomplete
   const initializeAutocomplete = () => {
     if (!addressRef.current || manualEntry || !isBrowser || (isBrowser && (!window.google || !window.google.maps || !window.google.maps.places))) {
+      if (isBrowser && !window.google) {
+        console.warn('Google Maps API not loaded yet - waiting for initialization');
+      }
       return;
     }
 
@@ -103,12 +106,36 @@ export function AddressInput({
       // Clean up any existing autocomplete instance first
       cleanup();
       
-      // Create the autocomplete instance
+      // Log the current environment for debugging
+      const currentOrigin = window.location.origin;
+      console.log(`Initializing Google Places Autocomplete on: ${currentOrigin}`);
+      
+      // Create the autocomplete instance with more specific options
       autocompleteRef.current = new window.google.maps.places.Autocomplete(addressRef.current, {
         types: ['address'],
         componentRestrictions: { country: 'au' }, // Restrict to Australia
-        fields: ['address_components', 'formatted_address'],
+        fields: ['address_components', 'formatted_address', 'place_id'],
       });
+      
+      // Attempt to set bounds based on a rough Australia-wide area if available
+      try {
+        const australiaBounds = {
+          north: -10.0,  // Northern extent (rough)
+          south: -44.0,  // Southern extent (rough)
+          east: 154.0,   // Eastern extent (rough)
+          west: 112.0,   // Western extent (rough)
+        };
+        
+        if (window.google.maps.LatLngBounds) {
+          const bounds = new window.google.maps.LatLngBounds(
+            { lat: australiaBounds.south, lng: australiaBounds.west },
+            { lat: australiaBounds.north, lng: australiaBounds.east }
+          );
+          autocompleteRef.current.setBounds(bounds);
+        }
+      } catch (boundsError) {
+        console.warn('Could not set bounds:', boundsError);
+      }
 
       // Add listener for place selection
       autocompleteListenerRef.current = window.google.maps.event.addListener(
@@ -117,14 +144,40 @@ export function AddressInput({
         () => {
           const place = autocompleteRef.current.getPlace();
           if (place && place.formatted_address) {
+            console.log('Place selected:', place.formatted_address);
             handlePlaceSelection(place.formatted_address);
+          } else {
+            console.warn('No place details available');
           }
         }
       );
 
+      // Mark as initialized for tracking
       setInitialized(true);
+      console.log('Google Places Autocomplete initialized successfully');
     } catch (error) {
       console.error('Error initializing Google Places Autocomplete:', error);
+      
+      // Provide more detailed error info for RefererNotAllowedMapError
+      if (error instanceof Error && error.message.includes('RefererNotAllowedMapError')) {
+        console.error(`
+          RefererNotAllowedMapError: Make sure this URL is allowed in your Google Cloud Console:
+          ${window.location.origin}
+        `);
+      }
+      
+      // If initialization fails, fall back to manual entry mode
+      if (!manualEntry) {
+        // Create a synthetic event to trigger manual entry mode
+        const syntheticEvent = {
+          target: { checked: true },
+          currentTarget: { checked: true },
+          preventDefault: () => {},
+          stopPropagation: () => {},
+        } as unknown as React.ChangeEvent<HTMLInputElement>;
+        
+        onManualEntryChange?.(syntheticEvent);
+      }
     }
   };
 
@@ -154,28 +207,45 @@ export function AddressInput({
       return;
     }
     
+    // Add debug event listener for Google Maps loaded event
+    const handleGoogleMapsLoaded = () => {
+      console.log('Google Maps loaded event detected');
+      setTimeout(() => {
+        if (window.google && window.google.maps && window.google.maps.places && !initialized) {
+          initializeAutocomplete();
+        }
+      }, 100);
+    };
+    
+    window.addEventListener('google-maps-loaded', handleGoogleMapsLoaded);
+    
     // Check if Google Maps API is already loaded
     if (isBrowser && window.google && window.google.maps && window.google.maps.places && !initialized) {
       // Add a small delay to ensure the API is fully loaded
       setTimeout(() => {
-        initializeAutocomplete();
+        initializeAutocomplete(); // Uncommented for Google Places functionality
       }, 100);
     } else {
       // Set up a polling mechanism to check for Google Maps API availability
       const checkGoogleMapsInterval = setInterval(() => {
         if (isBrowser && window.google && window.google.maps && window.google.maps.places && !initialized) {
           clearInterval(checkGoogleMapsInterval);
-          initializeAutocomplete();
+          initializeAutocomplete(); // Uncommented for Google Places functionality
         }
       }, 500);
       
       // Clear interval on component unmount
       return () => {
         clearInterval(checkGoogleMapsInterval);
+        window.removeEventListener('google-maps-loaded', handleGoogleMapsLoaded);
         cleanup();
       };
     }
-  }, [manualEntry, isBrowser]); // Add manualEntry and isBrowser as dependencies
+    
+    return () => {
+      window.removeEventListener('google-maps-loaded', handleGoogleMapsLoaded);
+    };
+  }, [manualEntry, isBrowser, initialized]); // Added initialized to dependencies
 
   // Re-initialize autocomplete when manual entry changes
   useEffect(() => {
@@ -184,7 +254,7 @@ export function AddressInput({
     } else if (isBrowser && window.google && window.google.maps && window.google.maps.places) {
       // Add a small delay to ensure the API is fully loaded
       setTimeout(() => {
-        initializeAutocomplete();
+        initializeAutocomplete(); // Uncommented for Google Places functionality
       }, 100);
     }
   }, [manualEntry, isBrowser]);

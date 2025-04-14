@@ -100,6 +100,9 @@ const nextConfig = {
       };
     }
     
+    // Disable webpack caching to avoid file rename errors
+    config.cache = false;
+    
     // Enable WebAssembly for Rive animations
     config.experiments = {
       ...config.experiments,

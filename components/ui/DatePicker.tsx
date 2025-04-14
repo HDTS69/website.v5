@@ -6,6 +6,10 @@ import { CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import * as Popover from "@radix-ui/react-popover";
 import { cn } from "@/lib/utils";
 import { useFormStatus } from "react-dom";
+import { useState, useEffect, useCallback } from 'react';
+import { Button } from "@/components/ui/button";
+import { DayPicker } from "react-day-picker";
+import { CalendarPickerContent } from "./CalendarPickerContent";
 
 interface DatePickerProps extends React.HTMLAttributes<HTMLDivElement> {
   value: string;
@@ -31,6 +35,8 @@ export function DatePicker({
   ...props
 }: DatePickerProps) {
   const [isClient, setIsClient] = React.useState(false);
+  const [open, setOpen] = useState(isOpen);
+  const [selectionMethod, setSelectionMethod] = useState<'calendar' | 'thisWeek' | 'nextWeek'>('calendar');
   
   // Check if we are on the client-side
   React.useEffect(() => {
@@ -65,9 +71,13 @@ export function DatePicker({
   const handleDateSelect = React.useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
+    console.log("DatePicker: handleDateSelect triggered");
     
     const day = parseInt(e.currentTarget.getAttribute('data-day') || '0', 10);
-    if (!day) return;
+    if (!day) {
+      console.log("DatePicker: No day found");
+      return;
+    }
 
     const newDate = new Date(
       currentDate.getFullYear(),
@@ -76,6 +86,7 @@ export function DatePicker({
     );
     
     if (newDate < minDate) {
+      console.log("DatePicker: Date is before minDate");
       return;
     }
 
@@ -83,11 +94,13 @@ export function DatePicker({
     const formattedDate = format(newDate, 'yyyy-MM-dd');
     
     if (onDateSelect) {
+      console.log("DatePicker: Calling onDateSelect with", formattedDate);
       onDateSelect(formattedDate);
     }
     
     // Close the popover after selection
     if (onToggle) {
+      console.log("DatePicker: Calling onToggle to close popover");
       onToggle();
     }
   }, [currentDate, minDate, onDateSelect, onToggle]);
@@ -106,7 +119,7 @@ export function DatePicker({
     setCurrentDate(newDate);
   }, [currentDate]);
 
-  const handleQuickDateSelect = React.useCallback((date: Date) => {
+  const handleQuickDateSelect = React.useCallback((date: Date, method: 'calendar' | 'thisWeek' | 'nextWeek' = 'calendar') => {
     const formattedDate = format(date, 'yyyy-MM-dd');
     if (onDateSelect) {
       onDateSelect(formattedDate);
@@ -114,7 +127,39 @@ export function DatePicker({
     if (onToggle) {
       onToggle();
     }
+    setSelectionMethod(method);
   }, [onDateSelect, onToggle]);
+
+  const handleThisWeekSelection = () => {
+    const today = new Date();
+    const endOfWeek = new Date(today);
+    endOfWeek.setDate(today.getDate() + (6 - today.getDay()));
+    
+    // Set the date and track that it was selected via "This Week" button
+    handleQuickDateSelect(endOfWeek, 'thisWeek');
+    setOpen(false);
+  };
+
+  const handleNextWeekSelection = () => {
+    const today = new Date();
+    const endOfNextWeek = new Date(today);
+    endOfNextWeek.setDate(today.getDate() + (13 - today.getDay()));
+    
+    // Set the date and track that it was selected via "Next Week" button
+    handleQuickDateSelect(endOfNextWeek, 'nextWeek');
+    setOpen(false);
+  };
+  
+  const handleCalendarSelect = (date: Date | undefined) => {
+    if (onDateSelect) {
+      onDateSelect(date ? format(date, 'yyyy-MM-dd') : '');
+    }
+    if (onToggle) {
+      onToggle();
+    }
+    setSelectionMethod('calendar');
+    setOpen(false);
+  };
 
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const months = [
@@ -132,8 +177,15 @@ export function DatePicker({
     "December",
   ];
 
+  // Custom styling for the calendar
+  const customClassNames = {
+    button: "hover:bg-[#252e3f] text-gray-300 hover:text-teal-500 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-[#141821]",
+    day_selected: "bg-teal-500 text-gray-900 hover:bg-teal-600 hover:text-gray-900 focus:ring-teal-500",
+    day_today: "bg-[#1c2230] text-gray-300",
+  };
+
   return (
-    <Popover.Root open={isOpen} onOpenChange={onToggle}>
+    <Popover.Root open={open} onOpenChange={setOpen}>
       <input 
         type="hidden" 
         name={name} 
@@ -152,39 +204,44 @@ export function DatePicker({
           disabled={pending}
           suppressHydrationWarning
           className={cn(
-            "w-full flex justify-between items-center rounded-md border border-gray-700 bg-[#141821] px-4 text-sm text-gray-300 shadow-sm hover:border-teal-500 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 h-10 dropdown-trigger",
+            "w-full flex justify-between items-center rounded-md border border-gray-700 bg-[#141821]",
+            "px-2 py-1",
+            "text-xs",
+            "text-gray-300 shadow-sm whitespace-normal text-left",
+            "min-h-[2.5rem] h-auto",
+            "hover:border-teal-500 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 dropdown-trigger",
             pending && "opacity-50 cursor-not-allowed",
             className
           )}
         >
-          <span className="text-gray-300" suppressHydrationWarning>
+          <span className="text-gray-300 flex-grow" suppressHydrationWarning>
             {isClient ? (value ? (() => {
               const selectedDate = new Date(value);
-              const today = new Date();
-              const nextWeek = new Date(today);
-              nextWeek.setDate(today.getDate() + 7);
-
-              // Check if the selected date is the end of this week
-              const endOfThisWeek = new Date(today);
-              endOfThisWeek.setDate(today.getDate() + (6 - today.getDay()));
-              const startOfThisWeek = new Date(today);
-              startOfThisWeek.setDate(today.getDate() - today.getDay());
-
-              // Check if the selected date is the end of next week
-              const endOfNextWeek = new Date(today);
-              endOfNextWeek.setDate(today.getDate() + (13 - today.getDay()));
-              const startOfNextWeek = new Date(today);
-              startOfNextWeek.setDate(today.getDate() + (7 - today.getDay()));
-
-              if (format(selectedDate, 'yyyy-MM-dd') === format(endOfThisWeek, 'yyyy-MM-dd')) {
+              
+              // Only show week ranges for dates selected via the specific buttons
+              if (selectionMethod === 'thisWeek') {
+                const today = new Date();
+                const startOfThisWeek = new Date(today);
+                startOfThisWeek.setDate(today.getDate() - today.getDay());
+                const endOfThisWeek = new Date(today);
+                endOfThisWeek.setDate(today.getDate() + (6 - today.getDay()));
+                
                 return `This Week (${format(startOfThisWeek, 'MMM d')} - ${format(endOfThisWeek, 'MMM d')})`;
-              } else if (format(selectedDate, 'yyyy-MM-dd') === format(endOfNextWeek, 'yyyy-MM-dd')) {
+              } else if (selectionMethod === 'nextWeek') {
+                const today = new Date();
+                const startOfNextWeek = new Date(today);
+                startOfNextWeek.setDate(today.getDate() + (7 - today.getDay()));
+                const endOfNextWeek = new Date(today);
+                endOfNextWeek.setDate(today.getDate() + (13 - today.getDay()));
+                
                 return `Next Week (${format(startOfNextWeek, 'MMM d')} - ${format(endOfNextWeek, 'MMM d')})`;
               }
+              
+              // Always show the specific date format for calendar selections
               return format(selectedDate, "dd MMMM yyyy");
             })() : placeholder) : placeholder}
           </span>
-          <CalendarIcon className="h-4 w-4 text-gray-400 hover:text-teal-500 transition-colors" aria-hidden="true" />
+          <CalendarIcon className="h-4 w-4 ml-1 flex-shrink-0 text-gray-400 hover:text-teal-500 transition-colors" aria-hidden="true" />
         </button>
       </Popover.Trigger>
       
@@ -193,8 +250,9 @@ export function DatePicker({
         <Popover.Content 
           sideOffset={4} 
           align="start" 
-          className="z-50" // Ensure it's above other elements
-          onOpenAutoFocus={(e) => e.preventDefault()} // Prevent focus steal on open
+          className="z-50"
+          onOpenAutoFocus={(e) => e.preventDefault()}
+          data-datepicker-popover
         >
           <div 
             id={`${name}-calendar`}
@@ -203,7 +261,6 @@ export function DatePicker({
           >
             <div 
               className="bg-[#141821]/95 p-4 rounded-lg border border-gray-700/50 shadow-lg w-[280px] dropdown-backdrop"
-              onClick={(e) => e.stopPropagation()}
               role="application"
               aria-label="Calendar"
             >
@@ -216,7 +273,7 @@ export function DatePicker({
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      handleQuickDateSelect(new Date());
+                      handleQuickDateSelect(new Date(), 'calendar');
                     }}
                     className="flex-1 py-1.5 text-sm text-teal-500 bg-[#1c2230] rounded hover:bg-[#252e3f] transition-colors hover:text-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-[#141821] active:transform active:scale-95"
                   >
@@ -231,7 +288,7 @@ export function DatePicker({
                       e.stopPropagation();
                       const tomorrow = new Date();
                       tomorrow.setDate(tomorrow.getDate() + 1);
-                      handleQuickDateSelect(tomorrow);
+                      handleQuickDateSelect(tomorrow, 'calendar');
                     }}
                     className="flex-1 py-1.5 text-sm text-teal-500 bg-[#1c2230] rounded hover:bg-[#252e3f] transition-colors hover:text-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-[#141821] active:transform active:scale-95"
                   >
@@ -250,7 +307,8 @@ export function DatePicker({
                       const endOfThisWeek = new Date(thisWeek);
                       // Adjust to end of week (Saturday)
                       endOfThisWeek.setDate(thisWeek.getDate() + (6 - thisWeek.getDay()));
-                      handleQuickDateSelect(endOfThisWeek);
+                      // Mark as selected via "This Week" button
+                      handleQuickDateSelect(endOfThisWeek, 'thisWeek');
                     }}
                     className="flex-1 py-1.5 text-sm text-teal-500 bg-[#1c2230] rounded hover:bg-[#252e3f] transition-colors hover:text-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-[#141821] active:transform active:scale-95"
                   >
@@ -267,7 +325,8 @@ export function DatePicker({
                       const endOfNextWeek = new Date(nextWeek);
                       // Move to end of next week
                       endOfNextWeek.setDate(nextWeek.getDate() + (13 - nextWeek.getDay()));
-                      handleQuickDateSelect(endOfNextWeek);
+                      // Mark as selected via "Next Week" button
+                      handleQuickDateSelect(endOfNextWeek, 'nextWeek');
                     }}
                     className="flex-1 py-1.5 text-sm text-teal-500 bg-[#1c2230] rounded hover:bg-[#252e3f] transition-colors hover:text-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-[#141821] active:transform active:scale-95"
                   >

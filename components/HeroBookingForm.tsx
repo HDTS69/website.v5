@@ -160,14 +160,36 @@ export function HeroBookingForm() {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       const target = event.target as HTMLElement;
-      if (servicesRef.current && !servicesRef.current.contains(target)) setShowServices(false);
-      if (timeRef.current && !timeRef.current.contains(target)) setShowTime(false);
-      if (urgencyRef.current && !urgencyRef.current.contains(target)) setShowUrgency(false);
-      if (dateRef.current && !dateRef.current.contains(target)) setShowDate(false);
+      console.log("HeroForm handleClickOutside: Target=", target); // Log target
+      
+      const isClickInsideDatePickerPopover = target.closest('[data-datepicker-popover]');
+      console.log("HeroForm handleClickOutside: isClickInsideDatePickerPopover=", !!isClickInsideDatePickerPopover); // Log check result
+
+      if (servicesRef.current && !servicesRef.current.contains(target)) {
+        // console.log("HeroForm handleClickOutside: Closing Services");
+        setShowServices(false);
+      }
+      if (timeRef.current && !timeRef.current.contains(target)) {
+        // console.log("HeroForm handleClickOutside: Closing Time");
+        setShowTime(false);
+      }
+      if (urgencyRef.current && !urgencyRef.current.contains(target)) {
+        // console.log("HeroForm handleClickOutside: Closing Urgency");
+        setShowUrgency(false);
+      }
+      
+      if (dateRef.current && !dateRef.current.contains(target) && !isClickInsideDatePickerPopover) {
+        console.log("HeroForm handleClickOutside: Closing DatePicker"); // Log closing condition
+        setShowDate(false);
+      } else if (dateRef.current && !dateRef.current.contains(target) && isClickInsideDatePickerPopover) {
+        console.log("HeroForm handleClickOutside: Click inside DatePicker popover, NOT closing."); // Log non-closing condition
+      } else if (dateRef.current && dateRef.current.contains(target)) {
+        console.log("HeroForm handleClickOutside: Click inside DatePicker trigger, NOT closing."); // Log trigger click
+      }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, []); // Dependencies remain empty
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -276,38 +298,76 @@ export function HeroBookingForm() {
                         initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
                         className="absolute z-20 mt-1 w-full rounded-md bg-gray-800 shadow-lg border border-gray-700 max-h-60 overflow-y-auto"
                       >
-                        {SERVICES.map((category: ServiceCategory) => (
-                          <div key={category.name}>
-                            <button
-                              type="button" onClick={() => toggleCategory(category.name)}
-                              className="w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 flex justify-between items-center"
-                            >
-                              {category.name}
-                              <svg className={cn("w-4 h-4 transition-transform", expandedCategories[category.name] ? "rotate-180" : "")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                            </button>
-                            {expandedCategories[category.name] && (
-                              <div className="pl-4">
-                                {category.services.map((service: ConfigService) => (
-                                  <label key={service.name} className="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 cursor-pointer">
-                                    <input
-                                      type="checkbox"
-                                      checked={formData.services.includes(service.name)}
-                                      onChange={() => handleServiceChange(service.name)}
-                                      className="mr-2 accent-[#00E6CA]"
-                                    />
-                                    {service.name}
-                                  </label>
-                                ))}
+                        {SERVICES.map((category: ServiceCategory) => {
+                          // Determine state for category checkbox
+                          const allServicesInCategory = category.services.map(s => s.name);
+                          const selectedServicesInCategory = formData.services.filter(s => allServicesInCategory.includes(s));
+                          const isAllSelected = selectedServicesInCategory.length === allServicesInCategory.length && allServicesInCategory.length > 0;
+                          const isIndeterminate = selectedServicesInCategory.length > 0 && !isAllSelected;
+
+                          const handleCategoryCheckboxChange = () => {
+                            setFormData(prev => {
+                              const currentServices = prev.services || [];
+                              let newServices;
+                              if (isAllSelected) {
+                                // Deselect all in this category
+                                newServices = currentServices.filter(s => !allServicesInCategory.includes(s));
+                              } else {
+                                // Select all in this category (add missing ones)
+                                const servicesToAdd = allServicesInCategory.filter(s => !currentServices.includes(s));
+                                newServices = [...currentServices, ...servicesToAdd];
+                              }
+                              return { ...prev, services: newServices };
+                            });
+                          };
+
+                          return (
+                            <div key={category.name}>
+                              {/* Category Header with Checkbox */}
+                              <div 
+                                className="w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 flex justify-between items-center cursor-pointer"
+                                onClick={() => toggleCategory(category.name)} // Keep toggle functionality on the div
+                              >
+                                <label className="flex items-center flex-grow mr-2 cursor-pointer">
+                                  <input
+                                    type="checkbox"
+                                    checked={isAllSelected}
+                                    ref={el => { if (el) el.indeterminate = isIndeterminate; }} // Set indeterminate state
+                                    onChange={handleCategoryCheckboxChange}
+                                    onClick={(e) => e.stopPropagation()} // Prevent click from toggling the dropdown
+                                    className="mr-2 accent-[#00E6CA]"
+                                  />
+                                  {category.name}
+                                </label>
+                                {/* Chevron stays part of the toggle area */}
+                                <svg className={cn("w-4 h-4 transition-transform", expandedCategories[category.name] ? "rotate-180" : "")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                               </div>
-                            )}
-                          </div>
-                        ))}
+
+                              {/* Sub-services (no change needed here) */}
+                              {expandedCategories[category.name] && (
+                                <div className="pl-4">
+                                  {category.services.map((service: ConfigService) => (
+                                    <label key={service.name} className="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 cursor-pointer">
+                                      <input
+                                        type="checkbox"
+                                        checked={formData.services.includes(service.name)}
+                                        onChange={() => handleServiceChange(service.name)}
+                                        className="mr-2 accent-[#00E6CA]"
+                                      />
+                                      {service.name}
+                                    </label>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
                 {/* Other Dropdowns (Time, Urgency, Date) */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                   {/* Preferred Time */}
                   <div className="relative" ref={timeRef}>
                     <Dropdown
@@ -323,14 +383,17 @@ export function HeroBookingForm() {
                           className="absolute z-20 mt-1 w-full rounded-md bg-gray-800 shadow-lg border border-gray-700 max-h-60 overflow-y-auto"
                         >
                           {PREFERRED_TIMES.map((time) => (
-                            <button
-                              key={time}
-                              type="button"
-                              onClick={() => handleDropdownSelection('preferredTime', time)}
-                              className="block w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700/50"
-                            >
+                            <label key={time} className="flex items-center px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700/50 cursor-pointer">
+                              <input
+                                type="radio"
+                                name="preferredTimeRadioHero"
+                                value={time}
+                                checked={formData.preferredTime === time}
+                                onChange={() => handleDropdownSelection('preferredTime', time)}
+                                className="mr-2 accent-[#00E6CA] cursor-pointer"
+                              />
                               {time}
-                            </button>
+                            </label>
                           ))}
                         </motion.div>
                       )}
@@ -351,14 +414,17 @@ export function HeroBookingForm() {
                           className="absolute z-20 mt-1 w-full rounded-md bg-gray-800 shadow-lg border border-gray-700 max-h-60 overflow-y-auto"
                         >
                           {URGENCY_OPTIONS.map((option) => (
-                            <button
-                              key={option}
-                              type="button"
-                              onClick={() => handleDropdownSelection('urgency', option)}
-                              className="block w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700/50"
-                            >
+                            <label key={option} className="flex items-center px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700/50 cursor-pointer">
+                              <input
+                                type="radio"
+                                name="urgencyRadioHero"
+                                value={option}
+                                checked={formData.urgency === option}
+                                onChange={() => handleDropdownSelection('urgency', option)}
+                                className="mr-2 accent-[#00E6CA] cursor-pointer"
+                              />
                               {option}
-                            </button>
+                            </label>
                           ))}
                         </motion.div>
                       )}
