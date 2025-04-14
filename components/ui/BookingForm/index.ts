@@ -6,6 +6,7 @@ export { AddressInput } from './AddressInput';
 export { EnhancedAddressInput } from './EnhancedAddressInput';
 export { GoogleMapsScript } from './GoogleMapsScript';
 export { GooglePlacesFallback } from './GooglePlacesFallback';
+export { WaveInput } from './WaveInput';
 export * from './Dropdown';
 export * from './useFormState';
 export * from './useFormValidation';
