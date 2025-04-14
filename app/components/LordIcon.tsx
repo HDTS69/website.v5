@@ -9,7 +9,6 @@ import Image from 'next/image';
 // Add lottie type declaration
 declare global {
   interface Window {
-    RiveCanvas?: any;
     lottie?: {
       setQuality: (quality: string) => void;
       loadAnimation: (config: {

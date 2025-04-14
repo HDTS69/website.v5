@@ -17,14 +17,17 @@ declare global {
     };
     initMap?: () => void;
     
-    // Rive extensions (from RiveLoader)
-    RiveCanvas?: {
-      new: (config: any) => any;
-    };
-    
     // Lottie extensions (from LordIcon)
     lottie?: {
-      loadAnimation: (config: any) => any;
+      setQuality: (quality: string) => void;
+      loadAnimation: (config: {
+        container: HTMLElement;
+        renderer: string;
+        loop: boolean;
+        autoplay: boolean;
+        path: string;
+        name: string;
+      }) => void;
     };
   }
 }

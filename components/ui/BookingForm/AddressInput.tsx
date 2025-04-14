@@ -15,6 +15,7 @@ declare global {
   interface Window {
     google?: {
       maps: {
+        Map: new (element: HTMLElement, options: any) => any;
         places: {
           Autocomplete: new (input: HTMLInputElement, options?: any) => any;
         };

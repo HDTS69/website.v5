@@ -9,7 +9,6 @@ import { useFormStatus } from "react-dom";
 import { useState, useEffect, useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { DayPicker } from "react-day-picker";
-import { CalendarPickerContent } from "./CalendarPickerContent";
 
 interface DatePickerProps extends React.HTMLAttributes<HTMLDivElement> {
   value: string;
