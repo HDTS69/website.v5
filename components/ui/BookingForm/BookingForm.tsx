@@ -12,7 +12,6 @@ import { useFormState } from './useFormState';
 import { useFormValidation } from './useFormValidation';
 import { useFormSubmission } from './useFormSubmission';
 import { AddressInput } from './AddressInput';
-import { EnhancedAddressInput } from './EnhancedAddressInput';
 import { PREFERRED_TIMES, URGENCY_OPTIONS } from './constants';
 import type { BookingFormProps, Service } from './types';
 import { SERVICES, ServiceCategory } from '@/config/services';
@@ -344,27 +343,21 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                   </div>
 
                   <div className="space-y-4">
-                    <div className="col-span-2">
-                      <EnhancedAddressInput
-                        value={formData.address || ''}
+                    <motion.div 
+                      className="col-span-2 relative" 
+                      layout
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                    >
+                      <AddressInput
+                        value={formData.address}
                         onChange={handleChange}
-                        onBlur={(e) => validateField('address', e.target.value, e)}
-                        onFocus={() => setShowManualEntry(true)}
+                        onFocus={() => {}}
                         error={errors.address}
-                        manualEntry={formData.manualEntry || false}
-                        onManualEntryChange={(e) => {
-                          const event = {
-                            target: {
-                              name: 'manualEntry',
-                              type: 'checkbox',
-                              checked: e.target.checked
-                            }
-                          } as unknown as React.ChangeEvent<HTMLInputElement>;
-                          handleChange(event);
-                        }}
+                        manualEntry={formData.manualEntry}
+                        onManualEntryChange={(e) => setFormData(prev => ({ ...prev, manualEntry: e.target.checked }))}
                         showManualEntry={showManualEntry}
                       />
-                    </div>
+                    </motion.div>
 
                     <motion.div 
                       className="space-y-4 mt-8"

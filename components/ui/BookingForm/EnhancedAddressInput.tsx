@@ -175,53 +175,51 @@ export function EnhancedAddressInput({
   }, [value]);
 
   return (
-    <div className={className}>
-      <div className="relative">
-        <WaveInput
-          ref={addressRef}
-          name="address"
-          value={value}
-          onChange={handleInputChange}
-          onBlur={validateAddress}
-          onFocus={onFocus}
-          label="Address"
-          disabled={!isBrowser}
-          className={error ? 'border-red-500' : ''}
-          aria-invalid={!!error}
-          aria-describedby={error ? 'address-error' : undefined}
-          autoComplete="off"
-        />
-        
-        {/* Show error from Google Places API */}
-        {placesError && !manualEntry && (
-          <div className="mt-2 py-2 border border-red-500 rounded-lg bg-red-50 text-red-700 px-4">
-            <div className="flex items-center">
-              <AlertCircle className="h-4 w-4 mr-2" />
-              <div className="text-xs">
-                {placesError}
-              </div>
+    <div className="relative">
+      <WaveInput
+        ref={addressRef}
+        name="address"
+        value={value}
+        onChange={handleInputChange}
+        onBlur={validateAddress}
+        onFocus={onFocus}
+        label="Address"
+        disabled={!isBrowser}
+        className={error ? 'border-red-500' : ''}
+        aria-invalid={!!error}
+        aria-describedby={error ? 'address-error' : undefined}
+        autoComplete="off"
+      />
+      
+      {/* Show error from Google Places API */}
+      {placesError && !manualEntry && (
+        <div className="mt-2 py-2 border border-red-500 rounded-lg bg-red-50 text-red-700 px-4">
+          <div className="flex items-center">
+            <AlertCircle className="h-4 w-4 mr-2" />
+            <div className="text-xs">
+              {placesError}
             </div>
           </div>
-        )}
-        
-        {/* Show loading indicator */}
-        {isLoading && !manualEntry && (
-          <div className="absolute right-10 top-1/2 transform -translate-y-1/2">
-            <div className="h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-          </div>
-        )}
-        
-        {/* Validation error */}
-        {error && (
-          <div 
-            id="address-error" 
-            className="text-red-500 text-xs mt-1 absolute -bottom-5 left-0"
-            aria-live="polite"
-          >
-            {error}
-          </div>
-        )}
-      </div>
+        </div>
+      )}
+      
+      {/* Show loading indicator */}
+      {isLoading && !manualEntry && (
+        <div className="absolute right-10 top-1/2 transform -translate-y-1/2">
+          <div className="h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
+      
+      {/* Validation error */}
+      {error && (
+        <div 
+          id="address-error" 
+          className="text-red-500 text-xs mt-1 absolute -bottom-5 left-0"
+          aria-live="polite"
+        >
+          {error}
+        </div>
+      )}
       
       {/* Manual entry toggle */}
       {showManualEntry && (
@@ -248,7 +246,7 @@ export function EnhancedAddressInput({
               onClick={() => reinitialize()}
               className="ml-auto text-blue-500 hover:text-blue-700 text-xs"
             >
-              Retry
+              Retry Location
             </button>
           )}
         </div>

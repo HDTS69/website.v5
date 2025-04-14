@@ -15,7 +15,7 @@
     "security:audit": "npm audit && npm audit fix",
     "security:audit:prod": "npm audit --production",
     "security:deps": "npx snyk test",
-    "security:lint": "eslint . --ext .ts,.tsx --config .eslintrc.json",
+    "security:lint": "next lint",
     "security:check": "npm run security:audit && npm run security:lint"
   },
   "dependencies": {
@@ -45,7 +45,7 @@
     "lottie-web": "5.12.2",
     "lucide-react": "0.475.0",
     "mini-svg-data-uri": "1.4.4",
-    "next": "15.2.3",
+    "next": "15.3.0",
     "node-fetch": "3.3.2",
     "react": "19.0.0",
     "react-day-picker": "9.6.7",
