@@ -13,7 +13,7 @@ const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
 // Define the Google Autocomplete interface
 declare global {
   interface Window {
-    google: {
+    google?: {
       maps: {
         places: {
           Autocomplete: new (input: HTMLInputElement, options?: any) => any;
@@ -24,7 +24,7 @@ declare global {
         };
       };
     };
-    initGooglePlacesAutocomplete: () => void;
+    initGooglePlacesAutocomplete?: () => void;
   }
 }
 
@@ -436,6 +436,68 @@ export function AddressInput({
         .pac-container:hover:before {
           color: #00E6CA;
         }
+        
+        /* Ensure wave-group and input styles match other form elements */
+        .wave-group .input {
+          font-size: 16px;
+          padding: 10px 10px 10px 5px;
+          display: block;
+          width: 100%;
+          border: none;
+          border-bottom: 1px solid #333;
+          background: transparent;
+          color: #fff;
+        }
+        
+        .wave-group .input:focus {
+          outline: none;
+          border-bottom-color: #00E6CA;
+        }
+        
+        .wave-group .label {
+          color: #999;
+          font-size: 16px;
+          font-weight: normal;
+          position: absolute;
+          pointer-events: none;
+          left: 5px;
+          top: 10px;
+          display: flex;
+          transition: 0.2s ease all;
+        }
+        
+        .wave-group .label-char {
+          transition: 0.2s cubic-bezier(0.72, 0.01, 0.58, 1) all;
+          transition-delay: calc(0.02s * var(--index));
+        }
+        
+        .wave-group .input:focus ~ .label .label-char,
+        .wave-group .input:not(:placeholder-shown) ~ .label .label-char {
+          transform: translateY(-20px);
+          font-size: 14px;
+          color: #00E6CA;
+        }
+        
+        .wave-group .bar {
+          position: relative;
+          display: block;
+          width: 100%;
+        }
+        
+        .wave-group .bar:before {
+          content: '';
+          height: 2px;
+          width: 0;
+          bottom: 0px;
+          position: absolute;
+          background: #00E6CA;
+          transition: 0.2s ease all;
+          left: 0%;
+        }
+        
+        .wave-group .input:focus ~ .bar:before {
+          width: 100%;
+        }
       `}</style>
 
       <div className="relative">
@@ -457,6 +519,7 @@ export function AddressInput({
             error={error}
             autoComplete={manualEntry ? "on" : "off"}
             disabled={!manualEntry && (!isBrowser || (isBrowser && !window.google))}
+            className="w-full text-white border-gray-600 bg-transparent focus:border-[#00E6CA]"
           />
         </div>
         
