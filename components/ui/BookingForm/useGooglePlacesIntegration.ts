@@ -42,7 +42,8 @@ export function useGooglePlacesIntegration({
     return typeof window !== 'undefined' && 
            window.google &&
            window.google.maps &&
-           window.google.maps.places;
+           window.google.maps.places &&
+           typeof window.google.maps.places.Autocomplete === 'function';
   }, []);
   
   // Function to handle place selection
@@ -117,6 +118,7 @@ export function useGooglePlacesIntegration({
         handlePlaceChanged
       );
       
+      // Only set initialized to true if we reach this point successfully
       setIsInitialized(true);
       setError(null);
       console.log('Google Places Autocomplete initialized successfully');
@@ -144,17 +146,22 @@ export function useGooglePlacesIntegration({
   
   // Cleanup function
   const cleanup = useCallback(() => {
+    // Only remove listener if it exists and Google Maps is available
     if (listenerRef.current && isGoogleMapsAvailable() && window.google.maps.event) {
       window.google.maps.event.removeListener(listenerRef.current);
       listenerRef.current = null;
     }
     
+    // Clear the autocomplete reference
     autocompleteRef.current = null;
+    
+    // Use functional updates to avoid stale closures
     setIsInitialized(false);
   }, [isGoogleMapsAvailable]);
   
   // Initialize when component mounts if Google Maps is available
   useEffect(() => {
+    // Skip initialization if disabled
     if (disabled) {
       cleanup();
       return;
@@ -189,25 +196,47 @@ export function useGooglePlacesIntegration({
       return () => {
         clearInterval(checkInterval);
         window.removeEventListener('google-maps-loaded', handleGoogleMapsLoaded);
-        cleanup();
+        
+        // Cleanup without causing re-renders on unmount
+        if (listenerRef.current && isGoogleMapsAvailable() && window.google?.maps?.event) {
+          window.google.maps.event.removeListener(listenerRef.current);
+          listenerRef.current = null;
+        }
+        autocompleteRef.current = null;
       };
     }
     
     // Clean up on unmount
     return () => {
       window.removeEventListener('google-maps-loaded', handleGoogleMapsLoaded);
-      cleanup();
+      
+      // Cleanup without causing re-renders on unmount
+      if (listenerRef.current && isGoogleMapsAvailable() && window.google?.maps?.event) {
+        window.google.maps.event.removeListener(listenerRef.current);
+        listenerRef.current = null;
+      }
+      autocompleteRef.current = null;
     };
-  }, [disabled, isInitialized, isGoogleMapsAvailable, initializeAutocomplete, cleanup]);
+  }, [disabled, isInitialized, isGoogleMapsAvailable, initializeAutocomplete]);
   
   // Re-initialize on disabled change
   useEffect(() => {
     if (disabled) {
-      cleanup();
-    } else if (isGoogleMapsAvailable() && !isInitialized) {
-      initializeAutocomplete();
+      // Direct cleanup instead of using the callback to avoid re-renders during unmount
+      if (listenerRef.current && isGoogleMapsAvailable() && window.google?.maps?.event) {
+        window.google.maps.event.removeListener(listenerRef.current);
+        listenerRef.current = null;
+      }
+      autocompleteRef.current = null;
+      setIsInitialized(false);
+    } else if (isGoogleMapsAvailable()) {
+      // Check current state directly in the effect body
+      // This avoids needing isInitialized in the dependency array
+      if (!isInitialized) {
+        initializeAutocomplete();
+      }
     }
-  }, [disabled, isGoogleMapsAvailable, isInitialized, initializeAutocomplete, cleanup]);
+  }, [disabled, isGoogleMapsAvailable, initializeAutocomplete]);
   
   return {
     isInitialized,
