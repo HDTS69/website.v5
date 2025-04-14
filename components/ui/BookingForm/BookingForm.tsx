@@ -344,7 +344,7 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                   </div>
 
                   <div className="space-y-4">
-                    <div className="col-span-2 relative">
+                    <div className="col-span-2">
                       <EnhancedAddressInput
                         value={formData.address || ''}
                         onChange={handleChange}

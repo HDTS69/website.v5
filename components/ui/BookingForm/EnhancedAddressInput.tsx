@@ -175,7 +175,7 @@ export function EnhancedAddressInput({
   }, [value]);
 
   return (
-    <div className={cn("relative", className)}>
+    <div className={className}>
       <div className="relative">
         <WaveInput
           ref={addressRef}
