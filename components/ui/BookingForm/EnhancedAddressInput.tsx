@@ -33,7 +33,8 @@ export function EnhancedAddressInput({
   testId,
   country = 'au'
 }: EnhancedAddressInputProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
+  // Using React.createRef() to ensure consistent type compatibility
+  const inputRef = React.createRef<HTMLInputElement>();
   const [inputValue, setInputValue] = useState(value || '');
   const [mapsLoaded, setMapsLoaded] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
