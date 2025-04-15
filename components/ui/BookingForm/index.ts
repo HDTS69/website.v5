@@ -5,7 +5,7 @@ export { BookingForm } from './BookingForm';
 export { AddressInput } from './AddressInput';
 export { EnhancedAddressInput } from './EnhancedAddressInput';
 export { GoogleMapsScript } from './GoogleMapsScript';
-export { GooglePlacesFallback } from './GooglePlacesFallback';
+export { default as GooglePlacesFallback } from './GooglePlacesFallback';
 export { WaveInput } from './WaveInput';
 export * from './Dropdown';
 export * from './useFormState';

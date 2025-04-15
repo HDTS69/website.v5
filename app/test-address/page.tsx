@@ -1,6 +1,11 @@
-import { GooglePlacesFallback } from '@/components/ui/BookingForm/GooglePlacesFallback';
+'use client';
+
+import { GooglePlacesFallback } from '@/components/ui/BookingForm';
+import { useState } from 'react';
 
 export default function TestAddressPage() {
+  const [address, setAddress] = useState('');
+  
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-2xl font-bold mb-6">Google Places Autocomplete Test</h1>
@@ -8,7 +13,10 @@ export default function TestAddressPage() {
         Note: Google has announced that google.maps.places.Autocomplete will be deprecated as of March 1st, 2025.
         We should plan to migrate to google.maps.places.PlaceAutocompleteElement.
       </p>
-      <GooglePlacesFallback />
+      <GooglePlacesFallback 
+        value={address}
+        onChange={setAddress}
+      />
     </div>
   );
 } 
