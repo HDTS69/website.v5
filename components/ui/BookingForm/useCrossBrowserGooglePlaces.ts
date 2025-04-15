@@ -1,10 +1,31 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
-// Reference the Google Maps types
-import './google-maps-types';
+
+// Define necessary types inline
+interface PlaceResult {
+  address_components?: Array<{
+    long_name: string;
+    short_name: string;
+    types: string[];
+  }>;
+  formatted_address?: string;
+  geometry?: {
+    location?: {
+      lat: () => number;
+      lng: () => number;
+    };
+  };
+  name?: string;
+  place_id?: string;
+}
+
+// Define a maps event listener type
+interface MapsEventListener {
+  remove: () => void;
+}
 
 interface UseCrossBrowserGooglePlacesProps {
   inputRef: React.RefObject<HTMLInputElement | null>;
-  onPlaceSelect?: (place: google.maps.places.PlaceResult) => void;
+  onPlaceSelect?: (place: PlaceResult) => void;
   country?: string;
   types?: string[];
   fields?: string[];
@@ -33,8 +54,8 @@ export function useCrossBrowserGooglePlaces({
   const [isInitialized, setIsInitialized] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
-  const listenerRef = useRef<google.maps.MapsEventListener | null>(null);
+  const autocompleteRef = useRef<any>(null);
+  const listenerRef = useRef<MapsEventListener | null>(null);
 
   // Detect browser for specific browser handling
   const detectBrowser = useCallback((): string => {
@@ -107,12 +128,13 @@ export function useCrossBrowserGooglePlaces({
         );
         
         // Set up event listener with proper type handling
-        if (autocompleteRef.current) {
+        if (autocompleteRef.current && window.google && window.google.maps && window.google.maps.event) {
+          // Cast the result to MapsEventListener to ensure type compatibility
           listenerRef.current = window.google.maps.event.addListener(
             autocompleteRef.current,
             'place_changed',
             handlePlaceChanged
-          );
+          ) as unknown as MapsEventListener;
         }
         
         // Firefox and Safari sometimes need additional DOM events to properly focus

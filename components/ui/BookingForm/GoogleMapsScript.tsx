@@ -2,8 +2,6 @@
 
 import Script from 'next/script';
 import { useEffect, useState, useCallback } from 'react';
-// Reference the Google Maps types
-import './google-maps-types';
 
 // Define the Google Maps API key
 const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
