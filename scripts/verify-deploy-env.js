@@ -15,14 +15,14 @@ console.log('\n=== Deployment Environment Variable Verification ===\n');
 
 // List of required environment variables
 const REQUIRED_VARIABLES = [
-  'NEXT_PUBLIC_GOOGLE_MAPS_API_KEY',
+  // 'NEXT_PUBLIC_GOOGLE_MAPS_API_KEY', // removed - will be added back later
   'NEXT_PUBLIC_SUPABASE_URL',
   'NEXT_PUBLIC_SUPABASE_ANON_KEY'
 ];
 
 // Variables that should not be placeholder values
 const NO_PLACEHOLDER_VARIABLES = [
-  'NEXT_PUBLIC_GOOGLE_MAPS_API_KEY'
+  // 'NEXT_PUBLIC_GOOGLE_MAPS_API_KEY' // removed - will be added back later
 ];
 
 // Known placeholder patterns to check against
@@ -127,22 +127,6 @@ function isValidGoogleMapsApiKey(key) {
   return !isPlaceholder(key);
 }
 
-// Verify Google Maps API key with more lenient checks
-function verifyGoogleMapsApiKey(key) {
-  if (!key) {
-    console.log('❌ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not set');
-    return false;
-  }
-  
-  if (!isValidGoogleMapsApiKey(key)) {
-    console.log('❌ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY appears to be invalid or a placeholder');
-    return false;
-  }
-  
-  console.log('✅ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is set');
-  return true;
-}
-
 // Check all required variables
 function checkRequiredVariables() {
   let allValid = true;
@@ -156,17 +140,16 @@ function checkRequiredVariables() {
       continue;
     }
     
-    // Special handling for API key
-    if (varName === 'NEXT_PUBLIC_GOOGLE_MAPS_API_KEY') {
-      if (!verifyGoogleMapsApiKey(value)) {
-        allValid = false;
-        continue;
-      }
-    } 
-    // For other variables, just check they exist
-    else {
-      console.log(`✅ ${varName} is set`);
-    }
+    // For all variables, just check they exist
+    console.log(`✅ ${varName} is set`);
+  }
+  
+  // Optional check for Google Maps API Key if it exists
+  const mapsApiKey = getEnvVar('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY');
+  if (mapsApiKey) {
+    console.log(`ℹ️ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is set (optional)`);
+  } else {
+    console.log(`ℹ️ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not set (optional)`);
   }
   
   return allValid;
@@ -175,27 +158,28 @@ function checkRequiredVariables() {
 // Main verification
 const allValid = checkRequiredVariables();
 
-// Specific check for Google Maps API key
-const mapsApiKey = getEnvVar('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY');
-
 console.log('\n=== Verification Summary ===\n');
 
 if (allValid) {
   console.log('✅ All required environment variables are properly set');
   
   // Provide helpful info about Google Maps API key
+  const mapsApiKey = getEnvVar('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY');
   if (mapsApiKey) {
     // Show just enough of the key to confirm it's set without revealing the whole thing
     const keyPreview = mapsApiKey.length > 10 
       ? `${mapsApiKey.substring(0, 4)}...${mapsApiKey.substring(mapsApiKey.length - 4)}`
       : '(key seems too short)';
       
-    console.log('\nGOOGLE MAPS API KEY INFO:');
+    console.log('\nℹ️ GOOGLE MAPS API KEY INFO (OPTIONAL):');
     console.log(`Key: ${keyPreview}`);
     console.log('');
-    console.log('Remember to add these restrictions to your Google Maps API key:');
+    console.log('When you add the Maps API key back, remember to add these restrictions:');
     console.log('- Website restrictions: https://hdtradeservices.com.au/*');
     console.log('- API restrictions: Maps JavaScript API, Places API');
+  } else {
+    console.log('\nℹ️ No Google Maps API key is set (optional)');
+    console.log('Maps features will not be available until you add this key back.');
   }
   
   process.exit(0);
