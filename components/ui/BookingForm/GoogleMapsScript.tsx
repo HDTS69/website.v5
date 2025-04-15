@@ -43,7 +43,7 @@ export function GoogleMapsScript({ onLoadSuccess, onLoadError }: GoogleMapsScrip
   const handleError = useCallback((error: any) => {
     console.error('Google Maps API loading error:', error);
     setScriptError(true);
-    onLoadError?.();
+    if (onLoadError) onLoadError();
     
     // If it's a RefererNotAllowedMapError, log helpful information
     if (error && typeof error === 'string' && error.includes('RefererNotAllowedMapError')) {
@@ -54,12 +54,12 @@ export function GoogleMapsScript({ onLoadSuccess, onLoadError }: GoogleMapsScrip
   }, [onLoadError, logReferrerError]);
   
   // Detect browser for specific browser handling
-  const detectBrowser = useCallback(() => {
+  const detectBrowser = useCallback((): string => {
     if (typeof window === 'undefined' || !window.navigator) return 'unknown';
     
     const ua = navigator.userAgent;
-    if (ua.indexOf('Chrome') > -1) return 'chrome';
-    if (ua.indexOf('Safari') > -1) return 'safari';
+    if (ua.indexOf('Chrome') > -1 && ua.indexOf('Edge') === -1) return 'chrome';
+    if (ua.indexOf('Safari') > -1 && ua.indexOf('Chrome') === -1) return 'safari';
     if (ua.indexOf('Firefox') > -1) return 'firefox';
     if (ua.indexOf('MSIE') > -1 || ua.indexOf('Trident') > -1) return 'ie';
     if (ua.indexOf('Edge') > -1) return 'edge';
@@ -70,8 +70,24 @@ export function GoogleMapsScript({ onLoadSuccess, onLoadError }: GoogleMapsScrip
   // Define the loader function with more robust error handling
   const loadGoogleMapsScript = useCallback(() => {
     try {
+      if (typeof window === 'undefined' || !document) return null;
+      
+      // Check if script is already loaded or loading
+      if (document.querySelector('script[src*="maps.googleapis.com/maps/api/js"]') ||
+          window.google?.maps?.places) {
+        console.log('Google Maps API already loaded or loading');
+        return null;
+      }
+      
       const browserType = detectBrowser();
       const script = document.createElement('script');
+      
+      // Check if API key is available
+      if (!GOOGLE_MAPS_API_KEY) {
+        console.error('Google Maps API key is missing. Please check your environment variables.');
+        handleError(new Error('Google Maps API key is missing'));
+        return null;
+      }
       
       // Create new instance
       const isIPAddress = /^http:\/\/\d+\.\d+\.\d+\.\d+/.test(window.location.origin);
@@ -104,12 +120,6 @@ export function GoogleMapsScript({ onLoadSuccess, onLoadError }: GoogleMapsScrip
       // Add additional error handler
       script.addEventListener('error', handleError);
       
-      // Log the current URL and origin for debugging
-      console.log('Loading Google Maps API from:', window.location.origin);
-      console.log('Full URL:', window.location.href);
-      console.log('Browser detected:', browserType);
-      console.log('Using referrer policy:', referrerPolicy);
-      
       document.head.appendChild(script);
       return script;
     } catch (error) {
@@ -120,66 +130,76 @@ export function GoogleMapsScript({ onLoadSuccess, onLoadError }: GoogleMapsScrip
   
   // Check if we're in the browser
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     setIsBrowser(true);
 
     // Store the original error handler
-    const originalOnError = typeof window !== 'undefined' ? window.onerror : undefined;
+    const originalOnError = window.onerror;
 
     // Define the callback function in the global scope
-    if (typeof window !== 'undefined') {
-      (window as any).initGooglePlacesAutocomplete = () => {
-        try {
-          // Signal that the API is ready
-          const event = new CustomEvent('google-maps-loaded');
-          window.dispatchEvent(event);
-          
-          setScriptLoaded(true);
-          onLoadSuccess?.();
-          
-          // Log success for debugging
-          console.log('Google Maps API loaded successfully');
-        } catch (error) {
-          handleError(error);
-        }
-      };
+    window.initGooglePlacesAutocomplete = () => {
+      try {
+        // Signal that the API is ready
+        const event = new CustomEvent('google-maps-loaded');
+        window.dispatchEvent(event);
+        
+        setScriptLoaded(true);
+        if (onLoadSuccess) onLoadSuccess();
+        
+        // Log success for debugging
+        console.log('Google Maps API loaded successfully');
+      } catch (error) {
+        handleError(error);
+      }
+    };
 
-      // Define the loader function
-      (window as any).initGoogleMapsLoader = () => {
-        return loadGoogleMapsScript();
-      };
-      
-      // Set up a global error handler to catch RefererNotAllowedMapError
-      window.onerror = (msg, url, line, col, error) => {
-        if (typeof msg === 'string' && msg.includes('RefererNotAllowedMapError')) {
-          logReferrerError();
-        }
-        // Call the original handler if it exists
-        if (typeof originalOnError === 'function') {
-          return originalOnError(msg, url, line, col, error);
-        }
-        return false;
-      };
+    // Define the loader function
+    window.initGoogleMapsLoader = () => {
+      return loadGoogleMapsScript();
+    };
+    
+    // Set up a global error handler to catch RefererNotAllowedMapError
+    window.onerror = (msg, url, line, col, error) => {
+      if (typeof msg === 'string' && msg.includes('RefererNotAllowedMapError')) {
+        logReferrerError();
+      }
+      // Call the original handler if it exists
+      if (typeof originalOnError === 'function') {
+        return originalOnError(msg, url, line, col, error);
+      }
+      return false;
+    };
+
+    // Check if Google Maps is already available
+    if (window.google?.maps?.places && !scriptLoaded) {
+      console.log('Google Maps API already available');
+      setScriptLoaded(true);
+      if (onLoadSuccess) onLoadSuccess();
+    } else {
+      // Try to load the script if not already loaded
+      loadGoogleMapsScript();
     }
 
     // Cleanup function
     return () => {
       if (typeof window !== 'undefined') {
-        delete (window as any).initGooglePlacesAutocomplete;
-        delete (window as any).initGoogleMapsLoader;
+        // @ts-ignore - Remove global functions
+        delete window.initGooglePlacesAutocomplete;
+        // @ts-ignore
+        delete window.initGoogleMapsLoader;
         
         // Restore original error handler
-        if (window.onerror !== originalOnError) {
-          window.onerror = originalOnError as OnErrorEventHandler;
-        }
+        window.onerror = originalOnError;
       }
     };
-  }, [onLoadSuccess, loadGoogleMapsScript, handleError, logReferrerError]);
+  }, [onLoadSuccess, loadGoogleMapsScript, handleError, logReferrerError, scriptLoaded]);
 
   // Don't render anything on the server
   if (!isBrowser) return null;
 
   // If the script is already loaded, don't load it again
-  if (typeof window !== 'undefined' && window.google && window.google.maps) {
+  if (scriptLoaded) {
     return null;
   }
 

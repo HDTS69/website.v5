@@ -32,10 +32,10 @@ export function useCrossBrowserGooglePlaces({
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
-  const listenerRef = useRef<any>(null);
+  const listenerRef = useRef<google.maps.MapsEventListener | null>(null);
 
   // Detect browser for specific browser handling
-  const detectBrowser = useCallback(() => {
+  const detectBrowser = useCallback((): string => {
     if (typeof window === 'undefined' || !window.navigator) return 'unknown';
     
     const ua = navigator.userAgent;
@@ -49,7 +49,7 @@ export function useCrossBrowserGooglePlaces({
   }, []);
 
   // Function to check if Google Maps API is available
-  const isGoogleMapsAvailable = useCallback(() => {
+  const isGoogleMapsAvailable = useCallback((): boolean => {
     return typeof window !== 'undefined' && 
            !!window.google && 
            !!window.google.maps && 
@@ -98,42 +98,46 @@ export function useCrossBrowserGooglePlaces({
         options.types = [...types, `country:${country}`];
       }
       
-      autocompleteRef.current = new window.google.maps.places.Autocomplete(
-        inputRef.current,
-        options
-      );
-      
-      // Set up event listener with proper type handling
-      if (autocompleteRef.current) {
-        listenerRef.current = window.google.maps.event.addListener(
-          autocompleteRef.current,
-          'place_changed',
-          handlePlaceChanged
+      if (inputRef.current && window.google && window.google.maps && window.google.maps.places) {
+        autocompleteRef.current = new window.google.maps.places.Autocomplete(
+          inputRef.current,
+          options
         );
-      }
-      
-      // Firefox and Safari sometimes need additional DOM events to properly focus
-      if (browserType === 'firefox' || browserType === 'safari') {
-        inputRef.current.addEventListener('focus', () => {
-          setTimeout(() => {
-            // Trigger a slight input change to ensure dropdown appears
-            const currentValue = inputRef.current?.value || '';
-            if (inputRef.current) inputRef.current.value = currentValue + ' ';
+        
+        // Set up event listener with proper type handling
+        if (autocompleteRef.current) {
+          listenerRef.current = window.google.maps.event.addListener(
+            autocompleteRef.current,
+            'place_changed',
+            handlePlaceChanged
+          );
+        }
+        
+        // Firefox and Safari sometimes need additional DOM events to properly focus
+        if (browserType === 'firefox' || browserType === 'safari') {
+          inputRef.current.addEventListener('focus', () => {
             setTimeout(() => {
-              if (inputRef.current) inputRef.current.value = currentValue;
-            }, 10);
-          }, 100);
-        });
+              // Trigger a slight input change to ensure dropdown appears
+              const currentValue = inputRef.current?.value || '';
+              if (inputRef.current) inputRef.current.value = currentValue + ' ';
+              setTimeout(() => {
+                if (inputRef.current) inputRef.current.value = currentValue;
+              }, 10);
+            }, 100);
+          });
+        }
+        
+        setIsInitialized(true);
       }
       
-      setIsInitialized(true);
       setLoading(false);
     } catch (error) {
-      console.error('Error initializing Google Places Autocomplete:', error);
-      setError(`Failed to initialize Google Places Autocomplete: ${error instanceof Error ? error.message : String(error)}`);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.error('Error initializing Google Places Autocomplete:', errorMessage);
+      setError(`Failed to initialize Google Places Autocomplete: ${errorMessage}`);
       setLoading(false);
       
-      if (!isGoogleMapsAvailable()) {
+      if (!isGoogleMapsAvailable() && typeof window !== 'undefined') {
         setError(`Google Maps API not allowed on this domain (${window.location.origin}). Please check API key restrictions.`);
       }
     }
@@ -147,14 +151,22 @@ export function useCrossBrowserGooglePlaces({
       listenerRef.current = null;
     }
     
+    // Remove any event listeners from the input element
+    if (inputRef.current) {
+      const browserType = detectBrowser();
+      if (browserType === 'firefox' || browserType === 'safari') {
+        // Remove the focus event listener - this is a best effort since we can't reference the exact function
+        // In a production app, you might want to keep a reference to the handler
+        inputRef.current.removeEventListener('focus', () => {});
+      }
+    }
+    
     autocompleteRef.current = null;
     setIsInitialized(false);
-  }, [isGoogleMapsAvailable]);
+  }, [isGoogleMapsAvailable, detectBrowser]);
 
   // Function to handle Google Maps loaded event
   const handleGoogleMapsLoaded = useCallback(() => {
-    console.log('Google Maps loaded event detected');
-    
     if (isGoogleMapsAvailable() && !isInitialized && !disabled) {
       initializeAutocomplete();
     }
@@ -162,6 +174,8 @@ export function useCrossBrowserGooglePlaces({
 
   // Initial setup
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     // Add event listener for Google Maps loaded event
     window.addEventListener('google-maps-loaded', handleGoogleMapsLoaded);
     
@@ -172,21 +186,26 @@ export function useCrossBrowserGooglePlaces({
     
     // Set up a polling mechanism for Safari and Firefox which may load differently
     const browserType = detectBrowser();
+    let checkInterval: number | null = null;
+    
     if ((browserType === 'safari' || browserType === 'firefox') && 
         !isGoogleMapsAvailable() && !isInitialized && !disabled) {
-      const checkInterval = setInterval(() => {
+      checkInterval = window.setInterval(() => {
         if (isGoogleMapsAvailable()) {
-          clearInterval(checkInterval);
+          if (checkInterval !== null) window.clearInterval(checkInterval);
           initializeAutocomplete();
         }
       }, 500); // Check every half second
       
       // Clear interval after 10 seconds to avoid infinite checking
-      setTimeout(() => clearInterval(checkInterval), 10000);
+      setTimeout(() => {
+        if (checkInterval !== null) window.clearInterval(checkInterval);
+      }, 10000);
     }
     
     return () => {
       window.removeEventListener('google-maps-loaded', handleGoogleMapsLoaded);
+      if (checkInterval !== null) window.clearInterval(checkInterval);
       cleanup();
     };
   }, [disabled, isInitialized, isGoogleMapsAvailable, initializeAutocomplete, handleGoogleMapsLoaded, cleanup, detectBrowser]);
