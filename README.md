@@ -103,3 +103,55 @@ Tests automatically run on pull requests to prevent regressions.
 
 © 2024 HD Trade Services. All rights reserved.
 
+## Development Workflow
+
+We use a preview-deploy workflow to catch and fix errors before they reach production:
+
+1. **Development Branch**: Make all changes on the `development` branch or feature branches
+   ```bash
+   # Switch to development branch
+   git checkout development
+   
+   # Create a feature branch if needed
+   git checkout -b feature/your-feature-name
+   ```
+
+2. **Preview Deploys**: 
+   - All pushes to non-main branches trigger preview deploys on Netlify
+   - Pull requests automatically generate deploy previews for testing
+
+3. **Testing**:
+   - Test all features and fixes on the preview URL before merging to main
+   - Use the preview URL format: `https://deploy-preview-{PR-NUMBER}--{SITE-NAME}.netlify.app/`
+   - Branch deploys use: `https://{BRANCH-NAME}--{SITE-NAME}.netlify.app/`
+
+4. **Production Deployment**:
+   - Once tested on preview environments, create a PR to merge into `main`
+   - Only merge to `main` when all tests pass and the feature is ready for production
+
+## Available Commands
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm run start
+```
+
+## Environment Variables
+
+Create a `.env.local` file in the root directory with:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your-google-maps-api-key
+```
+
