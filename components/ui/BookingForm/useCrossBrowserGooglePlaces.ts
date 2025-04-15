@@ -1,0 +1,219 @@
+import { useRef, useState, useEffect, useCallback } from 'react';
+
+interface UseCrossBrowserGooglePlacesProps {
+  inputRef: React.RefObject<HTMLInputElement>;
+  onPlaceSelect?: (place: google.maps.places.PlaceResult) => void;
+  country?: string;
+  types?: string[];
+  fields?: string[];
+  disabled?: boolean;
+}
+
+interface CrossBrowserGooglePlacesResult {
+  isInitialized: boolean;
+  error: string | null;
+  loading: boolean;
+  resetInput: () => void;
+}
+
+/**
+ * Custom hook to handle Google Places Autocomplete with cross-browser compatibility
+ * Handles browser-specific quirks for Chrome, Firefox, Safari, and Edge
+ */
+export function useCrossBrowserGooglePlaces({
+  inputRef,
+  onPlaceSelect,
+  country = 'au',
+  types = ['address'],
+  fields = ['address_components', 'formatted_address', 'geometry', 'name'],
+  disabled = false
+}: UseCrossBrowserGooglePlacesProps): CrossBrowserGooglePlacesResult {
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+  const listenerRef = useRef<google.maps.MapsEventListener | null>(null);
+
+  // Detect browser for specific browser handling
+  const detectBrowser = useCallback(() => {
+    if (typeof window === 'undefined' || !window.navigator) return 'unknown';
+    
+    const ua = navigator.userAgent;
+    if (ua.indexOf('Chrome') > -1 && ua.indexOf('Edge') === -1) return 'chrome';
+    if (ua.indexOf('Safari') > -1 && ua.indexOf('Chrome') === -1) return 'safari';
+    if (ua.indexOf('Firefox') > -1) return 'firefox';
+    if (ua.indexOf('Edge') > -1) return 'edge';
+    if (ua.indexOf('MSIE') > -1 || ua.indexOf('Trident') > -1) return 'ie';
+    
+    return 'unknown';
+  }, []);
+
+  // Function to check if Google Maps API is available
+  const isGoogleMapsAvailable = useCallback(() => {
+    return typeof window !== 'undefined' && 
+           !!window.google && 
+           !!window.google.maps && 
+           !!window.google.maps.places;
+  }, []);
+
+  // Handle place changed event
+  const handlePlaceChanged = useCallback(() => {
+    if (!autocompleteRef.current) return;
+    
+    try {
+      const place = autocompleteRef.current.getPlace();
+      if (place && onPlaceSelect) {
+        onPlaceSelect(place);
+      }
+    } catch (error) {
+      console.error('Error getting place details:', error);
+      setError('Failed to get place details');
+    }
+  }, [onPlaceSelect]);
+
+  // Initialize autocomplete
+  const initializeAutocomplete = useCallback(() => {
+    if (!inputRef.current || disabled || !isGoogleMapsAvailable()) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // Handle browser-specific issues
+      const browserType = detectBrowser();
+      
+      // Create autocomplete instance with browser-specific options
+      const options: google.maps.places.AutocompleteOptions = {
+        types,
+        fields,
+      };
+      
+      // Safari needs special handling for componentRestrictions
+      if (browserType !== 'safari') {
+        options.componentRestrictions = { country };
+      } else {
+        // For Safari, we'll add the country to the types
+        options.types = [...types, `country:${country}`];
+      }
+      
+      autocompleteRef.current = new window.google.maps.places.Autocomplete(
+        inputRef.current,
+        options
+      );
+      
+      // Set up event listener with proper type handling
+      if (autocompleteRef.current) {
+        const listener = window.google.maps.event.addListener(
+          autocompleteRef.current,
+          'place_changed',
+          handlePlaceChanged
+        );
+        if (listener) {
+          listenerRef.current = listener;
+        }
+      }
+      
+      // Firefox and Safari sometimes need additional DOM events to properly focus
+      if (browserType === 'firefox' || browserType === 'safari') {
+        inputRef.current.addEventListener('focus', () => {
+          setTimeout(() => {
+            // Trigger a slight input change to ensure dropdown appears
+            const currentValue = inputRef.current?.value || '';
+            if (inputRef.current) inputRef.current.value = currentValue + ' ';
+            setTimeout(() => {
+              if (inputRef.current) inputRef.current.value = currentValue;
+            }, 10);
+          }, 100);
+        });
+      }
+      
+      setIsInitialized(true);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error initializing Google Places Autocomplete:', error);
+      setError(`Failed to initialize Google Places Autocomplete: ${error instanceof Error ? error.message : String(error)}`);
+      setLoading(false);
+      
+      if (!isGoogleMapsAvailable()) {
+        setError(`Google Maps API not allowed on this domain (${window.location.origin}). Please check API key restrictions.`);
+      }
+    }
+  }, [disabled, isGoogleMapsAvailable, handlePlaceChanged, country, types, fields, detectBrowser]);
+
+  // Reset autocomplete and detach listener
+  const cleanup = useCallback(() => {
+    // Only remove listener if it exists and Google Maps is available
+    if (listenerRef.current && isGoogleMapsAvailable() && window.google.maps.event) {
+      window.google.maps.event.removeListener(listenerRef.current);
+      listenerRef.current = null;
+    }
+    
+    autocompleteRef.current = null;
+    setIsInitialized(false);
+  }, [isGoogleMapsAvailable]);
+
+  // Function to handle Google Maps loaded event
+  const handleGoogleMapsLoaded = useCallback(() => {
+    console.log('Google Maps loaded event detected');
+    
+    if (isGoogleMapsAvailable() && !isInitialized && !disabled) {
+      initializeAutocomplete();
+    }
+  }, [isGoogleMapsAvailable, isInitialized, disabled, initializeAutocomplete]);
+
+  // Initial setup
+  useEffect(() => {
+    // Add event listener for Google Maps loaded event
+    window.addEventListener('google-maps-loaded', handleGoogleMapsLoaded);
+    
+    // Check if Google Maps is already available
+    if (isGoogleMapsAvailable() && !isInitialized && !disabled) {
+      initializeAutocomplete();
+    }
+    
+    // Set up a polling mechanism for Safari and Firefox which may load differently
+    const browserType = detectBrowser();
+    if ((browserType === 'safari' || browserType === 'firefox') && 
+        !isGoogleMapsAvailable() && !isInitialized && !disabled) {
+      const checkInterval = setInterval(() => {
+        if (isGoogleMapsAvailable()) {
+          clearInterval(checkInterval);
+          initializeAutocomplete();
+        }
+      }, 500); // Check every half second
+      
+      // Clear interval after 10 seconds to avoid infinite checking
+      setTimeout(() => clearInterval(checkInterval), 10000);
+    }
+    
+    return () => {
+      window.removeEventListener('google-maps-loaded', handleGoogleMapsLoaded);
+      cleanup();
+    };
+  }, [disabled, isInitialized, isGoogleMapsAvailable, initializeAutocomplete, handleGoogleMapsLoaded, cleanup, detectBrowser]);
+
+  // When disabled prop changes, reinitialize
+  useEffect(() => {
+    if (disabled) {
+      cleanup();
+    } else if (isGoogleMapsAvailable()) {
+      initializeAutocomplete();
+    }
+  }, [disabled, isGoogleMapsAvailable, initializeAutocomplete, cleanup]);
+
+  // Function to reset the input
+  const resetInput = useCallback(() => {
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+  }, [inputRef]);
+
+  return {
+    isInitialized,
+    error,
+    loading,
+    resetInput
+  };
+} 

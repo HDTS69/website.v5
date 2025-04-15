@@ -12,11 +12,20 @@
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
     "test:headed": "playwright test --headed",
+    "test:cross-browser": "scripts/run-cross-browser-tests.sh",
+    "test:cross-browser:desktop": "scripts/run-cross-browser-tests.sh desktop",
+    "test:cross-browser:mobile": "scripts/run-cross-browser-tests.sh mobile",
+    "test:cross-browser:compatibility": "scripts/run-cross-browser-tests.sh compatibility",
+    "test:cross-browser:maps": "scripts/run-cross-browser-tests.sh maps",
+    "test:e2e": "playwright test tests/e2e/",
+    "test:ci": "playwright test --project=chromium --project=firefox --project=webkit",
     "security:audit": "npm audit && npm audit fix",
     "security:audit:prod": "npm audit --production",
     "security:deps": "npx snyk test",
     "security:lint": "next lint",
-    "security:check": "npm run security:audit && npm run security:lint"
+    "security:check": "npm run security:audit && npm run security:lint",
+    "verify-env": "node scripts/verify-deploy-env.js",
+    "prebuild": "npm run verify-env"
   },
   "dependencies": {
     "@heroicons/react": "2.2.0",

@@ -145,3 +145,5 @@ If you've tried everything above and still encounter issues:
    - Try in incognito/private mode
 
 For further assistance, contact the site administrator or refer to the [Google Maps JavaScript API documentation](https://developers.google.com/maps/documentation/javascript/overview). 
+
+script.src = `https://maps.googleapis.com/maps/api/js?key=${NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&callback=initGooglePlacesAutocomplete&v=weekly`; 
