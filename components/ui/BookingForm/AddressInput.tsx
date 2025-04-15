@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 // Reference the Google Maps types
-import '@/components/ui/BookingForm/google-maps-types';
+import './google-maps-types';
 
 // Define the Google Maps API key
 const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';

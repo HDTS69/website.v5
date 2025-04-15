@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useCrossBrowserGooglePlaces } from './useCrossBrowserGooglePlaces';
 import { GoogleMapsScript } from './GoogleMapsScript';
 // Reference the Google Maps types
-import '@/components/ui/BookingForm/google-maps-types';
+import './google-maps-types';
 
 interface EnhancedAddressInputProps {
   id: string;
