@@ -13,6 +13,29 @@
   NEXT_PUBLIC_SUPABASE_ANON_KEY = "placeholder-anon-key"
   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY = "placeholder-google-maps-key"
 
+# Production context: all deploys from the main branch 
+# will inherit these settings.
+[context.production]
+  command = "npm run build"
+  publish = ".next"
+
+# Deploy Preview context: all deploys generated from 
+# a pull request will inherit these settings.
+[context.deploy-preview]
+  command = "npm run build"
+  publish = ".next"
+
+# Branch deploy context: all deploys that are not from 
+# a pull request or from the main branch will inherit these settings.
+[context.branch-deploy]
+  command = "npm run build"
+  publish = ".next"
+
+# Specific branch context: all deploys from this specific branch will inherit these settings.
+[context.development]
+  command = "npm run build"
+  publish = ".next"
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
