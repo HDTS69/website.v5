@@ -2,12 +2,10 @@ import { Metadata } from 'next';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { FaTools, FaCheckCircle } from 'react-icons/fa';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
-import Header from '@/components/ui/header';
-import Footer from '@/components/ui/footer';
 
 export const metadata: Metadata = {
-  title: 'Professional Air Conditioning Service Brisbane | AC Maintenance',
-  description: 'Expert air conditioning servicing in Brisbane. Regular maintenance, performance optimization, and comprehensive AC check-ups. Book your service online now!',
+  title: 'Air Conditioning Servicing Brisbane | AC Maintenance',
+  description: 'Professional air conditioning servicing in Brisbane. Regular maintenance, performance optimization, and trouble-free operation. Book your AC service today!',
 };
 
 export default function ACServicingPage() {
@@ -170,11 +168,5 @@ export default function ACServicingPage() {
     }
   };
 
-  return (
-    <>
-      <Header />
-      <ServiceDetailLayout {...pageData} />
-      <Footer />
-    </>
-  );
+  return <ServiceDetailLayout {...pageData} />;
 } 

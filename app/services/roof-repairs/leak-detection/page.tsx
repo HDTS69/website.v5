@@ -3,14 +3,12 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 import { FaTools } from 'react-icons/fa';
 
 export default function RoofLeakDetectionPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Roof Leak Detection Brisbane"
         description="Professional roof leak detection services in Brisbane. Our experienced team uses advanced technology to identify and locate roof leaks with precision."

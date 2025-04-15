@@ -3,13 +3,11 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function RoofReportsPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Roof Reports Brisbane"
         description="Professional roof reporting services in Brisbane. Our experienced team provides detailed roof condition reports, documentation, and expert recommendations for all types of roofs."

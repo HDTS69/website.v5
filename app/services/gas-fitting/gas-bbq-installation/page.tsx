@@ -3,16 +3,14 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function GasBBQInstallationPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Gas BBQ Installation Brisbane"
-        description="Professional gas BBQ installation services in Brisbane. Our licensed gas fitters provide expert installation and safety solutions for all BBQ systems."
+        description="Professional gas BBQ installation services in Brisbane. Our licensed gas fitters provide expert installation solutions for all types of gas BBQs, ensuring safety and proper functioning."
         serviceArea="Brisbane Gas BBQ Installation Local Business Queensland"
       />
 

@@ -4,7 +4,6 @@ import React from 'react';
 import Image from 'next/image';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 import { FaTools } from 'react-icons/fa';
 import { CONTACT_PHONE, ICON_PATHS } from '@/config/constants';
@@ -21,7 +20,6 @@ const validateIconPath = (path: string): string => {
 export default function RoofRepairsPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Roof Repairs Brisbane"
         description="Professional roof repair services in Brisbane. Our experienced team provides expert repair solutions for all types of roofs, ensuring lasting protection and quality workmanship."

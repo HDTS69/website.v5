@@ -3,13 +3,11 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function RoofVentilationPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Roof Ventilation Brisbane"
         description="Professional roof ventilation services in Brisbane. Our experienced team provides expert installation and maintenance of roof ventilation systems for optimal airflow and temperature control."

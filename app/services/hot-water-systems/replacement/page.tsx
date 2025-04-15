@@ -3,7 +3,6 @@ import { ServiceDetailLayout, ServiceDetailLayoutProps } from '@/components/layo
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 import { FaTools } from 'react-icons/fa';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 
 export const metadata: Metadata = {
   title: 'Hot Water System Replacement Brisbane | Expert Solutions',
@@ -169,11 +168,10 @@ const pageData: ServiceDetailLayoutProps = {
 export default function HotWaterReplacementPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Hot Water System Replacement Brisbane"
-        description="Professional hot water system replacement services in Brisbane. Our licensed plumbers provide expert advice and replacement services for all types of hot water systems."
-        serviceArea="Brisbane Hot Water Replacement Local Business Queensland"
+        description="Professional hot water system replacement services in Brisbane. Our licensed specialists provide expert replacement solutions for all types of hot water systems."
+        serviceArea="Brisbane Hot Water System Replacement Local Business Queensland"
       />
       <ServiceDetailLayout {...pageData} />
     </>

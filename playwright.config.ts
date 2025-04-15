@@ -40,5 +40,23 @@ export default defineConfig({
       name: 'mobile-safari',
       use: { ...devices['iPhone 12'] },
     },
+    {
+      name: 'security',
+      testMatch: '**/*.security.spec.ts',
+      use: { 
+        ...devices['Desktop Chrome'],
+        // Security-specific settings
+        bypassCSP: false, // Don't bypass Content-Security-Policy
+        ignoreHTTPSErrors: false, // Don't ignore HTTPS errors
+        javaScriptEnabled: true, // Keep JavaScript enabled for security tests
+        permissions: [], // Don't grant permissions automatically
+        extraHTTPHeaders: {
+          'Sec-Fetch-Site': 'same-origin',
+          'Sec-Fetch-Mode': 'cors',
+          'Sec-Fetch-Dest': 'empty',
+        },
+        viewport: { width: 1280, height: 720 },
+      },
+    },
   ],
 }); 

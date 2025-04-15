@@ -2,8 +2,6 @@ import { Metadata } from 'next';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { FaTools, FaCheckCircle } from 'react-icons/fa';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
-import Header from '@/components/ui/header';
-import Footer from '@/components/ui/footer';
 
 export const metadata: Metadata = {
   title: 'Professional Air Conditioning Cleaning Brisbane | AC Deep Clean Service',
@@ -170,11 +168,5 @@ export default function ACCleaningPage() {
     }
   };
 
-  return (
-    <>
-      <Header />
-      <ServiceDetailLayout {...pageData} />
-      <Footer />
-    </>
-  );
+  return <ServiceDetailLayout {...pageData} />;
 } 

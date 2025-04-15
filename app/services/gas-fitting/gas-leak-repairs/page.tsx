@@ -3,16 +3,14 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function GasLeakRepairsPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Gas Leak Repairs Brisbane"
-        description="Professional gas leak repair services in Brisbane. Our licensed gas fitters provide expert repair and safety solutions for all gas leaks."
+        description="Professional gas leak repair services in Brisbane. Our licensed gas fitters provide expert repair solutions for all types of gas leaks, ensuring safety and reliability."
         serviceArea="Brisbane Gas Leak Repairs Local Business Queensland"
       />
 

@@ -1,11 +1,14 @@
-'use client';
-
+import { Metadata } from 'next';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
+import { FaTools, FaCheckCircle } from 'react-icons/fa';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
-import { FaTools } from 'react-icons/fa';
+import { ServiceSchema } from '@/components/ui/ServiceSchema';
 import Link from 'next/link';
-import Header from '@/components/ui/header';
-import Footer from '@/components/ui/footer';
+
+export const metadata: Metadata = {
+  title: 'Air Conditioning Services Brisbane | Installation, Repair & Service',
+  description: 'Professional air conditioning services in Brisbane. Expert installation, repairs, and maintenance for all AC types. Book your service today!',
+};
 
 export default function AirConditioningPage() {
   const pageData = {
@@ -200,9 +203,12 @@ export default function AirConditioningPage() {
 
   return (
     <>
-      <Header />
+      <ServiceSchema 
+        serviceName="Air Conditioning Services Brisbane"
+        description="Professional air conditioning services in Brisbane including installation, repairs, and maintenance for all brands and types of air conditioners."
+        serviceArea="Brisbane Air Conditioning Service"
+      />
       <ServiceDetailLayout {...pageData} />
-      <Footer />
     </>
   );
 } 

@@ -3,16 +3,14 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function GasLeakDetectionPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Gas Leak Detection Brisbane"
-        description="Professional gas leak detection services in Brisbane. Our licensed gas fitters provide expert detection and safety solutions for all gas systems."
+        description="Professional gas leak detection services in Brisbane. Our licensed gas fitters use advanced equipment to quickly identify and locate gas leaks, ensuring safety and peace of mind."
         serviceArea="Brisbane Gas Leak Detection Local Business Queensland"
       />
 

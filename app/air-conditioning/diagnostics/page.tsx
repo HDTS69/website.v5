@@ -2,12 +2,10 @@ import { Metadata } from 'next';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { FaTools, FaCheckCircle } from 'react-icons/fa';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
-import Header from '@/components/ui/header';
-import Footer from '@/components/ui/footer';
 
 export const metadata: Metadata = {
-  title: 'Air Conditioning Diagnostics Brisbane | Expert AC Fault Finding',
-  description: 'Professional air conditioning diagnostics in Brisbane. Expert fault finding, system analysis, and solution planning for all AC issues. Book your diagnostic service today!',
+  title: 'Air Conditioning Diagnostics Brisbane | Professional AC Troubleshooting',
+  description: 'Expert air conditioning diagnostics in Brisbane. Precise troubleshooting, accurate fault detection, and reliable solutions. Book your AC diagnostic service today!',
 };
 
 export default function ACDiagnosticsPage() {
@@ -170,11 +168,5 @@ export default function ACDiagnosticsPage() {
     }
   };
 
-  return (
-    <>
-      <Header />
-      <ServiceDetailLayout {...pageData} />
-      <Footer />
-    </>
-  );
+  return <ServiceDetailLayout {...pageData} />;
 } 

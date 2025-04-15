@@ -1,6 +1,4 @@
 import { Metadata } from 'next';
-import Header from "@/components/ui/header";
-import { MobileHeader } from "@/components/mobile";
 
 export const metadata: Metadata = {
   title: 'Plumbing Services Brisbane | HD Trade Services',
@@ -14,8 +12,6 @@ export default function PlumbingLayout({
 }) {
   return (
     <>
-      <Header />
-      <MobileHeader />
       {children}
     </>
   );

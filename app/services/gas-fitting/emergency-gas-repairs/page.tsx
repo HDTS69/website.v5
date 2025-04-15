@@ -3,16 +3,14 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function EmergencyGasRepairsPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Emergency Gas Repairs Brisbane"
-        description="24/7 emergency gas repair services in Brisbane. Our licensed gas fitters provide rapid response and expert solutions for all gas emergencies."
+        description="Professional emergency gas repair services in Brisbane. Our licensed gas fitters provide 24/7 expert repair solutions for all gas emergencies, ensuring safety and quick resolution."
         serviceArea="Brisbane Emergency Gas Repairs Local Business Queensland"
       />
 

@@ -3,16 +3,14 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function GasLineInstallationPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Gas Line Installation Brisbane"
-        description="Professional gas line installation services in Brisbane. Our licensed gas fitters provide expert installation and safety solutions for all gas systems."
+        description="Professional gas line installation services in Brisbane. Our licensed gas fitters provide expert installation solutions for all types of gas lines, ensuring safety and reliability."
         serviceArea="Brisbane Gas Line Installation Local Business Queensland"
       />
 

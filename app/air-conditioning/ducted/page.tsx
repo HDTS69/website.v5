@@ -2,12 +2,10 @@ import { Metadata } from 'next';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { FaTools, FaCheckCircle } from 'react-icons/fa';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
-import Header from '@/components/ui/header';
-import Footer from '@/components/ui/footer';
 
 export const metadata: Metadata = {
-  title: 'Ducted Air Conditioning Brisbane | Expert Installation & Service',
-  description: 'Professional ducted air conditioning services in Brisbane. Expert installation, maintenance, and repairs for whole-home comfort. Book your service today!',
+  title: 'Ducted Air Conditioning Brisbane | Installation & Service',
+  description: 'Professional ducted air conditioning services in Brisbane. Expert installation, maintenance, and repairs for whole-home comfort solutions.',
 };
 
 export default function DuctedACPage() {
@@ -170,11 +168,5 @@ export default function DuctedACPage() {
     }
   };
 
-  return (
-    <>
-      <Header />
-      <ServiceDetailLayout {...pageData} />
-      <Footer />
-    </>
-  );
+  return <ServiceDetailLayout {...pageData} />;
 } 

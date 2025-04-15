@@ -3,7 +3,6 @@ import { ServiceDetailLayout, ServiceDetailLayoutProps } from '@/components/layo
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 import { FaTools } from 'react-icons/fa';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 
 export const metadata: Metadata = {
   title: 'Solar Hot Water Systems Brisbane | Eco-Friendly Solutions',
@@ -169,10 +168,9 @@ const pageData: ServiceDetailLayoutProps = {
 export default function SolarHotWaterPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Solar Hot Water Systems Brisbane"
-        description="Professional solar hot water system services in Brisbane. Our licensed specialists provide expert installation, repairs, and maintenance for eco-friendly solar hot water systems."
+        description="Professional solar hot water system services in Brisbane. Our licensed specialists provide expert installation, repairs, and maintenance for energy-efficient solar hot water systems."
         serviceArea="Brisbane Solar Hot Water Service Local Business Queensland"
       />
       <ServiceDetailLayout {...pageData} />

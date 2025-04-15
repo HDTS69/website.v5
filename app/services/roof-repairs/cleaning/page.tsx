@@ -3,14 +3,12 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 import { FaTools } from 'react-icons/fa';
 
 export default function RoofCleaningPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Roof Cleaning Brisbane"
         description="Professional roof cleaning services in Brisbane. Our experienced team provides thorough cleaning solutions for all types of roofs, ensuring optimal condition and longevity."

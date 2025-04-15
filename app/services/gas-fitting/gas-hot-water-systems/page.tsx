@@ -3,16 +3,14 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function GasHotWaterSystemsPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Gas Hot Water Systems Brisbane"
-        description="Professional gas hot water system services in Brisbane. Our licensed gas fitters provide expert installation and maintenance solutions for all hot water systems."
+        description="Professional gas hot water system services in Brisbane. Our licensed gas fitters provide expert installation, repairs, and maintenance for all gas hot water systems."
         serviceArea="Brisbane Gas Hot Water Systems Local Business Queensland"
       />
 

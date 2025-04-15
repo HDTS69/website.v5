@@ -3,13 +3,11 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function GuttersAndDownpipesPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Gutters & Downpipes Brisbane"
         description="Professional gutters and downpipes services in Brisbane. Our experienced team provides expert installation, repairs, and maintenance for complete water management solutions."

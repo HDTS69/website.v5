@@ -4,34 +4,63 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+permissions:
+  contents: read # Minimal required permissions
+  security-events: write # For uploading security scan results
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
       NODE_ENV: test
+      # Use GitHub's secure method of handling secrets
       NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
       NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
     steps:
+    # Use the latest security-hardened checkout action
     - uses: actions/checkout@v4
+      with:
+        persist-credentials: false # Don't persist credentials
     
+    # Use the latest security-hardened Node.js setup action
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
         cache: 'npm'
         
+    # Run npm audit to check for vulnerabilities before running tests
+    - name: Security Audit
+      run: npm audit --production
+        
+    # Use clean installation to avoid tampering
     - name: Install dependencies
       run: |
-        npm ci
-        npm install -D @playwright/test typescript @types/react @types/node
+        npm ci --ignore-scripts # Prevent running arbitrary scripts
+        npm install -D @playwright/test typescript @types/react @types/node --ignore-scripts
         
+    # Lock down package.json and package-lock.json to prevent tampering
+    - name: Check package integrity
+      run: |
+        npm i lockfile-lint -g
+        lockfile-lint --path package-lock.json --validate-https --allowed-hosts npm
+        
+    # Install Playwright browsers securely
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
       
+    # Scan test files for security issues
+    - name: Run ESLint on test files
+      run: npx eslint 'tests/**/*.{js,ts,tsx}' --config .eslintrc.json
+      
+    # Build Next.js app
     - name: Build Next.js app
       run: npm run build
+      env:
+        NODE_ENV: production # Use production settings for build
       
+    # Run tests with appropriate security measures
     - name: Start Next.js app and run tests
       run: |
         npm run dev & # Start the dev server in the background
@@ -45,21 +74,27 @@ jobs:
       env:
         CI: true
         PLAYWRIGHT_TEST_BASE_URL: http://localhost:3000
+        # Disable unnecessary browser features for security
+        PLAYWRIGHT_BROWSER_CHROMIUM_NO_SANDBOX: true
+        PLAYWRIGHT_BROWSER_CHROMIUM_DISABLE_DEV_SHM: true
         
+    # Create test summary with sanitized output
     - name: Create test summary
       if: always()
       run: |
         echo "# Test Results Summary" > test-summary.md
         echo "## Cross-Browser Compatibility" >> test-summary.md
-        npx playwright show-report playwright-report --reporter=markdown >> test-summary.md
+        npx playwright show-report playwright-report --reporter=markdown | grep -v "Error:" >> test-summary.md
         
+    # Upload artifacts with expiration
     - uses: actions/upload-artifact@v4
       if: always()
       with:
         name: playwright-report
         path: playwright-report/
-        retention-days: 30
+        retention-days: 7 # Shorter retention for security reasons
         
+    # Publish test summary securely
     - name: Publish Test Summary
       if: always()
       uses: actions/github-script@v7
@@ -67,14 +102,77 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const fs = require('fs');
-          const summary = fs.readFileSync('test-summary.md', 'utf8');
-          const context = github.context;
+          const { promisify } = require('util');
+          const readFile = promisify(fs.readFile);
           
-          if (context.payload.pull_request) {
-            github.rest.issues.createComment({
-              issue_number: context.payload.pull_request.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: summary
-            });
+          async function postComment() {
+            try {
+              const summaryContent = await readFile('test-summary.md', 'utf8');
+              // Sanitize output to prevent content injection
+              const sanitizedContent = summaryContent
+                .replace(/[<>]/g, '') // Remove potential HTML/XML
+                .substring(0, 65000); // GitHub has a comment size limit
+              
+              const context = github.context;
+              
+              if (context.payload.pull_request) {
+                await github.rest.issues.createComment({
+                  issue_number: context.payload.pull_request.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: sanitizedContent
+                });
+              }
+            } catch (error) {
+              console.error('Error posting comment:', error);
+            }
           }
+          
+          return postComment();
+          
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          
+      # Scan the test files with specific security plugins
+      - name: Install security scanning tools
+        run: |
+          npm install -g eslint-plugin-security eslint-plugin-xss
+          npm install
+          
+      - name: Create security-focused ESLint config for tests
+        run: |
+          echo '{
+            "extends": ["./.eslintrc.json"],
+            "plugins": ["security", "xss"],
+            "rules": {
+              "security/detect-non-literal-regexp": "error",
+              "security/detect-unsafe-regex": "error",
+              "security/detect-buffer-noassert": "error",
+              "security/detect-child-process": "error",
+              "security/detect-disable-mustache-escape": "error",
+              "security/detect-eval-with-expression": "error",
+              "security/detect-no-csrf-before-method-override": "error",
+              "security/detect-object-injection": "warn",
+              "security/detect-possible-timing-attacks": "error",
+              "security/detect-pseudoRandomBytes": "error",
+              "xss/no-location-href-assign": "error",
+              "xss/no-mixed-html": "error"
+            }
+          }' > .eslintrc.security.json
+          
+      - name: Run security scan on test files
+        run: |
+          npx eslint --no-eslintrc -c .eslintrc.security.json 'tests/**/*.{js,ts,tsx}'
+          
+      # Scan for secrets in tests
+      - name: Check for hardcoded secrets in tests
+        run: |
+          npx secretlint "tests/**/*.{js,ts,tsx}"

@@ -31,6 +31,9 @@ export function GoogleMapsScript({ onLoadSuccess, onLoadError }: GoogleMapsScrip
       
       Add these to Google Cloud Console -> API & Services -> Credentials -> API keys:
       1. ${currentOrigin}/*
+      2. ${currentOrigin.replace('http://', 'https://')}/* (for HTTPS version)
+      3. ${currentOrigin.replace('https://', 'http://')}/* (for HTTP version)
+      4. ${currentOrigin.includes('www.') ? currentOrigin.replace('www.', '') : currentOrigin.replace('://', '://www.')}/* (with/without www)
       
       Note: Make sure to include the trailing /* in your URL restrictions.
     `);
@@ -50,10 +53,26 @@ export function GoogleMapsScript({ onLoadSuccess, onLoadError }: GoogleMapsScrip
     }
   }, [onLoadError, logReferrerError]);
   
+  // Detect browser for specific browser handling
+  const detectBrowser = useCallback(() => {
+    if (typeof window === 'undefined' || !window.navigator) return 'unknown';
+    
+    const ua = navigator.userAgent;
+    if (ua.indexOf('Chrome') > -1) return 'chrome';
+    if (ua.indexOf('Safari') > -1) return 'safari';
+    if (ua.indexOf('Firefox') > -1) return 'firefox';
+    if (ua.indexOf('MSIE') > -1 || ua.indexOf('Trident') > -1) return 'ie';
+    if (ua.indexOf('Edge') > -1) return 'edge';
+    
+    return 'unknown';
+  }, []);
+  
   // Define the loader function with more robust error handling
   const loadGoogleMapsScript = useCallback(() => {
     try {
+      const browserType = detectBrowser();
       const script = document.createElement('script');
+      
       // Create new instance
       const isIPAddress = /^http:\/\/\d+\.\d+\.\d+\.\d+/.test(window.location.origin);
       
@@ -61,11 +80,22 @@ export function GoogleMapsScript({ onLoadSuccess, onLoadError }: GoogleMapsScrip
       const useIPParam = isIPAddress ? '&useIP=true' : '';
       
       // Set referrerpolicy attribute to ensure proper referrer is sent
-      script.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
+      // Safari and Firefox need strict-origin-when-cross-origin
+      const referrerPolicy = browserType === 'safari' || browserType === 'firefox' 
+        ? 'strict-origin-when-cross-origin' 
+        : 'no-referrer-when-downgrade';
+        
+      script.setAttribute('referrerpolicy', referrerPolicy);
       
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places&callback=initGooglePlacesAutocomplete&loading=async${useIPParam}`;
+      // Add weekly version parameter to avoid caching issues
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places&callback=initGooglePlacesAutocomplete&loading=async${useIPParam}&v=weekly`;
       script.async = true;
       script.defer = true;
+      
+      // Browser-specific attributes
+      if (browserType === 'safari') {
+        script.setAttribute('crossorigin', 'anonymous');
+      }
       
       script.onerror = (event) => {
         handleError(event);
@@ -77,6 +107,8 @@ export function GoogleMapsScript({ onLoadSuccess, onLoadError }: GoogleMapsScrip
       // Log the current URL and origin for debugging
       console.log('Loading Google Maps API from:', window.location.origin);
       console.log('Full URL:', window.location.href);
+      console.log('Browser detected:', browserType);
+      console.log('Using referrer policy:', referrerPolicy);
       
       document.head.appendChild(script);
       return script;
@@ -84,7 +116,7 @@ export function GoogleMapsScript({ onLoadSuccess, onLoadError }: GoogleMapsScrip
       handleError(error);
       return null;
     }
-  }, [handleError]);
+  }, [handleError, detectBrowser]);
   
   // Check if we're in the browser
   useEffect(() => {

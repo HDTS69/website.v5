@@ -3,14 +3,12 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 import { FaTools } from 'react-icons/fa';
 
 export default function RoofInspectionsPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Roof Inspections Brisbane"
         description="Professional roof inspection services in Brisbane. Our experienced team provides thorough roof assessments, detailed reports, and expert recommendations for all types of roofs."

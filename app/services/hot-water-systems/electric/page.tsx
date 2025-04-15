@@ -3,7 +3,6 @@ import { ServiceDetailLayout, ServiceDetailLayoutProps } from '@/components/layo
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 import { FaTools } from 'react-icons/fa';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 
 export const metadata: Metadata = {
   title: 'Electric Hot Water Systems Brisbane | Expert Installation & Service',
@@ -169,10 +168,9 @@ const pageData: ServiceDetailLayoutProps = {
 export default function ElectricHotWaterPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Electric Hot Water Systems Brisbane"
-        description="Professional electric hot water system services in Brisbane. Our licensed plumbers provide expert installation, repairs, and maintenance for all electric hot water systems."
+        description="Professional electric hot water system services in Brisbane. Our licensed specialists provide expert installation, repairs, and maintenance for reliable electric hot water systems."
         serviceArea="Brisbane Electric Hot Water Service Local Business Queensland"
       />
       <ServiceDetailLayout {...pageData} />

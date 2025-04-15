@@ -3,13 +3,11 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function RoofTileRepairsPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Roof Tile Repairs Brisbane"
         description="Professional roof tile repair services in Brisbane. Our experienced team provides expert repairs and maintenance for all types of roof tiles."

@@ -1,0 +1,131 @@
+name: Playwright Security Scanning
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    - cron: '0 0 * * 0' # Run weekly
+
+permissions:
+  contents: read # Minimal required permissions
+  security-events: write # For uploading security scan results
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false # Don't persist credentials
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: |
+          npm ci --ignore-scripts # Prevent running arbitrary scripts
+          npm install -D @playwright/test typescript @types/react @types/node eslint-plugin-security eslint-plugin-xss --ignore-scripts
+          
+      - name: Audit dependencies
+        run: npm audit --production
+      
+      - name: Create security-focused ESLint config for tests
+        run: |
+          echo '{
+            "extends": ["./.eslintrc.json"],
+            "plugins": ["security", "xss"],
+            "rules": {
+              "security/detect-non-literal-regexp": "error",
+              "security/detect-unsafe-regex": "error",
+              "security/detect-buffer-noassert": "error",
+              "security/detect-child-process": "error",
+              "security/detect-disable-mustache-escape": "error",
+              "security/detect-eval-with-expression": "error",
+              "security/detect-no-csrf-before-method-override": "error",
+              "security/detect-object-injection": "warn",
+              "security/detect-possible-timing-attacks": "error",
+              "security/detect-pseudoRandomBytes": "error",
+              "xss/no-location-href-assign": "error",
+              "xss/no-mixed-html": "error"
+            }
+          }' > .eslintrc.security.json
+          
+      - name: Setup secretlint
+        run: |
+          echo '{
+            "rules": [
+              {
+                "id": "@secretlint/secretlint-rule-preset-recommend"
+              },
+              {
+                "id": "@secretlint/secretlint-rule-pattern",
+                "options": {
+                  "patterns": [
+                    {
+                      "name": "API Key",
+                      "pattern": "[a-zA-Z0-9_-]{20,}",
+                      "message": "Potential API key found in test file"
+                    }
+                  ]
+                }
+              }
+            ]
+          }' > .secretlintrc.json
+          npm install -g @secretlint/secretlint-rule-preset-recommend @secretlint/secretlint-rule-pattern secretlint
+          
+      - name: Run security scan on test files
+        run: |
+          npx eslint --no-eslintrc -c .eslintrc.security.json 'tests/**/*.{js,ts,tsx}'
+          
+      - name: Check for hardcoded secrets in tests
+        run: |
+          npx secretlint "tests/**/*.{js,ts,tsx}"
+          
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+        
+      - name: Run Playwright security tests
+        run: |
+          # Run only the security-specific tests
+          npx playwright test --project=security
+        
+      - name: Run Snyk to check for vulnerabilities
+        run: |
+          npm install -g snyk
+          snyk auth ${{ secrets.SNYK_TOKEN }}
+          snyk test --json > snyk-results.json || true
+          
+      - name: Upload Snyk report
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk-results.json
+          category: snyk
+
+  sonarcloud:
+    name: SonarCloud Analysis
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=my-project-key
+            -Dsonar.organization=my-organization
+            -Dsonar.sources=.
+            -Dsonar.tests=tests
+            -Dsonar.exclusions=node_modules/**,**/*.test.ts,**/*.spec.ts,**/*.test.tsx,**/*.spec.tsx
+            -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info 

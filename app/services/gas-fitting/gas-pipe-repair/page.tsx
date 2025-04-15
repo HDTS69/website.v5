@@ -3,16 +3,14 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function GasPipeRepairPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Gas Pipe Repair Brisbane"
-        description="Professional gas pipe repair services in Brisbane. Our licensed gas fitters provide expert repair and maintenance solutions for all gas pipe systems."
+        description="Professional gas pipe repair services in Brisbane. Our licensed gas fitters provide expert repair solutions for all types of gas pipes, ensuring safety and reliability."
         serviceArea="Brisbane Gas Pipe Repair Local Business Queensland"
       />
 

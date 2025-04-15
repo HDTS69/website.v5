@@ -2,15 +2,13 @@ import { Metadata } from 'next';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { FaTools, FaCheckCircle } from 'react-icons/fa';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
-import Header from '@/components/ui/header';
-import Footer from '@/components/ui/footer';
 
 export const metadata: Metadata = {
   title: 'Air Conditioning System Optimization Brisbane | AC Performance Tuning',
-  description: 'Professional air conditioning optimization in Brisbane. Expert system tuning, efficiency improvements, and performance enhancement. Book your optimization service today!',
+  description: 'Professional air conditioning system optimization in Brisbane. Improve efficiency, reduce energy costs, and enhance comfort with our expert AC tuning services.',
 };
 
-export default function ACOptimizationPage() {
+export default function ACSystemOptimizationPage() {
   const pageData = {
     heroData: {
       title: "Air Conditioning Optimization",
@@ -170,11 +168,5 @@ export default function ACOptimizationPage() {
     }
   };
 
-  return (
-    <>
-      <Header />
-      <ServiceDetailLayout {...pageData} />
-      <Footer />
-    </>
-  );
+  return <ServiceDetailLayout {...pageData} />;
 } 

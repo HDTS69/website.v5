@@ -3,16 +3,14 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function GasComplianceCertificatesPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Gas Compliance Certificates Brisbane"
-        description="Professional gas compliance certification services in Brisbane. Our licensed gas fitters provide expert inspections and official compliance certificates for all gas installations."
+        description="Professional gas compliance certificate services in Brisbane. Our licensed gas fitters provide expert inspections and certification for all gas installations and systems."
         serviceArea="Brisbane Gas Compliance Certificates Local Business Queensland"
       />
 

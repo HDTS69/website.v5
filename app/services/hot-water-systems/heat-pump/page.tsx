@@ -3,7 +3,6 @@ import { ServiceDetailLayout, ServiceDetailLayoutProps } from '@/components/layo
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 import { FaTools } from 'react-icons/fa';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 
 export const metadata: Metadata = {
   title: 'Heat Pump Hot Water Systems Brisbane | Energy Efficient Solutions',
@@ -169,7 +168,6 @@ const pageData: ServiceDetailLayoutProps = {
 export default function HeatPumpHotWaterPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Heat Pump Hot Water Systems Brisbane"
         description="Professional heat pump hot water system services in Brisbane. Our licensed specialists provide expert installation, repairs, and maintenance for energy-efficient heat pump systems."

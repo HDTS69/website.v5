@@ -2,12 +2,10 @@ import { Metadata } from 'next';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { FaTools, FaCheckCircle } from 'react-icons/fa';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
-import Header from '@/components/ui/header';
-import Footer from '@/components/ui/footer';
 
 export const metadata: Metadata = {
-  title: 'Air Conditioning Repairs Brisbane | 24/7 AC Repair Service',
-  description: 'Expert air conditioning repair services in Brisbane. Fast response, competitive rates, and guaranteed workmanship. Available 24/7 for emergency repairs. Book online now!',
+  title: 'Air Conditioning Repairs Brisbane | AC Repair Services',
+  description: 'Professional air conditioning repair in Brisbane. Expert technicians, fair pricing, and all AC brands serviced. Book your repair online or call now!',
 };
 
 export default function ACRepairsPage() {
@@ -170,11 +168,5 @@ export default function ACRepairsPage() {
     }
   };
 
-  return (
-    <>
-      <Header />
-      <ServiceDetailLayout {...pageData} />
-      <Footer />
-    </>
-  );
+  return <ServiceDetailLayout {...pageData} />;
 } 

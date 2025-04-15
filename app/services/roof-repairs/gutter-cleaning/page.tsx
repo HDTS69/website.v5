@@ -3,13 +3,11 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function GutterCleaningPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Gutter Cleaning Brisbane"
         description="Professional gutter cleaning services in Brisbane. Our experienced team provides thorough cleaning and maintenance of gutters and downpipes for optimal water flow and roof protection."

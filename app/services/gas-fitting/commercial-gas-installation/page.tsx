@@ -3,16 +3,14 @@
 import React from 'react';
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
 import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import Header from '@/components/ui/header';
 import { PaymentIcons } from '@/app/components/PaymentIcons';
 
 export default function CommercialGasInstallationPage() {
   return (
     <>
-      <Header />
       <ServiceSchema 
         serviceName="Commercial Gas Installation Brisbane"
-        description="Professional commercial gas installation services in Brisbane. Our licensed gas fitters provide expert installation and safety solutions for all commercial gas systems."
+        description="Professional commercial gas installation services in Brisbane. Our licensed gas fitters provide expert installation solutions for all types of commercial gas systems, ensuring safety and compliance."
         serviceArea="Brisbane Commercial Gas Installation Local Business Queensland"
       />
 
