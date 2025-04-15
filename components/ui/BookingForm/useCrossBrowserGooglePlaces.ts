@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 
 interface UseCrossBrowserGooglePlacesProps {
-  inputRef: React.RefObject<HTMLInputElement>;
+  inputRef: React.RefObject<HTMLInputElement | null>;
   onPlaceSelect?: (place: google.maps.places.PlaceResult) => void;
   country?: string;
   types?: string[];
@@ -32,7 +32,7 @@ export function useCrossBrowserGooglePlaces({
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
-  const listenerRef = useRef<google.maps.MapsEventListener | null>(null);
+  const listenerRef = useRef<any>(null);
 
   // Detect browser for specific browser handling
   const detectBrowser = useCallback(() => {
@@ -105,14 +105,11 @@ export function useCrossBrowserGooglePlaces({
       
       // Set up event listener with proper type handling
       if (autocompleteRef.current) {
-        const listener = window.google.maps.event.addListener(
+        listenerRef.current = window.google.maps.event.addListener(
           autocompleteRef.current,
           'place_changed',
           handlePlaceChanged
         );
-        if (listener) {
-          listenerRef.current = listener;
-        }
       }
       
       // Firefox and Safari sometimes need additional DOM events to properly focus
