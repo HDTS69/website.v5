@@ -3,6 +3,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useCrossBrowserGooglePlaces } from './useCrossBrowserGooglePlaces';
 import { GoogleMapsScript } from './GoogleMapsScript';
+// Reference the Google Maps types
+import '@/components/ui/BookingForm/google-maps-types';
 
 interface EnhancedAddressInputProps {
   id: string;
@@ -22,16 +24,6 @@ interface EnhancedAddressInputProps {
   manualEntry?: boolean;
   onManualEntryChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   showManualEntry?: boolean;
-}
-
-// Define Google Maps place result interface if not already available globally
-interface GooglePlace {
-  formatted_address?: string;
-  address_components?: Array<{
-    long_name: string;
-    short_name: string;
-    types: string[];
-  }>;
 }
 
 export function EnhancedAddressInput({

@@ -1,4 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
+// Reference the Google Maps types
+import '@/components/ui/BookingForm/google-maps-types';
 
 interface UseCrossBrowserGooglePlacesProps {
   inputRef: React.RefObject<HTMLInputElement | null>;

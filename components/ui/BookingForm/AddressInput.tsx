@@ -6,28 +6,11 @@ import { WaveInput } from './WaveInput';
 import { cn } from '@/lib/utils';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
+// Reference the Google Maps types
+import '@/components/ui/BookingForm/google-maps-types';
 
 // Define the Google Maps API key
 const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
-
-// Define the Google Autocomplete interface
-declare global {
-  interface Window {
-    google?: {
-      maps: {
-        Map: new (element: HTMLElement, options: any) => any;
-        places: {
-          Autocomplete: new (input: HTMLInputElement, options?: any) => any;
-        };
-        event: {
-          addListener: (instance: any, eventName: string, callback: Function) => void;
-          removeListener: (listener: any) => void;
-        };
-      };
-    };
-    initGooglePlacesAutocomplete?: () => void;
-  }
-}
 
 interface AddressInputProps {
   value: string;
