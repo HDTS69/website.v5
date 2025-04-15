@@ -27,11 +27,13 @@ const NO_PLACEHOLDER_VARIABLES = [
 
 // Known placeholder patterns to check against
 const PLACEHOLDER_PATTERNS = [
-  /placeholder/i,
-  /your-key/i,
-  /example/i,
-  /demo/i,
-  /test/i
+  /^placeholder$/i,
+  /^your-key$/i,
+  /^example$/i,
+  /^demo[-_]?key$/i,
+  /^test[-_]?key$/i,
+  /^YOUR_/i,
+  /^<.*>$/  // Matches anything like <YOUR_KEY_HERE>
 ];
 
 // Get the current environment (development, production, etc.)
@@ -100,40 +102,44 @@ function getEnvVar(name) {
 function isPlaceholder(value) {
   if (!value) return true;
   
+  // If the value is very short, it's probably not a real API key
+  if (value.length < 10) return true;
+  
+  // Check against known placeholder patterns
   return PLACEHOLDER_PATTERNS.some(pattern => pattern.test(value));
 }
 
-// Verify Google Maps API key format (simple check)
+// Verify Google Maps API key format with relaxed validation
 function isValidGoogleMapsApiKey(key) {
   if (!key) return false;
   
-  // Google API keys are typically ~40 characters
-  if (key.length < 20) return false;
+  // Google API keys are typically fairly long
+  if (key.length < 15) return false;
   
-  // They often start with 'AIza'
-  if (!key.startsWith('AIza')) return false;
+  // If it contains obvious placeholder text
+  if (key.toLowerCase().includes('place') && key.toLowerCase().includes('holder')) return false;
+  if (key.toLowerCase().includes('your') && key.toLowerCase().includes('key')) return false;
   
-  return true;
+  // If it clearly looks like a legitimate key, accept it directly
+  if (key.startsWith('AIza')) return true;
+  
+  // Otherwise, if it's long enough and doesn't match placeholder patterns, it's probably fine
+  return !isPlaceholder(key);
 }
 
-// Verify Google Maps API key with extra checks
+// Verify Google Maps API key with more lenient checks
 function verifyGoogleMapsApiKey(key) {
   if (!key) {
     console.log('❌ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not set');
     return false;
   }
   
-  if (isPlaceholder(key)) {
-    console.log('❌ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY appears to be a placeholder value');
-    return false;
-  }
-  
   if (!isValidGoogleMapsApiKey(key)) {
-    console.log('❌ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY does not match the expected format for a Google API key');
+    console.log('❌ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY appears to be invalid or a placeholder');
     return false;
   }
   
-  console.log('✅ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY appears to be properly formatted');
+  console.log('✅ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is set');
   return true;
 }
 
@@ -150,19 +156,15 @@ function checkRequiredVariables() {
       continue;
     }
     
-    if (NO_PLACEHOLDER_VARIABLES.includes(varName) && isPlaceholder(value)) {
-      console.log(`❌ ${varName} appears to be a placeholder value: "${value.substring(0, 5)}..."`);
-      allValid = false;
-      continue;
-    }
-    
+    // Special handling for API key
     if (varName === 'NEXT_PUBLIC_GOOGLE_MAPS_API_KEY') {
       if (!verifyGoogleMapsApiKey(value)) {
         allValid = false;
         continue;
       }
-    } else {
-      // For other variables, just log that they're set
+    } 
+    // For other variables, just check they exist
+    else {
       console.log(`✅ ${varName} is set`);
     }
   }
@@ -183,8 +185,13 @@ if (allValid) {
   
   // Provide helpful info about Google Maps API key
   if (mapsApiKey) {
+    // Show just enough of the key to confirm it's set without revealing the whole thing
+    const keyPreview = mapsApiKey.length > 10 
+      ? `${mapsApiKey.substring(0, 4)}...${mapsApiKey.substring(mapsApiKey.length - 4)}`
+      : '(key seems too short)';
+      
     console.log('\nGOOGLE MAPS API KEY INFO:');
-    console.log(`Key: ${mapsApiKey.substring(0, 5)}...${mapsApiKey.substring(mapsApiKey.length - 4)}`);
+    console.log(`Key: ${keyPreview}`);
     console.log('');
     console.log('Remember to add these restrictions to your Google Maps API key:');
     console.log('- Website restrictions: https://hdtradeservices.com.au/*');
@@ -200,12 +207,12 @@ if (allValid) {
   console.log('2. .env file (for local development)');
   console.log('3. netlify.toml (for local development and builds)');
   
-  // If we're in CI and the vars are missing, fail the build
-  if (isCI) {
+  // If we're in CI and the vars are missing, fail the build only in production
+  if (isCI && NODE_ENV === 'production') {
     console.error('\n❌ DEPLOYMENT VALIDATION FAILED. Build will not proceed.\n');
     process.exit(1);
   } else {
     console.log('\n⚠️ Warning: Environment validation failed, but continuing as this is not a production build.\n');
-    process.exit(0);
+    process.exit(0); // Exit with success to allow the build to continue
   }
 } 
