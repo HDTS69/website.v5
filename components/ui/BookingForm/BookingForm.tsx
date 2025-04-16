@@ -351,10 +351,11 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                       <AddressInput
                         value={formData.address}
                         onChange={handleChange}
-                        onFocus={() => {}}
+                        onFocus={() => setShowManualEntry(true)}
+                        onBlur={(e) => validateField('address', e.target.value, e)}
                         error={errors.address}
                         manualEntry={formData.manualEntry}
-                        onManualEntryChange={(e) => setFormData(prev => ({ ...prev, manualEntry: e.target.checked }))}
+                        onManualEntryChange={(e) => setFormData(prev => ({ ...prev, manualEntry: e.target.checked, isGoogleAddress: false }))}
                         showManualEntry={showManualEntry}
                       />
                     </motion.div>

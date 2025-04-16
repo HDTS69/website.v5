@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
+// import { Input } from '@/components/ui/input'; // Remove incorrect import
+// import { Label } from '@/components/ui/label'; // Remove incorrect import
 import { useCrossBrowserGooglePlaces } from './useCrossBrowserGooglePlaces';
 import { GoogleMapsScript } from './GoogleMapsScript';
 // Reference the Google Maps types
-import '@/components/ui/BookingForm/google-maps-types';
+// import '@/components/ui/BookingForm/google-maps-types';
 
 interface EnhancedAddressInputProps {
   id: string;
