@@ -184,65 +184,57 @@ export function AddressInput({
     }
   };
 
-  // Initialize Google Places Autocomplete when the component mounts
+  // Initialize Google Places Autocomplete when the component mounts or manualEntry changes
   useEffect(() => {
-    // Only try to initialize if not in manual entry mode
+    // --- Immediate check for manual entry --- 
     if (manualEntry) {
-      cleanup();
-      return;
+      console.log('AddressInput: Manual entry is true, cleaning up and returning.');
+      cleanup(); // Ensure cleanup runs if switching to manual
+      return; // Stop initialization if manual entry is enabled
     }
-    
-    // Add debug event listener for Google Maps loaded event
-    const handleGoogleMapsLoaded = () => {
-      console.log('Google Maps loaded event detected');
-      setTimeout(() => {
-        if (window.google && window.google.maps && window.google.maps.places && !initialized) {
-          initializeAutocomplete();
-        }
-      }, 100);
-    };
-    
-    window.addEventListener('google-maps-loaded', handleGoogleMapsLoaded);
-    
-    // Check if Google Maps API is already loaded
-    if (isBrowser && window.google && window.google.maps && window.google.maps.places && !initialized) {
-      // Add a small delay to ensure the API is fully loaded
-      setTimeout(() => {
-        initializeAutocomplete(); // Uncommented for Google Places functionality
-      }, 100);
-    } else {
-      // Set up a polling mechanism to check for Google Maps API availability
-      const checkGoogleMapsInterval = setInterval(() => {
-        if (isBrowser && window.google && window.google.maps && window.google.maps.places && !initialized) {
-          clearInterval(checkGoogleMapsInterval);
-          initializeAutocomplete(); // Uncommented for Google Places functionality
-        }
-      }, 500);
+
+    // --- Proceed only if not manual entry and initialization needed --- 
+    if (!initialized && isBrowser) {
+      console.log('AddressInput: Attempting initialization (manualEntry=false, initialized=false, isBrowser=true)');
       
-      // Clear interval on component unmount
+      const handleGoogleMapsLoaded = () => {
+        console.log('AddressInput: google-maps-loaded event received.');
+        // Double-check manualEntry again before initializing after event
+        if (!manualEntry && !initialized) {
+          // Use requestAnimationFrame for potentially smoother initialization after event
+          requestAnimationFrame(() => initializeAutocomplete()); 
+        }
+      };
+
+      window.addEventListener('google-maps-loaded', handleGoogleMapsLoaded);
+
+      // Check if Google Maps API is already loaded and ready
+      if (window.google?.maps?.places) {
+        console.log('AddressInput: Google Maps already loaded, initializing.');
+        // Use requestAnimationFrame here too
+        requestAnimationFrame(() => initializeAutocomplete());
+      } else {
+        console.log('AddressInput: Google Maps not loaded yet, waiting for event.');
+        // The GoogleMapsScript component should load the script and trigger the event.
+        // No need for polling here if the event listener is reliable.
+      }
+
+      // Cleanup function for this effect
       return () => {
-        clearInterval(checkGoogleMapsInterval);
+        console.log('AddressInput: Cleanup for main initialization effect.');
         window.removeEventListener('google-maps-loaded', handleGoogleMapsLoaded);
-        cleanup();
+        // Cleanup might be redundant here if called when manualEntry changes, 
+        // but ensure it runs on unmount if not in manual mode.
+        if (!manualEntry) {
+             cleanup();
+        }
       };
     }
     
-    return () => {
-      window.removeEventListener('google-maps-loaded', handleGoogleMapsLoaded);
-    };
-  }, [manualEntry, isBrowser, initialized]); // Added initialized to dependencies
+    // If already initialized or not in browser, do nothing in this effect run
+    console.log(`AddressInput: Skipping initialization (manualEntry=${manualEntry}, initialized=${initialized}, isBrowser=${isBrowser})`);
 
-  // Re-initialize autocomplete when manual entry changes
-  useEffect(() => {
-    if (manualEntry) {
-      cleanup();
-    } else if (isBrowser && window.google && window.google.maps && window.google.maps.places) {
-      // Add a small delay to ensure the API is fully loaded
-      setTimeout(() => {
-        initializeAutocomplete(); // Uncommented for Google Places functionality
-      }, 100);
-    }
-  }, [manualEntry, isBrowser]);
+  }, [manualEntry, isBrowser, initialized, initializeAutocomplete, cleanup]); // Added initializeAutocomplete and cleanup to dependencies
 
   // Handle Google Maps script load error
   const handleGoogleMapsError = () => {
