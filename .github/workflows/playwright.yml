@@ -52,7 +52,7 @@ jobs:
       
     # Scan test files for security issues
     - name: Run ESLint on test files
-      run: npx eslint 'tests/**/*.{js,ts,tsx}' --config .eslintrc.json
+      run: npx eslint 'tests/**/*.{js,ts,tsx}' --config .eslintrc.js
       
     # Build Next.js app
     - name: Build Next.js app
@@ -150,7 +150,7 @@ jobs:
       - name: Create security-focused ESLint config for tests
         run: |
           echo '{
-            "extends": ["./.eslintrc.json"],
+            "extends": ["./.eslintrc.js"],
             "plugins": ["security", "xss"],
             "rules": {
               "security/detect-non-literal-regexp": "error",
