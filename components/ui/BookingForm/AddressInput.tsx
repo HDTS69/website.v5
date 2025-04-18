@@ -49,14 +49,11 @@ interface PlaceAutocompleteCustomEvent extends Event {
 
 interface AddressInputProps {
   value: string;
-  // @ts-expect-error Function props are allowed between client components.
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  // @ts-expect-error Function props are allowed between client components.
   onFocus: () => void;
   error?: string;
   manualEntry: boolean;
-  // @ts-expect-error Function props are allowed between client components.
   onManualEntryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   showManualEntry: boolean;
 }
