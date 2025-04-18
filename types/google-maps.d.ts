@@ -1,33 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-// Define types for the Google Maps Place Autocomplete Web Component
-declare namespace JSX {
-  interface IntrinsicElements {
-    'gmp-placeautocomplete': React.HTMLAttributes<HTMLElement> & { 
-      // Simpler approach using React.HTMLAttributes
-      country?: string | string[];
-      'place-types'?: string | string[];
-      // Add other specific props if needed
-      // For event handling, rely on the global event listener approach below
-      // rather than specific onPlaceSelect prop, as web components often use standard addEventListener
-    };
-  }
-}
+// TypeScript Definitions for PlaceAutocompleteElement Web Component
 
-// Keep the global event listener type definition
 declare global {
-  interface HTMLElementEventMap {
-    'gmp-placeselect': CustomEvent<{ place: google.maps.places.PlaceResult }>;
+  namespace JSX {
+    interface IntrinsicElements {
+      'gmp-place-autocomplete': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+        // Define attributes the component accepts
+        'component-restrictions'?: string; // e.g., "country:au"
+        'placeholder'?: string;
+        'required'?: boolean;
+        'value'?: string; // If we need to control its value programmatically
+        'id'?: string;
+        'name'?: string;
+        // Add className for basic styling attempts
+        className?: string;
+      };
+    }
+  }
+  // Augment HTMLElement to potentially include the 'place' property
+  // Note: This might not be strictly necessary if we cast event.target
+  interface HTMLElement {
+      place?: google.maps.places.PlaceResult | null;
   }
 }
 
-// Ensure google global object type is available
-declare global {
-  interface Window {
-    google?: typeof google;
-  }
+// Define a more specific type for the custom event if possible
+// Using 'any' for the event target initially for simplicity
+interface PlaceAutocompleteCustomEvent extends Event {
+    target: HTMLElement & { value?: string }; // Target is an HTMLElement, might have place and value
 }
 
-// Export empty object
+// Export something to make it a module (if needed, often not for global declarations)
 export {}; 
