@@ -103,40 +103,6 @@ export const navigationItems: NavItem[] = [
     ]
   },
   {
-    name: "Brands",
-    url: "/brands",
-    icon: Building2,
-    dropdownItems: [
-      {
-        name: "Hot Water Brands",
-        url: "/brands/hot-water",
-        subItems: [
-          { name: "Rheem", url: "/brands/rheem" },
-          { name: "Rinnai", url: "/brands/rinnai" },
-          { name: "Bosch", url: "/brands/bosch" },
-          { name: "Dux", url: "/brands/dux" },
-          { name: "Thermann", url: "/brands/thermann" },
-          { name: "Vulcan", url: "/brands/vulcan" },
-          { name: "Aquamax", url: "/brands/aquamax" },
-          { name: "Chromagen", url: "/brands/chromagen" },
-          { name: "Everhot", url: "/brands/everhot" },
-          { name: "Stiebel Eltron", url: "/brands/stiebel-eltron" },
-        ]
-      },
-      {
-        name: "Air Conditioning",
-        url: "/brands/air-conditioning",
-        subItems: [
-          { name: "Daikin", url: "/brands/daikin" },
-          { name: "Fujitsu", url: "/brands/fujitsu" },
-          { name: "Mitsubishi Heavy Industries", url: "/brands/mitsubishi-heavy-industries" },
-          { name: "Samsung", url: "/brands/samsung" },
-          { name: "Gree", url: "/brands/gree" },
-        ]
-      }
-    ]
-  },
-  {
     name: "Locations",
     url: "/locations",
     icon: MapPin,
@@ -186,6 +152,40 @@ export const navigationItems: NavItem[] = [
           { name: "North Gold Coast", url: "/locations/gold-coast/north" },
           { name: "Central Gold Coast", url: "/locations/gold-coast/central" },
           { name: "South Gold Coast", url: "/locations/gold-coast/south" },
+        ]
+      }
+    ]
+  },
+  {
+    name: "Brands",
+    url: "/brands",
+    icon: Building2,
+    dropdownItems: [
+      {
+        name: "Hot Water Brands",
+        url: "/brands/hot-water",
+        subItems: [
+          { name: "Rheem", url: "/brands/rheem" },
+          { name: "Rinnai", url: "/brands/rinnai" },
+          { name: "Bosch", url: "/brands/bosch" },
+          { name: "Dux", url: "/brands/dux" },
+          { name: "Thermann", url: "/brands/thermann" },
+          { name: "Vulcan", url: "/brands/vulcan" },
+          { name: "Aquamax", url: "/brands/aquamax" },
+          { name: "Chromagen", url: "/brands/chromagen" },
+          { name: "Everhot", url: "/brands/everhot" },
+          { name: "Stiebel Eltron", url: "/brands/stiebel-eltron" },
+        ]
+      },
+      {
+        name: "Air Conditioning",
+        url: "/brands/air-conditioning",
+        subItems: [
+          { name: "Daikin", url: "/brands/daikin" },
+          { name: "Fujitsu", url: "/brands/fujitsu" },
+          { name: "Mitsubishi Heavy Industries", url: "/brands/mitsubishi-heavy-industries" },
+          { name: "Samsung", url: "/brands/samsung" },
+          { name: "Gree", url: "/brands/gree" },
         ]
       }
     ]
