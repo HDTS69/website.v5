@@ -14,6 +14,14 @@ const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
 // Define the library scope
 const libraries: ('places')[] = ['places'];
 
+// Rough bounds for South East Queensland
+const SEQ_BOUNDS: google.maps.LatLngBoundsLiteral = {
+  north: -24.0, // Bundaberg region
+  south: -28.5, // NSW Border / Gold Coast Hinterland
+  east:  154.0, // Coast + offshore
+  west:  150.0, // Toowoomba / Darling Downs edge
+};
+
 // --- TypeScript Definitions for PlaceAutocompleteElement ---
 declare global {
   namespace JSX {
@@ -41,11 +49,14 @@ interface PlaceAutocompleteCustomEvent extends Event {
 
 interface AddressInputProps {
   value: string;
+  // @ts-expect-error Function props are allowed between client components.
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  // @ts-expect-error Function props are allowed between client components.
   onFocus: () => void;
   error?: string;
   manualEntry: boolean;
+  // @ts-expect-error Function props are allowed between client components.
   onManualEntryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   showManualEntry: boolean;
 }
@@ -60,8 +71,8 @@ export function AddressInput({
   onManualEntryChange,
   showManualEntry,
 }: AddressInputProps) {
-  const waveInputRef = useRef<HTMLInputElement>(null); // Ref for WaveInput (manual entry)
-  const autocompleteElementRef = useRef<HTMLElement>(null); // Ref for <gmp-place-autocomplete>
+  const addressRef = useRef<HTMLInputElement>(null);
+  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   const manualEntryRef = useRef<HTMLDivElement>(null);
   const [isGoogleAddress, setIsGoogleAddress] = useState(false);
 
@@ -78,42 +89,63 @@ export function AddressInput({
     } as unknown as React.ChangeEvent<HTMLInputElement>;
     onChange(syntheticEvent);
     setIsGoogleAddress(true);
+    if (addressRef.current) {
+      addressRef.current.value = formattedAddress;
+    }
   }, [onChange]);
 
-  const onPlaceChangeHandler = useCallback((event: Event) => {
-    const customEvent = event as PlaceAutocompleteCustomEvent;
-    const element = customEvent.target;
-    const place = element?.place;
-
-    if (place?.formatted_address) {
-      console.log('Place selected via PlaceAutocompleteElement:', place.formatted_address);
-      handlePlaceSelection(place.formatted_address);
-    } else {
-      console.warn('No place details available from PlaceAutocompleteElement');
-      setIsGoogleAddress(false);
-      if (element?.value) {
-        const syntheticEvent = {
-          target: { name: 'address', value: element.value, dataset: { isGoogleAddress: 'false' } },
-          currentTarget: { name: 'address', value: element.value, dataset: { isGoogleAddress: 'false' } },
-          preventDefault: () => {}, stopPropagation: () => {},
-        } as unknown as React.ChangeEvent<HTMLInputElement>;
-        onChange(syntheticEvent);
+  const onPlaceChangedHandler = useCallback(() => {
+    if (autocompleteRef.current) {
+      const place = autocompleteRef.current.getPlace();
+      if (place?.formatted_address) {
+        console.log('Place selected via Autocomplete service:', place.formatted_address);
+        handlePlaceSelection(place.formatted_address);
+      } else {
+        console.warn('No place details available from Autocomplete service');
+        setIsGoogleAddress(false);
       }
+    } else {
+      console.error('Autocomplete service instance not available');
     }
   }, [handlePlaceSelection]);
 
   useEffect(() => {
-    const element = autocompleteElementRef.current;
-    if (isLoaded && element && !manualEntry) {
-      console.log('Attaching gmp-placechange listener...');
-      element.addEventListener('gmp-placechange', onPlaceChangeHandler);
+    if (!manualEntry && isLoaded && addressRef.current && !autocompleteRef.current) {
+      console.log('Initializing Classic Google Maps Autocomplete Service with SEQ Bounds...');
+      const options: google.maps.places.AutocompleteOptions = {
+        types: ['address'],
+        componentRestrictions: { country: 'au' },
+        fields: ['formatted_address', 'address_components', 'geometry', 'name'],
+        bounds: SEQ_BOUNDS,
+        strictBounds: true,
+      };
+      if (addressRef.current) {
+          const autocomplete = new google.maps.places.Autocomplete(addressRef.current, options);
+          autocompleteRef.current = autocomplete;
+          autocomplete.addListener('place_changed', onPlaceChangedHandler);
+      }
 
       return () => {
-        console.log('Removing gmp-placechange listener...');
-        element.removeEventListener('gmp-placechange', onPlaceChangeHandler);
+        console.log('Cleaning up Classic Autocomplete listener...');
+        if (autocompleteRef.current) {
+           google.maps.event.clearInstanceListeners(autocompleteRef.current);
+        }
+        autocompleteRef.current = null; 
       };
+    } else if (manualEntry && autocompleteRef.current) {
+        // If switching TO manual entry and the service exists, clean it up
+        console.log('Switching to manual entry, disabling and cleaning up existing Autocomplete...');
+        // Attempt to disable suggestions by clearing types
+        autocompleteRef.current.setTypes([]); 
+        // Also clear component restrictions just in case
+        autocompleteRef.current.setComponentRestrictions(null);
+        // Then clear listeners and nullify ref
+        google.maps.event.clearInstanceListeners(autocompleteRef.current);
+        autocompleteRef.current = null; // Ensure it can be re-initialized if needed
     }
-  }, [isLoaded, manualEntry, onPlaceChangeHandler]);
+    // If manualEntry is true and autocompleteRef is already null, do nothing.
+
+  }, [isLoaded, manualEntry, onPlaceChangedHandler]);
 
   useEffect(() => {
     if (loadError) {
@@ -210,45 +242,27 @@ export function AddressInput({
 
   return (
     <div className="relative mb-6 w-full">
-      {!manualEntry && isLoaded ? (
-        React.createElement('gmp-place-autocomplete' as any, {
-          ref: autocompleteElementRef,
-          key: 'gmp-autocomplete',
-          id: "address-autocomplete",
-          name: "address-autocomplete",
-          "component-restrictions": "country:au",
-          placeholder: "Start typing your address...",
-          required: true,
-          className: cn(
-            "peer block w-full appearance-none border-0 border-b",
-            "border-gray-600 bg-transparent px-3 py-2",
-            "text-base text-white placeholder-gray-400",
-            "focus:border-gray-500 focus:outline-none focus:ring-0",
-            error && !isGoogleAddress && "border-red-500 focus:border-red-500",
-            isGoogleAddress && "border-green-500 focus:border-green-500",
-            "h-10 leading-tight"
-          ),
-        })
-      ) : (
-        <WaveInput
-          ref={waveInputRef}
-          id="address"
-          name="address"
-          type="text"
-          value={value}
-          onChange={handleInputChange}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          label="Address"
-          required
-          disabled={!manualEntry && isLoaded}
-          autoComplete="street-address"
-          error={manualEntry ? error : undefined}
-          className={cn(
-            'peer'
-          )}
-        />
-      )}
+      <WaveInput
+        key={manualEntry ? 'manual-address' : 'auto-address'}
+        ref={addressRef}
+        id="address"
+        name="address"
+        type="text"
+        value={value}
+        onChange={handleInputChange}
+        onBlur={handleBlur}
+        onFocus={handleFocus}
+        label="Address"
+        required
+        disabled={false}
+        autoComplete="off"
+        error={error}
+        className={cn(
+          'peer',
+          error && 'border-red-500 focus:border-red-500',
+          isGoogleAddress && 'border-green-500 focus:border-green-500'
+        )}
+      />
 
       {showManualEntry && (
         <div ref={manualEntryRef} className="mt-2 flex items-center">
@@ -267,7 +281,7 @@ export function AddressInput({
       )}
       
       <AnimatePresence>
-        {(manualEntry && error || error && !isGoogleAddress) && (
+        {error && (
           <motion.p
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -279,7 +293,7 @@ export function AddressInput({
         )}
       </AnimatePresence>
       
-      {!isLoaded && !loadError && (
+      {!isLoaded && !manualEntry && !loadError && (
         <p className="mt-1 text-xs text-gray-400">Loading Google address suggestions...</p>
       )}
       {loadError && (

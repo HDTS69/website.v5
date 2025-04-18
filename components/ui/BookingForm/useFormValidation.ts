@@ -11,38 +11,36 @@ interface ValidationRules {
   address: (value: string) => string | null;
 }
 
+// Define validationRules outside the hook for stable reference
+const validationRules: ValidationRules = {
+  name: (value) => {
+    if (!value.trim()) return 'Name is required';
+    const names = value.trim().split(' ').filter(part => part.length > 0);
+    return names.length < 2 ? 'Enter first and last name' : null;
+  },
+  email: (value) => {
+    if (!value.trim()) return 'Email is required';
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return !emailRegex.test(value.trim()) ? 'Enter a valid email' : null;
+  },
+  phone: (value) => {
+    if (!value.trim()) return 'Phone is required';
+    const phoneRegex = new RegExp(PHONE_PATTERNS.JS);
+    return !phoneRegex.test(value.trim()) ? 'Enter a valid phone number' : null;
+  },
+  address: (value) => {
+    if (!value.trim()) return 'Address is required';
+    const hasPostcode = /\b\d{4}\b/.test(value);
+    const hasSuburb = /, [A-Za-z\s]+,/.test(value);
+    if (!hasPostcode || !hasSuburb) {
+      return 'Select from suggestions or use manual entry';
+    }
+    return null;
+  },
+};
+
 export const useFormValidation = (hasAttemptedSubmit: boolean) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const validationRules: ValidationRules = {
-    name: (value) => {
-      if (!value.trim()) return 'Name is required';
-      const names = value.trim().split(' ').filter(part => part.length > 0);
-      return names.length < 2 ? 'Enter first and last name' : null;
-    },
-    email: (value) => {
-      if (!value.trim()) return 'Email is required';
-      // More comprehensive email regex
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      return !emailRegex.test(value.trim()) ? 'Enter a valid email' : null;
-    },
-    phone: (value) => {
-      if (!value.trim()) return 'Phone is required';
-      const phoneRegex = new RegExp(PHONE_PATTERNS.JS);
-      return !phoneRegex.test(value.trim()) ? 'Enter a valid phone number' : null;
-    },
-    address: (value) => {
-      if (!value.trim()) return 'Address is required';
-      // Check if the address contains postcode and suburb for Australian addresses
-      const hasPostcode = /\b\d{4}\b/.test(value);
-      const hasSuburb = /, [A-Za-z\s]+,/.test(value);
-      
-      if (!hasPostcode || !hasSuburb) {
-        return 'Select from suggestions or use manual entry';
-      }
-      return null;
-    },
-  };
 
   const validateField = useCallback((name: keyof ValidationRules, value: string, event?: any) => {
     if (!hasAttemptedSubmit) return null;
@@ -50,9 +48,8 @@ export const useFormValidation = (hasAttemptedSubmit: boolean) => {
     const validationRule = validationRules[name];
     let error = '';
     
-    // Special handling for address field from Google Maps
     if (name === 'address' && event?.target?.dataset?.isGoogleAddress) {
-      error = ''; // No error if address was selected from Google suggestions
+      error = '';
     } else {
       error = validationRule?.(value) || '';
     }
@@ -63,7 +60,7 @@ export const useFormValidation = (hasAttemptedSubmit: boolean) => {
     }));
     
     return error;
-  }, [hasAttemptedSubmit, validationRules]);
+  }, [hasAttemptedSubmit]);
 
   const validateForm = useCallback((formData: FormState) => {
     console.log('Starting form validation');
