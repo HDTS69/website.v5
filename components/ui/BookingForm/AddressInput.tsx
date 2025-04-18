@@ -1,17 +1,18 @@
+/// <reference types="@types/google.maps" />
+
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useJsApiLoader, Autocomplete } from '@react-google-maps/api';
 import { WaveInput } from './WaveInput';
 import { cn } from '@/lib/utils';
-import { FaMapMarkerAlt } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-// Reference the Google Maps types
-// import '@/components/ui/BookingForm/google-maps-types'; // Comment out alias import
-// import './google-maps-types'; // Remove relative import
+// Removed unused icons FaMapMarkerAlt, MdEdit
 
 // Define the Google Maps API key
 const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
+// Define the library scope
+const libraries: ('places')[] = ['places'];
 
 interface AddressInputProps {
   value: string;
@@ -36,19 +37,22 @@ export function AddressInput({
 }: AddressInputProps) {
   const addressRef = useRef<HTMLInputElement>(null);
   const manualEntryRef = useRef<HTMLDivElement>(null);
-  const [initialized, setInitialized] = useState(false);
-  const autocompleteRef = useRef<any>(null);
-  const autocompleteListenerRef = useRef<any>(null);
-  const [isBrowser, setIsBrowser] = useState(false);
+  // Use useRef for the autocomplete instance, initialize type correctly
+  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+  // Removed initialized, autocompleteListenerRef state/refs
+  // isBrowser state is no longer needed for this approach
   const [isFloating, setIsFloating] = useState(false);
   const [isGoogleAddress, setIsGoogleAddress] = useState(false);
+  // Removed placeAutocompleteRef
 
-  useEffect(() => {
-    setIsBrowser(true);
-  }, []);
+  // Load the Google Maps script
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+    libraries: libraries,
+  });
 
-  // Add this function near the top of the component
-  const handlePlaceSelection = (formattedAddress: string) => {
+  // Wrap handlePlaceSelection in useCallback
+  const handlePlaceSelection = useCallback((formattedAddress: string) => {
     // Create a synthetic event to pass back to the parent form's onChange
     const syntheticEvent = {
       target: {
@@ -64,194 +68,62 @@ export function AddressInput({
       preventDefault: () => {},
       stopPropagation: () => {},
       // Add other necessary event properties if required by onChange type
-    } as unknown as React.ChangeEvent<HTMLInputElement>; 
-    
+    } as unknown as React.ChangeEvent<HTMLInputElement>;
+
     // Call the parent's onChange with the synthetic event
     onChange(syntheticEvent);
-    
+
     // Also set internal state if needed (though less critical now)
     setIsGoogleAddress(true);
-    
+
     // Optional: Manually update the input ref value if onChange doesn't trigger it
     if (addressRef.current) {
       addressRef.current.value = formattedAddress;
     }
-  };
+  }, [onChange]); // Added onChange to dependency array
 
-  // Initialize Google Places Autocomplete
-  const initializeAutocomplete = () => {
-    if (!addressRef.current || manualEntry || !isBrowser || (isBrowser && (!window.google || !window.google.maps || !window.google.maps.places))) {
-      if (isBrowser && !window.google) {
-        console.warn('Google Maps API not loaded yet - waiting for initialization');
+  // Callback for Autocomplete onLoad
+  const onLoad = useCallback((autocomplete: google.maps.places.Autocomplete) => {
+    console.log('AddressInput: Autocomplete loaded.');
+    autocompleteRef.current = autocomplete;
+  }, []);
+
+  // Callback for Autocomplete onPlaceChanged
+  const onPlaceChanged = useCallback(() => {
+    if (autocompleteRef.current) {
+      const place = autocompleteRef.current.getPlace();
+      if (place?.formatted_address) {
+        console.log('Place selected via Autocomplete:', place.formatted_address);
+        handlePlaceSelection(place.formatted_address);
+      } else {
+        console.warn('No place details available from Autocomplete');
+        // If user types something and hits Enter without selecting, 
+        // place might be undefined. Handle as manual input.
+        setIsGoogleAddress(false);
       }
-      return;
+    } else {
+      console.error('Autocomplete instance not available');
     }
+  }, [handlePlaceSelection]);
 
-    try {
-      // Clean up any existing autocomplete instance first
-      cleanup();
-      
-      // Log the current environment for debugging
-      const currentOrigin = window.location.origin;
-      console.log(`Initializing Google Places Autocomplete on: ${currentOrigin}`);
-      
-      // Create the autocomplete instance with more specific options
-      autocompleteRef.current = new window.google.maps.places.Autocomplete(addressRef.current, {
-        types: ['address'],
-        componentRestrictions: { country: 'au' }, // Restrict to Australia
-        fields: ['address_components', 'formatted_address', 'place_id'],
-      });
-      
-      // Attempt to set bounds based on a rough Australia-wide area if available
-      try {
-        const australiaBounds = {
-          north: -10.0,  // Northern extent (rough)
-          south: -44.0,  // Southern extent (rough)
-          east: 154.0,   // Eastern extent (rough)
-          west: 112.0,   // Western extent (rough)
-        };
-        
-        if (window.google.maps.LatLngBounds) {
-          const bounds = new window.google.maps.LatLngBounds(
-            { lat: australiaBounds.south, lng: australiaBounds.west },
-            { lat: australiaBounds.north, lng: australiaBounds.east }
-          );
-          autocompleteRef.current.setBounds(bounds);
-        }
-      } catch (boundsError) {
-        console.warn('Could not set bounds:', boundsError);
-      }
-
-      // Add listener for place selection
-      autocompleteListenerRef.current = window.google.maps.event.addListener(
-        autocompleteRef.current,
-        'place_changed',
-        () => {
-          const place = autocompleteRef.current.getPlace();
-          if (place && place.formatted_address) {
-            console.log('Place selected:', place.formatted_address);
-            handlePlaceSelection(place.formatted_address);
-          } else {
-            console.warn('No place details available');
-          }
-        }
-      );
-
-      // Mark as initialized for tracking
-      setInitialized(true);
-      console.log('Google Places Autocomplete initialized successfully');
-    } catch (error) {
-      console.error('Error initializing Google Places Autocomplete:', error);
-      
-      // Provide more detailed error info for RefererNotAllowedMapError
-      if (error instanceof Error && error.message.includes('RefererNotAllowedMapError')) {
-        console.error(`
-          RefererNotAllowedMapError: Make sure this URL is allowed in your Google Cloud Console:
-          ${window.location.origin}
-        `);
-      }
-      
-      // If initialization fails, fall back to manual entry mode
-      if (!manualEntry) {
-        // Create a synthetic event to trigger manual entry mode
+  // Effect to handle Google Maps script load error
+  useEffect(() => {
+    if (loadError) {
+      console.error('Error loading Google Maps API script:', loadError);
+      // If script fails to load, enable manual entry as fallback
+      if (!manualEntry && onManualEntryChange) { // Check if onManualEntryChange exists
+        // Create a synthetic event to match the expected type
         const syntheticEvent = {
           target: { checked: true },
           currentTarget: { checked: true },
           preventDefault: () => {},
           stopPropagation: () => {},
         } as unknown as React.ChangeEvent<HTMLInputElement>;
-        
-        onManualEntryChange?.(syntheticEvent);
+
+        onManualEntryChange(syntheticEvent);
       }
     }
-  };
-
-  // Cleanup function
-  const cleanup = () => {
-    if (autocompleteListenerRef.current && isBrowser && window.google && window.google.maps && window.google.maps.event) {
-      window.google.maps.event.removeListener(autocompleteListenerRef.current);
-      autocompleteListenerRef.current = null;
-    }
-    autocompleteRef.current = null;
-    setInitialized(false);
-    
-    // Force remove any existing pac-container elements when in manual entry mode
-    if (manualEntry && typeof document !== 'undefined') {
-      const pacContainers = document.querySelectorAll('.pac-container');
-      pacContainers.forEach(container => {
-        container.remove();
-      });
-    }
-  };
-
-  // Initialize Google Places Autocomplete when the component mounts or manualEntry changes
-  useEffect(() => {
-    // --- Immediate check for manual entry --- 
-    if (manualEntry) {
-      console.log('AddressInput: Manual entry is true, cleaning up and returning.');
-      cleanup(); // Ensure cleanup runs if switching to manual
-      return; // Stop initialization if manual entry is enabled
-    }
-
-    // --- Proceed only if not manual entry and initialization needed --- 
-    if (!initialized && isBrowser) {
-      console.log('AddressInput: Attempting initialization (manualEntry=false, initialized=false, isBrowser=true)');
-      
-      const handleGoogleMapsLoaded = () => {
-        console.log('AddressInput: google-maps-loaded event received.');
-        // Double-check manualEntry again before initializing after event
-        if (!manualEntry && !initialized) {
-          // Use requestAnimationFrame for potentially smoother initialization after event
-          requestAnimationFrame(() => initializeAutocomplete()); 
-        }
-      };
-
-      window.addEventListener('google-maps-loaded', handleGoogleMapsLoaded);
-
-      // Check if Google Maps API is already loaded and ready
-      if (window.google?.maps?.places) {
-        console.log('AddressInput: Google Maps already loaded, initializing.');
-        // Use requestAnimationFrame here too
-        requestAnimationFrame(() => initializeAutocomplete());
-      } else {
-        console.log('AddressInput: Google Maps not loaded yet, waiting for event.');
-        // The GoogleMapsScript component should load the script and trigger the event.
-        // No need for polling here if the event listener is reliable.
-      }
-
-      // Cleanup function for this effect
-      return () => {
-        console.log('AddressInput: Cleanup for main initialization effect.');
-        window.removeEventListener('google-maps-loaded', handleGoogleMapsLoaded);
-        // Cleanup might be redundant here if called when manualEntry changes, 
-        // but ensure it runs on unmount if not in manual mode.
-        if (!manualEntry) {
-             cleanup();
-        }
-      };
-    }
-    
-    // If already initialized or not in browser, do nothing in this effect run
-    console.log(`AddressInput: Skipping initialization (manualEntry=${manualEntry}, initialized=${initialized}, isBrowser=${isBrowser})`);
-
-  }, [manualEntry, isBrowser, initialized, initializeAutocomplete, cleanup]); // Added initializeAutocomplete and cleanup to dependencies
-
-  // Handle Google Maps script load error
-  const handleGoogleMapsError = () => {
-    console.error('Error loading Google Maps API script');
-    // If script fails to load, enable manual entry as fallback
-    if (!manualEntry) {
-      // Create a synthetic event to match the expected type
-      const syntheticEvent = {
-        target: { checked: true },
-        currentTarget: { checked: true },
-        preventDefault: () => {},
-        stopPropagation: () => {},
-      } as unknown as React.ChangeEvent<HTMLInputElement>;
-      
-      onManualEntryChange?.(syntheticEvent);
-    }
-  };
+  }, [loadError, manualEntry, onManualEntryChange]); // Added dependencies
 
   useEffect(() => {
     setIsFloating(value !== '');
@@ -259,8 +131,8 @@ export function AddressInput({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);
-    setIsGoogleAddress(false);
-    
+    setIsGoogleAddress(false); // Set to false on manual typing
+
     // Update the isGoogleAddress flag when manually typing in the address field
     const isGoogleAddressEvent = {
       target: {
@@ -270,28 +142,22 @@ export function AddressInput({
         checked: false
       }
     } as unknown as React.ChangeEvent<HTMLInputElement>;
-    
+
+    // Call onChange directly for isGoogleAddress flag to avoid potential conflicts
+    // This assumes onChange can handle this type of event or is robust enough
+    // Consider a separate state update mechanism if onChange is strictly for form fields
     onChange(isGoogleAddressEvent);
 
-    // Always validate on input change if not in manual entry mode
+    // Validation can remain, but only trigger error message if not Google Address
     if (!manualEntry && e.target.value) {
-      const isValid = validateAddressFormat(e.target.value);
-      if (!isValid) {
-        const validationEvent = {
-          target: {
-            name: 'address',
-            value: e.target.value,
-            validationMessage: 'Select from suggestions or use manual entry'
-          }
-        } as unknown as React.ChangeEvent<HTMLInputElement>;
-        onChange(validationEvent);
-      }
+      // No need to validate format strictly here, focus on blur or submission
     }
   };
 
   // Separate validation function for reuse
   const validateAddressFormat = (addressValue: string): boolean => {
-    if (!manualEntry && !isGoogleAddress) {
+    // Only run strict format validation if it's NOT a Google address and NOT manual entry
+    if (!manualEntry && !isGoogleAddress && addressValue) { 
       const hasStreetNumber = /^\d+\s+\w+/.test(addressValue);
       const hasStreetName = /\s+(?:Street|St|Road|Rd|Avenue|Ave|Drive|Dr|Court|Ct|Place|Pl|Lane|Ln|Way|Parade|Pde|Circuit|Cct|Crescent|Cres)\b/i.test(addressValue);
       const hasSuburb = /,\s*[A-Za-z\s]+,/.test(addressValue);
@@ -301,39 +167,36 @@ export function AddressInput({
       const isValid = hasStreetNumber && hasStreetName && hasSuburb && hasPostcode && hasState;
 
       if (!isValid) {
-        const event = {
-          target: {
-            name: 'address',
-            value: addressValue,
-            validationMessage: 'Use suggestions or manual entry'
-          }
-        } as unknown as React.ChangeEvent<HTMLInputElement>;
-        onChange(event);
+        // Return false, let the calling function handle the event synthesis
         return false;
       }
     }
-    return true;
+    return true; // Assume valid if manual entry, Google address, or empty
   };
 
-  const validateAddress = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const addressValue = e.target.value;
-    
+
     if (!addressValue) {
       setIsFloating(false);
-      const event = {
-        target: {
-          name: 'address',
-          value: '',
-          validationMessage: 'Address is required'
-        }
-      } as unknown as React.FocusEvent<HTMLInputElement>;
-      onBlur?.(event);
+      // Synthesize event only if onBlur prop exists
+      if (onBlur) {
+        const event = {
+          target: {
+            name: 'address',
+            value: '',
+            validationMessage: 'Address is required'
+          }
+        } as unknown as React.FocusEvent<HTMLInputElement>;
+        onBlur(event);
+      }
       return;
     }
 
+    // Validate format only if manual entry is OFF and it wasn't selected via Google
     if (!manualEntry && !isGoogleAddress) {
       const isValid = validateAddressFormat(addressValue);
-      if (!isValid) {
+      if (!isValid && onBlur) {
         const event = {
           target: {
             name: 'address',
@@ -341,78 +204,30 @@ export function AddressInput({
             validationMessage: 'Select from suggestions or use manual entry'
           }
         } as unknown as React.FocusEvent<HTMLInputElement>;
-        onBlur?.(event);
-        return;
+        onBlur(event);
+        return; // Don't call original onBlur if validation failed
       }
     }
+    // Call original onBlur if validation passed or wasn't applicable
     onBlur?.(e);
   };
 
+  // Render loading state
+  if (!isLoaded) {
+    return <div>Loading Maps...</div>; // Or a spinner component
+  }
+
+  // Render error state
+  if (loadError) {
+    // Optionally show error message, but manual entry fallback is handled in useEffect
+    // return <div>Error loading Maps</div>
+  }
+
   return (
     <>
-      {/* Custom styles for Google Places Autocomplete */}
+      {/* Removed custom styles for .pac-container as library handles it */}
       <style jsx global>{`
-        .pac-container {
-          background-color: #0C0C0C;
-          border: 1px solid #333;
-          border-radius: 0.375rem;
-          margin-top: 4px;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-          z-index: 40;
-          font-family: inherit;
-          position: relative;
-          padding-top: 28px;
-          ${manualEntry ? 'display: none !important;' : ''}
-        }
-        .pac-item {
-          padding: 8px 12px;
-          color: #e5e5e5;
-          cursor: pointer;
-          font-size: 0.875rem;
-          border-top: 1px solid #333;
-        }
-        .pac-item:first-child {
-          border-top: none;
-        }
-        .pac-item:hover, .pac-item-selected {
-          background-color: #1a1a1a;
-        }
-        .pac-icon {
-          display: none;
-        }
-        .pac-item-query {
-          color: #00E6CA;
-          font-size: 0.875rem;
-        }
-        .pac-matched {
-          color: #00E6CA;
-          font-weight: bold;
-        }
-        .pac-logo:after {
-          display: none;
-        }
-        /* Add exit button styles */
-        .pac-container:before {
-          content: "×";
-          position: absolute;
-          top: 4px;
-          right: 8px;
-          width: 20px;
-          height: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #666;
-          font-size: 20px;
-          cursor: pointer;
-          background: transparent;
-          border: none;
-          padding: 0;
-          transition: color 0.2s;
-        }
-        .pac-container:hover:before {
-          color: #00E6CA;
-        }
+        /* Remove .pac-container styles */
         
         /* Ensure wave-group and input styles match other form elements */
         .wave-group .input {
@@ -423,36 +238,27 @@ export function AddressInput({
           border: none;
           border-bottom: 1px solid #333;
           background: transparent;
-          color: #fff;
+          color: #fff; /* Ensure text color contrasts with background */
         }
         
         .wave-group .input:focus {
           outline: none;
-          border-bottom-color: #00E6CA;
         }
         
         .wave-group .label {
           color: #999;
-          font-size: 16px;
+          font-size: 18px;
           font-weight: normal;
           position: absolute;
           pointer-events: none;
           left: 5px;
           top: 10px;
-          display: flex;
           transition: 0.2s ease all;
+          -moz-transition: 0.2s ease all;
+          -webkit-transition: 0.2s ease all;
         }
         
-        .wave-group .label-char {
-          transition: 0.2s cubic-bezier(0.72, 0.01, 0.58, 1) all;
-          transition-delay: calc(0.02s * var(--index));
-        }
-        
-        .wave-group .input:focus ~ .label .label-char,
-        .wave-group .input:not(:placeholder-shown) ~ .label .label-char {
-          transform: translateY(-20px);
-          font-size: 14px;
-          color: #00E6CA;
+        .wave-group .input:focus ~ .label,\n        .wave-group .input:not(:placeholder-shown) ~ .label { /* Use :not(:placeholder-shown) for floating */\n          top: -20px;\n          font-size: 14px;\n          color: #5264AE; /* Example focus color */
         }
         
         .wave-group .bar {
@@ -461,81 +267,112 @@ export function AddressInput({
           width: 100%;
         }
         
-        .wave-group .bar:before {
+        .wave-group .bar:before,
+        .wave-group .bar:after {
           content: '';
           height: 2px;
           width: 0;
-          bottom: 0px;
+          bottom: 0; /* Adjusted from 1px to 0 */
           position: absolute;
-          background: #00E6CA;
+          background: #40b8a1; /* Changed to correct teal */
           transition: 0.2s ease all;
-          left: 0%;
+          -moz-transition: 0.2s ease all;
+          -webkit-transition: 0.2s ease all;
         }
         
-        .wave-group .input:focus ~ .bar:before {
-          width: 100%;
+        .wave-group .bar:before {
+          left: 50%;
+        }
+        
+        .wave-group .bar:after {
+          right: 50%;
+        }
+        
+        .wave-group .input:focus ~ .bar:before,
+        .wave-group .input:focus ~ .bar:after {
+          width: 50%;
+        }
+        
+        .wave-group .highlight {
+          position: absolute;
+          height: 60%;
+          width: 100px;
+          top: 25%;
+          left: 0;
+          pointer-events: none;
+          opacity: 0.5;
+        }
+        
+        .wave-group .input:focus ~ .highlight {
+          animation: inputHighlighter 0.3s ease;
+        }
+        
+        @keyframes inputHighlighter {
+          from { background: #40b8a1; } /* Changed to correct teal */
+          to   { width: 0; background: transparent; }
+        }
+        
+        .error-message {
+          color: red;
+          font-size: 12px;
+          margin-top: 5px;
         }
       `}</style>
-
-      <div className="relative">
-        <div className="relative z-[41]">
+      
+      {/* Conditionally render Autocomplete wrapper */}
+      {!manualEntry ? (
+        <Autocomplete
+          onLoad={onLoad}
+          onPlaceChanged={onPlaceChanged}
+          options={{ componentRestrictions: { country: 'au' } }} // Restrict to AU
+          fields={['formatted_address', 'geometry', 'name']}
+        >
           <WaveInput
-            required
-            type="text"
-            id="address"
-            name="address"
-            ref={addressRef}
-            value={value}
-            onChange={handleInputChange}
-            onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
-              if (!e.target.value) setIsFloating(false);
-              validateAddress(e);
-            }}
-            onFocus={onFocus}
             label="Address"
-            error={error}
-            autoComplete={manualEntry ? "on" : "off"}
-            disabled={!manualEntry && (!isBrowser || (isBrowser && !window.google))}
-            className="w-full text-white border-gray-600 bg-transparent focus:border-[#00E6CA]"
+            type="text"
+            name="address"
+            value={value}
+            onChange={handleInputChange} // Use adjusted handler
+            onFocus={onFocus}
+            onBlur={handleBlur} // Use adjusted handler
+            required={!manualEntry} // Required only if not manual entry
+            ref={addressRef} // Changed from inputRef to ref
+            error={error} // Pass error state
           />
+        </Autocomplete>
+      ) : (
+        // Render WaveInput directly when manualEntry is true
+        <WaveInput
+          label="Address"
+          type="text"
+          name="address"
+          value={value}
+          onChange={handleInputChange}
+          onFocus={onFocus}
+          onBlur={handleBlur}
+          required
+          ref={addressRef} // Changed from inputRef to ref
+          error={error}
+        />
+      )}
+
+      {showManualEntry && (
+        <div ref={manualEntryRef} className="mt-2 flex items-center">
+          <input
+            id="manualEntryCheckbox"
+            type="checkbox"
+            checked={manualEntry}
+            onChange={onManualEntryChange}
+            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+          />
+          <label htmlFor="manualEntryCheckbox" className="ml-2 block text-sm text-gray-400">
+            Enter address manually
+          </label>
         </div>
-        
-        <AnimatePresence>
-          {showManualEntry && (
-            <motion.div 
-              ref={manualEntryRef}
-              data-manual-entry
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
-              transition={{ 
-                duration: 0.15,
-                ease: "easeOut"
-              }}
-              className={cn(
-                "absolute right-0 z-[42]",
-                "pt-2",
-                error ? "top-[calc(100%+2px)]" : "top-full"
-              )}
-            >
-              <motion.label 
-                className="flex items-center space-x-2 text-sm whitespace-nowrap cursor-pointer"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <input
-                  type="checkbox"
-                  checked={manualEntry}
-                  onChange={(e) => onManualEntryChange(e)}
-                  className="accent-[#00E6CA] rounded border-gray-700 cursor-pointer"
-                  aria-label="Enable manual address entry"
-                />
-                <span className="text-teal-500 hover:text-[#00E6CA] transition-colors duration-200">Manual Entry</span>
-              </motion.label>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+      )}
+      
+      {/* Display error message if provided */}
+      {error && <p className="error-message">{error}</p>}
     </>
   );
 } 
