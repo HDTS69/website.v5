@@ -27,11 +27,19 @@ export function AboutUs() {
           >
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-2xl bg-gray-900 group">
               <motion.div 
-                className="relative w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 transition-all duration-500 group-hover:scale-105"
+                className="relative w-full h-full transition-all duration-500 group-hover:scale-105"
                 initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.5 }}
               >
+                <Image
+                  src="/images/Home Page/Van on street.webp"
+                  alt="HD Trade Services Van"
+                  fill
+                  className="object-cover object-center"
+                  sizes={IMAGE_SIZES.HERO}
+                  {...getImageLoadingProps(ImagePriority.HIGH)}
+                />
                 <div className="absolute inset-0 bg-gradient-to-br from-[#00E6CA]/10 to-transparent opacity-50" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,230,202,0.1),transparent_50%)] animate-pulse" />
               </motion.div>

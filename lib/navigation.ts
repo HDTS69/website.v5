@@ -223,7 +223,7 @@ export const actionItems: NavItem[] = [
   },
   {
     name: "Book Online",
-    url: "#booking-form",
+    url: "/book",
     icon: Calendar,
     isHighlighted: true,
   },

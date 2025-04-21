@@ -162,7 +162,7 @@ interface FooterProps {
   showCTA?: boolean;
 }
 
-export default function Footer({ showCTA = true }: FooterProps) {
+export default function Footer({ showCTA = false }: FooterProps) {
   const pathname = usePathname() || '';
 
   const handleBookingClick = (e: React.MouseEvent) => {

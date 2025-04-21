@@ -2,27 +2,31 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import type { Metadata, Viewport } from 'next';
 import { ClientComponents } from './components/ClientComponents';
-import ClientBackground from './components/ClientBackground';
-import { Providers } from '../components/providers';
-import { cn } from '@/lib/utils';
+import { Providers } from '@/components/providers';
+import { Toaster } from '@/components/ui/toaster';
 import 'swiper/css';
 import { LordIconScript } from './components/LordIconScript';
+import { GoogleAnalytics } from '@next/third-parties/google';
+import Script from 'next/script';
 
 const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-  preload: true,
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+  weight: ['400', '500', '700'],
+  style: ['normal'],
+  fallback: ['system-ui', 'sans-serif'],
   adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
-  title: {
-    template: '%s | HD Trade Services',
-    default: 'HD Trade Services | Brisbane Plumber, Gas Fitter, Roofer & Aircon',
-  },
-  description: "Your trusted Brisbane experts for Plumbing, Gas Fitting, Roofing, and Air Conditioning services. Available 24/7 for emergencies. Contact HD Trade Services today!",
-  metadataBase: new URL('https://hdtradeservices.com.au'),
+  title: 'HD Trade Services - Brisbane Plumbing, Gas, Roofing & Aircon',
+  description: 'Your reliable 24/7 partner for plumbing, gas fitting, roof repairs, and air conditioning services in Brisbane. Licensed, insured, and guaranteed satisfaction.',
+};
+
+export const viewport: Viewport = {
+  themeColor: '#00E6CA', // Matches the PWA theme color
+  // You can add more viewport settings here if needed
 };
 
 export default function RootLayout({
@@ -37,29 +41,49 @@ export default function RootLayout({
         
         {/* DNS prefetch for analytics only */}
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-        {/* Remove the DNS prefetch for googletagmanager, it's already handled by the Script component */}
-        {/* <link rel="dns-prefetch" href="https://www.googletagmanager.com" /> */}
         
-        {/* Favicon and manifest */}
+        {/* Favicon links */}
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="manifest" href="/site.webmanifest" />
+        
+        {/* PWA specific tags */}
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/images/PWA/icon-192.png"></link>
+        <meta name="theme-color" content="#00E6CA" />
+
+        {/* Lordicon Script - Ensure this is needed and loaded correctly */}
+        <LordIconScript />
       </head>
       <body className="font-inter antialiased bg-black touch-auto isolate" suppressHydrationWarning>
         <Providers>
-          {/* Sparkles background - directly importing client component */}
-          <ClientBackground />
+          <Toaster />
           
+          {/* Background Blur Effect */}
+          <div aria-hidden="true" className="fixed inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20 pointer-events-none">
+            <div className="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700"></div>
+            <div className="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
+          </div>
           {/* Main Content Wrapper */}
           <div className="relative z-10 min-h-screen flex flex-col touch-auto">
             {children}
           </div>
-          
-          {/* Load LordIcon script after main content */}
-          <LordIconScript />
         </Providers>
         <ClientComponents />
+        
+        {/* Google Analytics 4 */}
+        <GoogleAnalytics gaId="G-XXXXXXXXXX" /> {/* TODO: Replace with actual GA4 ID */}
+        
+        {/* Google Tag Manager - Recommended way to handle tags */}
+        <Script id="google-tag-manager" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-XXXXXXX'); /* TODO: Replace with actual GTM ID */
+          `}
+        </Script>
       </body>
     </html>
   );

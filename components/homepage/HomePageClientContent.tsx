@@ -50,7 +50,7 @@ export default function HomePageClientContent() {
       <BrandCarousel />
       
       {/* Founder's Message Section */}
-      <FoundersMessage imageSrc="/images/hayden-hero-fixed.webp" />
+      <FoundersMessage imageSrc="/images/Home Page/Hayden with dogs..webp" />
       
       {/* Booking Section */}
       <section id="book" className="relative bg-black py-20 overflow-hidden">

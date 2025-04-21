@@ -935,3 +935,28 @@ button:disabled {
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom spacing for booking page form */
+.book-page-form-wrapper form > div:not(:first-child) {
+  @apply mt-6;
+}
+
+/* Target grid layouts within the form specifically ON BOOKING PAGE */
+/* Keep general increased gap */
+.book-page-form-wrapper form .grid {
+  @apply gap-6;
+}
+/* Force the specific grid containing Tel/Email to be 2 columns */
+.book-page-form-wrapper form div.grid {
+    @apply grid-cols-2;
+}
+
+/* Target the specific space-y-4 containing dropdowns/date */
+.book-page-form-wrapper form > div > .space-y-4 {
+   @apply space-y-6;
+}
+
+/* Target the final section with checkboxes */
+.book-page-form-wrapper form > div > .space-y-4.mt-8 {
+  @apply mt-10;
+}

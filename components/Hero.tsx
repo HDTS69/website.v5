@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { AnimatedButton } from './ui/AnimatedButton';
 import { SparklesCore } from './ui/SparklesCore';
 import Image from 'next/image';
@@ -19,6 +19,7 @@ import heroImage from '@/public/images/hayden-hero-fixed.webp';
 
 export function Hero() {
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const containerRef = useRef<HTMLDivElement>(null);
 
   if (isMobile) {
     return <MobileHero />;
@@ -32,40 +33,126 @@ export function Hero() {
     }
   };
 
-  return (
-    <div
-      className="
-        relative min-h-[100dvh]
-        flex items-center justify-center
-        bg-black
-        overflow-x-hidden overflow-y-auto
-        pt-20
-      "
-    >
-      {/* Sparkles Background */}
-      <div className="absolute inset-0 z-[2]">
-        <BackgroundSparkles zIndex={5} />
-      </div>
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.3,
+        when: "beforeChildren"
+      }
+    }
+  };
 
-      {/* Hero Image (absolutely positioned) */}
+  const textVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        damping: 20,
+        stiffness: 100
+      }
+    }
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, x: -50, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        damping: 25,
+        stiffness: 100,
+        mass: 1.2
+      }
+    }
+  };
+
+  const formVariants = {
+    hidden: { opacity: 0, x: 50, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        damping: 25,
+        stiffness: 100,
+        mass: 1.2,
+        delay: 0.5
+      }
+    }
+  };
+
+  const sparkleVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: [0, 1, 0.8],
+      transition: {
+        duration: 2,
+        times: [0, 0.5, 1],
+        repeat: Infinity,
+        repeatType: "reverse" as const
+      }
+    }
+  };
+
+  const badgeContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.8
+      }
+    }
+  };
+
+  const badgeVariants = {
+    hidden: { opacity: 0, scale: 0.8, y: 20 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        damping: 20,
+        stiffness: 200
+      }
+    }
+  };
+
+  return (
+    <motion.div
+      ref={containerRef}
+      className="relative min-h-[100dvh] flex items-center justify-center bg-black overflow-x-hidden overflow-y-auto pt-20"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      data-testid="hero-section"
+    >
+      {/* Enhanced Sparkles Background */}
+      <motion.div 
+        className="absolute inset-0 z-[2]"
+        variants={sparkleVariants}
+      >
+        <BackgroundSparkles zIndex={5} />
+      </motion.div>
+
+      {/* Hero Image with Enhanced Animation */}
       <div className="absolute inset-0 top-[100px] z-[3] transform-gpu">
         <div className="relative h-full w-full">
           <AnimatePresence mode="wait">
             <motion.div 
               className="absolute inset-0 left-0 w-[35%] h-[90%]"
-              initial={{ x: '-100vw', opacity: 1 }}
-              animate={{ 
-                x: 0,
-                opacity: 1,
-                transition: {
-                  type: 'spring',
-                  damping: 25,
-                  mass: 0.5,
-                  stiffness: 120,
-                  delay: 0
-                }
-              }}
-              key="hero-image"
+              variants={imageVariants}
+              data-testid="hero-image"
             >
               <div className="relative w-full h-full">
                 <Image
@@ -78,115 +165,104 @@ export function Hero() {
                   sizes={IMAGE_SIZES.HERO_PORTRAIT}
                   quality={95}
                 />
+                {/* Add subtle glow effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-[#00E6CA]/10 to-transparent"
+                  animate={{
+                    opacity: [0.3, 0.5, 0.3],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  }}
+                />
               </div>
             </motion.div>
           </AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% via-black/70 via-85% to-black transform-gpu" />
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-b from-transparent from-70% via-black/70 via-85% to-black transform-gpu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.5 }}
+          />
         </div>
       </div>
       
       {/* Main Container */}
       <div className="relative z-[4] container mx-auto px-4 py-8 mt-8">
-        <div
-          className="
-            grid grid-cols-12 gap-6
-            items-center
-          "
-        >
-          {/* Left Spacer (for the absolute-positioned image) */}
+        <div className="grid grid-cols-12 gap-6 items-center">
+          {/* Left Spacer */}
           <div className="col-span-3 hidden md:block" />
           
-          {/* Text Column */}
-          <div
-            className="
-              col-span-12 md:col-span-5
-              flex flex-col
-              items-center md:items-center
-              text-center md:text-center
-              select-none transform-gpu
-            "
+          {/* Text Column with Enhanced Animations */}
+          <motion.div
+            className="col-span-12 md:col-span-5 flex flex-col items-center md:items-center text-center md:text-center select-none transform-gpu"
+            variants={textVariants}
           >
-            {/* Tighter spacing to keep text together */}
-            <h1
-              className="
-                text-3xl sm:text-4xl md:text-5xl lg:text-5xl
-                font-bold text-white mb-3
-                tracking-tight leading-tight
-              "
+            <motion.h1
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold text-white mb-3 tracking-tight leading-tight"
+              variants={textVariants}
             >
-              <span className="block mb-1 opacity-0 animate-fade-in-up animation-delay-300">
+              <motion.span 
+                className="block mb-1"
+                variants={textVariants}
+              >
                 Brisbane
-              </span>
-              <span
-                className="
-                  inline-block mb-1 text-[#00E6CA]
-                  opacity-0 animate-fade-in-up animation-delay-400
-                "
+              </motion.span>
+              <motion.span
+                className="inline-block mb-1 text-[#00E6CA]"
+                variants={textVariants}
               >
                 24/7 Emergency Repairs
-              </span>
-              <span
-                className="
-                  block opacity-0 animate-fade-in-up
-                  animation-delay-500
-                "
+              </motion.span>
+              <motion.span
+                className="block"
+                variants={textVariants}
               >
                 & Installations
-              </span>
-            </h1>
+              </motion.span>
+            </motion.h1>
             
-            <p
-              className="
-                text-base sm:text-base md:text-lg text-gray-300
-                mb-2 leading-relaxed
-                opacity-0 animate-fade-in-up animation-delay-600
-                drop-shadow-[0_2px_4px_rgba(0,0,0,1)]
-                font-medium transform-gpu
-              "
+            <motion.p
+              className="text-base sm:text-base md:text-lg text-gray-300 mb-2 leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,1)] font-medium transform-gpu"
+              variants={textVariants}
             >
               Professional plumbing, gas, roofing & air conditioning services. 
-            </p>
+            </motion.p>
 
-            <p
-              className="
-                text-base sm:text-base md:text-lg text-gray-300
-                mb-4 leading-relaxed
-                opacity-0 animate-fade-in-up animation-delay-650
-                drop-shadow-[0_2px_4px_rgba(0,0,0,1)]
-                font-medium transform-gpu
-              "
+            <motion.p
+              className="text-base sm:text-base md:text-lg text-gray-300 mb-4 leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,1)] font-medium transform-gpu"
+              variants={textVariants}
             >
               Fast response. Fair pricing. Guaranteed satisfaction.
-            </p>
+            </motion.p>
 
-            {/* Google Reviews Component */}
-            <div
-              className="
-                opacity-0 animate-scale-up animation-delay-700
-                transform-gpu mb-4 w-full
-              "
+            {/* Google Reviews with Enhanced Animation */}
+            <motion.div
+              className="transform-gpu mb-4 w-full"
+              variants={textVariants}
             >
               <GoogleReviews />
-            </div>
+            </motion.div>
             
-            {/* DESKTOP: Guarantee Badges with Floating Animation */}
-            <div className="hidden md:flex justify-center items-center gap-4 mt-6 w-full">
-              {[ /* Array of badge data */
+            {/* Enhanced Guarantee Badges Animation */}
+            <motion.div 
+              className="hidden md:flex justify-center items-center gap-4 mt-6 w-full"
+              variants={badgeContainerVariants}
+            >
+              {[
                 { src: "/Gold Badges/Lifetime Labour Guarantee Badge Mar 30 2025_result.webp", alt: "Lifetime Labour Guarantee" },
                 { src: "/Gold Badges/Lifetime Labour Guarantee Badge Mar 30 2025 (1)_result.webp", alt: "Satisfaction Guarantee" },
                 { src: "/Gold Badges/Lifetime Guarantee Badge Design Mar 30 2025_result.webp", alt: "Lifetime Guarantee Badge Design" }
               ].map((badge, index) => (
                 <motion.div
                   key={badge.src}
-                  animate={{
-                    y: ["0%", "-5%", "0%"], // Move up and down
-                  }}
-                  transition={{
-                    duration: 2.5, // Slower animation duration
-                    repeat: Infinity,
-                    repeatType: "mirror", // Smooth back and forth
-                    ease: "easeInOut",
-                    delay: index * 0.3 // Stagger start times slightly
+                  className="relative"
+                  variants={badgeVariants}
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 0.2 }
                   }}
                 >
                   <Image 
@@ -197,31 +273,35 @@ export function Hero() {
                     className="object-contain"
                     priority
                   />
+                  <motion.div
+                    className="absolute inset-0 bg-[#00E6CA]/10 rounded-full"
+                    animate={{
+                      scale: [1, 1.2, 1],
+                      opacity: [0.2, 0.4, 0.2],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      ease: "easeInOut",
+                      delay: index * 0.3,
+                    }}
+                  />
                 </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          {/* Booking Form */}
+          {/* Booking Form with Enhanced Animation */}
           <motion.div
             className="col-span-12 md:col-span-4 w-full"
-            initial={{ x: '100vw', opacity: 0 }}
-            animate={{ 
-              x: 0,
-              opacity: 1, 
-              transition: {
-                type: 'spring',
-                damping: 20,
-                mass: 0.75,
-                stiffness: 100,
-                delay: 0.4
-              }
-            }}
+            variants={formVariants}
+            data-testid="hero-booking-form"
           >
             <HeroBookingForm />
           </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 } 

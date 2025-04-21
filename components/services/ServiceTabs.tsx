@@ -127,7 +127,7 @@ const serviceData: Record<ServiceId, ServiceContent> = {
     title: "Expert Plumbing Services",
     subheading: "Professional Solutions for All Your Plumbing Needs",
     description: "From emergency repairs to complete bathroom renovations, our licensed plumbers deliver reliable solutions with guaranteed workmanship.",
-    imagePath: "/images/placeholder-service.jpg",
+    imagePath: "/images/Home Page/Hayden is fixing the toilet..webp",
     services: [
       { name: "Emergency Plumbing", href: "/services/plumbing/emergency" },
       { name: "Blocked Drains", href: "/services/plumbing/drain-cleaning" },
@@ -146,7 +146,7 @@ const serviceData: Record<ServiceId, ServiceContent> = {
     title: "Gas Fitting Services",
     subheading: "Safe & Certified Gas Installation",
     description: "Trust our licensed gas fitters for all your gas appliance installations, maintenance, and safety inspections.",
-    imagePath: "/images/placeholder-service.jpg",
+    imagePath: "/images/Home Page/Gas meter read.webp",
     services: [
       { name: "Emergency Gas Repairs", href: "/services/gas-fitting/emergency-gas-repairs" },
       { name: "Gas Leak Detection", href: "/services/gas-fitting/gas-leak-detection" },
@@ -164,7 +164,7 @@ const serviceData: Record<ServiceId, ServiceContent> = {
     title: "Roof Repair Solutions",
     subheading: "Protect Your Home from Top to Bottom",
     description: "Expert roof repairs and maintenance to keep your home safe and dry, with comprehensive inspection services.",
-    imagePath: "/images/placeholder-service.jpg",
+    imagePath: "/images/Home Page/Hayden on roof.webp",
     services: [
       { name: "Roof Inspections", href: "/services/roof-repairs/inspections" },
       { name: "Roof Reports", href: "/services/roof-repairs/reports" },
@@ -181,7 +181,7 @@ const serviceData: Record<ServiceId, ServiceContent> = {
     title: "Air Conditioning Services",
     subheading: "Complete Climate Control Solutions",
     description: "From installation to maintenance, we ensure your comfort with expert air conditioning services.",
-    imagePath: "/images/placeholder-service.jpg",
+    imagePath: "/images/Home Page/Wall hung Aircon.webp",
     services: [
       { name: "AC Installation", href: "/services/air-conditioning/installation" },
       { name: "AC Repairs", href: "/services/air-conditioning/repairs" },
@@ -278,11 +278,19 @@ export default function ServiceTabs() {
                 >
                   <div className="relative aspect-video rounded-xl overflow-hidden shadow-2xl bg-gray-900 group">
                     <motion.div 
-                      className="relative w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 transition-all duration-500 group-hover:scale-105"
+                      className="relative w-full h-full transition-all duration-500 group-hover:scale-105"
                       initial={{ scale: 0.95 }}
                       animate={{ scale: 1 }}
                       transition={{ duration: 0.5 }}
                     >
+                      <Image
+                        src={serviceData[activeTab].imagePath}
+                        alt={serviceData[activeTab].title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        priority
+                      />
                       <div className="absolute inset-0 bg-gradient-to-br from-[#00E6CA]/10 to-transparent opacity-50" />
                       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,230,202,0.1),transparent_50%)] animate-pulse" />
                     </motion.div>

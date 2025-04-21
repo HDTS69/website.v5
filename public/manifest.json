@@ -1,0 +1,21 @@
+{
+  "name": "HD Trade Services",
+  "short_name": "HD Trade",
+  "description": "Professional Plumbing, Gas, Roofing & Air Conditioning Services in Brisbane.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#00E6CA",
+  "icons": [
+    {
+      "src": "/images/PWA/Icon logo PWA 192px.webp",
+      "sizes": "192x192",
+      "type": "image/webp"
+    },
+    {
+      "src": "/images/PWA/Icon logo PWA 512px.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ]
+} 

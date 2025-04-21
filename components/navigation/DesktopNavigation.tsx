@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion" // Kept for active indicator (optional, can remove if no animations desired)
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { LucideIcon, ChevronDown, ChevronRight, Phone, Calendar } from "lucide-react"
 import { cn, scrollToElement } from "@/lib/utils"
 import type { NavItem, ActionItem } from "@/types/navigation/types"
@@ -17,6 +17,7 @@ interface NavBarProps {
 }
 
 export function NavBar({ items, actionItems = [], className }: NavBarProps) {
+  const router = useRouter()
   const pathname = usePathname()
   const isHomePage = pathname === '/'
   const [isMobile, setIsMobile] = useState(false)
@@ -150,13 +151,9 @@ export function NavBar({ items, actionItems = [], className }: NavBarProps) {
     }
   }
 
-  const handleBookingClick = (e: React.MouseEvent, url: string) => {
+  const handleBookingClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
-    if (pathname === '/') {
-      scrollToElement('book')
-    } else {
-      window.location.href = url
-    }
+    router.push("/book")
   }
 
   const linkBaseClasses = "relative flex items-center gap-1.5 text-xs font-medium transition-all duration-300 text-gray-400 hover:text-[#00E6CA]"
@@ -243,13 +240,7 @@ export function NavBar({ items, actionItems = [], className }: NavBarProps) {
                   <Link
                     key={item.name}
                     href={item.url}
-                    onClick={(e) => {
-                      if (item.name === "Book Online") {
-                        handleBookingClick(e, item.url)
-                      } else if (item.onClick) {
-                        item.onClick(e)
-                      }
-                    }}
+                    onClick={item.name === "Book Online" ? handleBookingClick : undefined}
                     className={cn(
                       linkBaseClasses,
                       isMobile 
