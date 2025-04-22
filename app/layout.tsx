@@ -8,6 +8,7 @@ import 'swiper/css';
 import { LordIconScript } from './components/LordIconScript';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -95,6 +96,7 @@ export default function RootLayout({
             })(window,document,'script','dataLayer','GTM-NSPVG9KV');
           `}
         </Script>
+        <Analytics />
       </body>
     </html>
   );
