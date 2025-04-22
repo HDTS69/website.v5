@@ -52,10 +52,20 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/images/PWA/icon-192.png"></link>
         <meta name="theme-color" content="#00E6CA" />
 
-        {/* Lordicon Script - Ensure this is needed and loaded correctly */}
+        {/* Lordicon Script */}
         <LordIconScript />
       </head>
       <body className="font-inter antialiased bg-black touch-auto isolate" suppressHydrationWarning>
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-NSPVG9KV"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          ></iframe>
+        </noscript>
+        {/* End Google Tag Manager (noscript) */}
         <Providers>
           <Toaster />
           
@@ -64,6 +74,7 @@ export default function RootLayout({
             <div className="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700"></div>
             <div className="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
           </div>
+          
           {/* Main Content Wrapper */}
           <div className="relative z-10 min-h-screen flex flex-col touch-auto">
             {children}
@@ -72,16 +83,16 @@ export default function RootLayout({
         <ClientComponents />
         
         {/* Google Analytics 4 */}
-        <GoogleAnalytics gaId="G-XXXXXXXXXX" /> {/* TODO: Replace with actual GA4 ID */}
+        <GoogleAnalytics gaId="G-XXXXXXXXXX" />
         
-        {/* Google Tag Manager - Recommended way to handle tags */}
+        {/* Google Tag Manager */}
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-XXXXXXX'); /* TODO: Replace with actual GTM ID */
+            })(window,document,'script','dataLayer','GTM-NSPVG9KV');
           `}
         </Script>
       </body>
