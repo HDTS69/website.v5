@@ -1,25 +1,14 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { usePathname, useSearchParams } from "next/navigation";
-import dynamic from 'next/dynamic';
-import React, { Suspense } from 'react';
-
-import AOS from "aos";
-import "aos/dist/aos.css";
-
-// Import header and footer normally as they're critical for initial render
 import Header from "@/components/ui/header";
 import Footer from "@/components/ui/footer";
 import { Navigation } from "@/components/ui/Navigation";
 import { navigationItems, actionItems } from "@/lib/navigation";
 import { MobileHeader } from "@/components/mobile/MobileHeader";
-
-// Dynamically import LoadingScreen as it's only needed occasionally
-const LoadingScreen = dynamic(() => import("@/components/ui/LoadingScreen"), {
-  ssr: false,
-  loading: () => null
-});
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function DefaultLayoutInner({
   children,
@@ -97,9 +86,5 @@ export default function DefaultLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <Suspense fallback={<div>Loading page...</div>}>
-      <DefaultLayoutInner>{children}</DefaultLayoutInner>
-    </Suspense>
-  );
+  return <DefaultLayoutInner>{children}</DefaultLayoutInner>;
 }

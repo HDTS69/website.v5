@@ -302,44 +302,47 @@ export function HeroBookingForm() {
                           // Determine state for category checkbox
                           const allServicesInCategory = category.services.map(s => s.name);
                           const selectedServicesInCategory = formData.services.filter(s => allServicesInCategory.includes(s));
-                          const isAllSelected = selectedServicesInCategory.length === allServicesInCategory.length && allServicesInCategory.length > 0;
+                          const isAllSelected = selectedServicesInCategory.length === allServicesInCategory.length;
                           const isIndeterminate = selectedServicesInCategory.length > 0 && !isAllSelected;
 
-                          const handleCategoryCheckboxChange = () => {
+                          const handleCategoryCheckboxChange = (e: React.MouseEvent<HTMLInputElement>) => {
+                            e.stopPropagation(); // Prevent category expansion
+                            
                             setFormData(prev => {
                               const currentServices = prev.services || [];
-                              let newServices;
-                              if (isAllSelected) {
-                                // Deselect all in this category
-                                newServices = currentServices.filter(s => !allServicesInCategory.includes(s));
+                              const categoryName = category.name;
+                              
+                              // Simply toggle the category name
+                              if (currentServices.includes(categoryName)) {
+                                return {
+                                  ...prev,
+                                  services: currentServices.filter(s => s !== categoryName)
+                                };
                               } else {
-                                // Select all in this category (add missing ones)
-                                const servicesToAdd = allServicesInCategory.filter(s => !currentServices.includes(s));
-                                newServices = [...currentServices, ...servicesToAdd];
+                                return {
+                                  ...prev,
+                                  services: [...currentServices, categoryName]
+                                };
                               }
-                              return { ...prev, services: newServices };
                             });
                           };
 
                           return (
                             <div key={category.name}>
-                              {/* Category Header with Checkbox */}
                               <div 
                                 className="w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 flex justify-between items-center cursor-pointer"
-                                onClick={() => toggleCategory(category.name)} // Keep toggle functionality on the div
+                                onClick={() => toggleCategory(category.name)}
                               >
-                                <label className="flex items-center flex-grow mr-2 cursor-pointer">
+                                <label className="flex items-center flex-grow mr-2 cursor-pointer" onClick={e => e.stopPropagation()}>
                                   <input
                                     type="checkbox"
-                                    checked={isAllSelected}
-                                    ref={el => { if (el) el.indeterminate = isIndeterminate; }} // Set indeterminate state
-                                    onChange={handleCategoryCheckboxChange}
-                                    onClick={(e) => e.stopPropagation()} // Prevent click from toggling the dropdown
+                                    checked={formData.services.includes(category.name)}
+                                    onChange={() => {}} // Handle change in onClick instead
+                                    onClick={handleCategoryCheckboxChange}
                                     className="mr-2 accent-[#00E6CA]"
                                   />
                                   {category.name}
                                 </label>
-                                {/* Chevron stays part of the toggle area */}
                                 <svg className={cn("w-4 h-4 transition-transform", expandedCategories[category.name] ? "rotate-180" : "")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                               </div>
 

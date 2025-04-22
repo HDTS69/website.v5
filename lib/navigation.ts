@@ -109,49 +109,49 @@ export const navigationItems: NavItem[] = [
     dropdownItems: [
       {
         name: "Brisbane",
-        url: "/locations/brisbane",
+        url: "/brisbane",
         subItems: [
-          { name: "North Brisbane", url: "/locations/brisbane/north" },
-          { name: "South Brisbane", url: "/locations/brisbane/south" },
-          { name: "East Brisbane", url: "/locations/brisbane/east" },
-          { name: "West Brisbane", url: "/locations/brisbane/west" },
-          { name: "Brisbane CBD", url: "/locations/brisbane/cbd" },
+          { name: "North Brisbane", url: "/north-brisbane" },
+          { name: "South Brisbane", url: "/south-brisbane" },
+          { name: "East Brisbane", url: "/east-brisbane" },
+          { name: "West Brisbane", url: "/west-brisbane" },
+          { name: "Brisbane CBD", url: "/brisbane-cbd" },
         ]
       },
       {
         name: "Ipswich",
-        url: "/locations/ipswich",
+        url: "/ipswich",
         subItems: [
-          { name: "Ipswich CBD", url: "/locations/ipswich/cbd" },
-          { name: "East Ipswich", url: "/locations/ipswich/east" },
-          { name: "West Ipswich", url: "/locations/ipswich/west" },
+          { name: "Ipswich CBD", url: "/ipswich-cbd" },
+          { name: "East Ipswich", url: "/east-ipswich" },
+          { name: "West Ipswich", url: "/west-ipswich" },
         ]
       },
       {
         name: "Logan",
-        url: "/locations/logan",
+        url: "/logan",
         subItems: [
-          { name: "Logan Central", url: "/locations/logan/central" },
-          { name: "North Logan", url: "/locations/logan/north" },
-          { name: "South Logan", url: "/locations/logan/south" },
+          { name: "Logan Central", url: "/logan-central" },
+          { name: "North Logan", url: "/north-logan" },
+          { name: "South Logan", url: "/south-logan" },
         ]
       },
       {
         name: "Moreton Bay",
-        url: "/locations/moreton-bay",
+        url: "/moreton-bay",
         subItems: [
-          { name: "North Lakes", url: "/locations/moreton-bay/north-lakes" },
-          { name: "Redcliffe", url: "/locations/moreton-bay/redcliffe" },
-          { name: "Caboolture", url: "/locations/moreton-bay/caboolture" },
+          { name: "North Lakes", url: "/north-lakes" },
+          { name: "Redcliffe", url: "/redcliffe" },
+          { name: "Caboolture", url: "/caboolture" },
         ]
       },
       {
         name: "Gold Coast",
-        url: "/locations/gold-coast",
+        url: "/gold-coast",
         subItems: [
-          { name: "North Gold Coast", url: "/locations/gold-coast/north" },
-          { name: "Central Gold Coast", url: "/locations/gold-coast/central" },
-          { name: "South Gold Coast", url: "/locations/gold-coast/south" },
+          { name: "North Gold Coast", url: "/north-gold-coast" },
+          { name: "Central Gold Coast", url: "/central-gold-coast" },
+          { name: "South Gold Coast", url: "/south-gold-coast" },
         ]
       }
     ]

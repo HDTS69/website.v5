@@ -38,25 +38,26 @@ export const SparklesCore = (props: ParticlesProps) => {
   
   useEffect(() => {
     // Check if we're on a mobile device
-    setIsMobile(window.innerWidth < 768 || 
+    if (typeof window !== 'undefined') {
+      setIsMobile(window.innerWidth < 768 || 
                 'ontouchstart' in window || 
                 navigator.maxTouchPoints > 0);
                 
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine);
-    }).then(() => {
-      setInit(true);
-      controls.start({ opacity: 1 });
-    });
-    
-    // Add resize listener to adjust for orientation changes
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [controls]);
+      initParticlesEngine(async (engine) => {
+        await loadSlim(engine);
+      }).then(() => {
+        setInit(true);
+      });
+      
+      // Add resize listener to adjust for orientation changes
+      const handleResize = () => {
+        setIsMobile(window.innerWidth < 768);
+      };
+      
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, []);
 
   const options = useMemo(() => ({
     background: {
@@ -128,7 +129,7 @@ export const SparklesCore = (props: ParticlesProps) => {
   return (
     <motion.div 
       initial={{ opacity: 0 }}
-      animate={controls}
+      animate={{ opacity: 1 }}
       className={cn("w-full h-full", className)}
       style={{
         willChange: 'transform, opacity',
@@ -139,7 +140,7 @@ export const SparklesCore = (props: ParticlesProps) => {
         <Particles
           id={id || generatedId}
           className={cn("h-full w-full")}
-          particlesLoaded={async (container) => {
+          particlesLoaded={async (container?: Container) => {
             if (container) {
               await controls.start({
                 opacity: 1,

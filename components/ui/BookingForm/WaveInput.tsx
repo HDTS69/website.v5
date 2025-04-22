@@ -25,6 +25,16 @@ interface WaveInputProps
    * the scrollHeight of the textarea on change.
    */
   onHeightChange?: (height: number) => void;
+
+  customStyles?: {
+    container?: React.CSSProperties;
+    suggestionsContainer?: React.CSSProperties;
+    suggestion?: React.CSSProperties;
+    suggestionHighlighted?: React.CSSProperties;
+    input?: React.CSSProperties;
+    description?: React.CSSProperties;
+    secondaryText?: React.CSSProperties;
+  };
 }
 
 export const WaveInput = React.forwardRef<
@@ -36,6 +46,7 @@ export const WaveInput = React.forwardRef<
   className,
   isTextArea,
   onHeightChange,
+  customStyles,
   ...props
 }, ref) => {
   // Determine which element to render
@@ -73,7 +84,8 @@ export const WaveInput = React.forwardRef<
         )}
         style={{
           backgroundColor: 'transparent',
-          ...(props.style || {})
+          ...(props.style || {}),
+          ...(customStyles?.container || {})
         }}
       />
 

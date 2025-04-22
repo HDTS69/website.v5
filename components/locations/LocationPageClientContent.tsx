@@ -15,14 +15,10 @@ const AboutUs = dynamic(() => import('@/components/ui/AboutUs').then(mod => mod.
 const OurProcess = dynamic(() => import('@/components/ui/OurProcess').then(mod => mod.OurProcess), { ssr: false });
 const FoundersMessage = dynamic(() => import('@/components/ui/FoundersMessage').then(mod => mod.FoundersMessage), { ssr: false });
 const BookingForm = dynamic(() => import('@/components/ui/BookingForm').then(mod => mod.BookingForm), { ssr: false });
-const PaymentPlansCarousel = dynamic(() => import('@/components/ui/PaymentPlansCarousel'), { ssr: false });
 
-export default function HomePageClientContent() {
+export default function LocationPageClientContent() {
   return (
     <>
-      {/* Payment Plans Carousel */}
-      <PaymentPlansCarousel />
-
       {/* Services Section */}
       <ServiceTabs />
 

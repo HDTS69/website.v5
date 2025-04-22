@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useJsApiLoader } from '@react-google-maps/api';
 import { WaveInput } from './WaveInput';
 import { cn } from '@/lib/utils';
+import { GoogleMapsScript } from './GoogleMapsScript';
+import { applyGooglePlacesStyles } from '@/lib/googlePlacesStyles';
 // Removed unused icons FaMapMarkerAlt, MdEdit
 
 // Define the Google Maps API key
@@ -20,6 +22,49 @@ const SEQ_BOUNDS: google.maps.LatLngBoundsLiteral = {
   south: -28.5, // NSW Border / Gold Coast Hinterland
   east:  154.0, // Coast + offshore
   west:  150.0, // Toowoomba / Darling Downs edge
+};
+
+// Brisbane region boundaries
+const BRISBANE_BOUNDS = {
+  north: -26.5,  // North of Brisbane
+  south: -28.5,  // Gold Coast
+  east:  153.5,  // Moreton Bay
+  west:  150.0,  // Toowoomba / Darling Downs edge
+};
+
+// Add this after imports
+const googlePlacesCustomStyles = {
+  container: {
+    backgroundColor: '#1a1a1a',
+    border: 'none',
+    borderRadius: '0.5rem',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    marginTop: '4px',
+    zIndex: 1000,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    padding: '8px 0',
+  },
+  suggestion: {
+    backgroundColor: '#1a1a1a',
+    color: '#fff',
+    padding: '12px 16px',
+    cursor: 'pointer',
+    fontSize: '0.875rem',
+    transition: 'all 0.2s ease',
+    '&:hover': {
+      backgroundColor: '#333',
+    },
+  },
+  input: {
+    width: '100%',
+    padding: '0.75rem 1rem',
+    backgroundColor: 'transparent',
+    color: '#fff',
+    border: 'none',
+    outline: 'none',
+  },
 };
 
 // --- TypeScript Definitions for PlaceAutocompleteElement ---
@@ -237,6 +282,55 @@ export function AddressInput({
     return true;
   };
 
+  useEffect(() => {
+    console.log('[AddressInput] useEffect triggered. manualEntry:', manualEntry, 'addressRef.current:', !!addressRef.current);
+    if (manualEntry || !addressRef.current) return;
+
+    console.log('[AddressInput] Setting up MutationObserver...');
+    const observer = new MutationObserver((mutations, obs) => {
+      console.log('[AddressInput] MutationObserver callback fired.');
+      const pac = document.querySelector('.pac-container:not(.hd-trade-pac-applied)') as HTMLElement | null;
+      console.log('[AddressInput] Found new/unstyled .pac-container:', !!pac);
+      if (pac && addressRef.current) {
+        console.log('[AddressInput] Applying Google Places styles to new container...');
+        try {
+          applyGooglePlacesStyles(pac, addressRef.current);
+          pac.classList.add('hd-trade-pac-applied'); // Mark as styled
+          console.log('[AddressInput] Styles applied successfully to new container.');
+        } catch (error) {
+          console.error('[AddressInput] Error applying styles:', error);
+        }
+        // Do NOT disconnect the observer here, let it keep watching
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+    console.log('[AddressInput] MutationObserver is now observing.');
+
+    // Ensure initial styling if container already exists when observer starts
+    const initialPac = document.querySelector('.pac-container:not(.hd-trade-pac-applied)') as HTMLElement | null;
+    if (initialPac && addressRef.current) {
+      console.log('[AddressInput] Applying styles to initially found container...');
+      try {
+        applyGooglePlacesStyles(initialPac, addressRef.current);
+        initialPac.classList.add('hd-trade-pac-applied');
+        console.log('[AddressInput] Styles applied successfully to initial container.');
+      } catch (error) {
+        console.error('[AddressInput] Error applying initial styles:', error);
+      }
+    }
+
+    return () => {
+      console.log('[AddressInput] Cleaning up MutationObserver.');
+      observer.disconnect();
+      // Clean up class marker on unmount if needed
+      document.querySelectorAll('.hd-trade-pac-applied').forEach(el => el.classList.remove('hd-trade-pac-applied'));
+    }
+  }, [manualEntry]);
+
   return (
     <div className="relative mb-6 w-full">
       <WaveInput
@@ -259,6 +353,7 @@ export function AddressInput({
           error && 'border-red-500 focus:border-red-500',
           isGoogleAddress && 'border-green-500 focus:border-green-500'
         )}
+        data-google-address={!manualEntry}
       />
 
       {showManualEntry && (
