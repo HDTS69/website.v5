@@ -1,21 +1,15 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
-export async function POST(request: Request) {
-  try {
-    const report = await request.json();
-    
-    // Log CSP violations for monitoring
-    console.error('CSP Violation:', {
-      blockedUri: report['csp-report']?.['blocked-uri'],
-      violatedDirective: report['csp-report']?.['violated-directive'],
-      documentUri: report['csp-report']?.['document-uri'],
-      originalPolicy: report['csp-report']?.['original-policy'],
-      timestamp: new Date().toISOString(),
-    });
+export async function POST(request: NextRequest) {
+  const violation = await request.json()
 
-    return NextResponse.json({ success: true }, { status: 204 });
-  } catch (error) {
-    console.error('Error processing CSP report:', error);
-    return NextResponse.json({ error: 'Invalid report' }, { status: 400 });
-  }
-} 
+  // Log CSP violations (you might want to use a proper logging service in production)
+  console.error('CSP Violation:', violation)
+
+  return new NextResponse(null, { status: 204 })
+}
+
+export async function GET() {
+  return new NextResponse('Method not allowed', { status: 405 })
+}
