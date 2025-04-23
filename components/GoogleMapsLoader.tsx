@@ -7,7 +7,7 @@ export function GoogleMapsLoader() {
     <>
       <Script
         id="google-maps-loader"
-        strategy="beforeInteractive"
+        strategy="lazyOnload"
         dangerouslySetInnerHTML={{
           __html: `
             window.initGoogleMapsLoader = function() {
@@ -22,7 +22,7 @@ export function GoogleMapsLoader() {
       <Script
         id="google-maps"
         src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&callback=initGoogleMapsLoader`}
-        strategy="beforeInteractive"
+        strategy="lazyOnload"
         onError={(e) => {
           console.error('Google Maps script failed to load:', e);
         }}

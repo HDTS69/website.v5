@@ -17,7 +17,11 @@ import { GoogleReviews } from './ui/GoogleReviews';
 import { BackgroundSparkles } from "@/components/ui/BackgroundSparkles";
 import heroImage from '@/public/images/hayden-hero-fixed.webp';
 
-export function Hero() {
+interface HeroProps {
+  isLocationPage?: boolean;
+}
+
+export function Hero({ isLocationPage = false }: HeroProps) {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const containerRef = useRef<HTMLDivElement>(null);
 
