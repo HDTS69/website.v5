@@ -62,73 +62,54 @@ export async function middleware(request: NextRequest) {
 
   // Add security headers
   response.headers.set('X-Content-Type-Options', 'nosniff')
-  response.headers.set('X-Frame-Options', 'DENY')
   response.headers.set('X-XSS-Protection', '1; mode=block')
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
+  response.headers.set('X-DNS-Prefetch-Control', 'on')
+  response.headers.set(
+    'Permissions-Policy',
+    'camera=(), microphone=(), geolocation=()',
+  )
 
   // Set Content Security Policy
-  const developmentCsp = [
-    // Default to only same-origin
-    "default-src 'self'",
-    // Allow all inline scripts and eval in development
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http:",
-    // Allow all styles in development
-    "style-src 'self' 'unsafe-inline' https: http:",
-    // Allow all images in development
-    "img-src 'self' data: blob: https: http:",
-    // Allow all fonts
-    "font-src 'self' data: https: http: https://fonts.gstatic.com https://fonts.googleapis.com",
-    // Allow all connections in development
-    "connect-src 'self' ws: wss: http: https:",
-    // Allow all media in development
-    "media-src 'self' https: http:",
-    // Allow frames in development
-    "frame-src 'self' https: http:",
-    // Allow workers in development
-    "worker-src 'self' blob: https: http:",
-    // Basic security directives
-    "object-src 'none'",
-    "base-uri 'self'",
-    "form-action 'self'",
-    "frame-ancestors 'self'",
-  ].join('; ')
-
-  const productionCsp = [
-    // Default to only same-origin
-    "default-src 'self'",
-    // Scripts: allow same-origin and necessary third-party sources
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel.app https://*.vercel.com https://maps.googleapis.com https://*.googletagmanager.com https://*.google-analytics.com",
-    // Styles: allow same-origin and inline styles (needed for shadcn and Next.js)
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    // Images: allow same-origin and trusted sources
-    "img-src 'self' data: blob: https://*.googleusercontent.com https://*.googleapis.com https://maps.gstatic.com https://*.vercel.app",
-    // Fonts: allow specific sources
-    "font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com https://rsms.me https://*.vercel.app",
-    // Connect: allow necessary APIs and WebSocket for Next.js
-    "connect-src 'self' https://*.supabase.co https://*.googleapis.com https://maps.googleapis.com wss://*.vercel.app",
-    // Media: restrict to same-origin
-    "media-src 'self'",
-    // Object: restrict to none
-    "object-src 'none'",
-    // Frame: allow Google Maps
-    "frame-src 'self' https://www.google.com https://maps.google.com",
-    // Worker: allow same-origin and blob
-    "worker-src 'self' blob:",
-    // Manifest: allow same-origin
-    "manifest-src 'self'",
-    // Form action: restrict to same-origin
-    "form-action 'self'",
-    // Base URI: restrict to same-origin
-    "base-uri 'self'",
-    // Frame ancestors: restrict to same-origin
-    "frame-ancestors 'self'",
-  ].join('; ')
+  const cspHeader =
+    process.env.NODE_ENV === 'production'
+      ? {
+          key: 'Content-Security-Policy',
+          value: [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.stripe.com https://*.googleapis.com https://cdn.lordicon.com https://*.supabase.co https://*.vercel-scripts.com",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "img-src 'self' data: https://*.stripe.com https://*.googleapis.com https://*.gstatic.com https://*.googletagmanager.com blob:",
+            "font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com https://js.stripe.com",
+            "connect-src 'self' https://*.stripe.com https://*.googleapis.com https://*.google-analytics.com https://*.supabase.co",
+            "frame-src 'self' https://*.stripe.com https://*.google.com",
+            "media-src 'self'",
+            "object-src 'none'",
+          ].join('; '),
+        }
+      : {
+          key: 'Content-Security-Policy',
+          value: [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.stripe.com https://*.googleapis.com https://cdn.lordicon.com https://*.supabase.co https://*.vercel-scripts.com",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "img-src 'self' data: https://*.stripe.com https://*.googleapis.com https://*.gstatic.com https://*.googletagmanager.com blob:",
+            "font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com https://js.stripe.com",
+            "connect-src 'self' https://*.stripe.com https://*.googleapis.com https://*.google-analytics.com https://*.supabase.co",
+            "frame-src 'self' https://*.stripe.com https://*.google.com",
+            "media-src 'self'",
+            "object-src 'none'",
+          ].join('; '),
+        }
 
   // Set the CSP header based on environment
-  if (isDev) {
-    response.headers.set('Content-Security-Policy', developmentCsp)
-  } else {
-    response.headers.set('Content-Security-Policy', productionCsp)
-  }
+  console.log('Applying CSP Header:', cspHeader.value)
+  response.headers.set(cspHeader.key, cspHeader.value)
+
+  // Add a permissive Report-Only header to potentially override others
+  const reportOnlyValue =
+    "default-src 'self' https: http: 'unsafe-inline' 'unsafe-eval'; font-src 'self' data: https: http:; report-uri /api/csp-report;"
+  response.headers.set('Content-Security-Policy-Report-Only', reportOnlyValue)
 
   // Set strict HSTS header
   response.headers.set(
@@ -136,9 +117,12 @@ export async function middleware(request: NextRequest) {
     'max-age=31536000; includeSubDomains; preload',
   )
 
-  // Prevent clickjacking
+  // Prevent clickjacking - Allow SAMEORIGIN for non-_next paths
   if (!request.nextUrl.pathname.startsWith('/_next')) {
     response.headers.set('X-Frame-Options', 'SAMEORIGIN')
+  } else {
+    // Optionally deny framing for internal Next.js assets if needed
+    // response.headers.set('X-Frame-Options', 'DENY')
   }
 
   // Add CORS headers for API routes

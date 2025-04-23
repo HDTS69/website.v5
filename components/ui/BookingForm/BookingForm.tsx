@@ -1,37 +1,36 @@
-'use client';
+'use client'
 
-import React, { useRef, useCallback, useState, useEffect } from 'react';
-import Link from 'next/link';
-import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useRef, useCallback, useState, useEffect } from 'react'
+import Link from 'next/link'
+import { cn } from '@/lib/utils'
+import { motion, AnimatePresence } from 'framer-motion'
 
-import { WaveInput } from './WaveInput';
-import { Dropdown } from './Dropdown';
-import { DatePicker } from '../DatePicker';
-import { useFormState } from './useFormState';
-import { useFormValidation } from './useFormValidation';
-import { useFormSubmission } from './useFormSubmission';
-import { AddressInput } from './AddressInput';
-import { PREFERRED_TIMES, URGENCY_OPTIONS } from './constants';
-import type { BookingFormProps, Service } from './types';
-import { SERVICES, ServiceCategory } from '@/config/services';
-import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles';
-import { GoogleMapsScript } from './GoogleMapsScript';
-import { PHONE_PATTERNS, EMAIL_PATTERNS } from '@/utils/security';
+import { WaveInput } from './WaveInput'
+import { Dropdown } from './Dropdown'
+import { DatePicker } from '../DatePicker'
+import { useFormState } from './useFormState'
+import { useFormValidation } from './useFormValidation'
+import { useFormSubmission } from './useFormSubmission'
+import { AddressInput } from './AddressInput'
+import { PREFERRED_TIMES, URGENCY_OPTIONS } from './constants'
+import type { BookingFormProps, Service } from './types'
+import { SERVICES, ServiceCategory } from '@/config/services'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
+import { PHONE_PATTERNS, EMAIL_PATTERNS } from '@/utils/security'
 
 interface ConfigService {
-  name: string;
-  description?: string;
-  path?: string;
+  name: string
+  description?: string
+  path?: string
 }
 
 // Define the keys that have specific validation rules in useFormValidation
-const validationKeys = ['name', 'email', 'phone', 'address'] as const;
-type ValidationKey = typeof validationKeys[number]; // Type: 'name' | 'email' | 'phone' | 'address'
+const validationKeys = ['name', 'email', 'phone', 'address'] as const
+type ValidationKey = (typeof validationKeys)[number] // Type: 'name' | 'email' | 'phone' | 'address'
 
 // Type guard to check if a key is one of the validation keys
 function isValidationKey(key: string): key is ValidationKey {
-  return validationKeys.includes(key as ValidationKey);
+  return validationKeys.includes(key as ValidationKey)
 }
 
 export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
@@ -48,262 +47,359 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
     setHasAttemptedSubmit,
     handleChange: originalHandleChange,
     resetForm,
-  } = useFormState();
+  } = useFormState()
 
-  const { errors, validateField, validateForm } = useFormValidation(hasAttemptedSubmit);
+  const { errors, validateField, validateForm } =
+    useFormValidation(hasAttemptedSubmit)
   const { submitForm } = useFormSubmission({
     formData,
     setIsSubmitting,
     setSubmitStatus,
     setShowThankYou,
     resetForm,
-  });
+  })
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [showManualEntry, setShowManualEntry] = useState(false);
-  const [showServices, setShowServices] = useState(false);
-  const [showTime, setShowTime] = useState(false);
-  const [showUrgency, setShowUrgency] = useState(false);
-  const [showDate, setShowDate] = useState(false);
-  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
-  const servicesRef = useRef<HTMLDivElement>(null);
-  const timeRef = useRef<HTMLDivElement>(null);
-  const urgencyRef = useRef<HTMLDivElement>(null);
-  const dateRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [showManualEntry, setShowManualEntry] = useState(false)
+  const [showServices, setShowServices] = useState(false)
+  const [showTime, setShowTime] = useState(false)
+  const [showUrgency, setShowUrgency] = useState(false)
+  const [showDate, setShowDate] = useState(false)
+  const [expandedCategories, setExpandedCategories] = useState<
+    Record<string, boolean>
+  >({})
+  const servicesRef = useRef<HTMLDivElement>(null)
+  const timeRef = useRef<HTMLDivElement>(null)
+  const urgencyRef = useRef<HTMLDivElement>(null)
+  const dateRef = useRef<HTMLDivElement>(null)
 
   const toggleCategory = useCallback((category: string) => {
-    setExpandedCategories(prev => ({
+    setExpandedCategories((prev) => ({
       ...prev,
-      [category]: !prev[category]
-    }));
-  }, []);
+      [category]: !prev[category],
+    }))
+  }, [])
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    originalHandleChange(e);
-    const { name, value } = e.target;
-    const isGoogleAddressSelected = e.target.dataset?.isGoogleAddress === 'true';
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      originalHandleChange(e)
+      const { name, value } = e.target
+      const isGoogleAddressSelected =
+        e.target.dataset?.isGoogleAddress === 'true'
 
-    if (name === 'address' && isGoogleAddressSelected) {
-      setFormData((prev) => ({
-        ...prev,
-        isGoogleAddress: true,
-        manualEntry: false
-      }));
-    } else if (name === 'address') {
-      setFormData((prev) => ({
-        ...prev,
-        isGoogleAddress: false
-      }));
-    }
-    
-    if (hasAttemptedSubmit && isValidationKey(name)) {
-      validateField(name, value, e);
-    }
-    
-    if (name === 'message' && e.target instanceof HTMLTextAreaElement) {
-      e.target.style.height = 'inherit';
-      e.target.style.height = `${e.target.scrollHeight}px`;
-    }
-  }, [originalHandleChange, setFormData, validateField, hasAttemptedSubmit]);
-
-  const handleServiceChange = useCallback((serviceName: string) => {
-    setFormData(prev => {
-      const currentServices = prev.services || [];
-      const isSelected = currentServices.includes(serviceName);
-      
-      if (isSelected) {
-        return {
+      if (name === 'address' && isGoogleAddressSelected) {
+        setFormData((prev) => ({
           ...prev,
-          services: currentServices.filter(s => s !== serviceName)
-        };
-      } else {
-        return {
+          isGoogleAddress: true,
+          manualEntry: false,
+        }))
+      } else if (name === 'address') {
+        setFormData((prev) => ({
           ...prev,
-          services: [...currentServices, serviceName]
-        };
+          isGoogleAddress: false,
+        }))
       }
-    });
-  }, [setFormData]);
 
-  const handleDropdownSelection = useCallback((name: keyof Omit<typeof formData, 'services' | 'files'>, value: string) => {
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (name === 'preferredTime') setShowTime(false);
-    if (name === 'urgency') setShowUrgency(false);
-    if (hasAttemptedSubmit && isValidationKey(name)) {
-      validateField(name, value);
-    }
-  }, [setFormData, validateField, hasAttemptedSubmit]);
+      if (hasAttemptedSubmit && isValidationKey(name)) {
+        validateField(name, value, e)
+      }
+
+      if (name === 'message' && e.target instanceof HTMLTextAreaElement) {
+        e.target.style.height = 'inherit'
+        e.target.style.height = `${e.target.scrollHeight}px`
+      }
+    },
+    [originalHandleChange, setFormData, validateField, hasAttemptedSubmit],
+  )
+
+  const handleServiceChange = useCallback(
+    (serviceName: string) => {
+      setFormData((prev) => {
+        const currentServices = prev.services || []
+        const isSelected = currentServices.includes(serviceName)
+
+        if (isSelected) {
+          return {
+            ...prev,
+            services: currentServices.filter((s) => s !== serviceName),
+          }
+        } else {
+          return {
+            ...prev,
+            services: [...currentServices, serviceName],
+          }
+        }
+      })
+    },
+    [setFormData],
+  )
+
+  const handleDropdownSelection = useCallback(
+    (
+      name: keyof Omit<typeof formData, 'services' | 'files'>,
+      value: string,
+    ) => {
+      setFormData((prev) => ({ ...prev, [name]: value }))
+      if (name === 'preferredTime') setShowTime(false)
+      if (name === 'urgency') setShowUrgency(false)
+      if (hasAttemptedSubmit && isValidationKey(name)) {
+        validateField(name, value)
+      }
+    },
+    [setFormData, validateField, hasAttemptedSubmit],
+  )
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      const target = event.target as HTMLElement;
-      
+      const target = event.target as HTMLElement
+
       // Check if click is inside the datepicker popover (even if in portal)
-      const isClickInsideDatePickerPopover = target.closest('[data-datepicker-popover]');
+      const isClickInsideDatePickerPopover = target.closest(
+        '[data-datepicker-popover]',
+      )
 
       if (servicesRef.current && !servicesRef.current.contains(target)) {
-        setShowServices(false);
+        setShowServices(false)
       }
       if (timeRef.current && !timeRef.current.contains(target)) {
-        setShowTime(false);
+        setShowTime(false)
       }
       if (urgencyRef.current && !urgencyRef.current.contains(target)) {
-        setShowUrgency(false);
+        setShowUrgency(false)
       }
       // Only close datepicker if click is outside its ref AND outside its popover content
-      if (dateRef.current && !dateRef.current.contains(target) && !isClickInsideDatePickerPopover) { 
-        setShowDate(false);
+      if (
+        dateRef.current &&
+        !dateRef.current.contains(target) &&
+        !isClickInsideDatePickerPopover
+      ) {
+        setShowDate(false)
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []); // Dependencies remain empty as refs don't change
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, []) // Dependencies remain empty as refs don't change
 
   React.useEffect(() => {
     if (onStateChange) {
-      console.log('BookingForm: calling onStateChange with', showThankYou);
-      onStateChange(showThankYou);
+      console.log('BookingForm: calling onStateChange with', showThankYou)
+      onStateChange(showThankYou)
     }
-  }, [showThankYou, onStateChange]);
+  }, [showThankYou, onStateChange])
 
   React.useEffect(() => {
     return () => {
       if (showThankYou) {
-        return;
+        return
       }
-      resetForm();
-    };
-  }, [resetForm, showThankYou]);
+      resetForm()
+    }
+  }, [resetForm, showThankYou])
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submission started');
-    setHasAttemptedSubmit(true);
-    
-    const isValid = validateForm(formData);
-    console.log('Form validation result:', isValid);
-    
+    e.preventDefault()
+    console.log('Form submission started')
+    setHasAttemptedSubmit(true)
+
+    const isValid = validateForm(formData)
+    console.log('Form validation result:', isValid)
+
     if (!isValid || isSubmitting) {
-      console.log('Form validation failed or already submitting');
-      return;
+      console.log('Form validation failed or already submitting')
+      return
     }
-    
-    console.log('Attempting to submit form with data:', formData);
-    await submitForm();
-  };
+
+    console.log('Attempting to submit form with data:', formData)
+    await submitForm()
+  }
 
   // Define animation variants
   const formVariants = {
     hidden: { opacity: 0, y: -20 },
     visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: 20, transition: { duration: 0.2 } }
-  };
+    exit: { opacity: 0, y: 20, transition: { duration: 0.2 } },
+  }
 
   const thankYouVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.3, delay: 0.2 } },
-    exit: { opacity: 0, y: -20 }
-  };
+    exit: { opacity: 0, y: -20 },
+  }
 
   return (
-    <div className="w-full relative py-16">
-      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 px-4 relative">
+    <div className="relative w-full py-16">
+      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 gap-12 px-4 lg:grid-cols-2">
         <div className="absolute inset-0 z-0">
           <BackgroundSparkles useFixed={false} zIndex={5} />
         </div>
-        
+
         <div className="space-y-8">
           <div>
             <br></br>
           </div>
 
           <div className="space-y-6">
-            <h3 className="text-xl font-medium text-white">Why Choose {brandName || 'Us'}?</h3>
+            <h3 className="text-xl font-medium text-white">
+              Why Choose {brandName || 'Us'}?
+            </h3>
             <ul className="space-y-4">
               <li className="flex items-start space-x-3">
-                <svg className="w-6 h-6 text-[#00E6CA] mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                <svg
+                  className="mt-1 h-6 w-6 text-[#00E6CA]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
-                <span className="text-gray-300">24/7 Emergency Service Available</span>
+                <span className="text-gray-300">
+                  24/7 Emergency Service Available
+                </span>
               </li>
               <li className="flex items-start space-x-3">
-                <svg className="w-6 h-6 text-[#00E6CA] mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                <svg
+                  className="mt-1 h-6 w-6 text-[#00E6CA]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
-                <span className="text-gray-300">Licensed & Fully Insured Professionals</span>
+                <span className="text-gray-300">
+                  Licensed & Fully Insured Professionals
+                </span>
               </li>
               <li className="flex items-start space-x-3">
-                <svg className="w-6 h-6 text-[#00E6CA] mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                <svg
+                  className="mt-1 h-6 w-6 text-[#00E6CA]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
-                <span className="text-gray-300">Same-Day Service for Urgent Issues</span>
+                <span className="text-gray-300">
+                  Same-Day Service for Urgent Issues
+                </span>
               </li>
               <li className="flex items-start space-x-3">
-                <svg className="w-6 h-6 text-[#00E6CA] mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                <svg
+                  className="mt-1 h-6 w-6 text-[#00E6CA]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
-                <span className="text-gray-300">Upfront, Transparent Pricing</span>
+                <span className="text-gray-300">
+                  Upfront, Transparent Pricing
+                </span>
               </li>
               <li className="flex items-start space-x-3">
-                <svg className="w-6 h-6 text-[#00E6CA] mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                <svg
+                  className="mt-1 h-6 w-6 text-[#00E6CA]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
                 <span className="text-gray-300">Satisfaction Guaranteed</span>
               </li>
             </ul>
           </div>
 
-          <div className="bg-gray-800/50 rounded-lg p-6 relative z-10">
-            <h3 className="text-xl font-medium text-white mb-4">Need Urgent Help?</h3>
-            <p className="text-gray-300 mb-4">
+          <div className="relative z-10 rounded-lg bg-gray-800/50 p-6">
+            <h3 className="mb-4 text-xl font-medium text-white">
+              Need Urgent Help?
+            </h3>
+            <p className="mb-4 text-gray-300">
               For emergency services, call us directly:
             </p>
-            <a 
-              href="tel:1300420911" 
-              className="inline-flex items-center space-x-2 text-[#00E6CA] text-xl font-semibold"
+            <a
+              href="tel:1300420911"
+              className="inline-flex items-center space-x-2 text-xl font-semibold text-[#00E6CA]"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                />
               </svg>
               <span>1300 420 911</span>
             </a>
           </div>
         </div>
 
-        <div className="bg-black rounded-2xl p-8 backdrop-blur-sm border border-gray-800/50 min-h-[600px] flex items-center justify-center"> 
+        <div className="flex min-h-[600px] items-center justify-center rounded-2xl border border-gray-800/50 bg-black p-8 backdrop-blur-sm">
           <AnimatePresence mode="wait">
             {showThankYou ? (
-              <motion.div 
+              <motion.div
                 key="thankyou"
                 variants={thankYouVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="w-full max-w-md mx-auto text-center space-y-6"
+                className="mx-auto w-full max-w-md space-y-6 text-center"
               >
-                <h2 className="text-3xl font-semibold text-white mb-4">Thank You!</h2>
-                <p className="text-gray-300 text-lg mb-8">
-                  Your booking request has been received. We'll contact you shortly.
+                <h2 className="mb-4 text-3xl font-semibold text-white">
+                  Thank You!
+                </h2>
+                <p className="mb-8 text-lg text-gray-300">
+                  Your booking request has been received. We'll contact you
+                  shortly.
                 </p>
                 <button
                   onClick={() => {
-                    setShowThankYou(false);
-                    resetForm();
+                    setShowThankYou(false)
+                    resetForm()
                   }}
                   className={cn(
-                    "px-6 py-3 rounded-lg font-semibold transition-all duration-300",
-                    "bg-[#00E6CA] hover:bg-[#00E6CA]/90 text-white",
-                    "shadow-lg hover:shadow-xl hover:shadow-[#00E6CA]/20"
+                    'rounded-lg px-6 py-3 font-semibold transition-all duration-300',
+                    'bg-[#00E6CA] text-white hover:bg-[#00E6CA]/90',
+                    'shadow-lg hover:shadow-xl hover:shadow-[#00E6CA]/20',
                   )}
                 >
                   Make Another Booking
                 </button>
               </motion.div>
             ) : (
-              <motion.div 
+              <motion.div
                 key="form"
                 variants={formVariants}
                 initial="visible"
@@ -322,7 +418,7 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                     error={errors.name}
                   />
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <WaveInput
                       required
                       type="tel"
@@ -335,7 +431,7 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                       error={errors.phone}
                       pattern={PHONE_PATTERNS.HTML}
                     />
-                    
+
                     <WaveInput
                       required
                       type="email"
@@ -351,34 +447,42 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                   </div>
 
                   <div className="space-y-4">
-                    <motion.div 
-                      className="col-span-2 relative" 
+                    <motion.div
+                      className="relative col-span-2"
                       layout
-                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      transition={{ duration: 0.2, ease: 'easeInOut' }}
                     >
                       <AddressInput
                         value={formData.address}
                         onChange={handleChange}
                         onFocus={() => setShowManualEntry(true)}
-                        onBlur={(e) => validateField('address', e.target.value, e)}
+                        onBlur={(e) =>
+                          validateField('address', e.target.value, e)
+                        }
                         error={errors.address}
                         manualEntry={formData.manualEntry}
-                        onManualEntryChange={(e) => setFormData(prev => ({ ...prev, manualEntry: e.target.checked, isGoogleAddress: false }))}
+                        onManualEntryChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            manualEntry: e.target.checked,
+                            isGoogleAddress: false,
+                          }))
+                        }
                         showManualEntry={showManualEntry}
                       />
                     </motion.div>
 
-                    <motion.div 
-                      className="space-y-4 mt-8"
+                    <motion.div
+                      className="mt-8 space-y-4"
                       layout
                       initial={false}
-                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      transition={{ duration: 0.2, ease: 'easeInOut' }}
                     >
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                         <div className="relative" ref={servicesRef}>
                           <Dropdown
                             value={
-                              formData.services.length > 0 
+                              formData.services.length > 0
                                 ? `${formData.services.length} selected`
                                 : ''
                             }
@@ -392,75 +496,129 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
-                                className="absolute z-20 mt-1 w-full rounded-md bg-gray-800 shadow-lg border border-gray-700 max-h-60 overflow-y-auto"
+                                className="absolute z-20 mt-1 max-h-60 w-full overflow-y-auto rounded-md border border-gray-700 bg-gray-800 shadow-lg"
                               >
                                 {SERVICES.map((category: ServiceCategory) => {
                                   // Determine state for category checkbox
-                                  const allServicesInCategory = category.services.map(s => s.name);
-                                  const selectedServicesInCategory = formData.services.filter(s => allServicesInCategory.includes(s));
-                                  const isAllSelected = selectedServicesInCategory.length === allServicesInCategory.length;
-                                  const isIndeterminate = selectedServicesInCategory.length > 0 && !isAllSelected;
+                                  const allServicesInCategory =
+                                    category.services.map((s) => s.name)
+                                  const selectedServicesInCategory =
+                                    formData.services.filter((s) =>
+                                      allServicesInCategory.includes(s),
+                                    )
+                                  const isAllSelected =
+                                    selectedServicesInCategory.length ===
+                                    allServicesInCategory.length
+                                  const isIndeterminate =
+                                    selectedServicesInCategory.length > 0 &&
+                                    !isAllSelected
 
-                                  const handleCategoryCheckboxChange = (e: React.MouseEvent<HTMLInputElement>) => {
-                                    e.stopPropagation(); // Prevent category expansion
-                                    const checkbox = e.target as HTMLInputElement;
-                                    
-                                    setFormData(prev => {
-                                      const currentServices = prev.services || [];
-                                      const categoryName = category.name;
-                                      
+                                  const handleCategoryCheckboxChange = (
+                                    e: React.MouseEvent<HTMLInputElement>,
+                                  ) => {
+                                    e.stopPropagation() // Prevent category expansion
+                                    const checkbox =
+                                      e.target as HTMLInputElement
+
+                                    setFormData((prev) => {
+                                      const currentServices =
+                                        prev.services || []
+                                      const categoryName = category.name
+
                                       // Simply toggle the category name
-                                      if (currentServices.includes(categoryName)) {
+                                      if (
+                                        currentServices.includes(categoryName)
+                                      ) {
                                         return {
                                           ...prev,
-                                          services: currentServices.filter(s => s !== categoryName)
-                                        };
+                                          services: currentServices.filter(
+                                            (s) => s !== categoryName,
+                                          ),
+                                        }
                                       } else {
                                         return {
                                           ...prev,
-                                          services: [...currentServices, categoryName]
-                                        };
+                                          services: [
+                                            ...currentServices,
+                                            categoryName,
+                                          ],
+                                        }
                                       }
-                                    });
-                                  };
+                                    })
+                                  }
 
                                   return (
                                     <div key={category.name}>
-                                      <div 
-                                        className="w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 flex justify-between items-center cursor-pointer"
-                                        onClick={() => toggleCategory(category.name)}
+                                      <div
+                                        className="flex w-full cursor-pointer items-center justify-between px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700"
+                                        onClick={() =>
+                                          toggleCategory(category.name)
+                                        }
                                       >
-                                        <label className="flex items-center flex-grow mr-2 cursor-pointer" onClick={e => e.stopPropagation()}>
+                                        <label
+                                          className="mr-2 flex flex-grow cursor-pointer items-center"
+                                          onClick={(e) => e.stopPropagation()}
+                                        >
                                           <input
                                             type="checkbox"
-                                            checked={formData.services.includes(category.name)}
+                                            checked={formData.services.includes(
+                                              category.name,
+                                            )}
                                             onChange={() => {}} // Handle change in onClick instead
-                                            onClick={handleCategoryCheckboxChange}
+                                            onClick={
+                                              handleCategoryCheckboxChange
+                                            }
                                             className="mr-2 accent-[#00E6CA]"
                                           />
                                           {category.name}
                                         </label>
-                                        <svg className={cn("w-4 h-4 transition-transform", expandedCategories[category.name] ? "rotate-180" : "")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                                        <svg
+                                          className={cn(
+                                            'h-4 w-4 transition-transform',
+                                            expandedCategories[category.name]
+                                              ? 'rotate-180'
+                                              : '',
+                                          )}
+                                          viewBox="0 0 24 24"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          strokeWidth="2"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        >
+                                          <path d="m6 9 6 6 6-6" />
+                                        </svg>
                                       </div>
 
                                       {/* Sub-services (no change needed here) */}
                                       {expandedCategories[category.name] && (
                                         <div className="pl-4">
-                                          {category.services.map((service: ConfigService) => (
-                                            <label key={service.name} className="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50 cursor-pointer">
-                                              <input
-                                                type="checkbox"
-                                                checked={formData.services.includes(service.name)}
-                                                onChange={() => handleServiceChange(service.name)}
-                                                className="mr-2 accent-[#00E6CA]"
-                                              />
-                                              {service.name}
-                                            </label>
-                                          ))}
+                                          {category.services.map(
+                                            (service: ConfigService) => (
+                                              <label
+                                                key={service.name}
+                                                className="flex cursor-pointer items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50"
+                                              >
+                                                <input
+                                                  type="checkbox"
+                                                  checked={formData.services.includes(
+                                                    service.name,
+                                                  )}
+                                                  onChange={() =>
+                                                    handleServiceChange(
+                                                      service.name,
+                                                    )
+                                                  }
+                                                  className="mr-2 accent-[#00E6CA]"
+                                                />
+                                                {service.name}
+                                              </label>
+                                            ),
+                                          )}
                                         </div>
                                       )}
                                     </div>
-                                  );
+                                  )
                                 })}
                               </motion.div>
                             )}
@@ -479,17 +637,25 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
-                                className="absolute z-20 mt-1 w-full rounded-md bg-gray-800 shadow-lg border border-gray-700 max-h-60 overflow-y-auto"
+                                className="absolute z-20 mt-1 max-h-60 w-full overflow-y-auto rounded-md border border-gray-700 bg-gray-800 shadow-lg"
                               >
                                 {PREFERRED_TIMES.map((time) => (
-                                  <label key={time} className="flex items-center px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700/50 cursor-pointer">
+                                  <label
+                                    key={time}
+                                    className="flex cursor-pointer items-center px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700/50"
+                                  >
                                     <input
                                       type="radio"
                                       name="preferredTimeRadio"
                                       value={time}
                                       checked={formData.preferredTime === time}
-                                      onChange={() => handleDropdownSelection('preferredTime', time)}
-                                      className="mr-2 accent-[#00E6CA] cursor-pointer"
+                                      onChange={() =>
+                                        handleDropdownSelection(
+                                          'preferredTime',
+                                          time,
+                                        )
+                                      }
+                                      className="mr-2 cursor-pointer accent-[#00E6CA]"
                                     />
                                     {time}
                                   </label>
@@ -500,7 +666,7 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                         <div className="relative" ref={urgencyRef}>
                           <Dropdown
                             value={formData.urgency}
@@ -514,17 +680,25 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
-                                className="absolute z-20 mt-1 w-full rounded-md bg-gray-800 shadow-lg border border-gray-700 max-h-60 overflow-y-auto"
+                                className="absolute z-20 mt-1 max-h-60 w-full overflow-y-auto rounded-md border border-gray-700 bg-gray-800 shadow-lg"
                               >
                                 {URGENCY_OPTIONS.map((urgency) => (
-                                  <label key={urgency} className="flex items-center px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700/50 cursor-pointer">
+                                  <label
+                                    key={urgency}
+                                    className="flex cursor-pointer items-center px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700/50"
+                                  >
                                     <input
                                       type="radio"
                                       name="urgencyRadio"
                                       value={urgency}
                                       checked={formData.urgency === urgency}
-                                      onChange={() => handleDropdownSelection('urgency', urgency)}
-                                      className="mr-2 accent-[#00E6CA] cursor-pointer"
+                                      onChange={() =>
+                                        handleDropdownSelection(
+                                          'urgency',
+                                          urgency,
+                                        )
+                                      }
+                                      className="mr-2 cursor-pointer accent-[#00E6CA]"
                                     />
                                     {urgency}
                                   </label>
@@ -541,8 +715,8 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                               isOpen={showDate}
                               onToggle={() => setShowDate(!showDate)}
                               onDateSelect={(value) => {
-                                handleDropdownSelection('preferredDate', value);
-                                setShowDate(false);
+                                handleDropdownSelection('preferredDate', value)
+                                setShowDate(false)
                               }}
                               min={new Date().toISOString().split('T')[0]}
                               placeholder="Preferred Date"
@@ -563,25 +737,25 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                         isTextArea
                         error={errors.message}
                       />
-                      
+
                       <div className="absolute right-0 top-0">
                         <button
                           type="button"
                           onClick={() => fileInputRef.current?.click()}
-                          className="p-2 text-gray-300 hover:text-teal-500 transition-colors"
+                          className="p-2 text-gray-300 transition-colors hover:text-teal-500"
                           aria-label="Upload files"
                         >
-                          <svg 
-                            className="w-5 h-5" 
-                            fill="none" 
-                            stroke="currentColor" 
+                          <svg
+                            className="h-5 w-5"
+                            fill="none"
+                            stroke="currentColor"
                             viewBox="0 0 24 24"
                           >
-                            <path 
-                              strokeLinecap="round" 
-                              strokeLinejoin="round" 
-                              strokeWidth="2" 
-                              d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" 
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
                             />
                           </svg>
                         </button>
@@ -594,10 +768,10 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                       multiple
                       onChange={(e) => {
                         if (e.target.files) {
-                          setFormData(prev => ({
+                          setFormData((prev) => ({
                             ...prev,
-                            files: Array.from(e.target.files || [])
-                          }));
+                            files: Array.from(e.target.files || []),
+                          }))
                         }
                       }}
                       className="hidden"
@@ -608,16 +782,18 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                       </div>
                     )}
 
-                    <div className="space-y-4 mt-8">
+                    <div className="mt-8 space-y-4">
                       <label className="flex items-center space-x-2">
                         <input
                           type="checkbox"
                           name="newsletter"
                           checked={formData.newsletter}
                           onChange={handleChange}
-                          className="accent-[#00E6CA] rounded border-gray-700 cursor-pointer"
+                          className="cursor-pointer rounded border-gray-700 accent-[#00E6CA]"
                         />
-                        <span className="text-gray-300">Keep me updated with news and special offers</span>
+                        <span className="text-gray-300">
+                          Keep me updated with news and special offers
+                        </span>
                       </label>
 
                       <div className="relative pb-6">
@@ -629,41 +805,52 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                             checked={formData.termsAccepted}
                             onChange={handleChange}
                             className={cn(
-                              "accent-[#00E6CA] rounded border-gray-700 cursor-pointer",
-                              !formData.termsAccepted && hasAttemptedSubmit && "ring-2 ring-red-500/50"
+                              'cursor-pointer rounded border-gray-700 accent-[#00E6CA]',
+                              !formData.termsAccepted &&
+                                hasAttemptedSubmit &&
+                                'ring-2 ring-red-500/50',
                             )}
                             required
                           />
                           <span className="text-gray-300">
-                            I accept the <Link href="/terms" className="text-teal-500 hover:underline">terms and conditions</Link>
+                            I accept the{' '}
+                            <Link
+                              href="/terms"
+                              className="text-teal-500 hover:underline"
+                            >
+                              terms and conditions
+                            </Link>
                           </span>
                         </label>
                         {!formData.termsAccepted && hasAttemptedSubmit && (
-                          <div className="validation-message text-red-500 text-xs absolute -bottom-1 left-0">
+                          <div className="validation-message absolute -bottom-1 left-0 text-xs text-red-500">
                             Please accept the terms and conditions to proceed
                           </div>
                         )}
                       </div>
                     </div>
 
-                    <div className="flex justify-center mt-8">
+                    <div className="mt-8 flex justify-center">
                       <button
                         type="submit"
                         disabled={isSubmitting}
                         className={cn(
-                          "w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300",
-                          "bg-[#00E6CA] hover:bg-[#00E6CA]/90 text-white",
-                          "shadow-lg hover:shadow-xl hover:shadow-[#00E6CA]/20",
-                          isSubmitting && "opacity-50 cursor-not-allowed"
+                          'w-full rounded-lg px-6 py-3 font-semibold transition-all duration-300',
+                          'bg-[#00E6CA] text-white hover:bg-[#00E6CA]/90',
+                          'shadow-lg hover:shadow-xl hover:shadow-[#00E6CA]/20',
+                          isSubmitting && 'cursor-not-allowed opacity-50',
                         )}
                       >
-                        {isSubmitting ? "Submitting..." : "Submit Booking Request"}
+                        {isSubmitting
+                          ? 'Submitting...'
+                          : 'Submit Booking Request'}
                       </button>
                     </div>
 
                     {submitStatus === 'error' && (
-                      <div className="text-red-400 text-center mt-4">
-                        There was an error submitting your booking. Please try again or call us directly.
+                      <div className="mt-4 text-center text-red-400">
+                        There was an error submitting your booking. Please try
+                        again or call us directly.
                       </div>
                     )}
                   </div>
@@ -674,5 +861,5 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
-});
+})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -32,6 +32,14 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: true,
+    domains: [
+      'images.unsplash.com',
+      'plus.unsplash.com',
+      'avatars.githubusercontent.com',
+      'lh3.googleusercontent.com',
+      'maps.googleapis.com',
+      'maps.gstatic.com',
+    ],
   },
   reactStrictMode: true,
   // Remove conditional static export for production
@@ -43,8 +51,9 @@ const nextConfig = {
     appDocumentPreloading: false,
     optimizePackageImports: ['framer-motion'],
     // Remove unrecognized optimizeFonts option
-    // optimizeFonts: true, 
+    // optimizeFonts: true,
     scrollRestoration: true,
+    serverActions: true,
   },
   compiler: {
     styledComponents: true,
@@ -52,51 +61,19 @@ const nextConfig = {
   // Add environment variables with default values for build time
   env: {
     // Supabase configuration
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder-supabase-url.supabase.co',
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key',
-    
+    NEXT_PUBLIC_SUPABASE_URL:
+      process.env.NEXT_PUBLIC_SUPABASE_URL ||
+      'https://placeholder-supabase-url.supabase.co',
+    NEXT_PUBLIC_SUPABASE_ANON_KEY:
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key',
+
     // Google Maps API (if needed)
-    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'placeholder-google-maps-key',
-  },
-  // Configure headers for proper CORS and asset loading
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.stripe.com https://*.googleapis.com https://cdn.lordicon.com https://*.supabase.co https://*.vercel-scripts.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "img-src 'self' data: https://*.stripe.com https://*.googleapis.com https://*.gstatic.com https://*.googletagmanager.com blob:",
-              "font-src 'self' data: https://fonts.gstatic.com",
-              "connect-src 'self' https://*.stripe.com https://*.googleapis.com https://*.google-analytics.com https://*.supabase.co",
-              "frame-src 'self' https://*.stripe.com https://*.google.com",
-              "media-src 'self'",
-              "object-src 'none'"
-            ].join('; ')
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY'
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin'
-          },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()'
-          }
-        ]
-      }
-    ];
+    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:
+      process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ||
+      'placeholder-google-maps-key',
+    NEXT_PUBLIC_GOOGLE_ANALYTICS_ID:
+      process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID,
+    NEXT_PUBLIC_RESEND_API_KEY: process.env.NEXT_PUBLIC_RESEND_API_KEY,
   },
   // Configure webpack
   webpack: (config, { isServer }) => {
@@ -107,18 +84,18 @@ const nextConfig = {
         path: false,
         os: false,
         crypto: false,
-      };
+      }
     }
-    
+
     // Disable webpack caching to avoid file rename errors
-    config.cache = false;
-    
+    config.cache = false
+
     // Enable WebAssembly for Rive animations
     config.experiments = {
       ...config.experiments,
       asyncWebAssembly: true,
-    };
-    
+    }
+
     // Add rules for .wasm and font files
     config.module.rules.push(
       {
@@ -130,13 +107,17 @@ const nextConfig = {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         type: 'asset/resource',
         generator: {
-          filename: 'static/fonts/[hash][ext][query]'
-        }
-      }
-    );
+          filename: 'static/fonts/[hash][ext][query]',
+        },
+      },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      },
+    )
 
-    return config;
+    return config
   },
 }
 
-module.exports = withBundleAnalyzer(nextConfig);
+module.exports = withBundleAnalyzer(nextConfig)

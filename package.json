@@ -51,6 +51,7 @@
     "@supabase/supabase-js": "2.39.8",
     "@types/stripe": "8.0.417",
     "@vercel/analytics": "1.2.2",
+    "@vis.gl/react-google-maps": "1.5.2",
     "aos": "3.0.0-beta.6",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.0",

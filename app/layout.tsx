@@ -1,16 +1,16 @@
-import "./globals.css";
-import { Inter } from "next/font/google";
-import type { Metadata, Viewport } from 'next';
-import { ClientComponents } from './components/ClientComponents';
-import { Providers } from '@/components/providers';
-import { Toaster } from '@/components/ui/toaster';
-import 'swiper/css';
-import { LordIconScript } from './components/LordIconScript';
-import { GoogleAnalytics } from '@next/third-parties/google';
-import Script from 'next/script';
-import { Analytics } from '@vercel/analytics/react';
-import ClientBackground from "./components/ClientBackground";
-import { GoogleMapsLoader } from '@/components/GoogleMapsLoader';
+import './globals.css'
+import { Inter } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
+import { ClientComponents } from './components/ClientComponents'
+import { Providers } from '@/components/providers'
+import { Toaster } from '@/components/ui/toaster'
+import 'swiper/css'
+import { LordIconScript } from './components/LordIconScript'
+import { GoogleAnalytics } from '@next/third-parties/google'
+import Script from 'next/script'
+import { Analytics } from '@vercel/analytics/react'
+import ClientBackground from './components/ClientBackground'
+import { GoogleMapsLoader } from '@/components/GoogleMapsLoader'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -20,40 +20,66 @@ const inter = Inter({
   style: ['normal'],
   fallback: ['system-ui', 'sans-serif'],
   adjustFontFallback: true,
-});
+})
 
 export const metadata: Metadata = {
   title: 'HD Trade Services - Brisbane Plumbing, Gas, Roofing & Aircon',
-  description: 'Your reliable 24/7 partner for plumbing, gas fitting, roof repairs, and air conditioning services in Brisbane. Licensed, insured, and guaranteed satisfaction.',
-};
+  description:
+    'Your reliable 24/7 partner for plumbing, gas fitting, roof repairs, and air conditioning services in Brisbane. Licensed, insured, and guaranteed satisfaction.',
+}
 
 export const viewport: Viewport = {
   themeColor: '#00E6CA', // Matches the PWA theme color
   // You can add more viewport settings here if needed
-};
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} dark touch-auto overscroll-none`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.variable} dark touch-auto overscroll-none`}
+      suppressHydrationWarning
+    >
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, minimum-scale=1.0, viewport-fit=cover" />
-        
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, minimum-scale=1.0, viewport-fit=cover"
+        />
+
         {/* DNS prefetch for analytics only */}
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-        
+
         {/* Apple-specific meta tags */}
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        
+        <meta name="application-name" content="HD Trade Services" />
+        <meta name="apple-mobile-web-app-title" content="HD Trade Services" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="format-detection" content="telephone=no" />
+
         {/* Favicon links */}
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="icon" href="/favicon.ico" />
+
         {/* PWA specific tags */}
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/images/PWA/icon-192.png"></link>
@@ -61,8 +87,16 @@ export default function RootLayout({
 
         {/* Lordicon Script */}
         <LordIconScript />
+
+        {/* Basic Meta Tags */}
+        <meta name="description" content="Your Site Description" />
+        <meta name="keywords" content="your, keywords, here" />
+        <meta name="author" content="Your Name/Company" />
       </head>
-      <body className="font-inter antialiased bg-black touch-auto isolate" suppressHydrationWarning>
+      <body
+        className="isolate touch-auto bg-black font-inter antialiased"
+        suppressHydrationWarning
+      >
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
@@ -75,27 +109,30 @@ export default function RootLayout({
         {/* End Google Tag Manager (noscript) */}
         <Providers>
           <Toaster />
-          
+
           {/* Global sparkle background */}
           <ClientBackground />
-          
+
           {/* Background Blur Effect */}
-          <div aria-hidden="true" className="fixed inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20 pointer-events-none">
-            <div className="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700"></div>
-            <div className="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none fixed inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20"
+          >
+            <div className="h-56 bg-gradient-to-br from-primary to-purple-400 blur-[106px] dark:from-blue-700"></div>
+            <div className="h-32 bg-gradient-to-r from-cyan-400 to-sky-300 blur-[106px] dark:to-indigo-600"></div>
           </div>
-          
+
           {/* Main Content Wrapper */}
-          <div className="relative z-10 min-h-screen flex flex-col touch-auto">
+          <div className="relative z-10 flex min-h-screen touch-auto flex-col">
             {children}
           </div>
         </Providers>
         <ClientComponents />
         <GoogleMapsLoader />
-        
+
         {/* Google Analytics 4 */}
         <GoogleAnalytics gaId="G-XXXXXXXXXX" />
-        
+
         {/* Google Tag Manager */}
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`
@@ -109,5 +146,5 @@ export default function RootLayout({
         <Analytics />
       </body>
     </html>
-  );
+  )
 }
