@@ -72,7 +72,7 @@ function DefaultLayoutInner({
         <Navigation items={navigationItems} actionItems={actionItems} />
       </nav>
 
-      <main className="flex-grow">
+      <main className="flex-grow pt-[calc(var(--mobile-header-height)+env(safe-area-inset-top))] md:pt-0">
         {children}
       </main>
 

@@ -37,6 +37,11 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    /* iOS Safe Area Insets */
+    --sat: env(safe-area-inset-top);
+    --sar: env(safe-area-inset-right);
+    --sab: env(safe-area-inset-bottom);
+    --sal: env(safe-area-inset-left);
   }
 
   body {
@@ -48,6 +53,15 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    /* Add padding for iOS status bar */
+    padding-top: var(--sat);
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+
+  /* Fix for mobile Safari 100vh issue */
+  html {
+    height: -webkit-fill-available;
   }
 
   /* Allow text selection in form inputs and textareas */
@@ -959,4 +973,18 @@ button:disabled {
 /* Target the final section with checkboxes */
 .book-page-form-wrapper form > div > .space-y-4.mt-8 {
   @apply mt-10;
+}
+
+/* Add styles for fixed headers/navigation */
+.fixed-header {
+  padding-top: max(env(safe-area-inset-top), 16px);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Add styles for bottom navigation/bars if needed */
+.fixed-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom), 16px);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }

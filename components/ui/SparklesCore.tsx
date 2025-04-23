@@ -1,9 +1,9 @@
 "use client";
-import React, { useId, useMemo } from "react";
-import { useEffect, useState } from "react";
-import { Particles, initParticlesEngine } from "@tsparticles/react";
-import type { Container, SingleOrMultiple } from "@tsparticles/engine";
-import { loadSlim } from "@tsparticles/slim";
+import React, { useId, useMemo, useState, useCallback } from "react";
+import { useEffect } from "react";
+import Particles from "react-tsparticles";
+import type { Container, Engine } from "tsparticles-engine";
+import { loadSlim } from "tsparticles-slim";
 import { cn } from "@/lib/utils";
 import { motion, useAnimation } from "framer-motion";
 
@@ -31,33 +31,43 @@ export const SparklesCore = (props: ParticlesProps) => {
     particleDensity,
   } = props;
   
-  const [init, setInit] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const controls = useAnimation();
   const generatedId = useId();
   
   useEffect(() => {
-    // Check if we're on a mobile device
+    // Check if we're on a mobile device initially and on resize
     if (typeof window !== 'undefined') {
-      setIsMobile(window.innerWidth < 768 || 
-                'ontouchstart' in window || 
-                navigator.maxTouchPoints > 0);
-                
-      initParticlesEngine(async (engine) => {
-        await loadSlim(engine);
-      }).then(() => {
-        setInit(true);
-      });
+      const checkMobile = () => {
+         setIsMobile(window.innerWidth < 768 || 
+                     'ontouchstart' in window || 
+                     navigator.maxTouchPoints > 0);
+      }
+      checkMobile(); // Initial check
       
-      // Add resize listener to adjust for orientation changes
-      const handleResize = () => {
-        setIsMobile(window.innerWidth < 768);
-      };
-      
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
+      window.addEventListener('resize', checkMobile);
+      return () => window.removeEventListener('resize', checkMobile);
     }
   }, []);
+
+  // Define the init function for the Particles component
+  const particlesInit = useCallback(async (engine: Engine) => {
+    console.log("Initializing particles engine...");
+    // Loads the slim preset
+    await loadSlim(engine);
+    console.log("Particles engine initialized.");
+  }, []);
+
+  // Define the loaded function for the Particles component
+  const particlesLoaded = useCallback(async (container?: Container) => {
+    console.log("Particles container loaded:", container);
+    if (container) {
+      await controls.start({
+        opacity: 1,
+        transition: { duration: 0.2 }
+      });
+    }
+  }, [controls]); // Added controls to dependency array
 
   const options = useMemo(() => ({
     background: {
@@ -101,7 +111,7 @@ export const SparklesCore = (props: ParticlesProps) => {
       },
       number: {
         value: isMobile ? 
-               (particleDensity ? Math.floor(particleDensity * 0.6) : 48) : 
+               (particleDensity ? Math.floor(particleDensity * 0.6) : 48) :
                (particleDensity || 80),
         density: {
           enable: true,
@@ -129,28 +139,20 @@ export const SparklesCore = (props: ParticlesProps) => {
   return (
     <motion.div 
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      animate={controls}
       className={cn("w-full h-full", className)}
       style={{
         willChange: 'transform, opacity',
         backfaceVisibility: 'hidden'
       }}
     >
-      {init && (
-        <Particles
-          id={id || generatedId}
-          className={cn("h-full w-full")}
-          particlesLoaded={async (container?: Container) => {
-            if (container) {
-              await controls.start({
-                opacity: 1,
-                transition: { duration: 0.2 }
-              });
-            }
-          }}
-          options={options}
-        />
-      )}
+      <Particles
+        id={id || generatedId}
+        className={cn("h-full w-full")}
+        init={particlesInit}
+        loaded={particlesLoaded}
+        options={options}
+      />
     </motion.div>
   );
 }; 

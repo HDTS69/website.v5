@@ -135,9 +135,8 @@ export function MobileHeader() {
       <div 
         ref={openNowRef}
         id="mobile-open-now"
-        className="block md:hidden shadow-md"
+        className="block md:hidden shadow-md fixed-header"
         style={{ 
-          paddingTop: 'env(safe-area-inset-top)',
           position: 'fixed',
           top: 0,
           left: 0,
@@ -145,7 +144,10 @@ export function MobileHeader() {
           width: '100%',
           zIndex: 50,
           backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.9))',
-          backdropFilter: 'blur(4px)'
+          backdropFilter: 'blur(4px)',
+          paddingTop: 'max(env(safe-area-inset-top), 0.5rem)',
+          paddingLeft: 'env(safe-area-inset-left)',
+          paddingRight: 'env(safe-area-inset-right)'
         }}
       >
         <div className="flex justify-center items-center w-full py-1 px-4">
@@ -165,9 +167,10 @@ export function MobileHeader() {
           'transition-all duration-300 ease-in-out'
         )}
         style={{ 
-          top: openNowRef.current ? openNowRef.current.offsetHeight + 'px' : '24px',
-          left: 0,
-          right: 0,
+          position: 'fixed',
+          top: openNowRef.current ? `calc(${openNowRef.current.offsetHeight}px + env(safe-area-inset-top))` : 'env(safe-area-inset-top)',
+          left: 'env(safe-area-inset-left)',
+          right: 'env(safe-area-inset-right)',
           width: '100%',
           zIndex: 49,
           backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.8))',

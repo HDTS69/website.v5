@@ -4,17 +4,13 @@
 
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useJsApiLoader } from '@react-google-maps/api';
 import { WaveInput } from './WaveInput';
 import { cn } from '@/lib/utils';
-import { GoogleMapsScript } from './GoogleMapsScript';
 import { applyGooglePlacesStyles } from '@/lib/googlePlacesStyles';
 // Removed unused icons FaMapMarkerAlt, MdEdit
 
 // Define the Google Maps API key
 const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
-// Define the library scope
-const libraries: ('places')[] = ['places'];
 
 // Rough bounds for South East Queensland
 const SEQ_BOUNDS: google.maps.LatLngBoundsLiteral = {
@@ -118,91 +114,65 @@ export function AddressInput({
   const manualEntryRef = useRef<HTMLDivElement>(null);
   const [isGoogleAddress, setIsGoogleAddress] = useState(false);
 
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
-    libraries: libraries,
-  });
-
-  const handlePlaceSelection = useCallback((formattedAddress: string) => {
-    const syntheticEvent = {
-      target: { name: 'address', value: formattedAddress, dataset: { isGoogleAddress: 'true' } },
-      currentTarget: { name: 'address', value: formattedAddress, dataset: { isGoogleAddress: 'true' } },
-      preventDefault: () => {}, stopPropagation: () => {},
-    } as unknown as React.ChangeEvent<HTMLInputElement>;
-    onChange(syntheticEvent);
-    setIsGoogleAddress(true);
-    if (addressRef.current) {
-      addressRef.current.value = formattedAddress;
-    }
-  }, [onChange]);
-
-  const onPlaceChangedHandler = useCallback(() => {
-    if (autocompleteRef.current) {
-      const place = autocompleteRef.current.getPlace();
-      if (place?.formatted_address) {
-        console.log('Place selected via Autocomplete service:', place.formatted_address);
-        handlePlaceSelection(place.formatted_address);
-      } else {
-        console.warn('No place details available from Autocomplete service');
-        setIsGoogleAddress(false);
-      }
-    } else {
-      console.error('Autocomplete service instance not available');
-    }
-  }, [handlePlaceSelection]);
-
+  // Initialize Google Maps Autocomplete when the component mounts
   useEffect(() => {
-    if (!manualEntry && isLoaded && addressRef.current && !autocompleteRef.current) {
-      console.log('Initializing Classic Google Maps Autocomplete Service with SEQ Bounds...');
-      const options: google.maps.places.AutocompleteOptions = {
+    if (!manualEntry && window.google?.maps?.places && addressRef.current && !autocompleteRef.current) {
+      console.log('Initializing Google Maps Autocomplete Service with SEQ Bounds...');
+      // Initialize Google Places Autocomplete
+      const autocomplete = new google.maps.places.Autocomplete(addressRef.current, {
         types: ['address'],
         componentRestrictions: { country: 'au' },
         fields: ['formatted_address', 'address_components', 'geometry', 'name'],
         bounds: SEQ_BOUNDS,
         strictBounds: true,
-      };
-      if (addressRef.current) {
-          const autocomplete = new google.maps.places.Autocomplete(addressRef.current, options);
-          autocompleteRef.current = autocomplete;
-          autocomplete.addListener('place_changed', onPlaceChangedHandler);
-      }
+      });
+
+      autocompleteRef.current = autocomplete;
+
+      // Create a MutationObserver to watch for the pac-container
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.addedNodes.forEach((node) => {
+            if (node instanceof HTMLElement && node.classList.contains('pac-container')) {
+              // Apply custom styles to the autocomplete dropdown
+              applyGooglePlacesStyles(node as HTMLElement, addressRef.current as HTMLElement);
+            }
+          });
+        });
+      });
+
+      // Start observing the document body for added nodes
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      // Set up event listener for place selection
+      autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+        if (place?.formatted_address) {
+          console.log('Place selected:', place.formatted_address);
+          const syntheticEvent = {
+            target: { name: 'address', value: place.formatted_address, dataset: { isGoogleAddress: 'true' } },
+            currentTarget: { name: 'address', value: place.formatted_address, dataset: { isGoogleAddress: 'true' } },
+            preventDefault: () => {}, 
+            stopPropagation: () => {},
+          } as unknown as React.ChangeEvent<HTMLInputElement>;
+          onChange(syntheticEvent);
+          setIsGoogleAddress(true);
+        } else {
+          console.warn('No place details available');
+          setIsGoogleAddress(false);
+        }
+      });
 
       return () => {
-        console.log('Cleaning up Classic Autocomplete listener...');
+        console.log('Cleaning up Autocomplete listener...');
         if (autocompleteRef.current) {
-           google.maps.event.clearInstanceListeners(autocompleteRef.current);
+          google.maps.event.clearInstanceListeners(autocompleteRef.current);
         }
-        autocompleteRef.current = null; 
+        observer.disconnect();
+        autocompleteRef.current = null;
       };
-    } else if (manualEntry && autocompleteRef.current) {
-        // If switching TO manual entry and the service exists, clean it up
-        console.log('Switching to manual entry, disabling and cleaning up existing Autocomplete...');
-        // Attempt to disable suggestions by clearing types
-        autocompleteRef.current.setTypes([]); 
-        // Also clear component restrictions just in case
-        autocompleteRef.current.setComponentRestrictions(null);
-        // Then clear listeners and nullify ref
-        google.maps.event.clearInstanceListeners(autocompleteRef.current);
-        autocompleteRef.current = null; // Ensure it can be re-initialized if needed
     }
-    // If manualEntry is true and autocompleteRef is already null, do nothing.
-
-  }, [isLoaded, manualEntry, onPlaceChangedHandler]);
-
-  useEffect(() => {
-    if (loadError) {
-      console.error('Error loading Google Maps API script:', loadError);
-      if (!manualEntry && onManualEntryChange) {
-        const syntheticEvent = {
-          target: { checked: true },
-          currentTarget: { checked: true },
-          preventDefault: () => {},
-          stopPropagation: () => {},
-        } as unknown as React.ChangeEvent<HTMLInputElement>;
-        onManualEntryChange(syntheticEvent);
-      }
-    }
-  }, [loadError, manualEntry, onManualEntryChange]);
+  }, [manualEntry, onChange]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);
@@ -287,21 +257,17 @@ export function AddressInput({
     if (manualEntry || !addressRef.current) return;
 
     console.log('[AddressInput] Setting up MutationObserver...');
-    const observer = new MutationObserver((mutations, obs) => {
+    const observer = new MutationObserver((mutations) => {
       console.log('[AddressInput] MutationObserver callback fired.');
-      const pac = document.querySelector('.pac-container:not(.hd-trade-pac-applied)') as HTMLElement | null;
-      console.log('[AddressInput] Found new/unstyled .pac-container:', !!pac);
-      if (pac && addressRef.current) {
-        console.log('[AddressInput] Applying Google Places styles to new container...');
-        try {
-          applyGooglePlacesStyles(pac, addressRef.current);
-          pac.classList.add('hd-trade-pac-applied'); // Mark as styled
-          console.log('[AddressInput] Styles applied successfully to new container.');
-        } catch (error) {
-          console.error('[AddressInput] Error applying styles:', error);
-        }
-        // Do NOT disconnect the observer here, let it keep watching
-      }
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node instanceof HTMLElement && node.classList.contains('pac-container')) {
+            console.log('[AddressInput] Found new pac-container, applying styles...');
+            applyGooglePlacesStyles(node, addressRef.current);
+            console.log('[AddressInput] Styles applied successfully.');
+          }
+        });
+      });
     });
 
     observer.observe(document.body, {
@@ -310,25 +276,10 @@ export function AddressInput({
     });
     console.log('[AddressInput] MutationObserver is now observing.');
 
-    // Ensure initial styling if container already exists when observer starts
-    const initialPac = document.querySelector('.pac-container:not(.hd-trade-pac-applied)') as HTMLElement | null;
-    if (initialPac && addressRef.current) {
-      console.log('[AddressInput] Applying styles to initially found container...');
-      try {
-        applyGooglePlacesStyles(initialPac, addressRef.current);
-        initialPac.classList.add('hd-trade-pac-applied');
-        console.log('[AddressInput] Styles applied successfully to initial container.');
-      } catch (error) {
-        console.error('[AddressInput] Error applying initial styles:', error);
-      }
-    }
-
     return () => {
       console.log('[AddressInput] Cleaning up MutationObserver.');
       observer.disconnect();
-      // Clean up class marker on unmount if needed
-      document.querySelectorAll('.hd-trade-pac-applied').forEach(el => el.classList.remove('hd-trade-pac-applied'));
-    }
+    };
   }, [manualEntry]);
 
   return (
@@ -384,15 +335,6 @@ export function AddressInput({
           </motion.p>
         )}
       </AnimatePresence>
-      
-      {!isLoaded && !manualEntry && !loadError && (
-        <p className="mt-1 text-xs text-gray-400">Loading Google address suggestions...</p>
-      )}
-      {loadError && (
-        <p className="mt-1 text-xs text-yellow-500">
-          Could not load Google address suggestions. Please enter manually.
-        </p>
-      )}
     </div>
   );
 } 

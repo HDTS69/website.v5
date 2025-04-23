@@ -54,14 +54,14 @@ const BrandLogoSlide: React.FC<BrandLogo> = ({ src, alt }) => {
 
   return (
     <div 
-      className="relative w-[200px] h-[120px] mx-4 flex items-center justify-center select-none"
+      className="relative w-[160px] h-[100px] mx-3 flex items-center justify-center select-none"
       onContextMenu={preventInteraction}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div 
         className={`
-          relative w-full h-full rounded-lg p-6 transition-all duration-300
+          relative w-full h-full rounded-lg p-5 transition-all duration-300
           ${isHovered ? 'bg-black/30 scale-105' : 'bg-black/20 scale-100'}
         `}
       >
@@ -69,7 +69,7 @@ const BrandLogoSlide: React.FC<BrandLogo> = ({ src, alt }) => {
           src={src}
           alt={alt}
           fill
-          sizes="(max-width: 640px) 160px, (max-width: 1024px) 180px, 200px"
+          sizes="(max-width: 640px) 120px, (max-width: 1024px) 140px, 160px"
           quality={90}
           priority={true}
           className={`
@@ -103,48 +103,29 @@ const BrandLogoSlide: React.FC<BrandLogo> = ({ src, alt }) => {
 export function BrandCarousel() {
   // Common marquee settings
   const marqueeSettings = {
-    speed: 40,
+    speed: 50,
     gradient: false,
     pauseOnHover: true,
     className: "overflow-hidden"
   };
 
   return (
-    <section className="relative py-12 md:py-16 lg:py-24 bg-black overflow-hidden">
-      <div className="absolute inset-0">
-        <BackgroundSparkles useFixed={false} zIndex={5} />
-      </div>
+    <div className="relative w-full overflow-hidden bg-black py-12">
+      <div className="relative z-10">
+        {/* Manufacturers Carousel */}
+        <Marquee {...marqueeSettings} className="py-4 mb-8">
+          {manufacturerLogos.map((logo, index) => (
+            <BrandLogoSlide key={index} src={logo.src} alt={logo.alt} />
+          ))}
+        </Marquee>
 
-      <div className="text-center mb-12 relative z-20">
-        <span className="text-sm font-semibold text-[#00E6CA] uppercase tracking-wider block text-center mb-2">TRUSTED PARTNERS</span>
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 relative">
-          Brands We Trust
-          <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"></div>
-        </h2>
-        <p className="text-gray-300 text-lg max-w-3xl mx-auto mt-6">
-          We partner with industry-leading manufacturers and suppliers to deliver excellence
-        </p>
+        {/* Suppliers Carousel */}
+        <Marquee {...marqueeSettings} className="py-4" direction="right">
+          {supplierLogos.map((logo, index) => (
+            <BrandLogoSlide key={index} src={logo.src} alt={logo.alt} />
+          ))}
+        </Marquee>
       </div>
-
-      <div className="relative z-20 w-full space-y-16">
-        {/* First marquee - Left to Right */}
-        <div className="w-full">
-          <Marquee {...marqueeSettings}>
-            {manufacturerLogos.map((brand, index) => (
-              <BrandLogoSlide key={`brand-1-${index}`} {...brand} />
-            ))}
-          </Marquee>
-        </div>
-
-        {/* Second marquee - Right to Left */}
-        <div className="w-full">
-          <Marquee {...marqueeSettings} direction="right">
-            {supplierLogos.map((brand, index) => (
-              <BrandLogoSlide key={`brand-2-${index}`} {...brand} />
-            ))}
-          </Marquee>
-        </div>
-      </div>
-    </section>
+    </div>
   );
 }

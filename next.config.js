@@ -16,10 +16,17 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.googleapis.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'maps.googleapis.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
     ],
     // Only use unoptimized images for static export
     unoptimized: process.env.NODE_ENV === 'production',
-    domains: ['maps.googleapis.com', 'localhost'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     formats: ['image/webp', 'image/avif'],
@@ -61,9 +68,9 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.stripe.com https://*.googleapis.com https://cdn.lordicon.com https://*.supabase.co",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.stripe.com https://*.googleapis.com https://cdn.lordicon.com https://*.supabase.co https://*.vercel-scripts.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "img-src 'self' data: https://*.stripe.com https://*.googleapis.com https://*.gstatic.com blob:",
+              "img-src 'self' data: https://*.stripe.com https://*.googleapis.com https://*.gstatic.com https://*.googletagmanager.com blob:",
               "font-src 'self' data: https://fonts.gstatic.com",
               "connect-src 'self' https://*.stripe.com https://*.googleapis.com https://*.google-analytics.com https://*.supabase.co",
               "frame-src 'self' https://*.stripe.com https://*.google.com",

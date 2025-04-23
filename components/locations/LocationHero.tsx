@@ -162,14 +162,6 @@ export function LocationHero({ suburb = '' }) {
       variants={containerVariants}
       data-testid="hero-section"
     >
-      {/* Enhanced Sparkles Background */}
-      <motion.div 
-        className="absolute inset-0 z-[2]"
-        variants={sparkleVariants}
-      >
-        <BackgroundSparkles zIndex={5} />
-      </motion.div>
-
       {/* Hero Image with Enhanced Animation */}
       <div className="absolute inset-0 top-[100px] z-[3] transform-gpu">
         <div className="relative h-full w-full">

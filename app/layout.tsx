@@ -9,6 +9,8 @@ import { LordIconScript } from './components/LordIconScript';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/react';
+import ClientBackground from "./components/ClientBackground";
+import { GoogleMapsLoader } from '@/components/GoogleMapsLoader';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -43,6 +45,10 @@ export default function RootLayout({
         {/* DNS prefetch for analytics only */}
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         
+        {/* Apple-specific meta tags */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        
         {/* Favicon links */}
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -70,6 +76,9 @@ export default function RootLayout({
         <Providers>
           <Toaster />
           
+          {/* Global sparkle background */}
+          <ClientBackground />
+          
           {/* Background Blur Effect */}
           <div aria-hidden="true" className="fixed inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20 pointer-events-none">
             <div className="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700"></div>
@@ -82,6 +91,7 @@ export default function RootLayout({
           </div>
         </Providers>
         <ClientComponents />
+        <GoogleMapsLoader />
         
         {/* Google Analytics 4 */}
         <GoogleAnalytics gaId="G-XXXXXXXXXX" />

@@ -137,12 +137,21 @@ export function Hero() {
       variants={containerVariants}
       data-testid="hero-section"
     >
-      {/* Enhanced Sparkles Background */}
+      {/* Sparkle Background */}
       <motion.div 
         className="absolute inset-0 z-[2]"
         variants={sparkleVariants}
       >
-        <BackgroundSparkles zIndex={5} />
+        <SparklesCore
+          id="tsparticlesfullpage"
+          background="transparent"
+          minSize={0.6}
+          maxSize={1.4}
+          particleDensity={100}
+          className="w-full h-full"
+          particleColor="#00E6CA"
+          speed={0.2}
+        />
       </motion.div>
 
       {/* Hero Image with Enhanced Animation */}
