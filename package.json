@@ -30,7 +30,8 @@
     "security:secrets": "npx secretlint \"tests/**/*.{js,ts,tsx}\"",
     "security:all": "npm run security:test && npm run security:secrets && npm run test:security",
     "verify-env": "node scripts/verify-deploy-env.js",
-    "prebuild": "npm run verify-env"
+    "verify-maps": "node scripts/verify-google-maps.js",
+    "prebuild": "npm run verify-env && npm run verify-maps"
   },
   "dependencies": {
     "@heroicons/react": "2.2.0",
