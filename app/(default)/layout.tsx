@@ -1,62 +1,58 @@
-"use client";
+'use client'
 
-import { useEffect } from 'react';
-import { usePathname, useSearchParams } from "next/navigation";
-import Header from "@/components/ui/header";
-import Footer from "@/components/ui/footer";
-import { Navigation } from "@/components/ui/Navigation";
-import { navigationItems, actionItems } from "@/lib/navigation";
-import { MobileHeader } from "@/components/mobile/MobileHeader";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import { useEffect, Suspense } from 'react'
+import { usePathname, useSearchParams } from 'next/navigation'
+import Header from '@/components/ui/header'
+import Footer from '@/components/ui/footer'
+import { Navigation } from '@/components/ui/Navigation'
+import { navigationItems, actionItems } from '@/lib/navigation'
+import { MobileHeader } from '@/components/mobile/MobileHeader'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
-function DefaultLayoutInner({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+function DefaultLayoutInner({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   // Initialize AOS
   useEffect(() => {
     AOS.init({
       once: true,
-      disable: "phone",
+      disable: 'phone',
       duration: 700,
-      easing: "ease-out-cubic",
-    });
-  }, []);
+      easing: 'ease-out-cubic',
+    })
+  }, [])
 
   // Handle scroll position
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual';
+      window.history.scrollRestoration = 'manual'
     }
 
     const handleBeforeUnload = () => {
-      sessionStorage.setItem('scrollPosition', window.scrollY.toString());
-    };
+      sessionStorage.setItem('scrollPosition', window.scrollY.toString())
+    }
 
     const handleLoad = () => {
-      const scrollPosition = sessionStorage.getItem('scrollPosition');
+      const scrollPosition = sessionStorage.getItem('scrollPosition')
       if (scrollPosition) {
-        window.scrollTo(0, parseInt(scrollPosition));
-        sessionStorage.removeItem('scrollPosition');
+        window.scrollTo(0, parseInt(scrollPosition))
+        sessionStorage.removeItem('scrollPosition')
       }
-    };
+    }
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    window.addEventListener('load', handleLoad);
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    window.addEventListener('load', handleLoad)
 
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      window.removeEventListener('load', handleLoad);
-    };
-  }, []);
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+      window.removeEventListener('load', handleLoad)
+    }
+  }, [])
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex min-h-screen flex-col">
       {/* Desktop Header */}
       <div className="hidden md:block">
         <Header />
@@ -78,13 +74,17 @@ function DefaultLayoutInner({
 
       <Footer />
     </div>
-  );
+  )
 }
 
 export default function DefaultLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  return <DefaultLayoutInner>{children}</DefaultLayoutInner>;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DefaultLayoutInner>{children}</DefaultLayoutInner>
+    </Suspense>
+  )
 }

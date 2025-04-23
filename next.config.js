@@ -32,14 +32,6 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: true,
-    domains: [
-      'images.unsplash.com',
-      'plus.unsplash.com',
-      'avatars.githubusercontent.com',
-      'lh3.googleusercontent.com',
-      'maps.googleapis.com',
-      'maps.gstatic.com',
-    ],
   },
   reactStrictMode: true,
   // Remove conditional static export for production
@@ -53,7 +45,6 @@ const nextConfig = {
     // Remove unrecognized optimizeFonts option
     // optimizeFonts: true,
     scrollRestoration: true,
-    serverActions: true,
   },
   compiler: {
     styledComponents: true,
@@ -71,9 +62,46 @@ const nextConfig = {
     NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:
       process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ||
       'placeholder-google-maps-key',
-    NEXT_PUBLIC_GOOGLE_ANALYTICS_ID:
-      process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID,
-    NEXT_PUBLIC_RESEND_API_KEY: process.env.NEXT_PUBLIC_RESEND_API_KEY,
+  },
+  // Configure headers for proper CORS and asset loading
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.stripe.com https://*.googleapis.com https://cdn.lordicon.com https://*.supabase.co https://*.vercel-scripts.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "img-src 'self' data: https://*.stripe.com https://*.googleapis.com https://*.gstatic.com https://*.googletagmanager.com blob:",
+              "font-src 'self' data: https://fonts.gstatic.com",
+              "connect-src 'self' https://*.stripe.com https://*.googleapis.com https://*.google-analytics.com https://*.supabase.co",
+              "frame-src 'self' https://*.stripe.com https://*.google.com",
+              "media-src 'self'",
+              "object-src 'none'",
+            ].join('; '),
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()',
+          },
+        ],
+      },
+    ]
   },
   // Configure webpack
   webpack: (config, { isServer }) => {
@@ -109,10 +137,6 @@ const nextConfig = {
         generator: {
           filename: 'static/fonts/[hash][ext][query]',
         },
-      },
-      {
-        test: /\.svg$/,
-        use: ['@svgr/webpack'],
       },
     )
 

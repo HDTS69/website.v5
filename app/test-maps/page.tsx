@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { GoogleMapsScript } from '@/components/ui/BookingForm/GoogleMapsScript'
+import { GoogleMapsLoader } from '@/components/GoogleMapsLoader'
 
 export default function TestMapsPage() {
   const mapRef = useRef<HTMLDivElement>(null)
@@ -11,35 +11,35 @@ export default function TestMapsPage() {
   const [apiKey, setApiKey] = useState<string>('')
   const [error, setError] = useState<string>('')
 
-  // Handle Google Maps script loading success
-  const handleMapScriptSuccess = () => {
-    if (window.google?.maps && mapRef.current) {
-      try {
-        console.log('Google Maps loaded successfully!')
-        const map = new window.google.maps.Map(mapRef.current, {
-          center: { lat: -33.8688, lng: 151.2093 },
-          zoom: 13,
-        })
-        setMapLoaded(true)
-        setError('')
-        console.log('Map initialized')
-      } catch (error) {
-        const errorMessage =
-          error instanceof Error
-            ? error.message
-            : 'Unknown error initializing map'
-        console.error('Error initializing map:', errorMessage)
-        setError(errorMessage)
+  // Handle Google Maps initialization
+  useEffect(() => {
+    const handleGoogleMapsLoaded = () => {
+      if (window.google?.maps && mapRef.current) {
+        try {
+          console.log('Google Maps loaded successfully!')
+          const map = new window.google.maps.Map(mapRef.current, {
+            center: { lat: -33.8688, lng: 151.2093 },
+            zoom: 13,
+          })
+          setMapLoaded(true)
+          setError('')
+          console.log('Map initialized')
+        } catch (error) {
+          const errorMessage =
+            error instanceof Error
+              ? error.message
+              : 'Unknown error initializing map'
+          console.error('Error initializing map:', errorMessage)
+          setError(errorMessage)
+        }
       }
     }
-  }
 
-  // Handle Google Maps script loading error
-  const handleMapScriptError = (errorMessage: string) => {
-    console.error('Failed to load Google Maps script:', errorMessage)
-    setError(errorMessage)
-    setMapLoaded(false)
-  }
+    window.addEventListener('google-maps-loaded', handleGoogleMapsLoaded)
+    return () => {
+      window.removeEventListener('google-maps-loaded', handleGoogleMapsLoaded)
+    }
+  }, [])
 
   // Client-side only code
   useEffect(() => {
@@ -104,12 +104,7 @@ export default function TestMapsPage() {
         </ul>
       </div>
 
-      {isClient && (
-        <GoogleMapsScript
-          onLoadSuccess={handleMapScriptSuccess}
-          onLoadError={handleMapScriptError}
-        />
-      )}
+      {isClient && <GoogleMapsLoader />}
     </div>
   )
 }

@@ -19,14 +19,9 @@ export const GOOGLE_MAPS_LIBRARIES: (
 // Default options for Google Maps Autocomplete
 export const GOOGLE_MAPS_OPTIONS = {
   componentRestrictions: { country: 'AU' }, // Restrict to Australia
-  types: ['address'] as const, // Only show addresses
-  fields: [
-    'address_components',
-    'formatted_address',
-    'geometry',
-    'name',
-  ] as const, // Fields to return
-} as const
+  types: ['address'], // Only show addresses
+  fields: ['address_components', 'formatted_address', 'geometry', 'name'], // Fields to return
+}
 
 // Ensure google.maps types are available
 declare global {

@@ -65,7 +65,7 @@ export function useCrossBrowserGooglePlaces({
 
     try {
       const place = autocompleteRef.current.getPlace()
-      if (place) {
+      if (place && onPlaceSelect) {
         onPlaceSelect(place)
       }
     } catch (error) {

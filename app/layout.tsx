@@ -54,11 +54,11 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
         {/* Apple-specific meta tags */}
-        <meta name="application-name" content="HD Trade Services" />
-        <meta name="apple-mobile-web-app-title" content="HD Trade Services" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="format-detection" content="telephone=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
 
         {/* Favicon links */}
         <link
@@ -78,7 +78,6 @@ export default function RootLayout({
           sizes="16x16"
           href="/favicon-16x16.png"
         />
-        <link rel="icon" href="/favicon.ico" />
 
         {/* PWA specific tags */}
         <link rel="manifest" href="/manifest.json" />
@@ -87,11 +86,6 @@ export default function RootLayout({
 
         {/* Lordicon Script */}
         <LordIconScript />
-
-        {/* Basic Meta Tags */}
-        <meta name="description" content="Your Site Description" />
-        <meta name="keywords" content="your, keywords, here" />
-        <meta name="author" content="Your Name/Company" />
       </head>
       <body
         className="isolate touch-auto bg-black font-inter antialiased"

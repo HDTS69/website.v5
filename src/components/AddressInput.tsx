@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useGoogleMaps } from '@/hooks/useGoogleMaps'
+import { useGoogleMaps } from '@/src/hooks/useGoogleMaps'
 
 interface AddressInputProps {
   value: string
@@ -29,7 +29,7 @@ export function AddressInput({
   disabled = false,
 }: AddressInputProps) {
   const inputRef = useRef<HTMLInputElement>(null)
-  const { initAutocomplete, formattedAddress, isLoading, error } =
+  const { initAutocomplete, getFormattedAddress, isLoading, error } =
     useGoogleMaps()
 
   useEffect(() => {
@@ -38,11 +38,28 @@ export function AddressInput({
     }
   }, [initAutocomplete])
 
-  useEffect(() => {
-    if (formattedAddress && onAddressSelect) {
-      onAddressSelect(formattedAddress)
+  // Handle place selection
+  const handlePlaceSelect = () => {
+    if (inputRef.current && window.google?.maps?.places) {
+      const autocomplete = new window.google.maps.places.Autocomplete(
+        inputRef.current,
+      )
+      const place = autocomplete.getPlace()
+      if (place && onAddressSelect) {
+        const formattedAddress = getFormattedAddress(place)
+        // For now, we'll just pass a simplified version since we don't have the full parsing logic
+        onAddressSelect({
+          streetNumber: '',
+          streetName: '',
+          suburb: '',
+          state: '',
+          postcode: '',
+          country: '',
+          fullAddress: formattedAddress,
+        })
+      }
     }
-  }, [formattedAddress, onAddressSelect])
+  }
 
   return (
     <div className="relative w-full">
@@ -51,6 +68,7 @@ export function AddressInput({
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onBlur={handlePlaceSelect}
         placeholder={placeholder}
         className={`w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
           error ? 'border-red-500' : 'border-gray-300'
