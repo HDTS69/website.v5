@@ -1,1 +1,0 @@
-export { FoundersMessage } from './FoundersMessage'; 
