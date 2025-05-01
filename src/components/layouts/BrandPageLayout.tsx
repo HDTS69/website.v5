@@ -6,7 +6,7 @@ import { useRef } from 'react'
 import { AnimatedButton } from '../ui/AnimatedButton'
 import { SparklesCore } from '../ui/SparklesCore'
 import { BookingForm } from '../ui/BookingForm'
-import { NavBar } from '@/components/navigation/DesktopNavigation'
+import { NavBar } from '@/src/components/navigation/DesktopNavigation'
 import {
   Calendar,
   Phone,
@@ -16,9 +16,9 @@ import {
   Building2,
   MapPin,
 } from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { navigationItems, actionItems } from '@/lib/navigation'
-import { getImageLoadingProps, ImagePriority } from '@/utils/imageLoading'
+import { cn } from '@/src/lib/utils'
+import { navigationItems, actionItems } from '@/src/lib/navigation'
+import { getImageLoadingProps, ImagePriority } from '@/src/utils/imageLoading'
 
 interface Feature {
   title: string

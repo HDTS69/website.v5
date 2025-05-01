@@ -1,75 +1,315 @@
 'use client'
 
 import React from 'react'
-import Link from 'next/link'
+import { NavBar } from '@/components/navigation/DesktopNavigation'
+import { Building2, Home, MapPin, Wrench, Calendar, Phone } from 'lucide-react'
 import { usePathname } from 'next/navigation'
-import { cn } from '@/lib/utils'
-import { NavItem, ActionItem, BaseNavigationProps } from '@/types/navigation/types'
-import { AnimatedBookNowButton } from './AnimatedBookNowButton'
+import type { NavItem } from '@/types/navigation/types'
 
-export function Navigation({ items, actionItems, className }: BaseNavigationProps) {
-  const pathname = usePathname()
-  
-  return (
-    <nav className={cn("hidden md:flex items-center space-x-4", className)}>
-      <ul className="flex flex-1 items-center">
-        {items.map((item: NavItem, index: number) => (
-          <li key={`nav-${index}`} className="relative group py-2 px-3">
-            <Link 
-              href={item.url}
-              className={cn(
-                "text-white hover:text-teal-400 transition-colors duration-200",
-                pathname === item.url ? "text-teal-400" : "text-white"
-              )}
-            >
-              {item.label}
-            </Link>
-            
-            {/* Dropdown Menu */}
-            {item.dropdownItems && item.dropdownItems.length > 0 && (
-              <div className="absolute left-0 top-full mt-1 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden group-hover:block z-50">
-                <div className="py-1">
-                  {item.dropdownItems.map((dropdownItem, idx) => (
-                    <Link 
-                      key={`dropdown-${idx}`}
-                      href={dropdownItem.url}
-                      className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
-                    >
-                      {dropdownItem.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
-      
-      {/* Action Items */}
-      {actionItems && actionItems.length > 0 && (
-        <div className="flex items-center space-x-4">
-          {actionItems.map((item: ActionItem, index: number) => (
-            item.isHighlighted ? (
-              <AnimatedBookNowButton 
-                key={`action-${index}`}
-                href={item.url}
-                className="bg-teal-400 text-white px-4 py-2 rounded-md"
-              >
-                {item.label}
-              </AnimatedBookNowButton>
-            ) : (
-              <Link 
-                key={`action-${index}`}
-                href={item.url}
-                className="text-white hover:text-teal-400 transition-colors duration-200 flex items-center"
-              >
-                {item.icon && <item.icon className="mr-1 h-4 w-4" />}
-                {item.label}
-              </Link>
-            )
-          ))}
-        </div>
-      )}
-    </nav>
-  )
+const navigationItems = [
+  {
+    name: 'Home',
+    url: '/',
+    icon: Home,
+  },
+  {
+    name: 'Services',
+    url: '/services',
+    icon: Wrench,
+    dropdownItems: [
+      {
+        name: 'Plumbing',
+        url: '/services/plumbing',
+        subItems: [
+          { name: 'Leaking Taps', url: '/services/plumbing/leaking-taps' },
+          {
+            name: 'Cistern Plumbing',
+            url: '/services/plumbing/cistern-plumbing',
+          },
+          { name: 'Burst Pipes', url: '/services/plumbing/burst-pipes' },
+          { name: 'Blocked Drains', url: '/services/plumbing/blocked-drains' },
+          {
+            name: 'Blocked Toilets',
+            url: '/services/plumbing/blocked-toilets',
+          },
+          { name: 'Water Filters', url: '/services/plumbing/water-filters' },
+          {
+            name: 'Toilet Installation',
+            url: '/services/plumbing/toilet-installation',
+          },
+          {
+            name: 'Bathroom Renovations',
+            url: '/services/plumbing/bathroom-renovations',
+          },
+          {
+            name: 'Kitchen Plumbing',
+            url: '/services/plumbing/kitchen-plumbing',
+          },
+          { name: 'Emergency Plumbing', url: '/services/plumbing/emergency' },
+        ],
+      },
+      {
+        name: 'Gas Fitting',
+        url: '/services/gas-fitting',
+        subItems: [
+          {
+            name: 'Gas BBQ Installation',
+            url: '/services/gas-fitting/gas-bbq-installation',
+          },
+          {
+            name: 'Gas Hot Water Systems',
+            url: '/services/gas-fitting/gas-hot-water-systems',
+          },
+          {
+            name: 'Gas Leak Repairs',
+            url: '/services/gas-fitting/gas-leak-repairs',
+          },
+          {
+            name: 'Gas Cooktop Installation',
+            url: '/services/gas-fitting/gas-cooktop-installation',
+          },
+          {
+            name: 'Gas Heater Installation',
+            url: '/services/gas-fitting/gas-heater-installation',
+          },
+          {
+            name: 'Gas Safety Inspections',
+            url: '/services/gas-fitting/gas-safety-inspections',
+          },
+          {
+            name: 'Gas Line Installation',
+            url: '/services/gas-fitting/gas-line-installation',
+          },
+          {
+            name: 'Emergency Gas Services',
+            url: '/services/gas-fitting/emergency',
+          },
+        ],
+      },
+      {
+        name: 'Hot Water Systems',
+        url: '/services/hot-water-systems',
+        subItems: [
+          {
+            name: 'Heat Pump Hot Water',
+            url: '/services/hot-water-systems/heat-pump',
+          },
+          {
+            name: 'Gas Hot Water Systems',
+            url: '/services/hot-water-systems/gas',
+          },
+          {
+            name: 'Solar Hot Water Systems',
+            url: '/services/hot-water-systems/solar',
+          },
+          {
+            name: 'Electric Hot Water Systems',
+            url: '/services/hot-water-systems/electric',
+          },
+          {
+            name: 'Hot Water Repairs',
+            url: '/services/hot-water-systems/repairs',
+          },
+          {
+            name: 'Hot Water Installation',
+            url: '/services/hot-water-systems/installation',
+          },
+          {
+            name: 'Hot Water System Replacement',
+            url: '/services/hot-water-systems/replacement',
+          },
+          {
+            name: 'Emergency Hot Water',
+            url: '/services/hot-water-systems/emergency',
+          },
+          {
+            name: 'Buyers Guide',
+            url: '/services/hot-water-systems/maintenance',
+          },
+        ],
+      },
+      {
+        name: 'Roof Repairs',
+        url: '/services/roof-repairs',
+        subItems: [
+          {
+            name: 'Leak Investigation',
+            url: '/services/roof-repairs/leak-investigation',
+          },
+          { name: 'Roof Report', url: '/services/roof-repairs/roof-report' },
+          {
+            name: 'Roof Tile Repair',
+            url: '/services/roof-repairs/tile-repair',
+          },
+          {
+            name: 'Metal Roof Repairs',
+            url: '/services/roof-repairs/metal-roof-repairs',
+          },
+          {
+            name: 'Gutter Replacement',
+            url: '/services/roof-repairs/gutter-replacement',
+          },
+          {
+            name: 'Downpipe Installation',
+            url: '/services/roof-repairs/downpipe-installation',
+          },
+          {
+            name: 'Storm Damage Repair',
+            url: '/services/roof-repairs/storm-damage',
+          },
+          {
+            name: 'Emergency Roof Repairs',
+            url: '/services/roof-repairs/emergency',
+          },
+        ],
+      },
+      {
+        name: 'Air Conditioning',
+        url: '/services/air-conditioning',
+        subItems: [
+          {
+            name: 'Split System Installation',
+            url: '/air-conditioning/split-system-installation',
+          },
+          { name: 'AC Repairs', url: '/air-conditioning/repairs' },
+          { name: 'AC Servicing', url: '/air-conditioning/servicing' },
+          { name: 'AC Cleaning', url: '/air-conditioning/cleaning' },
+          { name: 'AC Diagnostics', url: '/air-conditioning/diagnostics' },
+          { name: 'Ducted AC', url: '/air-conditioning/ducted' },
+          {
+            name: 'System Optimization',
+            url: '/air-conditioning/system-optimization',
+          },
+          {
+            name: 'Air Con Sizing Calculator',
+            url: '/air-conditioning/sizing-calculator',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Brands',
+    url: '/brands',
+    icon: Building2,
+    dropdownItems: [
+      { name: 'Aquamax', url: '/brands/aquamax' },
+      { name: 'Bosch', url: '/brands/bosch' },
+      { name: 'Chromagen', url: '/brands/chromagen' },
+      { name: 'Dux', url: '/brands/dux' },
+      { name: 'Everhot', url: '/brands/everhot' },
+      { name: 'Rheem', url: '/brands/rheem' },
+      { name: 'Rinnai', url: '/brands/rinnai' },
+      { name: 'Stiebel Eltron', url: '/brands/stiebel-eltron' },
+      { name: 'Saxon', url: '/brands/saxon' },
+      { name: 'Thermann', url: '/brands/thermann' },
+      { name: 'Vulcan', url: '/brands/vulcan' },
+      { name: 'Mitsubishi', url: '/brands/mitsubishi' },
+      { name: 'Caroma', url: '/brands/caroma' },
+    ],
+  },
+  {
+    name: 'Locations',
+    url: '/locations',
+    icon: MapPin,
+    dropdownItems: [
+      {
+        name: 'Brisbane',
+        url: '/locations/brisbane',
+        subItems: [
+          { name: 'Brisbane CBD', url: '/locations/brisbane/cbd' },
+          { name: 'South Brisbane', url: '/locations/brisbane/south' },
+          { name: 'North Brisbane', url: '/locations/brisbane/north' },
+          { name: 'East Brisbane', url: '/locations/brisbane/east' },
+          { name: 'West Brisbane', url: '/locations/brisbane/west' },
+        ],
+      },
+      {
+        name: 'Moreton Bay',
+        url: '/locations/moreton-bay',
+        subItems: [
+          { name: 'North Lakes', url: '/locations/moreton-bay/north-lakes' },
+          { name: 'Redcliffe', url: '/locations/moreton-bay/redcliffe' },
+          { name: 'Caboolture', url: '/locations/moreton-bay/caboolture' },
+          { name: 'Strathpine', url: '/locations/moreton-bay/strathpine' },
+          {
+            name: 'Deception Bay',
+            url: '/locations/moreton-bay/deception-bay',
+          },
+        ],
+      },
+      {
+        name: 'Ipswich',
+        url: '/locations/ipswich',
+        subItems: [
+          { name: 'Ipswich CBD', url: '/locations/ipswich/cbd' },
+          { name: 'Springfield', url: '/locations/ipswich/springfield' },
+          { name: 'Goodna', url: '/locations/ipswich/goodna' },
+          { name: 'Booval', url: '/locations/ipswich/booval' },
+          { name: 'Ripley', url: '/locations/ipswich/ripley' },
+        ],
+      },
+      {
+        name: 'Logan',
+        url: '/locations/logan',
+        subItems: [
+          { name: 'Logan Central', url: '/locations/logan/central' },
+          { name: 'Springwood', url: '/locations/logan/springwood' },
+          { name: 'Beenleigh', url: '/locations/logan/beenleigh' },
+          { name: 'Shailer Park', url: '/locations/logan/shailer-park' },
+          { name: 'Daisy Hill', url: '/locations/logan/daisy-hill' },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'About Us',
+    url: '/about',
+    icon: Building2,
+    dropdownItems: [
+      {
+        name: 'Our Story',
+        url: '/about/our-story',
+      },
+      {
+        name: 'Our Team',
+        url: '/about/our-team',
+      },
+      {
+        name: 'Careers',
+        url: '/about/careers',
+      },
+      {
+        name: 'Contact Us',
+        url: '/about/contact',
+      },
+    ],
+  },
+  {
+    name: 'Call Now',
+    url: 'tel:1300000000',
+    icon: Phone,
+  },
+  {
+    name: 'Book Online',
+    url: '#booking-form',
+    icon: Calendar,
+    isHighlighted: true,
+    onClick: (e: React.MouseEvent) => {
+      e.preventDefault()
+      const bookingForm = document.getElementById('booking-form')
+      if (bookingForm) {
+        bookingForm.scrollIntoView({ behavior: 'smooth' })
+      }
+    },
+  },
+]
+
+interface NavigationProps {
+  items: NavItem[]
+  actionItems: NavItem[]
+}
+
+export function Navigation({ items, actionItems }: NavigationProps) {
+  return <NavBar items={items} actionItems={actionItems} />
 }

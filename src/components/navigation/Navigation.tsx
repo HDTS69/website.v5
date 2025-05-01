@@ -1,2 +1,2 @@
-import { NavBar } from "@/components/navigation/DesktopNavigation";
+import { NavBar } from '@/src/components/navigation/DesktopNavigation'
 // ... existing code ...

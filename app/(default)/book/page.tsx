@@ -1,21 +1,22 @@
-'use client';
+'use client'
 
-import React from 'react';
-import { HeroBookingForm } from '@/components/HeroBookingForm';
-import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles';
+import React from 'react'
+import { HeroBookingForm } from '@/src/components/HeroBookingForm'
+import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
 // Footer is handled by the layout
-// import Footer from '@/components/ui/footer';
+// import Footer from '@/src/components/ui/footer';
 
 export default function BookingPage() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen flex-col">
       {/* Header should be handled by the global layout */}
 
       {/* Main Content - Adjust padding based on the actual global header height */}
-      <main className="flex-grow pt-32 pb-16 relative"> {/* Reverted padding, adjust if needed */} 
+      <main className="relative flex-grow pb-16 pt-32">
+        {' '}
+        {/* Reverted padding, adjust if needed */}
         {/* Background Effects */}
         <BackgroundSparkles zIndex={-1} />
-
         <div className="container mx-auto px-4">
           {/* Page Title - Removed */}
           {/* 
@@ -30,7 +31,7 @@ export default function BookingPage() {
           */}
 
           {/* Booking Form */}
-          <div className="max-w-3xl mx-auto book-page-form-wrapper">
+          <div className="book-page-form-wrapper mx-auto max-w-3xl">
             <HeroBookingForm />
           </div>
         </div>
@@ -39,5 +40,5 @@ export default function BookingPage() {
       {/* Footer is handled by the layout */}
       {/* <Footer /> */}
     </div>
-  );
+  )
 }

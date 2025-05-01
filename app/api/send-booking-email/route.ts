@@ -1,16 +1,16 @@
-import { Resend } from 'resend';
-import { NextResponse } from 'next/server';
-import type { FormData } from '@/components/ui/BookingForm/types';
+import { Resend } from 'resend'
+import { NextResponse } from 'next/server'
+import type { FormData } from '@/src/components/ui/BookingForm/types'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request: Request) {
   try {
-    const formData: FormData = await request.json();
+    const formData: FormData = await request.json()
 
     // Format services array into a readable string
-    const servicesString = formData.services.join(', ');
-    
+    const servicesString = formData.services.join(', ')
+
     // Admin email HTML template
     const adminEmailHtml = `
     <!DOCTYPE html>
@@ -175,12 +175,16 @@ export async function POST(request: Request) {
             </tr>
           </table>
           
-          ${formData.message ? `
+          ${
+            formData.message
+              ? `
           <h2>Additional Message</h2>
           <div class="message-box">
             <p>${formData.message}</p>
           </div>
-          ` : ''}
+          `
+              : ''
+          }
           
           <div class="highlight-box">
             <p>Please contact the customer as soon as possible to confirm their booking.</p>
@@ -192,8 +196,8 @@ export async function POST(request: Request) {
       </div>
     </body>
     </html>
-    `;
-    
+    `
+
     // Customer email HTML template
     const customerEmailHtml = `
     <!DOCTYPE html>
@@ -362,7 +366,7 @@ export async function POST(request: Request) {
       </div>
     </body>
     </html>
-    `;
+    `
 
     // Send email to admin
     const adminEmail = await resend.emails.send({
@@ -370,7 +374,7 @@ export async function POST(request: Request) {
       to: 'admin@hdtradeservices.com.au',
       subject: 'New Booking Request',
       html: adminEmailHtml,
-    });
+    })
 
     // Send confirmation email to customer
     const customerEmail = await resend.emails.send({
@@ -378,18 +382,15 @@ export async function POST(request: Request) {
       to: formData.email,
       subject: 'Booking Confirmation - HD Trade Services',
       html: customerEmailHtml,
-    });
+    })
 
     return NextResponse.json({
       success: true,
       adminEmail,
       customerEmail,
-    });
+    })
   } catch (error) {
-    console.error('Error sending email:', error);
-    return NextResponse.json(
-      { error: 'Failed to send email' },
-      { status: 500 }
-    );
+    console.error('Error sending email:', error)
+    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
   }
-} 
+}

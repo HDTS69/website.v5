@@ -1,16 +1,16 @@
-'use client';
+'use client'
 
-import { Navigation } from "@/components/ui/Navigation";
-import { navigationItems, actionItems } from "@/lib/navigation";
-import Footer from "@/components/ui/footer";
+import { Navigation } from '@/src/components/ui/Navigation'
+import { navigationItems, actionItems } from '@/src/lib/navigation'
+import Footer from '@/src/components/ui/footer'
 
 export default function AirConditioningLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex min-h-screen flex-col">
       {/* Desktop Navigation */}
       <div className="hidden md:block">
         <Navigation items={navigationItems} actionItems={actionItems} />
@@ -22,5 +22,5 @@ export default function AirConditioningLayout({
 
       <Footer />
     </div>
-  );
-} 
+  )
+}

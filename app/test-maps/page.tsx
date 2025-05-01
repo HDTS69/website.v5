@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { GoogleMapsLoader } from '@/components/GoogleMapsLoader'
+import { GoogleMapsLoader } from '@src/components/GoogleMapsLoader'
 
 export default function TestMapsPage() {
   const mapRef = useRef<HTMLDivElement>(null)

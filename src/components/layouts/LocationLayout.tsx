@@ -3,12 +3,12 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PaymentIcons } from '@/app/components/PaymentIcons'
-import { BookingForm } from '@/components/ui/BookingForm/BookingForm'
-import { GoogleReviews } from '@/components/ui/GoogleReviews'
-import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
+import { BookingForm } from '@/src/components/ui/BookingForm/BookingForm'
+import { GoogleReviews } from '@/src/components/ui/GoogleReviews'
+import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
 import { FaMapMarkerAlt, FaTools, FaPhoneAlt, FaClock } from 'react-icons/fa'
-import { Testimonials } from '@/components/ui/Testimonials'
-import LordIcon from '@/components/ui/LordIcon'
+import { Testimonials } from '@/src/components/ui/Testimonials'
+import LordIcon from '@/src/components/ui/LordIcon'
 
 interface LocationLayoutProps {
   locationName: string

@@ -1,53 +1,53 @@
-"use client";
+'use client'
 
-import { WavyBackground } from "./ui/wavy-background";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { scrollToElement } from "@/lib/utils";
+import { WavyBackground } from './ui/wavy-background'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { scrollToElement } from '@/src/lib/utils'
 
 export const BannerCTA = () => {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     if (pathname === '/') {
-      scrollToElement('book');
+      scrollToElement('book')
     } else {
-      window.location.href = '/book';
+      window.location.href = '/book'
     }
-  };
+  }
 
   return (
     <div className="w-full overflow-hidden">
       <WavyBackground
         className="w-full px-4 py-8"
         containerClassName="h-auto min-h-[200px] relative w-full overflow-hidden"
-        colors={["#00E6CA", "#1CD4A7", "#14B8A6"]}
+        colors={['#00E6CA', '#1CD4A7', '#14B8A6']}
         waveWidth={200}
         backgroundFill="#000000"
         blur={2}
         waveOpacity={0.3}
         speed="slow"
       >
-        <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+        <div className="mx-auto flex max-w-4xl flex-col items-center justify-center text-center">
+          <h2 className="mb-4 text-2xl font-bold text-white md:text-3xl">
             Ready to Experience Our Services?
           </h2>
-          <p className="text-base md:text-lg text-gray-300 mb-6 max-w-2xl">
+          <p className="mb-6 max-w-2xl text-base text-gray-300 md:text-lg">
             Book your appointment today and let us help you achieve your goals
           </p>
           <Link
             href="/book"
             onClick={handleClick}
-            className="inline-flex items-center px-6 py-3 text-base font-semibold text-white bg-[#00E6CA] hover:bg-[#1CD4A7] rounded-full transition-all duration-300 transform hover:scale-105"
+            className="inline-flex transform items-center rounded-full bg-[#00E6CA] px-6 py-3 text-base font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-[#1CD4A7]"
           >
             Book Online Now
           </Link>
         </div>
-        <div className="mt-6 text-center text-sm text-gray-400 max-w-4xl mx-auto">
+        <div className="mx-auto mt-6 max-w-4xl text-center text-sm text-gray-400">
           Transforming experiences, one appointment at a time
         </div>
       </WavyBackground>
     </div>
-  );
-}; 
+  )
+}

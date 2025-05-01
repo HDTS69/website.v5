@@ -1,12 +1,12 @@
-import Image from "next/image";
-import Header from "@/components/ui/header";
-import { MobileHeader } from "@/components/mobile";
-import AuthBg from "@/public/images/auth-bg.svg";
+import Image from 'next/image'
+import Header from '@/src/components/ui/header'
+import { MobileHeader } from '@/src/components/mobile'
+import AuthBg from '@/public/images/auth-bg.svg'
 
 export default function AuthLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <>
@@ -18,7 +18,7 @@ export default function AuthLayout({
           className="pointer-events-none absolute bottom-0 left-0 -translate-x-1/3"
           aria-hidden="true"
         >
-          <div className="h-80 w-80 rounded-full bg-linear-to-tr from-blue-500 opacity-70 blur-[160px]"></div>
+          <div className="bg-linear-to-tr h-80 w-80 rounded-full from-blue-500 opacity-70 blur-[160px]"></div>
         </div>
 
         {/* Content */}
@@ -58,14 +58,14 @@ export default function AuthLayout({
               <div className="font-mono text-sm text-gray-500 transition duration-300 [&_span]:opacity-0">
                 <span className="animate-[code-1_10s_infinite] text-gray-200">
                   npm login
-                </span>{" "}
+                </span>{' '}
                 <span className="animate-[code-2_10s_infinite]">
                   --registry=https://npm.pkg.github.com
                 </span>
                 <br />
                 <span className="animate-[code-3_10s_infinite]">
                   --scope=@phanatic
-                </span>{" "}
+                </span>{' '}
                 <span className="animate-[code-4_10s_infinite]">
                   Successfully logged-in.
                 </span>
@@ -84,5 +84,5 @@ export default function AuthLayout({
         </div>
       </main>
     </>
-  );
+  )
 }

@@ -4,10 +4,10 @@ import * as React from 'react'
 import { format, startOfToday } from 'date-fns'
 import { CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react'
 import * as Popover from '@radix-ui/react-popover'
-import { cn } from '@/lib/utils'
+import { cn } from '@/src/lib/utils'
 import { useFormStatus } from 'react-dom'
 import { useState, useEffect, useCallback } from 'react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/src/components/ui/button'
 import { DayPicker } from 'react-day-picker'
 
 interface DatePickerProps extends React.HTMLAttributes<HTMLDivElement> {

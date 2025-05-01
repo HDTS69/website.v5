@@ -1,10 +1,10 @@
-'use client';
+'use client'
 
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import Link from 'next/link';
-import { SparklesCore } from '@/components/ui/SparklesCore';
-import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles';
+import { motion } from 'framer-motion'
+import Image from 'next/image'
+import Link from 'next/link'
+import { SparklesCore } from '@/src/components/ui/SparklesCore'
+import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
 
 const brands = [
   {
@@ -85,11 +85,11 @@ const brands = [
     path: '/brands/caroma',
     description: 'Premium bathroom fixtures',
   },
-];
+]
 
 export default function BrandsPage() {
   return (
-    <div className="pt-32 pb-16 min-h-screen">
+    <div className="min-h-screen pb-16 pt-32">
       {/* Background Effects */}
       <BackgroundSparkles zIndex={5} />
 
@@ -99,13 +99,15 @@ export default function BrandsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="mb-16 text-center"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-[#1CD4A7] via-white to-[#1CD4A7]">
+          <h1 className="mb-6 bg-gradient-to-r from-[#1CD4A7] via-white to-[#1CD4A7] bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
             Trusted Brands We Work With
           </h1>
-          <p className="text-gray-300 text-lg max-w-3xl mx-auto">
-            We partner with industry-leading manufacturers to ensure you receive the highest quality products and solutions for your home or business.
+          <p className="mx-auto max-w-3xl text-lg text-gray-300">
+            We partner with industry-leading manufacturers to ensure you receive
+            the highest quality products and solutions for your home or
+            business.
           </p>
         </motion.div>
 
@@ -114,7 +116,7 @@ export default function BrandsPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
           {brands.map((brand, index) => (
             <motion.div
@@ -125,12 +127,12 @@ export default function BrandsPage() {
             >
               <Link
                 href={brand.path}
-                className="block group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-6 transition-all duration-300 hover:shadow-lg hover:shadow-[#1CD4A7]/20 hover:-translate-y-1"
+                className="group relative block overflow-hidden rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#1CD4A7]/20"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#1CD4A7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
+                <div className="absolute inset-0 bg-gradient-to-br from-[#1CD4A7]/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
                 <div className="relative z-10">
-                  <div className="h-24 mb-4 relative">
+                  <div className="relative mb-4 h-24">
                     <Image
                       src={brand.logo}
                       alt={brand.name}
@@ -139,19 +141,17 @@ export default function BrandsPage() {
                       className="object-contain"
                     />
                   </div>
-                  
-                  <h3 className="text-xl font-semibold text-white mb-2">
+
+                  <h3 className="mb-2 text-xl font-semibold text-white">
                     {brand.name}
                   </h3>
-                  
-                  <p className="text-gray-300 mb-4">
-                    {brand.description}
-                  </p>
-                  
+
+                  <p className="mb-4 text-gray-300">{brand.description}</p>
+
                   <div className="flex items-center text-[#1CD4A7]">
                     <span className="mr-2">Learn More</span>
                     <svg
-                      className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200"
+                      className="h-4 w-4 transform transition-transform duration-200 group-hover:translate-x-1"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -171,5 +171,5 @@ export default function BrandsPage() {
         </motion.div>
       </div>
     </div>
-  );
-} 
+  )
+}

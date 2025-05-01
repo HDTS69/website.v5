@@ -1,6 +1,6 @@
 'use client'
 
-import ClientBackground from '@/app/components/ClientBackground'
+import { ClientBackground } from '@/src/components/ui/ClientBackground'
 import { motion } from 'framer-motion'
 import { Testimonials } from '@/src/components/ui/Testimonials'
 import { BookingForm } from '@/src/components/ui/BookingForm/BookingForm'

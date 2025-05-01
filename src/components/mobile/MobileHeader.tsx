@@ -1,12 +1,11 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { cn } from '@/lib/utils'
+import { cn } from '@/src/lib/utils'
 import { OpenNowIndicator } from '../ui/OpenNowIndicator'
-import { Phone } from 'lucide-react'
 
 export function MobileHeader() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -93,10 +92,12 @@ export function MobileHeader() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
+      setIsScrolled(window.scrollY > 0)
     }
 
     window.addEventListener('scroll', handleScroll)
+    handleScroll() // Check initial scroll position
+
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -107,8 +108,8 @@ export function MobileHeader() {
         {/* Left-aligned Icon Logo */}
         <div className="flex-shrink-0 pl-0">
           <Image
-            src="/images/logo.png"
-            alt="HD Trade Services"
+            src="/images/icon-logo.webp"
+            alt="HD Trade Services Logo"
             width={64}
             height={64}
             className="h-16 w-16"
@@ -168,9 +169,6 @@ export function MobileHeader() {
         className={cn(
           'fixed block shadow-md md:hidden',
           'transition-all duration-300 ease-in-out',
-          isScrolled 
-            ? "bg-black shadow-md backdrop-blur-sm" 
-            : "bg-transparent"
         )}
         style={{
           position: 'fixed',

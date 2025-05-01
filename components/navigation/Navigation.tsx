@@ -1,5 +1,5 @@
-import { NavBar } from "./DesktopNavigation"
-import { NavItem, ActionItem } from "@/types/navigation/types"
+import { NavBar } from './DesktopNavigation'
+import { NavItem, ActionItem } from '@/src/types/navigation/types'
 
 interface NavigationProps {
   items: NavItem[]
@@ -12,4 +12,4 @@ export function Navigation({ items, actionItems }: NavigationProps) {
       <NavBar items={items} actionItems={actionItems} />
     </>
   )
-} 
+}

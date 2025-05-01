@@ -1,14 +1,14 @@
-'use client';
+'use client'
 
-import React from 'react';
-import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout';
-import { ServiceSchema } from '@/components/ui/ServiceSchema';
-import { PaymentIcons } from '@/app/components/PaymentIcons';
+import React from 'react'
+import { ServiceDetailLayout } from '@/src/components/layouts/ServiceDetailLayout'
+import { ServiceSchema } from '@/src/components/ui/ServiceSchema'
+import { PaymentIcons } from '@/app/components/PaymentIcons'
 
 export default function WaterPressurePage() {
   return (
     <>
-      <ServiceSchema 
+      <ServiceSchema
         serviceName="Water Pressure Solutions Brisbane"
         description="Professional water pressure services in Brisbane. Our licensed plumbers provide expert solutions for all water pressure issues."
         serviceArea="Brisbane Water Pressure Local Business Queensland"
@@ -16,161 +16,162 @@ export default function WaterPressurePage() {
 
       <ServiceDetailLayout
         heroData={{
-          title: "Water Pressure Solutions",
-          subtitle: "Expert Pressure Services",
+          title: 'Water Pressure Solutions',
+          subtitle: 'Expert Pressure Services',
           description: `Our team provides <span class="font-bold text-white">professional water pressure services</span> with guaranteed results. We ensure <span class="font-bold text-white">optimal pressure</span> for your property.`,
-          bookOnlineLink: "#book",
-          callNowLink: "tel:1300HDTRADE"
+          bookOnlineLink: '#book',
+          callNowLink: 'tel:1300HDTRADE',
         }}
         bentoGridData={{
-          title: "Why Choose Our Service",
-          subtitle: "Professional & Reliable",
+          title: 'Why Choose Our Service',
+          subtitle: 'Professional & Reliable',
           items: [
             {
-              type: "featured",
-              title: "Professional",
-              description: "Expert solutions with advanced equipment.",
-              icon: "/icons/man-search-avatar.json",
-              colSpan: 2
+              type: 'featured',
+              title: 'Professional',
+              description: 'Expert solutions with advanced equipment.',
+              icon: '/icons/man-search-avatar.json',
+              colSpan: 2,
             },
             {
-              type: "standard",
-              title: "Quality Service",
-              description: "Solutions guaranteed.",
-              icon: "/icons/graduation-scroll.json"
+              type: 'standard',
+              title: 'Quality Service',
+              description: 'Solutions guaranteed.',
+              icon: '/icons/graduation-scroll.json',
             },
             {
-              type: "list",
-              title: "Pressure Services",
+              type: 'list',
+              title: 'Pressure Services',
               listItems: [
-                { icon: "pipe", text: "Pressure Testing" },
-                { icon: "valve", text: "Pressure Control" },
-                { icon: "meter", text: "System Optimization" },
-                { icon: "safety", text: "Maintenance" }
-              ]
+                { icon: 'pipe', text: 'Pressure Testing' },
+                { icon: 'valve', text: 'Pressure Control' },
+                { icon: 'meter', text: 'System Optimization' },
+                { icon: 'safety', text: 'Maintenance' },
+              ],
             },
             {
-              type: "payment",
-              title: "Flexible Payments",
+              type: 'payment',
+              title: 'Flexible Payments',
               paymentItems: [
                 {
-                  title: "Buy Now, Pay Later",
-                  description: "Split your payments with ease",
-                  icons: <PaymentIcons type="bnpl" />
+                  title: 'Buy Now, Pay Later',
+                  description: 'Split your payments with ease',
+                  icons: <PaymentIcons type="bnpl" />,
                 },
                 {
-                  title: "Secure Payments",
-                  description: "All major cards accepted",
-                  icons: <PaymentIcons type="cards" />
+                  title: 'Secure Payments',
+                  description: 'All major cards accepted',
+                  icons: <PaymentIcons type="cards" />,
                 },
                 {
-                  title: "Quick Tap & Go",
-                  description: "Fast, contactless convenience",
-                  icons: <PaymentIcons type="tap" />
-                }
-              ]
+                  title: 'Quick Tap & Go',
+                  description: 'Fast, contactless convenience',
+                  icons: <PaymentIcons type="tap" />,
+                },
+              ],
             },
             {
-              type: "guarantee",
-              title: "Our Guarantees",
-              icon: "/icons/star-smile.json",
+              type: 'guarantee',
+              title: 'Our Guarantees',
+              icon: '/icons/star-smile.json',
               guaranteeItems: [
-                "Same Day Service",
-                "100% Satisfaction Guarantee",
-                "Fixed Price Upfront",
-                "Licensed & Insured Team"
-              ]
-            }
-          ]
+                'Same Day Service',
+                '100% Satisfaction Guarantee',
+                'Fixed Price Upfront',
+                'Licensed & Insured Team',
+              ],
+            },
+          ],
         }}
         introData={{
-          title: "Water Pressure",
-          subtitle: "Professional Service",
+          title: 'Water Pressure',
+          subtitle: 'Professional Service',
           paragraph1: `Our expert team provides <span class="font-bold text-white">comprehensive water pressure solutions</span> for both residential and commercial properties. We ensure optimal pressure throughout your system.`,
-          paragraph2: `Using <span class="font-bold text-white">advanced equipment</span>, our licensed plumbers deliver effective solutions for all types of pressure issues.`
+          paragraph2: `Using <span class="font-bold text-white">advanced equipment</span>, our licensed plumbers deliver effective solutions for all types of pressure issues.`,
         }}
         issuesData={{
-          title: "Pressure Services",
-          subtitle: "Comprehensive Solutions",
-          introParagraph: "We provide professional services for all water pressure needs.",
+          title: 'Pressure Services',
+          subtitle: 'Comprehensive Solutions',
+          introParagraph:
+            'We provide professional services for all water pressure needs.',
           issues: [
             {
-              title: "Pressure Testing",
-              description: "Complete testing service.",
+              title: 'Pressure Testing',
+              description: 'Complete testing service.',
               bullets: [
-                "System assessment",
-                "Pressure measurement",
-                "Problem identification",
-                "Solution planning"
-              ]
+                'System assessment',
+                'Pressure measurement',
+                'Problem identification',
+                'Solution planning',
+              ],
             },
             {
-              title: "Pressure Control",
-              description: "Expert control solutions.",
+              title: 'Pressure Control',
+              description: 'Expert control solutions.',
               bullets: [
-                "Pressure regulation",
-                "Valve installation",
-                "System balancing",
-                "Performance testing"
-              ]
+                'Pressure regulation',
+                'Valve installation',
+                'System balancing',
+                'Performance testing',
+              ],
             },
             {
-              title: "Maintenance",
-              description: "Professional maintenance service.",
+              title: 'Maintenance',
+              description: 'Professional maintenance service.',
               bullets: [
-                "Regular checks",
-                "System optimization",
-                "Preventive care",
-                "Performance monitoring"
-              ]
-            }
-          ]
+                'Regular checks',
+                'System optimization',
+                'Preventive care',
+                'Performance monitoring',
+              ],
+            },
+          ],
         }}
         financeData={{
-          title: "Water Pressure",
-          subtitle: "Competitive & Transparent Pricing",
+          title: 'Water Pressure',
+          subtitle: 'Competitive & Transparent Pricing',
           description1: `We offer <span class="font-bold text-white">competitive pricing</span> for all our pressure services. Get upfront quotes with no hidden fees.`,
           description2: `Take advantage of our <span class="font-bold text-white">flexible payment options</span> to handle your pressure needs without financial stress.`,
           features: [
-            "Upfront Fixed Pricing",
-            "No Hidden Charges",
-            "Interest-Free Options",
-            "Senior Discounts"
-          ]
+            'Upfront Fixed Pricing',
+            'No Hidden Charges',
+            'Interest-Free Options',
+            'Senior Discounts',
+          ],
         }}
         ctaData={{
-          title: "Need Pressure Solutions?",
+          title: 'Need Pressure Solutions?',
           subtitle: "Don't Wait - Call Now",
           description: `Get your water pressure optimized professionally. Our <span class="font-bold text-white">expert team</span> is ready to help with advanced solutions.`,
-          buttonText: "Call Now",
-          buttonLink: "tel:1300HDTRADE"
+          buttonText: 'Call Now',
+          buttonLink: 'tel:1300HDTRADE',
         }}
         trustData={{
-          title: "Why Trust Our Service",
-          subtitle: "Licensed & Experienced Team",
+          title: 'Why Trust Our Service',
+          subtitle: 'Licensed & Experienced Team',
           factors: [
             {
-              icon: "/icons/shield-security.json",
-              title: "Licensed Plumbers",
-              description: "Fully licensed and certified professionals."
+              icon: '/icons/shield-security.json',
+              title: 'Licensed Plumbers',
+              description: 'Fully licensed and certified professionals.',
             },
             {
-              icon: "/icons/magnifier-zoom.json",
-              title: "Advanced Equipment",
-              description: "Latest pressure testing technology."
+              icon: '/icons/magnifier-zoom.json',
+              title: 'Advanced Equipment',
+              description: 'Latest pressure testing technology.',
             },
             {
-              icon: "/icons/star-smile.json",
-              title: "Guaranteed Work",
-              description: "100% satisfaction guarantee."
-            }
-          ]
+              icon: '/icons/star-smile.json',
+              title: 'Guaranteed Work',
+              description: '100% satisfaction guarantee.',
+            },
+          ],
         }}
         bookingData={{
-          title: "Book Your Service",
-          subtitle: "Fast & Easy Online Booking"
+          title: 'Book Your Service',
+          subtitle: 'Fast & Easy Online Booking',
         }}
       />
     </>
-  );
-} 
+  )
+}

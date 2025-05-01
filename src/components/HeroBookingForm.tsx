@@ -2,21 +2,21 @@
 
 import React, { useRef, useCallback, useState, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { cn } from '@/lib/utils'
+import { cn } from '@/src/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 
-import { WaveInput } from '@/components/ui/BookingForm/WaveInput'
-import { Dropdown } from '@/components/ui/BookingForm/Dropdown'
-import { DatePicker } from '@/components/ui/DatePicker' // Corrected path if DatePicker is reusable
-import { AddressInput } from '@/components/ui/BookingForm/AddressInput'
-import { useFormState } from '@/components/ui/BookingForm/useFormState'
-import { useFormValidation } from '@/components/ui/BookingForm/useFormValidation'
-import { useFormSubmission } from '@/components/ui/BookingForm/useFormSubmission'
+import { WaveInput } from '@/src/components/ui/BookingForm/WaveInput'
+import { Dropdown } from '@/src/components/ui/BookingForm/Dropdown'
+import { DatePicker } from '@/src/components/ui/DatePicker' // Corrected path if DatePicker is reusable
+import { AddressInput } from '@/src/components/ui/BookingForm/AddressInput'
+import { useFormState } from '@/src/components/ui/BookingForm/useFormState'
+import { useFormValidation } from '@/src/components/ui/BookingForm/useFormValidation'
+import { useFormSubmission } from '@/src/components/ui/BookingForm/useFormSubmission'
 import {
   PREFERRED_TIMES,
   URGENCY_OPTIONS,
-} from '@/components/ui/BookingForm/constants'
-import type { Service, FormState } from '@/components/ui/BookingForm/types' // Import Service type (string) and FormState
+} from '@/src/components/ui/BookingForm/constants'
+import type { Service, FormState } from '@/src/components/ui/BookingForm/types' // Import Service type (string) and FormState
 import { SERVICES, ServiceCategory } from '@/config/services' // Import ServiceCategory
 import { PHONE_PATTERNS, EMAIL_PATTERNS } from '@/utils/security'
 
@@ -97,8 +97,8 @@ export function HeroBookingForm() {
   // Initialize expanded categories based on initial service
   useEffect(() => {
     if (initialService) {
-      const initialCategory = SERVICES.find((cat) =>
-        cat.services.some((s) => s.name === initialService),
+      const initialCategory = SERVICES.find((cat: any) =>
+        cat.services.some((s: any) => s.name === initialService),
       )?.name
       if (initialCategory) {
         setExpandedCategories({ [initialCategory]: true })
@@ -383,7 +383,7 @@ export function HeroBookingForm() {
                         {SERVICES.map((category: ServiceCategory) => {
                           // Determine state for category checkbox
                           const allServicesInCategory = category.services.map(
-                            (s) => s.name,
+                            (s: any) => s.name,
                           )
                           const selectedServicesInCategory =
                             formData.services.filter((s) =>
@@ -466,22 +466,29 @@ export function HeroBookingForm() {
                                 <div className="pl-4">
                                   {category.services.map(
                                     (service: ConfigService) => (
-                                      <label
-                                        key={service.name}
-                                        className="flex cursor-pointer items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50"
+                                      <div
+                                        key={`${category.name}-${service.name}`}
+                                        className="flex items-center space-x-2"
                                       >
                                         <input
                                           type="checkbox"
+                                          id={`${category.name}-${service.name}`}
+                                          value={service.name}
                                           checked={formData.services.includes(
                                             service.name,
                                           )}
                                           onChange={() =>
                                             handleServiceChange(service.name)
                                           }
-                                          className="mr-2 accent-[#00E6CA]"
+                                          className="form-checkbox h-4 w-4 rounded border-gray-600 bg-gray-700 text-[#00E6CA] focus:ring-[#00E6CA] focus:ring-offset-0"
                                         />
-                                        {service.name}
-                                      </label>
+                                        <label
+                                          htmlFor={`${category.name}-${service.name}`}
+                                          className="text-sm text-white"
+                                        >
+                                          {service.name}
+                                        </label>
+                                      </div>
                                     ),
                                   )}
                                 </div>

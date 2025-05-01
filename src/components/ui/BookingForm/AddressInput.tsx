@@ -5,8 +5,8 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { WaveInput } from './WaveInput'
-import { cn } from '@/lib/utils'
-import { applyGooglePlacesStyles } from '@/lib/googlePlacesStyles'
+import { cn } from '@/src/lib/utils'
+import { applyGooglePlacesStyles } from '@/src/lib/googlePlacesStyles'
 // Removed unused icons FaMapMarkerAlt, MdEdit
 
 // Define the Google Maps API key

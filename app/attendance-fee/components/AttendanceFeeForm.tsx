@@ -1,23 +1,24 @@
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
-import {
-  PaymentElement,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js';
-import { type Appearance } from '@stripe/stripe-js';
-import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles';
+import { useState, useEffect } from 'react'
+import { loadStripe } from '@stripe/stripe-js'
+import { Elements } from '@stripe/react-stripe-js'
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import { type Appearance } from '@stripe/stripe-js'
+import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
 
 // Initialize Stripe outside of component to prevent multiple instances
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!, {
-  // Only include stripeAccount if you're using Stripe Connect
-  ...(process.env.NEXT_PUBLIC_STRIPE_ACCOUNT_ID ? {
-    stripeAccount: process.env.NEXT_PUBLIC_STRIPE_ACCOUNT_ID
-  } : {})
-});
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
+  {
+    // Only include stripeAccount if you're using Stripe Connect
+    ...(process.env.NEXT_PUBLIC_STRIPE_ACCOUNT_ID
+      ? {
+          stripeAccount: process.env.NEXT_PUBLIC_STRIPE_ACCOUNT_ID,
+        }
+      : {}),
+  },
+)
 
 // Define Stripe appearance configuration
 const appearance: Appearance = {
@@ -27,7 +28,8 @@ const appearance: Appearance = {
     colorBackground: '#1a1a1a',
     colorText: '#ffffff',
     colorDanger: '#ff4444',
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+    fontFamily:
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
     fontSizeBase: '16px',
     fontWeightNormal: '400',
     fontWeightMedium: '500',
@@ -57,24 +59,24 @@ const appearance: Appearance = {
       fontSmoothing: 'antialiased',
     },
   },
-};
+}
 
 const PaymentForm = () => {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [paymentError, setPaymentError] = useState<string | null>(null);
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const stripe = useStripe()
+  const elements = useElements()
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [paymentError, setPaymentError] = useState<string | null>(null)
+  const [paymentSuccess, setPaymentSuccess] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!stripe || !elements) {
-      return;
+      return
     }
 
-    setIsProcessing(true);
-    setPaymentError(null);
+    setIsProcessing(true)
+    setPaymentError(null)
 
     try {
       const { error } = await stripe.confirmPayment({
@@ -82,39 +84,42 @@ const PaymentForm = () => {
         confirmParams: {
           return_url: `${window.location.origin}/attendance-fee/success`,
         },
-      });
+      })
 
       if (error) {
-        setPaymentError(error.message || 'An error occurred with your payment.');
-        setIsProcessing(false);
+        setPaymentError(error.message || 'An error occurred with your payment.')
+        setIsProcessing(false)
       } else {
-        setPaymentSuccess(true);
+        setPaymentSuccess(true)
       }
     } catch (err) {
-      setPaymentError('An unexpected error occurred.');
-      setIsProcessing(false);
+      setPaymentError('An unexpected error occurred.')
+      setIsProcessing(false)
     }
-  };
+  }
 
   if (paymentSuccess) {
     return (
       <div className="text-center text-white">
-        <h2 className="text-2xl font-bold mb-4">Payment Successful!</h2>
-        <p>Thank you for your payment. You will receive a confirmation email shortly.</p>
+        <h2 className="mb-4 text-2xl font-bold">Payment Successful!</h2>
+        <p>
+          Thank you for your payment. You will receive a confirmation email
+          shortly.
+        </p>
       </div>
-    );
+    )
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <PaymentElement 
+      <PaymentElement
         options={{
-          layout: 'tabs'
+          layout: 'tabs',
         }}
       />
-      
+
       {paymentError && (
-        <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-sm">
+        <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-500">
           {paymentError}
         </div>
       )}
@@ -122,60 +127,62 @@ const PaymentForm = () => {
       <button
         type="submit"
         disabled={!stripe || isProcessing}
-        className="w-full bg-[#00E6CA] text-black font-semibold py-4 px-6 rounded-lg 
-                 disabled:opacity-50 disabled:cursor-not-allowed
-                 transition-all duration-200"
+        className="w-full rounded-lg bg-[#00E6CA] px-6 py-4 font-semibold text-black transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isProcessing ? 'Processing...' : 'Pay $120.00'}
       </button>
 
-      <div className="text-center text-sm text-gray-400 mt-4">
+      <div className="mt-4 text-center text-sm text-gray-400">
         <p>Secure payment powered by Stripe</p>
       </div>
     </form>
-  );
-};
+  )
+}
 
 const StripePaymentForm = () => {
-  const [clientSecret, setClientSecret] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [elementsKey, setElementsKey] = useState<number>(0);
+  const [clientSecret, setClientSecret] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [elementsKey, setElementsKey] = useState<number>(0)
 
   useEffect(() => {
     const initializePayment = async () => {
       try {
-        setIsLoading(true);
-        setError(null);
-        
+        setIsLoading(true)
+        setError(null)
+
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ amount: 12000 }), // Amount in cents
-        });
-        
+        })
+
         if (!response.ok) {
-          throw new Error('Failed to create payment intent');
+          throw new Error('Failed to create payment intent')
         }
-        
-        const data = await response.json();
+
+        const data = await response.json()
         if (!data.clientSecret) {
-          throw new Error('No client secret received');
+          throw new Error('No client secret received')
         }
 
-        setClientSecret(data.clientSecret);
+        setClientSecret(data.clientSecret)
         // Increment key to force Elements remount with new clientSecret
-        setElementsKey(prev => prev + 1);
+        setElementsKey((prev) => prev + 1)
       } catch (error) {
-        console.error('Payment initialization error:', error);
-        setError(error instanceof Error ? error.message : 'Failed to initialize payment');
+        console.error('Payment initialization error:', error)
+        setError(
+          error instanceof Error
+            ? error.message
+            : 'Failed to initialize payment',
+        )
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
+    }
 
-    initializePayment();
-  }, []);
+    initializePayment()
+  }, [])
 
   if (error) {
     return (
@@ -183,20 +190,20 @@ const StripePaymentForm = () => {
         <div className="absolute inset-0">
           <BackgroundSparkles useFixed={false} zIndex={5} />
         </div>
-        <div className="relative z-10 bg-gray-900/80 backdrop-blur-sm rounded-xl p-8 shadow-xl border border-gray-800">
+        <div className="relative z-10 rounded-xl border border-gray-800 bg-gray-900/80 p-8 shadow-xl backdrop-blur-sm">
           <div className="text-center text-red-500">
-            <h2 className="text-xl font-semibold mb-4">Payment Error</h2>
+            <h2 className="mb-4 text-xl font-semibold">Payment Error</h2>
             <p className="text-gray-400">{error}</p>
             <button
               onClick={() => window.location.reload()}
-              className="mt-4 bg-[#00E6CA] text-black font-semibold py-2 px-4 rounded-lg"
+              className="mt-4 rounded-lg bg-[#00E6CA] px-4 py-2 font-semibold text-black"
             >
               Try Again
             </button>
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   if (isLoading || !clientSecret) {
@@ -205,34 +212,37 @@ const StripePaymentForm = () => {
         <div className="absolute inset-0">
           <BackgroundSparkles useFixed={false} zIndex={5} />
         </div>
-        <div className="relative z-10 bg-gray-900/80 backdrop-blur-sm rounded-xl p-8 shadow-xl border border-gray-800">
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-[#00E6CA]"></div>
+        <div className="relative z-10 rounded-xl border border-gray-800 bg-gray-900/80 p-8 shadow-xl backdrop-blur-sm">
+          <div className="flex min-h-[400px] items-center justify-center">
+            <div className="h-12 w-12 animate-spin rounded-full border-t-2 border-[#00E6CA]"></div>
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   const options = {
     clientSecret,
     appearance,
-  };
+  }
 
   return (
     <div className="relative">
       <div className="absolute inset-0">
         <BackgroundSparkles useFixed={false} zIndex={5} />
       </div>
-      
-      <div className="relative z-10 bg-gray-900/80 backdrop-blur-sm rounded-xl p-8 shadow-xl border border-gray-800">
+
+      <div className="relative z-10 rounded-xl border border-gray-800 bg-gray-900/80 p-8 shadow-xl backdrop-blur-sm">
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-white">Payment Details</h2>
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-xl font-semibold text-white">
+              Payment Details
+            </h2>
             <span className="text-2xl font-bold text-[#00E6CA]">$120.00</span>
           </div>
-          <p className="text-gray-400 text-sm">
-            Please complete the payment form below to process your attendance fee.
+          <p className="text-sm text-gray-400">
+            Please complete the payment form below to process your attendance
+            fee.
           </p>
         </div>
 
@@ -241,7 +251,7 @@ const StripePaymentForm = () => {
         </Elements>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default StripePaymentForm; 
+export default StripePaymentForm

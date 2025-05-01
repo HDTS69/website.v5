@@ -12,6 +12,7 @@ import {
 import { SparklesCore } from './SparklesCore'
 import { AnimatedBookNowButton } from './AnimatedBookNowButton'
 import { BackgroundSparkles } from './BackgroundSparkles'
+import { GoogleReviews } from './GoogleReviews'
 
 export function AboutUs() {
   return (

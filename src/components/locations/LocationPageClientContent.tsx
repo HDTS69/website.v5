@@ -1,57 +1,66 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { ClientOnly } from '@/components/ui/ClientOnly'
+import { ClientOnly } from '@/src/components/ui/ClientOnly'
 
 // Dynamically import components
 const WhyChooseUs = dynamic(
-  () => import('@/components/ui/WhyChooseUs').then((mod) => mod.WhyChooseUs),
+  () =>
+    import('@/src/components/ui/WhyChooseUs').then((mod) => mod.WhyChooseUs),
   { ssr: false },
 )
 const WhyChooseUsMobile = dynamic(
   () =>
-    import('@/components/mobile/WhyChooseUsMobile').then(
+    import('@/src/components/mobile/WhyChooseUsMobile').then(
       (mod) => mod.WhyChooseUsMobile,
     ),
   { ssr: false },
 )
 const Testimonials = dynamic(
-  () => import('@/components/ui/Testimonials').then((mod) => mod.Testimonials),
+  () =>
+    import('@/src/components/ui/Testimonials').then((mod) => mod.Testimonials),
   { ssr: false },
 )
-const ServiceTabs = dynamic(() => import('@/components/services/ServiceTabs'), {
-  ssr: false,
-})
+const ServiceTabs = dynamic(
+  () => import('@/src/components/services/ServiceTabs'),
+  {
+    ssr: false,
+  },
+)
 const BrandCarousel = dynamic(
   () =>
-    import('@/components/ui/BrandCarousel').then((mod) => mod.BrandCarousel),
+    import('@/src/components/ui/BrandCarousel').then(
+      (mod) => mod.BrandCarousel,
+    ),
   { ssr: false },
 )
 const FAQ = dynamic(
-  () => import('@/components/ui/FAQ').then((mod) => mod.FAQ),
+  () => import('@/src/components/ui/FAQ').then((mod) => mod.FAQ),
   { ssr: false },
 )
 const SparklesCore = dynamic(
-  () => import('@/components/ui/SparklesCore').then((mod) => mod.SparklesCore),
+  () =>
+    import('@/src/components/ui/SparklesCore').then((mod) => mod.SparklesCore),
   { ssr: false },
 )
 const AboutUs = dynamic(
-  () => import('@/components/ui/AboutUs').then((mod) => mod.AboutUs),
+  () => import('@/src/components/ui/AboutUs').then((mod) => mod.AboutUs),
   { ssr: false },
 )
 const OurProcess = dynamic(
-  () => import('@/components/ui/OurProcess').then((mod) => mod.OurProcess),
+  () => import('@/src/components/ui/OurProcess').then((mod) => mod.OurProcess),
   { ssr: false },
 )
 const FoundersMessage = dynamic(
   () =>
-    import('@/components/ui/FoundersMessage').then(
+    import('@/src/components/ui/FoundersMessage').then(
       (mod) => mod.FoundersMessage,
     ),
   { ssr: false },
 )
 const BookingForm = dynamic(
-  () => import('@/components/ui/BookingForm').then((mod) => mod.BookingForm),
+  () =>
+    import('@/src/components/ui/BookingForm').then((mod) => mod.BookingForm),
   { ssr: false },
 )
 

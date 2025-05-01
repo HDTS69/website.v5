@@ -1,18 +1,18 @@
-'use client';
+'use client'
 
-import Header from "@/components/ui/header";
-import { MobileHeader } from "@/components/mobile";
-import Footer from "@/components/ui/footer";
-import { Navigation } from "@/components/ui/Navigation";
-import { navigationItems, actionItems } from "@/lib/navigation";
+import Header from '@/src/components/ui/header'
+import { MobileHeader } from '@/src/components/mobile'
+import Footer from '@/src/components/ui/footer'
+import { Navigation } from '@/src/components/ui/Navigation'
+import { navigationItems, actionItems } from '@/src/lib/navigation'
 
 export default function ServicesLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex min-h-screen flex-col">
       {/* Desktop Header */}
       <div className="hidden md:block">
         <Header />
@@ -33,5 +33,5 @@ export default function ServicesLayout({
       </main>
       <Footer />
     </div>
-  );
+  )
 }

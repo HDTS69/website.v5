@@ -1,10 +1,10 @@
-'use client';
+'use client'
 
-import HomePageClientContent from '@/components/homepage/HomePageClientContent';
-import { LocationHero } from '@/components/locations/LocationHero';
+import HomePageClientContent from '@/src/components/homepage/HomePageClientContent'
+import { LocationHero } from '@/src/components/locations/LocationHero'
 
 interface SuburbPageProps {
-  suburb: string;
+  suburb: string
 }
 
 export default function SuburbPage({ suburb }: SuburbPageProps) {
@@ -13,5 +13,5 @@ export default function SuburbPage({ suburb }: SuburbPageProps) {
       <LocationHero suburb={suburb} />
       <HomePageClientContent />
     </>
-  );
-} 
+  )
+}
