@@ -15,7 +15,6 @@ import {
 import { HeroBookingForm } from '@/components/HeroBookingForm'
 import { GoogleReviews } from '@/components/ui/GoogleReviews'
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
-import heroImage from '@/public/images/hayden-hero-fixed.webp'
 
 interface HeroProps {
   isLocationPage?: boolean
@@ -166,12 +165,14 @@ export function Hero({ isLocationPage = false }: HeroProps) {
             >
               <div className="relative h-full w-full">
                 <Image
-                  src={heroImage}
-                  className="absolute inset-0 h-full w-full object-cover object-center"
+                  src="/images/hayden-hero-fixed.webp"
+                  className="object-contain object-left-bottom"
                   alt="HD Trade Services - Trusted Tradesmen"
                   fill
+                  priority
+                  loading="eager"
                   sizes={IMAGE_SIZES.HERO_PORTRAIT}
-                  {...getImageLoadingProps(ImagePriority.CRITICAL)}
+                  quality={95}
                 />
                 {/* Add subtle glow effect */}
                 <motion.div
