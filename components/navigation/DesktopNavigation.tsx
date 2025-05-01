@@ -11,9 +11,9 @@ import {
   Phone,
   Calendar,
 } from 'lucide-react'
-import { cn, scrollToElement } from '@/src/lib/utils'
+import { cn } from '@/src/lib/utils'
 import type { NavItem, ActionItem } from '@/types/navigation/types'
-import { useMediaQuery } from '@src/hooks/useMediaQuery'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import DesktopLogo from '@/src/components/ui/DesktopLogo'
 
 interface NavBarProps {
