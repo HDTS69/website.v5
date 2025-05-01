@@ -2,11 +2,11 @@
 
 import { useEffect, Suspense } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
-import Header from '@/src/components/ui/header'
-import Footer from '@/src/components/ui/footer'
-import { Navigation } from '@/src/components/ui/Navigation'
-import { navigationItems, actionItems } from '@/src/lib/navigation'
-import { MobileHeader } from '@/src/components/mobile/MobileHeader'
+import Header from '@/components/ui/header'
+import Footer from '@/components/ui/footer'
+import { Navigation } from '@/components/ui/Navigation'
+import { navigationItems, actionItems } from '@/lib/navigation'
+import { MobileHeader } from '@/components/mobile/MobileHeader'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 

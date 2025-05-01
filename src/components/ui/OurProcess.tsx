@@ -7,7 +7,7 @@ import {
   getImageLoadingProps,
   IMAGE_SIZES,
   ImagePriority,
-} from '@/src/utils/imageLoading'
+} from '@/utils/imageLoading'
 import { SparklesCore } from './SparklesCore'
 import { AnimatedBookNowButton } from './AnimatedBookNowButton'
 import { BackgroundSparkles } from './BackgroundSparkles'

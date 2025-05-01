@@ -2,21 +2,21 @@
 
 import React, { useRef, useCallback, useState, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { cn } from '@/src/lib/utils'
+import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 
-import { WaveInput } from '@/src/components/ui/BookingForm/WaveInput'
-import { Dropdown } from '@/src/components/ui/BookingForm/Dropdown'
-import { DatePicker } from '@/src/components/ui/DatePicker' // Corrected path if DatePicker is reusable
-import { AddressInput } from '@/src/components/ui/BookingForm/AddressInput'
-import { useFormState } from '@/src/components/ui/BookingForm/useFormState'
-import { useFormValidation } from '@/src/components/ui/BookingForm/useFormValidation'
-import { useFormSubmission } from '@/src/components/ui/BookingForm/useFormSubmission'
+import { WaveInput } from '@/components/ui/BookingForm/WaveInput'
+import { Dropdown } from '@/components/ui/BookingForm/Dropdown'
+import { DatePicker } from '@/components/ui/DatePicker' // Corrected path if DatePicker is reusable
+import { AddressInput } from '@/components/ui/BookingForm/AddressInput'
+import { useFormState } from '@/components/ui/BookingForm/useFormState'
+import { useFormValidation } from '@/components/ui/BookingForm/useFormValidation'
+import { useFormSubmission } from '@/components/ui/BookingForm/useFormSubmission'
 import {
   PREFERRED_TIMES,
   URGENCY_OPTIONS,
-} from '@/src/components/ui/BookingForm/constants'
-import type { Service, FormState } from '@/src/components/ui/BookingForm/types' // Import Service type (string) and FormState
+} from '@/components/ui/BookingForm/constants'
+import type { Service, FormState } from '@/components/ui/BookingForm/types' // Import Service type (string) and FormState
 import { SERVICES, ServiceCategory } from '@/config/services' // Import ServiceCategory
 import { PHONE_PATTERNS, EMAIL_PATTERNS } from '@/utils/security'
 

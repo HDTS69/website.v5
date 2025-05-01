@@ -2,9 +2,9 @@
 
 import ClientBackground from '@/app/components/ClientBackground'
 import { motion } from 'framer-motion'
-import { Testimonials } from '@/src/components/ui/Testimonials'
-import { BookingForm } from '@/src/components/ui/BookingForm/BookingForm'
-import { GoogleReviews } from '@/src/components/ui/GoogleReviews'
+import { Testimonials } from '@/components/ui/Testimonials'
+import { BookingForm } from '@/components/ui/BookingForm/BookingForm'
+import { GoogleReviews } from '@/components/ui/GoogleReviews'
 import { useEffect } from 'react'
 import Image from 'next/image'
 

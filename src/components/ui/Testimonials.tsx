@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { cn } from '@/src/lib/utils'
+import { cn } from '@/lib/utils'
 
 // Interfaces for type safety
 interface Review {

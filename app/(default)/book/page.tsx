@@ -4,7 +4,7 @@ import React from 'react'
 import { HeroBookingForm } from '@/components/HeroBookingForm'
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 // Footer is handled by the layout
-// import Footer from '@/src/components/ui/footer';
+// import Footer from '@/components/ui/footer';
 
 export default function BookingPage() {
   return (

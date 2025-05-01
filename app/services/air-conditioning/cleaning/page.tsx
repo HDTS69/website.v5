@@ -1,4 +1,4 @@
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 import Link from 'next/link'
 import { PaymentIcons } from '@/app/components/PaymentIcons'
 

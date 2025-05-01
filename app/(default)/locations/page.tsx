@@ -2,7 +2,7 @@ import React from 'react'
 import dynamic from 'next/dynamic'
 import { Hero } from '@/components/Hero'
 import type { Metadata } from 'next'
-import LocationPageClientContent from '@/src/components/locations/LocationPageClientContent'
+import LocationPageClientContent from '@/components/locations/LocationPageClientContent'
 
 export const metadata: Metadata = {
   title: 'Local Service Areas - HD Trade Services',

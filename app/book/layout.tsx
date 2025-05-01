@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import ClientBookingLayout from '@/src/components/book/ClientBookingLayout'
+import ClientBookingLayout from '@/components/book/ClientBookingLayout'
 
 export const metadata: Metadata = {
   title: 'Book Online - HD Trade Services',

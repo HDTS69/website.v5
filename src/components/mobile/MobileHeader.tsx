@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { cn } from '@/src/lib/utils'
+import { cn } from '@/lib/utils'
 import { OpenNowIndicator } from '../ui/OpenNowIndicator'
 
 export function MobileHeader() {

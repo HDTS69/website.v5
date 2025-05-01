@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { cn } from '@/src/lib/utils'
+import { cn } from '@/lib/utils'
 
 interface EmergencyService {
   id: string

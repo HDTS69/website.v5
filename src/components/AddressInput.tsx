@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useGoogleMaps } from '@/src/hooks/useGoogleMaps'
+import { useGoogleMaps } from '@/hooks/useGoogleMaps'
 
 interface AddressInputProps {
   value: string

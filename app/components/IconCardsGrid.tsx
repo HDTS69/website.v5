@@ -4,9 +4,9 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { cn } from '@/src/lib/utils'
+import { cn } from '@/lib/utils'
 import LordIcon from '@/app/components/LordIcon'
-import { Card, CardContent } from '@/src/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 
 interface IconCard {
   title: string

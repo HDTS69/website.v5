@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import Analytics from '@/src/components/ui/Analytics'
+import Analytics from '@/components/ui/Analytics'
 
 // Silent version of the particle debugger without console logs
 function ParticleDebugger() {

@@ -2,10 +2,10 @@
 
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { SparklesCore } from '@/src/components/ui/SparklesCore'
+import { SparklesCore } from '@/components/ui/SparklesCore'
 import Link from 'next/link'
-import { AnimatedBookNowButton } from '@/src/components/ui/AnimatedBookNowButton'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+import { AnimatedBookNowButton } from '@/components/ui/AnimatedBookNowButton'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 
 // Custom styles for the animated buttons
 const customButtonStyles = `

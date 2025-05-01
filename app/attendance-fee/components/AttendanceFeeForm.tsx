@@ -5,7 +5,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { type Appearance } from '@stripe/stripe-js'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 
 // Initialize Stripe outside of component to prevent multiple instances
 const stripePromise = loadStripe(

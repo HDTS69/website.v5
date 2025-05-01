@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import Header from '@/src/components/ui/header'
-import { MobileHeader } from '@/src/components/mobile'
+import Header from '@/components/ui/header'
+import { MobileHeader } from '@/components/mobile'
 import AuthBg from '@/public/images/auth-bg.svg'
 
 export default function AuthLayout({

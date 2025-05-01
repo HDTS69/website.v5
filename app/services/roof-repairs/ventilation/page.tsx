@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
-import { ServiceDetailLayout } from '@/src/components/layouts/ServiceDetailLayout'
-import { ServiceSchema } from '@/src/components/ui/ServiceSchema'
+import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout'
+import { ServiceSchema } from '@/components/ui/ServiceSchema'
 import { PaymentIcons } from '@/app/components/PaymentIcons'
 
 export default function RoofVentilationPage() {

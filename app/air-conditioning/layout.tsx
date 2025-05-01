@@ -1,8 +1,8 @@
 'use client'
 
-import { Navigation } from '@/src/components/ui/Navigation'
-import { navigationItems, actionItems } from '@/src/lib/navigation'
-import Footer from '@/src/components/ui/footer'
+import { Navigation } from '@/components/ui/Navigation'
+import { navigationItems, actionItems } from '@/lib/navigation'
+import Footer from '@/components/ui/footer'
 
 export default function AirConditioningLayout({
   children,

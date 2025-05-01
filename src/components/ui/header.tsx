@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { cn } from '@/src/lib/utils'
+import { cn } from '@/lib/utils'
 import { motion } from 'framer-motion'
 import {
   getImageLoadingProps,
   IMAGE_SIZES,
   ImagePriority,
-} from '@/src/utils/imageLoading'
+} from '@/utils/imageLoading'
 import { OpenNowIndicator } from './OpenNowIndicator'
 import DesktopLogo from './DesktopLogo'
 

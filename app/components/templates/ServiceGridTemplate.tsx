@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
 import LordIcon from '@/app/components/LordIcon'
-import { getImageLoadingProps, ImagePriority } from '@/src/utils/imageLoading'
+import { getImageLoadingProps, ImagePriority } from '@/utils/imageLoading'
 
 interface Service {
   title: string
@@ -81,7 +81,7 @@ export function ServiceGridTemplate({ services }: ServiceGridTemplateProps) {
 /*
 Example usage in a service page:
 
-import { ServiceGridTemplate } from '@/src/components/templates/ServiceGridTemplate';
+import { ServiceGridTemplate } from '@/components/templates/ServiceGridTemplate';
 
 export default function ServicePage() {
   return (

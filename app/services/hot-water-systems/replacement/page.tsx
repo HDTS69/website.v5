@@ -2,10 +2,10 @@ import { Metadata } from 'next'
 import {
   ServiceDetailLayout,
   ServiceDetailLayoutProps,
-} from '@/src/components/layouts/ServiceDetailLayout'
+} from '@/components/layouts/ServiceDetailLayout'
 import { PaymentIcons } from '@/app/components/PaymentIcons'
 import { FaTools } from 'react-icons/fa'
-import { ServiceSchema } from '@/src/components/ui/ServiceSchema'
+import { ServiceSchema } from '@/components/ui/ServiceSchema'
 
 export const metadata: Metadata = {
   title: 'Hot Water System Replacement Brisbane | Expert Solutions',

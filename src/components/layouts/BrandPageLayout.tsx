@@ -22,8 +22,8 @@ import {
   Users,
   Wrench,
 } from 'lucide-react'
-import { cn } from '@/src/lib/utils'
-import { navigationItems, actionItems } from '@/src/lib/navigation'
+import { cn } from '@/lib/utils'
+import { navigationItems, actionItems } from '@/lib/navigation'
 import { getImageLoadingProps, ImagePriority } from '@/utils/imageLoading'
 
 interface Feature {

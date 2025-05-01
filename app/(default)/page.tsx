@@ -2,8 +2,8 @@
 import { Hero } from '@/components/Hero'
 // Static imports removed - they are now in HomePageClientContent
 import type { Metadata } from 'next'
-// import { ClientOnly } from '@/src/components/ui/ClientOnly'; // Moved to client component
-import HomePageClientContent from '@/src/components/homepage/HomePageClientContent' // Import the new wrapper
+// import { ClientOnly } from '@/components/ui/ClientOnly'; // Moved to client component
+import HomePageClientContent from '@/components/homepage/HomePageClientContent' // Import the new wrapper
 
 // Dynamic imports removed - they are now in HomePageClientContent
 

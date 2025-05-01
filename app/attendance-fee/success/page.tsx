@@ -1,9 +1,9 @@
 'use client'
 
 import React, { Suspense } from 'react'
-import Header from '@/src/components/ui/header'
-import Footer from '@/src/components/ui/footer'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+import Header from '@/components/ui/header'
+import Footer from '@/components/ui/footer'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 import { PaymentVerification } from './PaymentVerification'
 
 export default function PaymentSuccessPage() {

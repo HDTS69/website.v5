@@ -1,4 +1,4 @@
-import { SparklesCore } from '@/src/components/ui/SparklesCore'
+import { SparklesCore } from '@/components/ui/SparklesCore'
 import Link from 'next/link'
 import { PaymentIcons } from '@/app/components/PaymentIcons'
 

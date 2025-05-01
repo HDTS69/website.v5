@@ -1,10 +1,10 @@
 'use client'
 
-import Header from '@/src/components/ui/header'
-import { MobileHeader } from '@/src/components/mobile/MobileHeader'
-import { Navigation } from '@/src/components/ui/Navigation'
-import { navigationItems, actionItems } from '@/src/lib/navigation'
-import Footer from '@/src/components/ui/footer'
+import Header from '@/components/ui/header'
+import { MobileHeader } from '@/components/mobile/MobileHeader'
+import { Navigation } from '@/components/ui/Navigation'
+import { navigationItems, actionItems } from '@/lib/navigation'
+import Footer from '@/components/ui/footer'
 
 export default function SuburbLayout({
   children,

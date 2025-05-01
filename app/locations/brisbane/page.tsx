@@ -1,6 +1,6 @@
 'use client'
 
-import LocationLayout from '@/src/components/layouts/LocationLayout'
+import LocationLayout from '@/components/layouts/LocationLayout'
 
 export default function BrisbanePage() {
   const locationData = {

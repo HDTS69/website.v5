@@ -2,8 +2,8 @@
 
 import React from 'react'
 import { PaymentIcons } from '@/app/components/PaymentIcons'
-import ServiceDetailLayout from '@/src/components/layouts/ServiceDetailLayout'
-import type { ServiceDetailLayoutProps } from '@/src/components/layouts/ServiceDetailLayout'
+import ServiceDetailLayout from '@/components/layouts/ServiceDetailLayout'
+import type { ServiceDetailLayoutProps } from '@/components/layouts/ServiceDetailLayout'
 import {
   FaTools,
   FaMoneyBillWave,

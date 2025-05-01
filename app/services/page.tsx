@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useInView } from 'framer-motion'
-import { SparklesCore } from '@/src/components/ui/SparklesCore'
+import { SparklesCore } from '@/components/ui/SparklesCore'
 import Link from 'next/link'
 import {
   Wrench,
@@ -18,16 +18,16 @@ import {
   ArrowRight,
 } from 'lucide-react'
 import ServiceTabs from '@/components/services/ServiceTabs'
-import { WhyChooseUs } from '@/src/components/ui/WhyChooseUs'
-import { Testimonials } from '@/src/components/ui/Testimonials'
-import { BrandCarousel } from '@/src/components/ui/BrandCarousel'
-import { FAQ } from '@/src/components/ui/FAQ'
-import { ServiceSchema } from '@/src/components/ui/ServiceSchema'
-import { ServiceRequestForm } from '@/src/components/ui/ServiceRequestForm'
+import { WhyChooseUs } from '@/components/ui/WhyChooseUs'
+import { Testimonials } from '@/components/ui/Testimonials'
+import { BrandCarousel } from '@/components/ui/BrandCarousel'
+import { FAQ } from '@/components/ui/FAQ'
+import { ServiceSchema } from '@/components/ui/ServiceSchema'
+import { ServiceRequestForm } from '@/components/ui/ServiceRequestForm'
 import { PaymentIcons } from '@/app/components/PaymentIcons'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 
 // Dynamically import the BookingForm component with SSR disabled
 const BookingForm = dynamic(
