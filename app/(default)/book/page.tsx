@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
-import { HeroBookingForm } from '@/src/components/HeroBookingForm'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+import { HeroBookingForm } from '@/components/HeroBookingForm'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 // Footer is handled by the layout
 // import Footer from '@/src/components/ui/footer';
 

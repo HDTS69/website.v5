@@ -3,9 +3,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Star, ExternalLink } from 'lucide-react'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
-import { Testimonials } from '@/src/components/ui/Testimonials'
-import { GoogleReviews } from '@/src/components/ui/GoogleReviews'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
+import { Testimonials } from '@/components/ui/Testimonials'
+import { GoogleReviews } from '@/components/ui/GoogleReviews'
 import Link from 'next/link'
 
 // Common Background Wrapper
