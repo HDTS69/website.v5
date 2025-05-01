@@ -5,8 +5,9 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { WaveInput } from './WaveInput'
-import { cn } from '@/src/lib/utils'
-import { applyGooglePlacesStyles } from '@/src/lib/googlePlacesStyles'
+import { cn } from '@/lib/utils'
+import { applyGooglePlacesStyles } from '@/lib/googlePlacesStyles'
+import { Loader } from '@googlemaps/js-api-loader'
 // Removed unused icons FaMapMarkerAlt, MdEdit
 
 // Define the Google Maps API key
@@ -116,19 +117,53 @@ export function AddressInput({
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null)
   const manualEntryRef = useRef<HTMLDivElement>(null)
   const [isGoogleAddress, setIsGoogleAddress] = useState(false)
+  const [mapsApiLoaded, setMapsApiLoaded] = useState(false)
+  const observerRef = useRef<MutationObserver | null>(null)
 
-  // Initialize Google Maps Autocomplete when the component mounts
+  useEffect(() => {
+    if (manualEntry || !GOOGLE_MAPS_API_KEY) {
+      if (autocompleteRef.current) {
+        google.maps.event.clearInstanceListeners(autocompleteRef.current)
+        autocompleteRef.current = null
+      }
+      if (observerRef.current) {
+        observerRef.current.disconnect()
+        observerRef.current = null
+      }
+      setMapsApiLoaded(false)
+      return
+    }
+
+    if (!mapsApiLoaded && !manualEntry) {
+      const loader = new Loader({
+        apiKey: GOOGLE_MAPS_API_KEY,
+        version: 'weekly',
+        libraries: ['places'],
+      })
+
+      console.log('[AddressInput] Loading Google Maps API...')
+      loader
+        .load()
+        .then((google) => {
+          console.log('[AddressInput] Google Maps API loaded successfully.')
+          setMapsApiLoaded(true)
+        })
+        .catch((e) => {
+          console.error('[AddressInput] Error loading Google Maps API:', e)
+        })
+    }
+  }, [manualEntry, mapsApiLoaded])
+
   useEffect(() => {
     if (
+      mapsApiLoaded &&
       !manualEntry &&
-      window.google?.maps?.places &&
       addressRef.current &&
       !autocompleteRef.current
     ) {
       console.log(
-        'Initializing Google Maps Autocomplete Service with SEQ Bounds...',
+        '[AddressInput] Initializing Google Maps Autocomplete Service with SEQ Bounds...',
       )
-      // Initialize Google Places Autocomplete
       const autocomplete = new google.maps.places.Autocomplete(
         addressRef.current,
         {
@@ -144,10 +179,11 @@ export function AddressInput({
           strictBounds: true,
         },
       )
-
       autocompleteRef.current = autocomplete
 
-      // Create a MutationObserver to watch for the pac-container
+      if (observerRef.current) {
+        observerRef.current.disconnect()
+      }
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           mutation.addedNodes.forEach((node) => {
@@ -155,20 +191,17 @@ export function AddressInput({
               node instanceof HTMLElement &&
               node.classList.contains('pac-container')
             ) {
-              // Apply custom styles to the autocomplete dropdown
-              applyGooglePlacesStyles(
-                node as HTMLElement,
-                addressRef.current as HTMLElement,
+              console.log(
+                '[AddressInput] pac-container added, applying styles.',
               )
+              applyGooglePlacesStyles(node, addressRef.current!)
             }
           })
         })
       })
-
-      // Start observing the document body for added nodes
       observer.observe(document.body, { childList: true, subtree: true })
+      observerRef.current = observer
 
-      // Set up event listener for place selection
       autocomplete.addListener('place_changed', () => {
         const place = autocomplete.getPlace()
         if (place?.formatted_address) {
@@ -196,15 +229,22 @@ export function AddressInput({
       })
 
       return () => {
-        console.log('Cleaning up Autocomplete listener...')
-        if (autocompleteRef.current) {
+        console.log(
+          '[AddressInput] Cleaning up Autocomplete instance and listeners...',
+        )
+        if (google?.maps?.event && autocompleteRef.current) {
           google.maps.event.clearInstanceListeners(autocompleteRef.current)
+          const pacContainers = document.querySelectorAll('.pac-container')
+          pacContainers.forEach((container) => container.remove())
         }
-        observer.disconnect()
+        if (observerRef.current) {
+          observerRef.current.disconnect()
+          observerRef.current = null
+        }
         autocompleteRef.current = null
       }
     }
-  }, [manualEntry, onChange])
+  }, [mapsApiLoaded, manualEntry, onChange])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e)
@@ -290,46 +330,6 @@ export function AddressInput({
     }
     return true
   }
-
-  useEffect(() => {
-    console.log(
-      '[AddressInput] useEffect triggered. manualEntry:',
-      manualEntry,
-      'addressRef.current:',
-      !!addressRef.current,
-    )
-    if (manualEntry || !addressRef.current) return
-
-    console.log('[AddressInput] Setting up MutationObserver...')
-    const observer = new MutationObserver((mutations) => {
-      console.log('[AddressInput] MutationObserver callback fired.')
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          if (
-            node instanceof HTMLElement &&
-            node.classList.contains('pac-container')
-          ) {
-            console.log(
-              '[AddressInput] Found new pac-container, applying styles...',
-            )
-            applyGooglePlacesStyles(node, addressRef.current)
-            console.log('[AddressInput] Styles applied successfully.')
-          }
-        })
-      })
-    })
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    })
-    console.log('[AddressInput] MutationObserver is now observing.')
-
-    return () => {
-      console.log('[AddressInput] Cleaning up MutationObserver.')
-      observer.disconnect()
-    }
-  }, [manualEntry])
 
   return (
     <div className="relative mb-6 w-full">
