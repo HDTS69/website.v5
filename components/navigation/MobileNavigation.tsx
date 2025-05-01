@@ -1,92 +1,235 @@
-import { useState } from "react";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
-import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
+import React, { useState, useEffect } from 'react';
+import { Menu, X, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+import Link from 'next/link';
+import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
 
+// Re-use the NavigationItem interface (or import if defined elsewhere)
 interface NavigationItem {
-  name: string;
-  url: string;
+  label: string;
+  href?: string;
+  dropdownItems?: NavigationItem[];
+  subDropdownItems?: NavigationItem[];
 }
 
-interface ActionItem extends NavigationItem {
-  icon: React.ComponentType<{ className?: string }>;
-  isHighlighted?: boolean;
+interface MobileNavigationProps {
+  items: NavigationItem[];
 }
 
-const navigationItems: NavigationItem[] = [
-  { name: "Home", url: "/" },
-  { name: "Services", url: "/services" },
-  { name: "About", url: "/about" },
-  { name: "Contact", url: "/contact" }
-];
+const MobileNavigation: React.FC<MobileNavigationProps> = ({ items }: MobileNavigationProps) => {
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
 
-const actionItems: ActionItem[] = [
-  { 
-    name: "Book Online",
-    url: "/book",
-    icon: Menu,
-    isHighlighted: true
+  // Close menu on screen resize if switching to desktop
+  useEffect(() => {
+    if (!isMobile && isOpen) {
+      setIsOpen(false);
+    }
+  }, [isMobile, isOpen]);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  // Reset expanded items when menu closes
+  useEffect(() => {
+    if (!isOpen) {
+      setExpandedItems({});
+    }
+  }, [isOpen]);
+
+  if (!isMobile) {
+    return null; // Don't render on desktop
   }
-];
 
-export function MobileNavigation() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const toggleMenu = (): void => setIsOpen(!isOpen);
 
-  const handleBookingClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    setIsOpen(false);
-    router.push("/book");
+  const toggleExpandItem = (itemKey: string): void => {
+    setExpandedItems(prev => ({
+      ...prev,
+      [itemKey]: !prev[itemKey]
+    }));
+  };
+
+  const renderNavLinks = (navItems: NavigationItem[], level = 0): React.ReactNode[] => {
+    return navItems.map((item, index) => {
+      const itemKey = `${item.label}-${level}-${index}`;
+      const hasChildren = !!item.dropdownItems?.length || !!item.subDropdownItems?.length;
+      const isExpanded = expandedItems[itemKey];
+      
+      return (
+        <div key={itemKey} className="py-1">
+          <div className="flex items-center">
+            {!hasChildren && item.href ? (
+              <Link 
+                href={item.href}
+                className={cn(
+                  "block w-full py-3 text-base font-medium transition-colors",
+                  "text-gray-800 hover:text-black active:text-black",
+                  level === 0 ? "border-b border-gray-100" : ""
+                )}
+                onClick={() => setIsOpen(false)}
+                style={{ paddingLeft: `${16 + level * 16}px` }}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <button
+                onClick={() => {
+                  if (hasChildren) {
+                    toggleExpandItem(itemKey);
+                  } else if (item.href) {
+                    window.location.href = item.href;
+                    setIsOpen(false);
+                  }
+                }}
+                className={cn(
+                  "flex w-full items-center justify-between py-3 text-base font-semibold transition-colors",
+                  "text-gray-800 hover:text-black active:text-black",
+                  level === 0 ? "border-b border-gray-100" : "",
+                  isExpanded ? "text-black" : ""
+                )}
+                style={{ paddingLeft: `${16 + level * 16}px` }}
+              >
+                <span>{item.label}</span>
+                {hasChildren && (
+                  <ChevronRight 
+                    className={cn(
+                      "h-4 w-4 mr-4 transition-transform duration-200",
+                      isExpanded ? "rotate-90" : ""
+                    )} 
+                  />
+                )}
+              </button>
+            )}
+          </div>
+          
+          {hasChildren && (
+            <AnimatePresence>
+              {isExpanded && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2, ease: "easeInOut" }}
+                  className="overflow-hidden"
+                >
+                  {item.dropdownItems && item.dropdownItems.length > 0 && (
+                    <div className={cn("border-l-2 border-gray-200 ml-6")}>
+                      {renderNavLinks(item.dropdownItems, level + 1)}
+                    </div>
+                  )}
+                  {item.subDropdownItems && item.subDropdownItems.length > 0 && (
+                    <div className={cn("border-l-2 border-gray-200 ml-6")}>
+                      {renderNavLinks(item.subDropdownItems, level + 2)}
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          )}
+        </div>
+      );
+    });
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild>
-        <Button variant="ghost" className="lg:hidden">
-          <Menu className="h-6 w-6" />
-          <span className="sr-only">Toggle menu</span>
-        </Button>
-      </SheetTrigger>
-      <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-        <nav className="flex flex-col gap-4">
-          {navigationItems.map((item: NavigationItem) => (
-            <Link
-              key={item.name}
-              href={item.url}
-              onClick={() => setIsOpen(false)}
-              className={cn(
-                "text-sm font-medium transition-colors hover:text-primary",
-                pathname === item.url
-                  ? "text-primary"
-                  : "text-muted-foreground"
-              )}
+    <>
+      {/* Floating Action Button */}
+      <div className="fixed bottom-6 right-6 z-50 md:hidden">
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        >
+          <Button
+            variant="default"
+            className="h-14 w-14 rounded-full shadow-lg p-0 bg-[#28DF99] hover:bg-[#20c287] text-white"
+            onClick={toggleMenu}
+            aria-label="Toggle navigation menu"
+          >
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </Button>
+        </motion.div>
+      </div>
+
+      {/* Fullscreen Overlay */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 md:hidden"
+          >
+            {/* Backdrop */}
+            <motion.div 
+              className="absolute inset-0 bg-black/5 backdrop-blur-sm"
+              onClick={toggleMenu}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
+            
+            {/* Menu Panel */}
+            <motion.div
+              className="absolute top-[72px] right-0 h-[calc(100%-72px)] w-full max-w-md bg-white shadow-xl overflow-hidden"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
             >
-              {item.name}
-            </Link>
-          ))}
-          {actionItems.map((item: ActionItem) => (
-            <Link
-              key={item.name}
-              href={item.url}
-              onClick={item.name === "Book Online" ? handleBookingClick : () => setIsOpen(false)}
-              className={cn(
-                "flex items-center gap-2 text-sm font-medium transition-colors",
-                item.isHighlighted
-                  ? "text-primary hover:text-primary/90"
-                  : "text-muted-foreground hover:text-primary"
-              )}
-            >
-              {item.icon && <item.icon className="h-4 w-4" />}
-              {item.name}
-            </Link>
-          ))}
-        </nav>
-      </SheetContent>
-    </Sheet>
+              <motion.nav 
+                className="h-full overflow-y-auto pb-20 pt-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+              >
+                {renderNavLinks(items)}
+                
+                {/* Contact Info */}
+                <div className="px-6 pt-8 pb-4 mt-6 border-t border-gray-100">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Contact Us</h3>
+                  <a href="tel:1300136336" className="flex items-center py-2 text-[#28DF99] font-bold text-lg">
+                    1300 136 336
+                  </a>
+                  <div className="text-sm text-gray-500 mt-2">
+                    <p>Available 24/7 for emergency service</p>
+                  </div>
+                </div>
+                
+                {/* Book Now Button */}
+                <div className="px-6 pb-24">
+                  <Button 
+                    className="w-full bg-black hover:bg-gray-800 text-white py-6 font-medium text-base"
+                    onClick={() => {
+                      window.location.href = '/book';
+                      setIsOpen(false);
+                    }}
+                  >
+                    Book Now
+                  </Button>
+                </div>
+              </motion.nav>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
-} 
+};
+
+export default MobileNavigation; 
