@@ -1,4 +1,6 @@
-import { Hero } from '@/src/components/Hero'
+import React from 'react'
+import dynamic from 'next/dynamic'
+import { Hero } from '@/components/Hero'
 import type { Metadata } from 'next'
 import LocationPageClientContent from '@/src/components/locations/LocationPageClientContent'
 

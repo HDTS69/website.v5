@@ -3,7 +3,8 @@ import Image from 'next/image'
 import { ServiceDetailLayout } from '@/src/components/layouts/ServiceDetailLayout'
 import { ServiceSchema } from '@/src/components/ui/ServiceSchema'
 import { PaymentIcons } from '@/app/components/PaymentIcons'
-import { CONTACT_PHONE, ICON_PATHS } from '@/src/config/constants'
+import { FaTools } from 'react-icons/fa'
+import { CONTACT_PHONE, ICON_PATHS } from '@/config/constants'
 
 export default function HotWaterReplacementPage() {
   return (

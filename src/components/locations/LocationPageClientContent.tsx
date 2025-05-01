@@ -21,12 +21,9 @@ const Testimonials = dynamic(
     import('@/src/components/ui/Testimonials').then((mod) => mod.Testimonials),
   { ssr: false },
 )
-const ServiceTabs = dynamic(
-  () => import('@/src/components/services/ServiceTabs'),
-  {
-    ssr: false,
-  },
-)
+const ServiceTabs = dynamic(() => import('@/components/services/ServiceTabs'), {
+  ssr: false,
+})
 const BrandCarousel = dynamic(
   () =>
     import('@/src/components/ui/BrandCarousel').then(
