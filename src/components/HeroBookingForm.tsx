@@ -17,8 +17,8 @@ import {
   URGENCY_OPTIONS,
 } from '@/components/ui/BookingForm/constants'
 import type { Service, FormState } from '@/components/ui/BookingForm/types' // Import Service type (string) and FormState
-import { SERVICES, ServiceCategory } from '@/config/services' // Import ServiceCategory
-import { PHONE_PATTERNS, EMAIL_PATTERNS } from '@/utils/security'
+import { SERVICES, ServiceCategory } from '../../config/services' // Corrected relative path
+import { PHONE_PATTERNS, EMAIL_PATTERNS } from '../../utils/security' // Corrected relative path
 
 // Define the structure of individual services from config
 interface ConfigService {
