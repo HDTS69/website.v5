@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
-import LordIcon from '@/app/components/LordIcon'
+import LordIcon from './LordIcon'
 import { Card, CardContent } from '@/components/ui/card'
 
 interface IconCard {

@@ -4,8 +4,11 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
-import LordIcon from '@/app/components/LordIcon'
-import { getImageLoadingProps, ImagePriority } from '@/utils/imageLoading'
+import LordIcon from '../LordIcon'
+import {
+  getImageLoadingProps,
+  ImagePriority,
+} from '../../../utils/imageLoading'
 
 interface Service {
   title: string
