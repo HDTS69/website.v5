@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react'
 import { FormState } from './types'
-import { PHONE_PATTERNS } from '@/utils/security'
+import { PHONE_PATTERNS } from '../../../../utils/security'
 
 interface ValidationRules {
   name: (value: string) => string | null
