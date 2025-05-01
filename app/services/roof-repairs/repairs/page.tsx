@@ -6,7 +6,7 @@ import { ServiceDetailLayout } from '@/src/components/layouts/ServiceDetailLayou
 import { ServiceSchema } from '@/src/components/ui/ServiceSchema'
 import { PaymentIcons } from '@/app/components/PaymentIcons'
 import { FaTools } from 'react-icons/fa'
-import { CONTACT_PHONE, ICON_PATHS } from '@/src/config/constants'
+import { CONTACT_PHONE, ICON_PATHS } from '@/config/constants'
 
 // Validate icon paths at build time
 const validateIconPath = (path: string): string => {

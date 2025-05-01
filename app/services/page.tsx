@@ -17,7 +17,7 @@ import {
   CheckCircle,
   ArrowRight,
 } from 'lucide-react'
-import ServiceTabs from '@/src/components/services/ServiceTabs'
+import ServiceTabs from '@/components/services/ServiceTabs'
 import { WhyChooseUs } from '@/src/components/ui/WhyChooseUs'
 import { Testimonials } from '@/src/components/ui/Testimonials'
 import { BrandCarousel } from '@/src/components/ui/BrandCarousel'

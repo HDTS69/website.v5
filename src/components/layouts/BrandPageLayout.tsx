@@ -6,19 +6,25 @@ import { useRef } from 'react'
 import { AnimatedButton } from '../ui/AnimatedButton'
 import { SparklesCore } from '../ui/SparklesCore'
 import { BookingForm } from '../ui/BookingForm'
-import { NavBar } from '@/src/components/navigation/DesktopNavigation'
+import { NavBar } from '@/components/navigation/DesktopNavigation'
 import {
   Calendar,
-  Phone,
-  Home,
-  Wrench,
-  Info,
-  Building2,
+  CheckCircle,
+  ChevronRight,
+  Clock,
+  Facebook,
+  Instagram,
+  Mail,
   MapPin,
+  Phone,
+  ShieldCheck,
+  Star,
+  Users,
+  Wrench,
 } from 'lucide-react'
 import { cn } from '@/src/lib/utils'
 import { navigationItems, actionItems } from '@/src/lib/navigation'
-import { getImageLoadingProps, ImagePriority } from '@/src/utils/imageLoading'
+import { getImageLoadingProps, ImagePriority } from '@/utils/imageLoading'
 
 interface Feature {
   title: string
