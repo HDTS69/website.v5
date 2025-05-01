@@ -16,7 +16,7 @@ import {
   HeartHandshake,
 } from 'lucide-react'
 import { SparklesCore } from './SparklesCore'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 
 const fadeInUpVariant = {
   hidden: { opacity: 0, y: 20 },

@@ -3,14 +3,14 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { cn } from '@/src/lib/utils'
+import { cn } from '@/lib/utils'
 import {
   IMAGE_SIZES,
-  ImagePriority,
   getImageLoadingProps,
-} from '@/utils/imageLoading'
-import LordIcon from '@/app/components/LordIcon'
-import { AnimatedBookNowButton } from '@/src/components/ui/AnimatedBookNowButton'
+  ImagePriority,
+} from '../../../../utils/imageLoading'
+import LordIcon from '../../../../app/components/LordIcon'
+import { AnimatedBookNowButton } from '@/components/ui/AnimatedBookNowButton'
 
 interface FoundersMessageProps {
   className?: string

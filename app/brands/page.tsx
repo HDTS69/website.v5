@@ -3,8 +3,8 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { SparklesCore } from '@/src/components/ui/SparklesCore'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+import { SparklesCore } from '@/components/ui/SparklesCore'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 
 const brands = [
   {

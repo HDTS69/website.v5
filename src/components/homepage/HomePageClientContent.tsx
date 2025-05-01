@@ -1,68 +1,45 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { ClientOnly } from '@/src/components/ui/ClientOnly'
+import { ClientOnly } from '@/components/ui/ClientOnly'
 
 // Dynamically import components
-const WhyChooseUs = dynamic(
-  () =>
-    import('@/src/components/ui/WhyChooseUs').then((mod) => mod.WhyChooseUs),
-  { ssr: false },
+const WhyChooseUs = dynamic(() =>
+  import('@/components/ui/WhyChooseUs').then((mod) => mod.WhyChooseUs),
 )
-const WhyChooseUsMobile = dynamic(
-  () =>
-    import('@/src/components/mobile/WhyChooseUsMobile').then(
-      (mod) => mod.WhyChooseUsMobile,
-    ),
-  { ssr: false },
+const WhyChooseUsMobile = dynamic(() =>
+  import('@/components/mobile/WhyChooseUsMobile').then(
+    (mod) => mod.WhyChooseUsMobile,
+  ),
 )
-const Testimonials = dynamic(
-  () =>
-    import('@/src/components/ui/Testimonials').then((mod) => mod.Testimonials),
-  { ssr: false },
+const Testimonials = dynamic(() =>
+  import('@/components/ui/Testimonials').then((mod) => mod.Testimonials),
 )
-const ServiceTabs = dynamic(() => import('@/components/services/ServiceTabs'), {
-  ssr: false,
-})
-const BrandCarousel = dynamic(
-  () =>
-    import('@/src/components/ui/BrandCarousel').then(
-      (mod) => mod.BrandCarousel,
-    ),
-  { ssr: false },
+// const ServiceTabs = dynamic(() =>
+//   import('@/components/services/ServiceTabs').then(mod => mod.ServiceTabs),
+//   { ssr: false },
+// ); // Commented out for now
+const BrandCarousel = dynamic(() =>
+  import('@/components/ui/BrandCarousel').then((mod) => mod.BrandCarousel),
 )
-const FAQ = dynamic(
-  () => import('@/src/components/ui/FAQ').then((mod) => mod.FAQ),
-  { ssr: false },
+const FAQ = dynamic(() => import('@/components/ui/FAQ').then((mod) => mod.FAQ))
+const SparklesCore = dynamic(() =>
+  import('@/components/ui/SparklesCore').then((mod) => mod.SparklesCore),
 )
-const SparklesCore = dynamic(
-  () =>
-    import('@/src/components/ui/SparklesCore').then((mod) => mod.SparklesCore),
-  { ssr: false },
+const AboutUs = dynamic(() =>
+  import('@/components/ui/AboutUs').then((mod) => mod.AboutUs),
 )
-const AboutUs = dynamic(
-  () => import('@/src/components/ui/AboutUs').then((mod) => mod.AboutUs),
-  { ssr: false },
+const OurProcess = dynamic(() =>
+  import('@/components/ui/OurProcess').then((mod) => mod.OurProcess),
 )
-const OurProcess = dynamic(
-  () => import('@/src/components/ui/OurProcess').then((mod) => mod.OurProcess),
-  { ssr: false },
+const FoundersMessage = dynamic(() =>
+  import('@/components/ui/FoundersMessage').then((mod) => mod.FoundersMessage),
 )
-const FoundersMessage = dynamic(
-  () =>
-    import('@/src/components/ui/FoundersMessage').then(
-      (mod) => mod.FoundersMessage,
-    ),
-  { ssr: false },
-)
-const BookingForm = dynamic(
-  () =>
-    import('@/src/components/ui/BookingForm').then((mod) => mod.BookingForm),
-  { ssr: false },
+const BookingForm = dynamic(() =>
+  import('@/components/ui/BookingForm').then((mod) => mod.BookingForm),
 )
 const PaymentPlansCarousel = dynamic(
-  () => import('@/src/components/ui/PaymentPlansCarousel'),
-  { ssr: false },
+  () => import('@/components/ui/PaymentPlansCarousel'),
 )
 
 export default function HomePageClientContent() {
@@ -72,7 +49,8 @@ export default function HomePageClientContent() {
       <PaymentPlansCarousel />
 
       {/* Services Section */}
-      <ServiceTabs />
+      {/* <ServiceTabs /> */}
+      {/* Commented out usage */}
 
       {/* Why Choose Us Section - Conditionally rendered for mobile/desktop */}
       <ClientOnly>

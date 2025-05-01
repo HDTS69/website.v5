@@ -3,16 +3,16 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { cn, scrollToElement } from '@/src/lib/utils'
-import { Button } from '@/src/components/ui/button'
+import { cn, scrollToElement } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 import { Check, Copy, ChevronDown } from 'lucide-react'
-import { AnimatedButton } from '@/src/components/ui/AnimatedButton'
+import { AnimatedButton } from '@/components/ui/AnimatedButton'
 import {
   getImageLoadingProps,
   IMAGE_SIZES,
   ImagePriority,
-} from '@src/utils/imageLoading'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+} from '../../../utils/imageLoading'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 import { usePathname } from 'next/navigation'
 
 interface CopyButtonProps {

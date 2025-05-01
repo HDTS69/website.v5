@@ -1,6 +1,6 @@
 'use client'
 
-import { GooglePlacesFallback } from '@/src/components/ui/BookingForm'
+import { GooglePlacesFallback } from '@/components/ui/BookingForm'
 import { useState } from 'react'
 
 export default function TestAddressPage() {

@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
-import Header from '@/src/components/ui/header'
-import { MobileHeader } from '@/src/components/mobile'
-import Footer from '@/src/components/ui/footer'
+import Header from '@/components/ui/header'
+import { MobileHeader } from '@/components/mobile'
+import Footer from '@/components/ui/footer'
 
 export const metadata: Metadata = {
   title: 'AquaMAX Hot Water Systems | Expert Installation & Service',

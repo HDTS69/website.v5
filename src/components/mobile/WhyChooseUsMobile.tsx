@@ -15,8 +15,8 @@ import {
   Truck,
   HeartHandshake,
 } from 'lucide-react'
-import { SparklesCore } from '@/src/components/ui/SparklesCore'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+import { SparklesCore } from '@/components/ui/SparklesCore'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 
 const fadeInUpVariant = {
   hidden: { opacity: 0, y: 10 },

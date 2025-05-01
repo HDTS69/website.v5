@@ -3,9 +3,9 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { GoogleReviews } from '@/src/components/ui/GoogleReviews'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
-import LordIcon from '@/app/components/LordIcon'
+import { GoogleReviews } from '@/components/ui/GoogleReviews'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
+import LordIcon from '../../../../app/components/LordIcon'
 
 // Common Background Wrapper
 function BackgroundWrapper({

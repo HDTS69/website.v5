@@ -2,7 +2,10 @@
 
 import { useRef, useEffect } from 'react'
 import { motion, useInView, useAnimation } from 'framer-motion'
-import { EmergencyServicesCard } from '@/src/components/ui/EmergencyServicesCard'
+import { EmergencyServicesCard } from '@/components/ui/EmergencyServicesCard'
+import { SparklesCore } from '@/components/ui/SparklesCore'
+import { AnimatedButton } from '@/components/ui/AnimatedButton'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 
 export function HomeEmergencySection() {
   const controls = useAnimation()

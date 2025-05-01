@@ -1,11 +1,11 @@
 'use client'
 
-import { BrandPageLayout } from '@/src/components/layouts/BrandPageLayout'
+import { BrandPageLayout } from '@/components/layouts/BrandPageLayout'
 import { Clock, Shield, Wrench } from 'lucide-react'
-import { SparklesCore } from '@/src/components/ui/SparklesCore'
+import { SparklesCore } from '@/components/ui/SparklesCore'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 
 const features = [
   {

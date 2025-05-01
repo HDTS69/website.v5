@@ -1,20 +1,20 @@
 'use client'
 
 import React, { useRef } from 'react'
-import { AnimatedButton } from '@/src/components/ui/AnimatedButton'
-import { SparklesCore } from '@/src/components/ui/SparklesCore'
+import { AnimatedButton } from '@/components/ui/AnimatedButton'
+import { SparklesCore } from '@/components/ui/SparklesCore'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Hero as MobileHero } from '@/src/components/mobile/Hero'
-import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { Hero as MobileHero } from '@/components/mobile/Hero'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 import {
   getImageLoadingProps,
-  IMAGE_SIZES,
   ImagePriority,
-} from '@/utils/imageLoading'
-import { HeroBookingForm } from '@/src/components/HeroBookingForm'
-import { GoogleReviews } from '@/src/components/ui/GoogleReviews'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+  IMAGE_SIZES,
+} from '../utils/imageLoading'
+import { HeroBookingForm } from '@/components/HeroBookingForm'
+import { GoogleReviews } from '@/components/ui/GoogleReviews'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 import heroImage from '@/public/images/hayden-hero-fixed.webp'
 
 interface HeroProps {
@@ -167,13 +167,11 @@ export function Hero({ isLocationPage = false }: HeroProps) {
               <div className="relative h-full w-full">
                 <Image
                   src={heroImage}
-                  alt="Hayden Drew - Professional Hairdresser"
-                  className="object-contain object-left-bottom"
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                  alt="HD Trade Services - Trusted Tradesmen"
                   fill
-                  priority
-                  loading="eager"
                   sizes={IMAGE_SIZES.HERO_PORTRAIT}
-                  quality={95}
+                  {...getImageLoadingProps(ImagePriority.CRITICAL)}
                 />
                 {/* Add subtle glow effect */}
                 <motion.div

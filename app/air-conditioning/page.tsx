@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
-import { ServiceDetailLayout } from '@/src/components/layouts/ServiceDetailLayout'
+import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout'
 import { FaTools, FaCheckCircle } from 'react-icons/fa'
-import { PaymentIcons } from '@/app/components/PaymentIcons'
-import { ServiceSchema } from '@/src/components/ui/ServiceSchema'
+import { PaymentIcons } from '../components/PaymentIcons'
+import { ServiceSchema } from '@/components/ui/ServiceSchema'
 import Link from 'next/link'
 
 export const metadata: Metadata = {

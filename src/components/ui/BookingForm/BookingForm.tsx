@@ -2,7 +2,7 @@
 
 import React, { useRef, useCallback, useState, useEffect } from 'react'
 import Link from 'next/link'
-import { cn } from '@/src/lib/utils'
+import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import { WaveInput } from './WaveInput'
@@ -14,9 +14,9 @@ import { useFormSubmission } from './useFormSubmission'
 import { AddressInput } from './AddressInput'
 import { PREFERRED_TIMES, URGENCY_OPTIONS } from './constants'
 import type { BookingFormProps, Service } from './types'
-import { SERVICES, ServiceCategory } from '@/config/services'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
-import { PHONE_PATTERNS, EMAIL_PATTERNS } from '@/utils/security'
+import { SERVICES, ServiceCategory } from '../../../../config/services'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
+import { PHONE_PATTERNS, EMAIL_PATTERNS } from '../../../../utils/security'
 
 interface ConfigService {
   name: string

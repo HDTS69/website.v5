@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { SparklesCore } from '@/src/components/ui/SparklesCore'
+import { SparklesCore } from '@/components/ui/SparklesCore'
 import Marquee from 'react-fast-marquee'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 
 interface BrandLogo {
   src: string

@@ -1,10 +1,10 @@
 'use client'
 
-import { ClientBackground } from '@/src/components/ui/ClientBackground'
+// import { ClientBackground } from '@/components/ui/ClientBackground' // Commented out
 import { motion } from 'framer-motion'
-import { Testimonials } from '@/src/components/ui/Testimonials'
-import { BookingForm } from '@/src/components/ui/BookingForm/BookingForm'
-import { GoogleReviews } from '@/src/components/ui/GoogleReviews'
+import { Testimonials } from '@/components/ui/Testimonials'
+import { BookingForm } from '@/components/ui/BookingForm/BookingForm'
+import { GoogleReviews } from '@/components/ui/GoogleReviews'
 import { useEffect } from 'react'
 import Image from 'next/image'
 
@@ -60,7 +60,8 @@ export function ServiceCategoryLayout({
 
   return (
     <div className="relative min-h-screen w-full">
-      <ClientBackground />
+      {/* <ClientBackground /> */}
+      {/* Commented out usage */}
 
       <div
         className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8"

@@ -2,9 +2,11 @@
 
 import Script from 'next/script'
 import dynamic from 'next/dynamic'
-import Header from '@/src/components/ui/header'
-import Footer from '@/src/components/ui/footer'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+import React from 'react'
+import { Metadata } from 'next'
+import Header from '@/components/ui/header'
+import Footer from '@/components/ui/footer'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 
 // Dynamically import the form component
 const AttendanceFeeForm = dynamic(

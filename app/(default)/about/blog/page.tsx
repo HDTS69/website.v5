@@ -1,8 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
-import { GoogleReviews } from '@/src/components/ui/GoogleReviews'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
+import { GoogleReviews } from '@/components/ui/GoogleReviews'
 
 export default function BlogPage() {
   return (

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { Menu, X, ChevronRight, Phone } from 'lucide-react'
-import { Button } from '@/src/components/ui/button'
-import { cn } from '@/src/lib/utils'
-import { useMediaQuery } from '@/src/hooks/useMediaQuery'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import {
   NavItem,
   DropdownNavItem,
   SubNavItem,
-} from '@/src/types/navigation/types'
+} from '../../../types/navigation/types'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
-import { AnimatedBookNowButton } from '@/src/components/ui/AnimatedBookNowButton'
+import { AnimatedBookNowButton } from '@/components/ui/AnimatedBookNowButton'
 
 interface MobileNavigationProps {
   items: NavItem[]
@@ -204,23 +204,25 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
                   )}
                   {'subItems' in item && item.subItems && (
                     <div className={cn('ml-6 border-l border-zinc-700')}>
-                      {item.subItems.map((subItem, subIndex) => (
-                        <div
-                          key={`${subItem.name}-${level + 2}-${subIndex}`}
-                          className="py-1"
-                        >
-                          <Link
-                            href={subItem.url}
-                            className={cn(
-                              'text-md block py-2 font-medium text-gray-300 transition-colors hover:text-[#00E6CA]',
-                              'pl-[calc(16px+((level+2)*16px))]',
-                            )}
-                            onClick={() => setIsOpen(false)}
+                      {item.subItems.map(
+                        (subItem: SubNavItem, subIndex: number) => (
+                          <div
+                            key={`${subItem.name}-${level + 2}-${subIndex}`}
+                            className="py-1"
                           >
-                            {subItem.name}
-                          </Link>
-                        </div>
-                      ))}
+                            <Link
+                              href={subItem.url}
+                              className={cn(
+                                'text-md block py-2 font-medium text-gray-300 transition-colors hover:text-[#00E6CA]',
+                                'pl-[calc(16px+((level+2)*16px))]',
+                              )}
+                              onClick={() => setIsOpen(false)}
+                            >
+                              {subItem.name}
+                            </Link>
+                          </div>
+                        ),
+                      )}
                     </div>
                   )}
                 </motion.div>
