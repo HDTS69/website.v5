@@ -1,27 +1,32 @@
 import {
   Building2,
   Calendar,
+  CalendarClock,
   Home,
   Info,
   MapPin,
   Phone,
+  Star,
   Wrench,
 } from 'lucide-react'
-import { NavItem } from '@/types/navigation/types'
+import { NavItem, ActionItem } from '@/types/navigation/types'
 
 export const navigationItems: NavItem[] = [
   {
     name: 'Home',
+    label: 'Home',
     url: '/',
     icon: Home,
   },
   {
     name: 'Services',
+    label: 'Services',
     url: '/services',
     icon: Wrench,
     dropdownItems: [
       {
         name: 'Plumbing',
+        label: 'Plumbing',
         url: '/services/plumbing',
         subItems: [
           { name: 'Emergency Plumbing', url: '/services/plumbing/emergency' },
@@ -87,6 +92,7 @@ export const navigationItems: NavItem[] = [
       },
       {
         name: 'Gas Fitting',
+        label: 'Gas Fitting',
         url: '/services/gas-fitting',
         subItems: [
           {
@@ -136,7 +142,8 @@ export const navigationItems: NavItem[] = [
         ],
       },
       {
-        name: 'Roofing',
+        name: 'Roof Repairs',
+        label: 'Roof Repairs',
         url: '/services/roof-repairs',
         subItems: [
           {
@@ -178,6 +185,7 @@ export const navigationItems: NavItem[] = [
       },
       {
         name: 'Air Conditioning',
+        label: 'Air Conditioning',
         url: '/services/air-conditioning',
         subItems: [
           {
@@ -232,6 +240,7 @@ export const navigationItems: NavItem[] = [
   },
   {
     name: 'Locations',
+    label: 'Locations',
     url: '/locations',
     icon: MapPin,
     dropdownItems: [
@@ -323,6 +332,7 @@ export const navigationItems: NavItem[] = [
   },
   {
     name: 'About Us',
+    label: 'About Us',
     url: '/about',
     icon: Info,
     dropdownItems: [
@@ -346,16 +356,18 @@ export const navigationItems: NavItem[] = [
   },
 ]
 
-export const actionItems: NavItem[] = [
+export const actionItems: ActionItem[] = [
   {
     name: 'Call Now',
-    url: 'tel:1300420911',
+    label: 'Call Now',
+    url: 'tel:1300136336',
     icon: Phone,
   },
   {
     name: 'Book Online',
+    label: 'Book Online',
     url: '/book',
-    icon: Calendar,
+    icon: CalendarClock,
     isHighlighted: true,
   },
 ]

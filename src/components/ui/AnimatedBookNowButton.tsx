@@ -1,75 +1,74 @@
 'use client'
 
-import React from 'react'
+import React, { ReactNode } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { motion } from 'framer-motion'
 
+// Define props for the animated button
 interface AnimatedBookNowButtonProps {
-  href?: string
+  children: ReactNode
+  href: string
   className?: string
-  isSubmitting?: boolean
-  type?: 'button' | 'submit' | 'reset'
-  onClick?: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void
-  disabled?: boolean
-  children?: React.ReactNode
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>
 }
 
+// Component for the animated Book Now button with floating point effects
 export function AnimatedBookNowButton({
-  href = '#book',
-  className = '',
-  isSubmitting = false,
-  type,
-  onClick,
-  disabled = false,
   children,
-  ...props
+  href,
+  className,
+  onClick,
 }: AnimatedBookNowButtonProps) {
-  // Button content with animation elements
-  const ButtonContent = () => (
-    <>
-      <div className="points_wrapper">
-        {/* Animation points */}
-        {Array.from({ length: 10 }).map((_, i) => (
-          <i key={i} className="point" />
-        ))}
-      </div>
-      <span className="inner">
-        {children || (isSubmitting ? 'Submitting...' : 'Book Online')}
-      </span>
-    </>
-  )
+  // Generate an array of random positions for the floating points
+  const points = Array.from({ length: 10 }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100, // Random X position (0-100%)
+    y: Math.random() * 100, // Random Y position (0-100%)
+    size: Math.random() * 3 + 1, // Random size (1-4px)
+    duration: Math.random() * 10 + 5, // Random animation duration (5-15s)
+    delay: Math.random() * 2, // Random delay (0-2s)
+  }))
 
-  // CSS classes for the button
-  const buttonClasses = cn(
-    'animated-book-now-button',
-    disabled && 'opacity-50 cursor-not-allowed',
-    className,
-  )
-
-  // If it's a submit button in a form
-  if (type === 'submit') {
-    return (
-      <button
-        type={type}
-        className={buttonClasses}
-        onClick={onClick as any}
-        disabled={disabled || isSubmitting}
-        {...props}
-      >
-        <ButtonContent />
-      </button>
-    )
-  }
-
-  // Default as a link
   return (
     <Link
-      href={disabled ? '#' : href}
-      className={buttonClasses}
-      onClick={!disabled ? (onClick as any) : (e) => e.preventDefault()}
-      {...props}
+      href={href}
+      onClick={onClick}
+      className={cn(
+        'animated-book-now-button relative overflow-hidden px-5 py-2.5 rounded-md font-medium text-white bg-[#00E6CA] hover:bg-[#00E6CA]/90 transition-all duration-300',
+        className
+      )}
     >
-      <ButtonContent />
+      {/* Inner content */}
+      <span className="inner relative z-10 flex items-center justify-center">
+        {children}
+      </span>
+      
+      {/* Floating points container */}
+      <div className="points_wrapper absolute inset-0 overflow-hidden pointer-events-none">
+        {points.map((point) => (
+          <motion.div
+            key={point.id}
+            className="point absolute rounded-full bg-white opacity-50"
+            style={{
+              left: `${point.x}%`,
+              top: `${point.y}%`,
+              width: `${point.size}px`,
+              height: `${point.size}px`,
+            }}
+            animate={{
+              y: [0, -20, 0],
+              x: [0, point.id % 2 === 0 ? 10 : -10, 0],
+              opacity: [0.5, 0.8, 0.5],
+            }}
+            transition={{
+              duration: point.duration,
+              repeat: Infinity,
+              delay: point.delay,
+            }}
+          />
+        ))}
+      </div>
     </Link>
   )
 }
