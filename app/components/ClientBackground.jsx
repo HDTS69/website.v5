@@ -1,6 +1,6 @@
 'use client'
 
-import { BackgroundSparkles } from '@/src/components/ui/BackgroundSparkles'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 
 // Global background component
 export default function ClientBackground() {
