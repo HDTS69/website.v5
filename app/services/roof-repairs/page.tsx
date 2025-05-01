@@ -1,8 +1,8 @@
-'use client';
+'use client'
 
-import React from 'react';
-import ServiceCategoryLayout from '@/app/components/ServiceCategoryLayout';
-import { RoofingServicesGrid } from './components/RoofingServicesGrid';
+import React from 'react'
+import ServiceCategoryLayout from '../../components/ServiceCategoryLayout'
+import { RoofingServicesGrid } from './components/RoofingServicesGrid'
 
 export default function RoofRepairsPage() {
   return (
@@ -14,5 +14,5 @@ export default function RoofRepairsPage() {
         <RoofingServicesGrid />
       </ServiceCategoryLayout>
     </>
-  );
-} 
+  )
+}

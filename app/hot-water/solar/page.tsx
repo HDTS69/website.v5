@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout'
 import { FaTools } from 'react-icons/fa'
-import { PaymentIcons } from '@/app/components/PaymentIcons'
+import { PaymentIcons } from '../../../components/PaymentIcons'
 
 export const metadata: Metadata = {
   title: 'Solar Hot Water Systems Brisbane | Eco-Friendly Solutions',

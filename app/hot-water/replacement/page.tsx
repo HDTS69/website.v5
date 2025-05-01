@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout'
 import { ServiceSchema } from '@/components/ui/ServiceSchema'
-import { PaymentIcons } from '@/app/components/PaymentIcons'
+import { PaymentIcons } from '../../../components/PaymentIcons'
 import { FaTools } from 'react-icons/fa'
 import { CONTACT_PHONE, ICON_PATHS } from '@/config/constants'
 

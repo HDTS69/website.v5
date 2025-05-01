@@ -1,8 +1,8 @@
-'use client';
+'use client'
 
-import React from 'react';
-import ServiceCategoryLayout from '@/app/components/ServiceCategoryLayout';
-import { GasServicesGrid } from './components/GasServicesGrid';
+import React from 'react'
+import ServiceCategoryLayout from '../../components/ServiceCategoryLayout'
+import { GasServicesGrid } from './components/GasServicesGrid'
 
 export default function GasFittingPage() {
   return (
@@ -14,5 +14,5 @@ export default function GasFittingPage() {
         <GasServicesGrid />
       </ServiceCategoryLayout>
     </>
-  );
-} 
+  )
+}

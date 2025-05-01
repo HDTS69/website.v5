@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import { PlumbingServicesGrid } from './components/PlumbingServicesGrid';
-import ServiceCategoryLayout from '@/app/components/ServiceCategoryLayout';
+import { PlumbingServicesGrid } from './components/PlumbingServicesGrid'
+import ServiceCategoryLayout from '../../components/ServiceCategoryLayout'
 
 export default function PlumbingServices() {
   return (
@@ -11,5 +11,5 @@ export default function PlumbingServices() {
     >
       <PlumbingServicesGrid />
     </ServiceCategoryLayout>
-  );
-} 
+  )
+}

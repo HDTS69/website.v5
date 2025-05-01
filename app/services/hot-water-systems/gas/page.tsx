@@ -3,7 +3,7 @@ import {
   ServiceDetailLayout,
   ServiceDetailLayoutProps,
 } from '@/components/layouts/ServiceDetailLayout'
-import { PaymentIcons } from '@/app/components/PaymentIcons'
+import { PaymentIcons } from '../../../components/PaymentIcons'
 import { FaTools } from 'react-icons/fa'
 import { ServiceSchema } from '@/components/ui/ServiceSchema'
 

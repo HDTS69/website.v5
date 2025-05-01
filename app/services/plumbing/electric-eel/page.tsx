@@ -3,7 +3,7 @@
 import React from 'react'
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout'
 import { ServiceSchema } from '@/components/ui/ServiceSchema'
-import { PaymentIcons } from '@/app/components/PaymentIcons'
+import { PaymentIcons } from '../../../components/PaymentIcons'
 
 export default function ElectricEelPage() {
   return (

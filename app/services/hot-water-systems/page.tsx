@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import { HotWaterServicesGrid } from './components/HotWaterServicesGrid';
-import ServiceCategoryLayout from '@/app/components/ServiceCategoryLayout';
+import { HotWaterServicesGrid } from './components/HotWaterServicesGrid'
+import ServiceCategoryLayout from '../../components/ServiceCategoryLayout'
 
 export default function HotWaterSystemsPage() {
   return (
@@ -11,5 +11,5 @@ export default function HotWaterSystemsPage() {
     >
       <HotWaterServicesGrid />
     </ServiceCategoryLayout>
-  );
-} 
+  )
+}

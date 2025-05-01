@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import { AirConditioningServicesGrid } from './components/AirConditioningServicesGrid';
-import ServiceCategoryLayout from '@/app/components/ServiceCategoryLayout';
+import { AirConditioningServicesGrid } from './components/AirConditioningServicesGrid'
+import ServiceCategoryLayout from '../../components/ServiceCategoryLayout'
 
 export default function AirConditioningServices() {
   return (
@@ -11,5 +11,5 @@ export default function AirConditioningServices() {
     >
       <AirConditioningServicesGrid />
     </ServiceCategoryLayout>
-  );
-} 
+  )
+}
