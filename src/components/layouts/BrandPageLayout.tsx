@@ -24,7 +24,8 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { navigationItems, actionItems } from '@/lib/navigation'
-import { getImageLoadingProps, ImagePriority } from '@/utils/imageLoading'
+import { getImageLoadingProps, ImagePriority } from '../../utils/imageLoading'
+import { Footer } from '@/components/ui/footer'
 
 interface Feature {
   title: string
