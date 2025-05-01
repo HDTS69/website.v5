@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
@@ -8,11 +8,14 @@ import { WaveInput } from '../ui/BookingForm/WaveInput'
 import { Dropdown } from '../ui/BookingForm/Dropdown'
 import { DatePicker } from '../ui/DatePicker'
 import { AddressInput } from '../ui/BookingForm/AddressInput'
+import { useFormState } from '../ui/BookingForm/useFormState'
+import { useFormValidation } from '../ui/BookingForm/useFormValidation'
+import { useFormSubmission } from '../ui/BookingForm/useFormSubmission'
 import { PREFERRED_TIMES, URGENCY_OPTIONS } from '../ui/BookingForm/constants'
 import type { Service } from '../ui/BookingForm/types'
-import { SERVICES } from '@/config/services'
+import { SERVICES } from '../../../config/services'
 import { AnimatedBookNowButton } from '../ui/AnimatedBookNowButton'
-import { PHONE_PATTERNS, EMAIL_PATTERNS } from '@/utils/security'
+import { PHONE_PATTERNS, EMAIL_PATTERNS } from '../../../utils/security'
 
 export function HeroBookingForm() {
   const [formData, setFormData] = useState({
@@ -219,7 +222,7 @@ export function HeroBookingForm() {
   }
 
   // Close dropdowns when clicking outside
-  React.useEffect(() => {
+  useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       const target = event.target as HTMLElement
 
