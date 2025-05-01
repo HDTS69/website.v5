@@ -17,17 +17,17 @@ import {
   CheckCircle,
   ArrowRight,
 } from 'lucide-react'
-import ServiceTabs from '@/components/services/ServiceTabs'
+import { ServiceTabs } from '../components/services/ServiceTabs'
+import { PaymentIcons } from '../../components/PaymentIcons'
+import dynamic from 'next/dynamic'
+import { useEffect, useRef, useState } from 'react'
+import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 import { WhyChooseUs } from '@/components/ui/WhyChooseUs'
 import { Testimonials } from '@/components/ui/Testimonials'
 import { BrandCarousel } from '@/components/ui/BrandCarousel'
 import { FAQ } from '@/components/ui/FAQ'
 import { ServiceSchema } from '@/components/ui/ServiceSchema'
 import { ServiceRequestForm } from '@/components/ui/ServiceRequestForm'
-import { PaymentIcons } from '../../../components/PaymentIcons'
-import dynamic from 'next/dynamic'
-import { useEffect, useRef, useState } from 'react'
-import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 
 // Dynamically import the BookingForm component with SSR disabled
 const BookingForm = dynamic(

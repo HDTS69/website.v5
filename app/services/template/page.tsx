@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { PaymentIcons } from '../../../components/PaymentIcons'
+import { PaymentIcons } from '../../components/PaymentIcons'
 import ServiceDetailLayout from '@/components/layouts/ServiceDetailLayout'
 import type { ServiceDetailLayoutProps } from '@/components/layouts/ServiceDetailLayout'
 import {

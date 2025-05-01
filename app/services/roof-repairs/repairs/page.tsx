@@ -6,12 +6,14 @@ import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout'
 import { ServiceSchema } from '@/components/ui/ServiceSchema'
 import { PaymentIcons } from '../../../components/PaymentIcons'
 import { FaTools } from 'react-icons/fa'
-import { CONTACT_PHONE, ICON_PATHS } from '@/config/constants'
+import { constants } from '../../../config/constants'
+import { FAQs } from '@/components/ui/FAQs'
+import type { Metadata } from 'next'
 
 // Validate icon paths at build time
 const validateIconPath = (path: string): string => {
   // Use type assertion to bypass strict includes check
-  if (!Object.values(ICON_PATHS).includes(path as any)) {
+  if (!Object.values(constants.ICON_PATHS).includes(path as any)) {
     console.warn(`Warning: Icon path ${path} not found in constants`)
   }
   return path
@@ -38,7 +40,7 @@ export default function RoofRepairsPage() {
             ],
           },
           bookOnlineLink: '#book',
-          callNowLink: `tel:${CONTACT_PHONE}`,
+          callNowLink: `tel:${constants.CONTACT_PHONE}`,
         }}
         bentoGridData={{
           title: 'Why Choose',
@@ -47,14 +49,14 @@ export default function RoofRepairsPage() {
             {
               type: 'featured',
               title: 'Professional Service',
-              icon: validateIconPath(ICON_PATHS.WRENCH_TOOL),
+              icon: validateIconPath(constants.ICON_PATHS.WRENCH_TOOL),
               description:
                 'Our experienced team delivers high-quality roof repairs with attention to detail and safety.',
             },
             {
               type: 'standard',
               title: 'Quality Service',
-              icon: validateIconPath(ICON_PATHS.STAR_SMILE),
+              icon: validateIconPath(constants.ICON_PATHS.STAR_SMILE),
               description:
                 'We use professional-grade materials and techniques for lasting repairs.',
             },

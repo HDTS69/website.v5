@@ -1,6 +1,8 @@
 'use client'
 
-import { ServiceCategoryLayout } from '../../components/ServiceCategoryLayout'
+import React from 'react'
+import { ServiceCategoryLayout } from '../../../components/ServiceCategoryLayout'
+import { PaymentIcons } from '../../../components/PaymentIcons'
 
 export default function HotWaterBuyersGuidePage() {
   return (
