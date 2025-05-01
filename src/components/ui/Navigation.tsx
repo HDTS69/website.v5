@@ -1,10 +1,11 @@
 'use client'
 
 import React from 'react'
-import { NavBar } from '@/components/navigation/DesktopNavigation'
+import { NavBar } from '../../../components/navigation/DesktopNavigation'
 import { Building2, Home, MapPin, Wrench, Calendar, Phone } from 'lucide-react'
 import { usePathname } from 'next/navigation'
-import type { NavItem } from '@/types/navigation/types'
+import type { NavItem } from '../../../types/navigation/types'
+import { cn } from '@/lib/utils'
 
 const navigationItems = [
   {

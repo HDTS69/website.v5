@@ -2,7 +2,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
 import { ClientComponents } from './components/ClientComponents'
-import { Providers } from '@/components/providers'
+import { Providers } from '../components/providers'
 import { Toaster } from '@/components/ui/toaster'
 import 'swiper/css'
 import { LordIconScript } from './components/LordIconScript'
@@ -10,7 +10,7 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/react'
 import ClientBackground from './components/ClientBackground'
-import { GoogleMapsLoader } from '@/components/GoogleMapsLoader'
+import { GoogleMapsLoader } from '../components/GoogleMapsLoader'
 
 const inter = Inter({
   subsets: ['latin'],
