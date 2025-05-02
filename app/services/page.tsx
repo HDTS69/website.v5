@@ -31,10 +31,7 @@ import { ServiceRequestForm } from '@/components/ui/ServiceRequestForm'
 
 // Dynamically import the BookingForm component with SSR disabled
 const BookingForm = dynamic(
-  () =>
-    import('@/src/components/ui/BookingForm/BookingForm').then(
-      (mod) => mod.BookingForm,
-    ),
+  () => import('@/components/ui/BookingForm/BookingForm'),
   { ssr: false },
 )
 

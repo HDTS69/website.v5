@@ -6,7 +6,7 @@ import { useRef } from 'react'
 import { AnimatedButton } from '../ui/AnimatedButton'
 import { SparklesCore } from '../ui/SparklesCore'
 import { BookingForm } from '../ui/BookingForm'
-import { NavBar } from '@/components/navigation/DesktopNavigation'
+import { NavBar } from '../../../components/navigation/DesktopNavigation'
 import {
   Calendar,
   CheckCircle,
