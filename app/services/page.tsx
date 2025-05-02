@@ -17,8 +17,8 @@ import {
   CheckCircle,
   ArrowRight,
 } from 'lucide-react'
-import { ServiceTabs } from '../components/services/ServiceTabs'
-import { PaymentIcons } from '../../components/PaymentIcons'
+import ServiceTabs from '@/components/services/ServiceTabs'
+import { PaymentIcons } from '@/components/PaymentIcons'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
@@ -31,7 +31,7 @@ import { ServiceRequestForm } from '@/components/ui/ServiceRequestForm'
 
 // Dynamically import the BookingForm component with SSR disabled
 const BookingForm = dynamic(
-  () => import('@/components/ui/BookingForm/BookingForm'),
+  () => import('@/components/ui/BookingForm/BookingForm').then(mod => mod.BookingForm),
   { ssr: false },
 )
 

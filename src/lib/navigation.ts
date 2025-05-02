@@ -7,7 +7,7 @@ import {
   Phone,
   Wrench,
 } from 'lucide-react'
-import { NavItem } from '@/src/types/navigation/types'
+import { NavItem } from '@/types/navigation/types'
 
 export const navigationItems: NavItem[] = [
   {

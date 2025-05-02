@@ -6,12 +6,12 @@ import { SparklesCore } from '@/components/ui/SparklesCore'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Hero as MobileHero } from '@/components/mobile/Hero'
-import { useMediaQuery } from '../hooks/useMediaQuery'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import {
   getImageLoadingProps,
   ImagePriority,
   IMAGE_SIZES,
-} from '../utils/imageLoading'
+} from '@/utils/imageLoading'
 import { HeroBookingForm } from '@/components/HeroBookingForm'
 import { GoogleReviews } from '@/components/ui/GoogleReviews'
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'

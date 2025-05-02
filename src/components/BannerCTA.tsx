@@ -1,9 +1,9 @@
 'use client'
 
-import { WavyBackground } from './ui/wavy-background'
+import { WavyBackground } from '@/components/ui/wavy-background'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { scrollToElement } from '@/src/lib/utils'
+import { scrollToElement } from '@/lib/utils'
 
 export const BannerCTA = () => {
   const pathname = usePathname()

@@ -14,9 +14,9 @@ import { useFormSubmission } from './useFormSubmission'
 import { AddressInput } from './AddressInput'
 import { PREFERRED_TIMES, URGENCY_OPTIONS } from './constants'
 import type { BookingFormProps, Service } from './types'
-import { SERVICES, ServiceCategory } from '../../../../config/services'
+import { SERVICES, ServiceCategory } from '@/config/services'
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
-import { PHONE_PATTERNS, EMAIL_PATTERNS } from '../../../../utils/security'
+import { PHONE_PATTERNS, EMAIL_PATTERNS } from '@/utils/security'
 
 interface ConfigService {
   name: string

@@ -2,13 +2,13 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { PaymentIcons } from '@/app/components/PaymentIcons'
+import { PaymentIcons } from '@/components/PaymentIcons'
 import { BookingForm } from '@/components/ui/BookingForm/BookingForm'
 import { GoogleReviews } from '@/components/ui/GoogleReviews'
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 import { FaMapMarkerAlt, FaTools, FaPhoneAlt, FaClock } from 'react-icons/fa'
 import { Testimonials } from '@/components/ui/Testimonials'
-import LordIcon from '../../app/components/LordIcon'
+import LordIcon from '@/components/LordIcon'
 
 interface LocationLayoutProps {
   locationName: string
@@ -169,10 +169,7 @@ const LocationLayout: React.FC<LocationLayoutProps> = ({
                     src={service.icon}
                     size={40}
                     trigger="hover"
-                    colors={{
-                      primary: '#00E6CA',
-                      secondary: '#00E6CA',
-                    }}
+                    colors="#00E6CA"
                     className="mr-4"
                   />
                   <h3 className="text-xl font-semibold text-white">

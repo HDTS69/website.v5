@@ -6,7 +6,7 @@ import { SparklesCore } from '../ui/SparklesCore'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AnimatedButton } from '../ui/AnimatedButton'
 import { HeroBookingForm } from './HeroBookingForm'
-import { IMAGE_SIZES } from '../../../utils/imageLoading'
+import { IMAGE_SIZES } from '@/utils/imageLoading'
 
 export function Hero() {
   const [showBookingForm, setShowBookingForm] = useState(false)

@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { ServiceDetailLayout } from '@/components/layouts/ServiceDetailLayout'
 import { FaTools, FaCheckCircle } from 'react-icons/fa'
-import { PaymentIcons } from '../../../components/PaymentIcons'
+import { PaymentIcons } from '@/components/PaymentIcons'
 
 export const metadata: Metadata = {
   title:
@@ -21,40 +21,40 @@ export default function ACSystemOptimizationPage() {
     },
     bentoGridData: {
       title: 'Why Choose',
-      subtitle: 'Our Optimization Service',
+      subtitle: 'Our Cleaning Service',
       items: [
         {
           type: 'featured' as const,
-          title: 'Professional Optimization',
-          description: `Our <span class="font-bold text-white">expert technicians</span> use advanced diagnostics and tuning techniques to maximize your AC system's performance.`,
-          icon: '/icons/tools.json',
+          title: 'Deep Clean Technology',
+          description: `We use <span class="font-bold text-white">advanced cleaning methods</span> and professional-grade sanitizers to ensure your AC system is thoroughly cleaned and decontaminated.`,
+          icon: '/icons/sparkles.json',
           colSpan: 2,
         },
         {
           type: 'standard' as const,
-          title: 'Enhanced Efficiency',
-          description: `Reduce energy costs and improve comfort with <span class="font-bold text-white">optimized performance</span>.`,
-          icon: '/icons/home.json',
+          title: 'Health Benefits',
+          description: `Improve your indoor air quality with our <span class="font-bold text-white">comprehensive cleaning service</span>.`,
+          icon: '/icons/heart.json',
         },
         {
           type: 'list' as const,
-          title: 'Our Services',
+          title: 'Cleaning Process',
           listItems: [
             {
               icon: <FaCheckCircle className="text-blue-400" />,
-              text: 'Performance Analysis',
+              text: 'Deep Coil Cleaning',
             },
             {
               icon: <FaCheckCircle className="text-green-400" />,
-              text: 'System Tuning',
+              text: 'Filter Decontamination',
             },
             {
               icon: <FaCheckCircle className="text-yellow-400" />,
-              text: 'Efficiency Testing',
+              text: 'Drain Line Clearing',
             },
             {
               icon: <FaCheckCircle className="text-red-400" />,
-              text: 'Optimization Report',
+              text: 'Full System Sanitization',
             },
           ],
         },
@@ -84,74 +84,74 @@ export default function ACSystemOptimizationPage() {
           title: 'Our Guarantees',
           icon: '/icons/shield-check.json',
           guaranteeItems: [
-            'Expert Analysis',
-            'Advanced Tools',
+            'Thorough Deep Clean',
+            'Safe Sanitization',
             'Satisfaction Guarantee',
-            'Performance Improvement',
+            'Fixed Price Service',
           ],
         },
       ],
     },
     introData: {
-      title: 'System',
-      subtitle: 'Optimization',
-      paragraph1: `Our <span class="font-bold text-white">comprehensive optimization service</span> ensures your air conditioning system operates at peak efficiency, delivering maximum comfort while minimizing energy consumption.`,
-      paragraph2: `Using <span class="font-bold text-white">advanced diagnostic tools</span> and expert knowledge, we identify and implement improvements that enhance your system's performance.`,
+      title: 'Professional AC',
+      subtitle: 'Cleaning Service',
+      paragraph1: `Our comprehensive cleaning service <span class="font-bold text-white">removes contaminants, mold, and bacteria</span> from your air conditioning system, improving air quality and system efficiency.`,
+      paragraph2: `Regular cleaning by our <span class="font-bold text-white">certified technicians</span> helps prevent health issues, reduces energy costs, and extends the life of your AC system.`,
     },
     issuesData: {
-      title: 'Optimization',
+      title: 'Our Cleaning',
       subtitle: 'Process',
-      introParagraph: `Our systematic approach to AC optimization includes:`,
+      introParagraph: `We follow a thorough cleaning process to ensure your AC system is completely sanitized:`,
       issues: [
         {
-          title: 'Performance Analysis',
-          description: `Comprehensive <span class="font-bold text-white">system assessment</span> using advanced diagnostics.`,
+          title: 'Initial Assessment',
+          description: `Complete inspection to <span class="font-bold text-white">identify problem areas</span> and contamination levels.`,
           bullets: [
-            'Efficiency testing',
-            'Performance metrics',
-            'Energy consumption',
-            'Comfort analysis',
+            'Visual inspection',
+            'Contamination assessment',
+            'Performance check',
+            'Photo documentation',
           ],
         },
         {
-          title: 'System Tuning',
-          description: `Expert <span class="font-bold text-white">optimization</span> for peak performance.`,
+          title: 'Deep Cleaning',
+          description: `Thorough cleaning of all <span class="font-bold text-white">major components</span> using specialized equipment.`,
           bullets: [
-            'Parameter adjustment',
-            'Flow optimization',
-            'Control calibration',
-            'Performance verification',
+            'Coil deep cleaning',
+            'Filter decontamination',
+            'Drain line clearing',
+            'Fan cleaning',
           ],
         },
         {
-          title: 'Recommendations',
-          description: `Detailed <span class="font-bold text-white">improvement plan</span> for long-term efficiency.`,
+          title: 'Sanitization',
+          description: `Professional sanitization to <span class="font-bold text-white">eliminate bacteria and mold</span>.`,
           bullets: [
-            'Enhancement options',
-            'Upgrade suggestions',
-            'Maintenance schedule',
-            'Energy-saving tips',
+            'Antimicrobial treatment',
+            'Deodorization',
+            'Mold prevention',
+            'Final sanitization',
           ],
         },
       ],
     },
     financeData: {
       title: 'Affordable',
-      subtitle: 'Solutions',
-      description1: `Invest in your comfort with our <span class="font-bold text-white">cost-effective optimization service</span>. The improvements pay for themselves through reduced energy costs.`,
-      description2: `Take advantage of our <span class="font-bold text-white">flexible payment options</span> to optimize your system's performance today.`,
+      subtitle: 'Cleaning',
+      description1: `We offer <span class="font-bold text-white">competitive rates</span> for our professional cleaning service, with options to suit every budget.`,
+      description2: `Take advantage of our <span class="font-bold text-white">special cleaning packages</span> and flexible payment plans to maintain a healthy AC system.`,
       featuresTitle: 'Service Benefits',
       features: [
-        'Reduced Energy Costs',
-        'Enhanced Comfort',
-        'Extended System Life',
-        'Better Performance',
+        'Fixed Price Cleaning',
+        'No Hidden Charges',
+        'Package Deals Available',
+        'Interest-Free Options',
       ],
     },
     ctaData: {
-      title: 'Optimize Your',
-      subtitle: 'System Today',
-      description: `Book our <span class="font-bold text-white">professional optimization service</span> and experience the difference in comfort and efficiency.`,
+      title: 'Book Your',
+      subtitle: 'Clean Today',
+      description: `Improve your air quality with our <span class="font-bold text-white">professional cleaning service</span>. Book now for a healthier home.`,
       buttonText: 'Book Online',
       buttonLink: '#book',
     },
@@ -161,24 +161,24 @@ export default function ACSystemOptimizationPage() {
       factors: [
         {
           icon: '/icons/graduation-scroll.json',
-          title: 'Certified',
-          description: `<span class="font-bold text-white">Expert technicians</span> with advanced training.`,
+          title: 'Licensed',
+          description: `All our technicians are <span class="font-bold text-white">fully licensed and insured</span>.`,
         },
         {
-          icon: '/icons/tools.json',
-          title: 'Advanced Tools',
-          description: `Using <span class="font-bold text-white">latest diagnostic</span> equipment.`,
+          icon: '/icons/sparkles.json',
+          title: 'Specialized',
+          description: `Expert in <span class="font-bold text-white">AC deep cleaning</span> techniques.`,
         },
         {
           icon: '/icons/star-smile.json',
-          title: 'Proven Results',
-          description: `<span class="font-bold text-white">Measurable improvements</span> in performance.`,
+          title: 'Guaranteed',
+          description: `100% satisfaction <span class="font-bold text-white">guaranteed</span> on all cleans.`,
         },
       ],
     },
     bookingData: {
       title: 'Book Your',
-      subtitle: 'Optimization Service',
+      subtitle: 'Clean Today',
     },
   }
 

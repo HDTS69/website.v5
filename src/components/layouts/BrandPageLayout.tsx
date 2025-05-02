@@ -6,7 +6,7 @@ import { useRef } from 'react'
 import { AnimatedButton } from '../ui/AnimatedButton'
 import { SparklesCore } from '../ui/SparklesCore'
 import { BookingForm } from '../ui/BookingForm'
-import { NavBar } from '../../../components/navigation/DesktopNavigation'
+import { NavBar } from '@/components/navigation/DesktopNavigation'
 import {
   Calendar,
   CheckCircle,
@@ -24,8 +24,8 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { navigationItems, actionItems } from '@/lib/navigation'
-import { getImageLoadingProps, ImagePriority } from '../../utils/imageLoading'
-import { Footer } from '@/components/ui/footer'
+import { getImageLoadingProps, ImagePriority } from '@/utils/imageLoading'
+import Footer from '@/components/ui/footer'
 
 interface Feature {
   title: string

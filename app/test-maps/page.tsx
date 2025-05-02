@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useEffect, useRef, useState } from 'react'
-import { GoogleMapsLoader } from '../components/GoogleMapsLoader'
+import { GoogleMapsLoader } from '@/components/GoogleMapsLoader'
 import MapComponent from '@/components/ui/MapComponent'
 
 export default function TestMapsPage() {
@@ -106,7 +106,11 @@ export default function TestMapsPage() {
         </ul>
       </div>
 
-      {isClient && <GoogleMapsLoader />}
+      {isClient && (
+        <GoogleMapsLoader>
+          <div id="maps-container" className="hidden" />
+        </GoogleMapsLoader>
+      )}
     </div>
   )
 }

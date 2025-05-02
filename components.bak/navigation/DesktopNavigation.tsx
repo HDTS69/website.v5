@@ -11,9 +11,9 @@ import {
   Phone,
   Calendar,
 } from 'lucide-react'
-import { cn } from '../../src/lib/utils'
-import type { NavItem, ActionItem } from '../../types/navigation/types'
-import { useMediaQuery } from '../../hooks/useMediaQuery'
+import { cn } from '@/lib/utils'
+import type { NavItem, ActionItem } from '@/types/navigation/types'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import DesktopLogo from '@/components/ui/DesktopLogo'
 
 interface NavBarProps {

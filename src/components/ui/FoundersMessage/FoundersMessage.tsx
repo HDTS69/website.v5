@@ -8,8 +8,8 @@ import {
   IMAGE_SIZES,
   getImageLoadingProps,
   ImagePriority,
-} from '../../../../utils/imageLoading'
-import LordIcon from '../../../../app/components/LordIcon'
+} from '@/utils/imageLoading'
+import LordIcon from '@/components/LordIcon'
 import { AnimatedBookNowButton } from '@/components/ui/AnimatedBookNowButton'
 
 interface FoundersMessageProps {

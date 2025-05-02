@@ -1,5 +1,5 @@
 import { NavBar } from './DesktopNavigation'
-import { NavItem, ActionItem } from '@/src/types/navigation/types'
+import { NavItem, ActionItem } from '@/types/navigation/types'
 
 interface NavigationProps {
   items: NavItem[]

@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Header from '@/components/ui/header'
 import { MobileHeader } from '@/components/mobile'
-import AuthBg from '@/public/images/auth-bg.svg'
 
 export default function AuthLayout({
   children,
@@ -40,7 +39,7 @@ export default function AuthLayout({
             aria-hidden="true"
           >
             <Image
-              src={AuthBg}
+              src="/images/auth-bg.svg"
               className="max-w-none"
               width={1285}
               height={1684}

@@ -1,21 +1,22 @@
 'use client'
-import { cn } from '@/lib/utils'
-import React, { useEffect, useRef, useState } from 'react'
-import { createNoise3D } from 'simplex-noise'
 
-export const WavyBackground = ({
+import { motion } from 'framer-motion'
+import React, { useEffect, useRef, useState } from 'react'
+import { cn } from '@/lib/utils'
+
+export function WavyBackground({
   children,
   className,
   containerClassName,
   colors,
-  waveWidth,
+  waveWidth = 50,
   backgroundFill,
   blur = 10,
   speed = 'fast',
   waveOpacity = 0.5,
   ...props
 }: {
-  children?: any
+  children?: React.ReactNode
   className?: string
   containerClassName?: string
   colors?: string[]
@@ -25,42 +26,7 @@ export const WavyBackground = ({
   speed?: 'slow' | 'fast'
   waveOpacity?: number
   [key: string]: any
-}) => {
-  const noise = createNoise3D()
-  let w: number,
-    h: number,
-    nt: number,
-    i: number,
-    x: number,
-    ctx: any,
-    canvas: any
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const getSpeed = () => {
-    switch (speed) {
-      case 'slow':
-        return 0.001
-      case 'fast':
-        return 0.002
-      default:
-        return 0.001
-    }
-  }
-
-  const init = () => {
-    canvas = canvasRef.current
-    ctx = canvas.getContext('2d')
-    w = ctx.canvas.width = window.innerWidth
-    h = ctx.canvas.height = window.innerHeight
-    ctx.filter = `blur(${blur}px)`
-    nt = 0
-    window.onresize = function () {
-      w = ctx.canvas.width = window.innerWidth
-      h = ctx.canvas.height = window.innerHeight
-      ctx.filter = `blur(${blur}px)`
-    }
-    render()
-  }
-
+}) {
   const waveColors = colors ?? [
     '#38bdf8',
     '#818cf8',
@@ -68,64 +34,69 @@ export const WavyBackground = ({
     '#e879f9',
     '#22d3ee',
   ]
-  const drawWave = (n: number) => {
-    nt += getSpeed()
-    for (i = 0; i < n; i++) {
-      ctx.beginPath()
-      ctx.lineWidth = waveWidth || 50
-      ctx.strokeStyle = waveColors[i % waveColors.length]
-      for (x = 0; x < w; x += 5) {
-        var y = noise(x / 800, 0.3 * i, nt) * 100
-        ctx.lineTo(x, y + h * 0.5)
-      }
-      ctx.stroke()
-      ctx.closePath()
-    }
-  }
-
-  let animationId: number
-  const render = () => {
-    ctx.fillStyle = backgroundFill || 'black'
-    ctx.globalAlpha = waveOpacity || 0.5
-    ctx.fillRect(0, 0, w, h)
-    drawWave(5)
-    animationId = requestAnimationFrame(render)
-  }
+  
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [svgHeight, setSvgHeight] = useState(0)
 
   useEffect(() => {
-    init()
-    return () => {
-      cancelAnimationFrame(animationId)
+    if (containerRef.current) {
+      setSvgHeight(containerRef.current.offsetHeight)
     }
-  }, [])
+  }, [containerRef])
 
-  const [isSafari, setIsSafari] = useState(false)
-  useEffect(() => {
-    setIsSafari(
-      typeof window !== 'undefined' &&
-        navigator.userAgent.includes('Safari') &&
-        !navigator.userAgent.includes('Chrome'),
-    )
-  }, [])
+  const animationDuration = speed === 'fast' ? '5s' : '10s'
 
   return (
     <div
+      ref={containerRef}
       className={cn(
-        'flex h-screen flex-col items-center justify-center',
-        containerClassName,
+        'flex flex-col items-center justify-center overflow-hidden relative z-0',
+        containerClassName
       )}
     >
-      <canvas
+      <svg
         className="absolute inset-0 z-0"
-        ref={canvasRef}
-        id="canvas"
         style={{
-          ...(isSafari ? { filter: `blur(${blur}px)` } : {}),
+          filter: `blur(${blur}px)`,
+          opacity: waveOpacity,
         }}
-      ></canvas>
-      <div className={cn('relative z-10', className)} {...props}>
-        {children}
-      </div>
+        width="100%"
+        height={svgHeight ? svgHeight : "100%"}
+        viewBox={`0 0 100 ${svgHeight}`}
+        preserveAspectRatio="none"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+      >
+        {backgroundFill && (
+          <rect
+            width="100"
+            height={svgHeight}
+            fill={backgroundFill}
+          />
+        )}
+        {waveColors.map((color, i) => (
+          <motion.path
+            key={i}
+            d={`M 0 ${svgHeight/2 + ((i - waveColors.length/2) * waveWidth)} Q 25 ${svgHeight/2 + ((i - waveColors.length/2) * waveWidth) - 20} 50 ${svgHeight/2 + ((i - waveColors.length/2) * waveWidth)} Q 75 ${svgHeight/2 + ((i - waveColors.length/2) * waveWidth) + 20} 100 ${svgHeight/2 + ((i - waveColors.length/2) * waveWidth)} L 100 ${svgHeight} L 0 ${svgHeight} Z`}
+            fill={color}
+            initial={{
+              y: 0,
+            }}
+            animate={{
+              y: [0, -20, 0],
+            }}
+            transition={{
+              repeat: Infinity,
+              repeatType: "mirror",
+              duration: Number(animationDuration.replace('s', '')),
+              ease: "easeInOut",
+              delay: i * 0.5,
+            }}
+          />
+        ))}
+      </svg>
+      <div className={cn("relative z-10", className)}>{children}</div>
     </div>
   )
 }

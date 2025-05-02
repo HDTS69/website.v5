@@ -1,66 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { Menu, X, ChevronRight, Phone } from 'lucide-react'
+import { Menu, X, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { useMediaQuery } from '../../../hooks/useMediaQuery'
-import {
-  NavItem,
-  DropdownNavItem,
-  SubNavItem,
-} from '../../../types/navigation/types'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
-import { AnimatedBookNowButton } from '@/components/ui/AnimatedBookNowButton'
+import Image from 'next/image'
 
-interface MobileNavigationProps {
-  items: NavItem[]
+// Re-use the NavigationItem interface (or import if defined elsewhere)
+interface NavigationItem {
+  label: string
+  href?: string
+  dropdownItems?: NavigationItem[]
+  subDropdownItems?: NavigationItem[]
 }
 
-// Custom styles for the animated buttons
-const customButtonStyles = `
-  .book-online-btn .points_wrapper .point {
-    background-color: white !important;
-  }
-  
-  .call-now-btn .points_wrapper .point {
-    background-color: #00E6CA !important;
-  }
-  
-  .call-now-btn {
-    background: white !important;
-  }
-  
-  .call-now-btn .inner {
-    color: #00E6CA !important;
-  }
-  
-  .call-now-btn::after {
-    background: white !important;
-  }
-  
-  /* Make hero buttons the same width */
-  .hero-buttons-container .animated-book-now-button {
-    min-width: 180px !important;
-    width: 180px !important;
-    text-align: center;
-    justify-content: center;
-    transition: all 0.3s ease !important;
-  }
-  
-  .hero-buttons-container .inner {
-    justify-content: center;
-    width: 100%;
-  }
-  
-  /* Glow effects on hover */
-  .hero-buttons-container .book-online-btn:hover {
-    box-shadow: 0 0 25px 4px rgba(0, 230, 202, 0.6) !important;
-  }
-  
-  .hero-buttons-container .call-now-btn:hover {
-    box-shadow: 0 0 25px 4px rgba(255, 255, 255, 0.5) !important;
-  }
-`
+interface MobileNavigationProps {
+  items: NavigationItem[]
+}
 
 const MobileNavigation: React.FC<MobileNavigationProps> = ({
   items,
@@ -90,13 +47,6 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
     }
   }, [isOpen])
 
-  // Reset expanded items when menu closes
-  useEffect(() => {
-    if (!isOpen) {
-      setExpandedItems({})
-    }
-  }, [isOpen])
-
   if (!isMobile) {
     return null // Don't render on desktop
   }
@@ -110,76 +60,50 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
     }))
   }
 
-  // Helper function to check if item has children
-  const hasChildren = (item: NavItem | DropdownNavItem): boolean => {
-    return (
-      ('dropdownItems' in item &&
-        Array.isArray(item.dropdownItems) &&
-        item.dropdownItems.length > 0) ||
-      ('subItems' in item &&
-        Array.isArray(item.subItems) &&
-        item.subItems.length > 0)
-    )
-  }
-
   const renderNavLinks = (
-    navItems: NavItem[] | DropdownNavItem[],
+    navItems: NavigationItem[],
     level = 0,
   ): React.ReactNode[] => {
     return navItems.map((item, index) => {
-      const itemKey = `${item.name}-${level}-${index}`
-      const itemHasChildren = hasChildren(item)
-      const isExpanded = !!expandedItems[itemKey]
+      const itemKey = `${item.label}-${level}-${index}`
+      const hasChildren = !!(
+        item.dropdownItems?.length || item.subDropdownItems?.length
+      )
+      const isExpanded = expandedItems[itemKey]
 
       return (
         <div key={itemKey} className="py-1">
-          <div className="flex w-full items-center">
-            {item.url ? (
+          <div className="flex items-center">
+            {item.href ? (
               <Link
-                href={item.url}
+                href={item.href}
                 className={cn(
                   'block w-full py-3 text-base font-medium transition-colors',
-                  'text-white hover:text-[#00E6CA] active:text-[#00E6CA]',
-                  level === 0 ? 'border-b border-zinc-800' : '',
-                  'isHighlighted' in item &&
-                    item.isHighlighted &&
-                    'font-semibold text-[#00E6CA]',
+                  'text-gray-800 hover:text-black active:text-black',
+                  level === 0 ? 'border-b border-gray-100' : '',
                 )}
                 onClick={() => setIsOpen(false)}
                 style={{ paddingLeft: `${16 + level * 16}px` }}
               >
-                <span className="flex items-center">
-                  {'icon' in item && item.icon && (
-                    <item.icon className="mr-2 h-5 w-5" />
-                  )}
-                  {item.name}
-                </span>
+                {item.label}
               </Link>
             ) : (
               <button
                 onClick={() => toggleExpandItem(itemKey)}
                 className={cn(
                   'flex w-full items-center justify-between py-3 text-base font-semibold transition-colors',
-                  'text-white hover:text-[#00E6CA] active:text-[#00E6CA]',
-                  level === 0 ? 'border-b border-zinc-800' : '',
-                  isExpanded ? 'text-[#00E6CA]' : '',
-                  'isHighlighted' in item &&
-                    item.isHighlighted &&
-                    'text-[#00E6CA]',
+                  'text-gray-800 hover:text-black active:text-black',
+                  level === 0 ? 'border-b border-gray-100' : '',
+                  isExpanded ? 'text-black' : '',
                 )}
                 style={{ paddingLeft: `${16 + level * 16}px` }}
               >
-                <span className="flex items-center">
-                  {'icon' in item && item.icon && (
-                    <item.icon className="mr-2 h-5 w-5" />
-                  )}
-                  {item.name}
-                </span>
-                {itemHasChildren && (
+                <span>{item.label}</span>
+                {hasChildren && (
                   <ChevronRight
                     className={cn(
                       'mr-4 h-4 w-4 transition-transform duration-200',
-                      isExpanded ? 'rotate-90 text-[#00E6CA]' : '',
+                      isExpanded ? 'rotate-90' : '',
                     )}
                   />
                 )}
@@ -187,42 +111,24 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
             )}
           </div>
 
-          {itemHasChildren && (
+          {hasChildren && (
             <AnimatePresence>
               {isExpanded && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  transition={{ duration: 0.3 }}
                   className="overflow-hidden"
                 >
-                  {'dropdownItems' in item && item.dropdownItems && (
-                    <div className={cn('ml-6 border-l border-zinc-700')}>
+                  {item.dropdownItems && (
+                    <div className={cn('ml-6 border-l-2 border-gray-200')}>
                       {renderNavLinks(item.dropdownItems, level + 1)}
                     </div>
                   )}
-                  {'subItems' in item && item.subItems && (
-                    <div className={cn('ml-6 border-l border-zinc-700')}>
-                      {item.subItems.map(
-                        (subItem: SubNavItem, subIndex: number) => (
-                          <div
-                            key={`${subItem.name}-${level + 2}-${subIndex}`}
-                            className="py-1"
-                          >
-                            <Link
-                              href={subItem.url}
-                              className={cn(
-                                'text-md block py-2 font-medium text-gray-300 transition-colors hover:text-[#00E6CA]',
-                                'pl-[calc(16px+((level+2)*16px))]',
-                              )}
-                              onClick={() => setIsOpen(false)}
-                            >
-                              {subItem.name}
-                            </Link>
-                          </div>
-                        ),
-                      )}
+                  {item.subDropdownItems && (
+                    <div className={cn('ml-6 border-l-2 border-gray-200')}>
+                      {renderNavLinks(item.subDropdownItems, level + 2)}
                     </div>
                   )}
                 </motion.div>
@@ -236,11 +142,6 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
 
   return (
     <>
-      {/* Inject global styles needed for animated buttons */}
-      <style jsx global>
-        {customButtonStyles}
-      </style>
-
       {/* Floating Action Button */}
       <div className="fixed bottom-6 right-6 z-50 md:hidden">
         <motion.div
@@ -250,14 +151,9 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
         >
           <Button
             variant="default"
-            className="h-14 w-14 rounded-full bg-[#00E6CA] p-0 text-white shadow-lg hover:bg-[#00E6CA]/90"
+            className="h-14 w-14 rounded-full bg-[#28DF99] p-0 text-white shadow-lg hover:bg-[#20c287]"
             onClick={toggleMenu}
             aria-label="Toggle navigation menu"
-            style={{
-              position: 'fixed',
-              bottom: 'max(env(safe-area-inset-bottom, 16px) + 8px, 24px)',
-              right: 'max(env(safe-area-inset-right, 16px) + 8px, 24px)',
-            }}
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
@@ -273,16 +169,10 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-40 md:hidden"
-            style={{
-              paddingTop: 'env(safe-area-inset-top, 0)',
-              paddingBottom: 'env(safe-area-inset-bottom, 0)',
-              paddingLeft: 'env(safe-area-inset-left, 0)',
-              paddingRight: 'env(safe-area-inset-right, 0)',
-            }}
           >
             {/* Backdrop */}
             <motion.div
-              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/5 backdrop-blur-sm"
               onClick={toggleMenu}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -291,53 +181,76 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
 
             {/* Menu Panel */}
             <motion.div
-              className="absolute right-0 top-[72px] h-[calc(100%-72px)] w-full max-w-md overflow-hidden bg-black shadow-xl"
+              className="absolute right-0 top-0 h-full w-full max-w-md overflow-hidden bg-white shadow-xl"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
             >
+              <div className="flex items-center justify-between border-b border-gray-100 p-4">
+                {/* Logo area */}
+                <div className="flex items-center">
+                  <div className="relative mr-2 h-10 w-10">
+                    <Image
+                      src="/images/logo.png"
+                      alt="Logo"
+                      fill
+                      style={{ objectFit: 'contain' }}
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'
+                      }}
+                    />
+                  </div>
+                  <h2 className="text-lg font-bold text-black">
+                    HD Trade Services
+                  </h2>
+                </div>
+
+                <Button
+                  variant="ghost"
+                  className="h-10 w-10 rounded-full p-0 hover:bg-gray-100"
+                  onClick={toggleMenu}
+                  aria-label="Close navigation menu"
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+
               <motion.nav
-                className="pb-safe h-full overflow-y-auto"
+                className="h-[calc(100vh-80px)] overflow-y-auto pb-20 pt-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
               >
-                <div className="py-4">{renderNavLinks(items)}</div>
+                {renderNavLinks(items)}
 
                 {/* Contact Info */}
-                <div className="mt-2 border-t border-zinc-800 px-6 pb-4 pt-6">
-                  <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-gray-400">
+                <div className="mt-6 border-t border-gray-100 px-6 pb-4 pt-8">
+                  <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-gray-500">
                     Contact Us
                   </h3>
                   <a
                     href="tel:1300136336"
-                    className="flex items-center py-2 text-lg font-bold text-[#00E6CA]"
+                    className="flex items-center py-2 text-lg font-bold text-[#28DF99]"
                   >
-                    <Phone className="mr-2 h-5 w-5" />
                     1300 136 336
                   </a>
-                  <div className="mt-2 text-sm text-gray-400">
+                  <div className="mt-2 text-sm text-gray-500">
                     <p>Available 24/7 for emergency service</p>
                   </div>
                 </div>
 
-                {/* Hero Section Buttons */}
-                <div className="hero-buttons-container mt-4 flex justify-center gap-4 px-6 pb-16">
-                  <AnimatedBookNowButton
-                    href="tel:1300136336"
-                    className="call-now-btn bg-white text-[#00E6CA]"
+                {/* Book Now Button */}
+                <div className="px-6 pb-8">
+                  <Button
+                    className="w-full bg-black py-6 text-base font-medium text-white hover:bg-gray-800"
+                    onClick={() => {
+                      window.location.href = '/book'
+                      setIsOpen(false)
+                    }}
                   >
-                    Call Now
-                  </AnimatedBookNowButton>
-
-                  <AnimatedBookNowButton
-                    href="/book"
-                    className="book-online-btn bg-[#00E6CA] text-white"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Book Online
-                  </AnimatedBookNowButton>
+                    Book Now
+                  </Button>
                 </div>
               </motion.nav>
             </motion.div>

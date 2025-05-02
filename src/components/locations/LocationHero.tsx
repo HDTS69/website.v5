@@ -6,16 +6,15 @@ import { SparklesCore } from '../ui/SparklesCore'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Hero as MobileHero } from '../mobile/Hero'
-import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import {
   getImageLoadingProps,
   IMAGE_SIZES,
   ImagePriority,
-} from '../../../utils/imageLoading'
+} from '@/utils/imageLoading'
 import { HeroBookingForm } from '@/components/HeroBookingForm'
 import { GoogleReviews } from '../ui/GoogleReviews'
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
-import heroImage from '@/public/images/hayden-hero-fixed.webp'
 import { createClient } from '@supabase/supabase-js'
 
 // Initialize Supabase client
@@ -173,7 +172,7 @@ export function LocationHero({ suburb = '' }) {
             >
               <div className="relative h-full w-full">
                 <Image
-                  src={heroImage}
+                  src="/images/hayden-hero-fixed.webp"
                   alt="Hayden Drew - Professional Hairdresser"
                   className="object-contain object-left-bottom"
                   fill

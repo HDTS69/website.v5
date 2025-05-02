@@ -1,5 +1,5 @@
 // import dynamic from 'next/dynamic'; // Moved to client component
-import { Hero } from '../../components/Hero'
+import { Hero } from '@/components/Hero'
 // Static imports removed - they are now in HomePageClientContent
 import type { Metadata } from 'next'
 // import { ClientOnly } from '@/components/ui/ClientOnly'; // Moved to client component

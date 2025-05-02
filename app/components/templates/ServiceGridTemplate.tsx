@@ -8,7 +8,7 @@ import LordIcon from '../LordIcon'
 import {
   getImageLoadingProps,
   ImagePriority,
-} from '../../../utils/imageLoading'
+} from '@/utils/imageLoading'
 
 interface Service {
   title: string

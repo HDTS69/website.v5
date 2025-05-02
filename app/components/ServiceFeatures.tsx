@@ -1,7 +1,7 @@
 'use client';
 
 import { IconCardsGrid } from './IconCardsGrid';
-import { serviceFeatureIcons } from '@/public/icons/service-features';
+import { serviceFeatureIcons } from '../../public/icons/service-features';
 
 const serviceFeatures = [
   {

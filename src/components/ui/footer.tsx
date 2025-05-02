@@ -11,7 +11,7 @@ import {
   getImageLoadingProps,
   IMAGE_SIZES,
   ImagePriority,
-} from '../../../utils/imageLoading'
+} from '@/utils/imageLoading'
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 import { usePathname } from 'next/navigation'
 

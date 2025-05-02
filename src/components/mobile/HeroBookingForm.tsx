@@ -13,9 +13,9 @@ import { useFormValidation } from '../ui/BookingForm/useFormValidation'
 import { useFormSubmission } from '../ui/BookingForm/useFormSubmission'
 import { PREFERRED_TIMES, URGENCY_OPTIONS } from '../ui/BookingForm/constants'
 import type { Service } from '../ui/BookingForm/types'
-import { SERVICES } from '../../../config/services'
+import { SERVICES } from '@/config/services'
 import { AnimatedBookNowButton } from '../ui/AnimatedBookNowButton'
-import { PHONE_PATTERNS, EMAIL_PATTERNS } from '../../../utils/security'
+import { PHONE_PATTERNS, EMAIL_PATTERNS } from '@/utils/security'
 
 export function HeroBookingForm() {
   const [formData, setFormData] = useState({

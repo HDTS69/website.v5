@@ -1,6 +1,6 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
-import type { FormData } from '@/src/components/ui/BookingForm/types'
+import type { FormData } from '@/components/ui/BookingForm/types'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
