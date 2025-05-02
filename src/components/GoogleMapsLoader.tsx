@@ -25,19 +25,28 @@ export function GoogleMapsLoader({
 }: GoogleMapsLoaderProps) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [loadError, setLoadError] = useState<Error | null>(null)
+  const [isClient, setIsClient] = useState(false)
+
+  // Check if running in browser
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // Check if Google Maps is already loaded
   useEffect(() => {
-    if (window.googleMapsIsLoaded || (window.google && window.google.maps)) {
+    if (!isClient) return;
+    
+    if (typeof window !== 'undefined' && 
+        (window.googleMapsIsLoaded || (window.google && window.google.maps))) {
       console.log('Google Maps API already loaded, skipping load');
       setIsLoaded(true);
       return;
     }
-  }, []);
+  }, [isClient]);
   
   // Use our script loader hook to load the script only if not already loaded
   const { isLoading, error } = useScriptLoader(
-    !isLoaded ? 
+    (!isLoaded && isClient) ? 
     `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places` : 
     '',
     {
@@ -48,8 +57,11 @@ export function GoogleMapsLoader({
   )
 
   useEffect(() => {
+    if (!isClient) return;
+    
     // If script is loaded but not marked as loaded yet
-    if (!isLoading && !isLoaded && window.google && window.google.maps) {
+    if (!isLoading && !isLoaded && typeof window !== 'undefined' && 
+        window.google && window.google.maps) {
       // Set global flag to prevent duplicate loading
       window.googleMapsIsLoaded = true;
       
@@ -66,7 +78,12 @@ export function GoogleMapsLoader({
     if (error) {
       setLoadError(error);
     }
-  }, [isLoading, isLoaded, error]);
+  }, [isLoading, isLoaded, error, isClient]);
+
+  // During SSR, render only children without script loading
+  if (!isClient) {
+    return <>{children}</>
+  }
 
   // Show loading component while the script is loading
   if ((isLoading && !isLoaded) || (!isLoaded && !window.googleMapsIsLoaded)) {

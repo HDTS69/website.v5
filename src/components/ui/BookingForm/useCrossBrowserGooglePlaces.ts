@@ -36,10 +36,16 @@ export function useCrossBrowserGooglePlaces({
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null)
   const listenerRef = useRef<google.maps.MapsEventListener | null>(null)
   const initAttempts = useRef<number>(0)
+  const [isClient, setIsClient] = useState(false)
+
+  // Check if running in browser
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // Detect browser for specific browser handling
   const detectBrowser = useCallback((): string => {
-    if (typeof window === 'undefined' || !window.navigator) return 'unknown'
+    if (!isClient || typeof window === 'undefined' || !window.navigator) return 'unknown'
 
     const ua = navigator.userAgent
     if (ua.indexOf('Chrome') > -1 && ua.indexOf('Edge') === -1) return 'chrome'
@@ -50,11 +56,11 @@ export function useCrossBrowserGooglePlaces({
     if (ua.indexOf('MSIE') > -1 || ua.indexOf('Trident') > -1) return 'ie'
 
     return 'unknown'
-  }, [])
+  }, [isClient])
 
   // Function to check if Google Maps API is available
   const isGoogleMapsAvailable = useCallback((): boolean => {
-    if (typeof window === 'undefined') return false
+    if (!isClient || typeof window === 'undefined') return false
     
     try {
       // Check for both the API and specifically the Places service
@@ -68,11 +74,11 @@ export function useCrossBrowserGooglePlaces({
       console.error('Error checking Google Maps availability:', e);
       return false;
     }
-  }, [])
+  }, [isClient])
 
   // Handle place selection
   const handlePlaceChanged = useCallback(() => {
-    if (!autocompleteRef.current) return
+    if (!isClient || !autocompleteRef.current) return
 
     try {
       const place = autocompleteRef.current.getPlace()
@@ -83,10 +89,12 @@ export function useCrossBrowserGooglePlaces({
       console.error('Error handling place selection:', error)
       setError('Error selecting place. Please try again.')
     }
-  }, [onPlaceSelect])
+  }, [onPlaceSelect, isClient])
 
   // Cleanup function - moved before initializeAutocomplete to fix dependency issue
   const cleanup = useCallback(() => {
+    if (!isClient) return;
+    
     if (
       listenerRef.current &&
       isGoogleMapsAvailable() &&
@@ -113,11 +121,11 @@ export function useCrossBrowserGooglePlaces({
 
     autocompleteRef.current = null
     setIsInitialized(false)
-  }, [isGoogleMapsAvailable, detectBrowser])
+  }, [isGoogleMapsAvailable, detectBrowser, isClient, inputRef])
 
   // Initialize autocomplete
   const initializeAutocomplete = useCallback(() => {
-    if (!inputRef.current || disabled) {
+    if (!isClient || !inputRef.current || disabled) {
       return;
     }
 
@@ -196,12 +204,14 @@ export function useCrossBrowserGooglePlaces({
     types,
     fields,
     detectBrowser,
-    cleanup
+    cleanup,
+    isClient,
+    inputRef
   ])
 
   // Initialize when Google Maps is loaded
   useEffect(() => {
-    if (disabled) return;
+    if (!isClient || disabled) return;
     
     // Reset attempt counter when dependencies change
     initAttempts.current = 0;
@@ -241,6 +251,7 @@ export function useCrossBrowserGooglePlaces({
     isGoogleMapsAvailable,
     initializeAutocomplete,
     cleanup,
+    isClient
   ]);
 
   // Reset input value

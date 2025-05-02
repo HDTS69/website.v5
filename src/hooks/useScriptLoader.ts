@@ -20,10 +20,16 @@ export function useScriptLoader(
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   const [scriptElement, setScriptElement] = useState<HTMLScriptElement | null>(null)
+  const [isClient, setIsClient] = useState(false)
+
+  // Check if running in browser
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   useEffect(() => {
-    // Skip if src is empty
-    if (!src) {
+    // Skip if not in browser or src is empty
+    if (!isClient || !src) {
       setIsLoading(false)
       return
     }
@@ -112,7 +118,7 @@ export function useScriptLoader(
         script.parentNode.removeChild(script)
       }
     }
-  }, [src, options.id, options.defer, options.async, options.nonce, options['data-testid']])
+  }, [src, options.id, options.defer, options.async, options.nonce, options['data-testid'], isClient])
 
   return { isLoading, error, scriptElement }
 } 
