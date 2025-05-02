@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { GoogleReviews } from '@/components/ui/GoogleReviews'
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
-import LordIcon from '../../../../app/components/LordIcon'
+import LordIcon from '@/components/LordIcon'
 
 // Common Background Wrapper
 function BackgroundWrapper({

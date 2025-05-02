@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import LordIcon from '../../../app/components/LordIcon'
+import LordIcon from '@/components/LordIcon'
 import { Testimonials } from '@/components/ui/Testimonials'
 import { BookingForm } from '@/components/ui/BookingForm/BookingForm'
 import { GoogleReviews } from '@/components/ui/GoogleReviews'
@@ -12,7 +12,7 @@ import { AnimatedBookNowButton } from '@/components/ui/AnimatedBookNowButton'
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 import { CheckIcon } from '@heroicons/react/24/outline'
 import { FaTools } from 'react-icons/fa'
-import { PaymentIcons } from '../../../app/components/PaymentIcons'
+import { PaymentIcons } from '@/components/PaymentIcons'
 
 // Custom styles for the animated buttons (copied from emergency page)
 const customButtonStyles = `
