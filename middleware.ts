@@ -96,15 +96,15 @@ export async function middleware(request: NextRequest) {
     // Default to only same-origin
     "default-src 'self'",
     // Scripts: allow same-origin and necessary third-party sources
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel.app https://*.vercel.com https://maps.googleapis.com https://*.googletagmanager.com https://*.google-analytics.com https://cdn.lordicon.com",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel.app https://*.vercel.com https://maps.googleapis.com https://*.googletagmanager.com https://*.google-analytics.com https://cdn.lordicon.com https://*.gstatic.com https://*.ggpht.com",
     // Styles: allow same-origin and inline styles (needed for shadcn and Next.js)
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.gstatic.com",
     // Images: allow same-origin and trusted sources
-    "img-src 'self' data: blob: https://*.googleusercontent.com https://*.googleapis.com https://maps.gstatic.com https://*.vercel.app",
+    "img-src 'self' data: blob: https://*.googleusercontent.com https://*.googleapis.com https://maps.gstatic.com https://*.vercel.app https://*.google-analytics.com https://*.gstatic.com https://*.ggpht.com",
     // Fonts: allow specific sources
     "font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com https://rsms.me https://*.vercel.app https://cdn.lordicon.com *.stripe.com",
     // Connect: allow necessary APIs and WebSocket for Next.js
-    "connect-src 'self' https://*.supabase.co https://*.googleapis.com https://maps.googleapis.com wss://*.vercel.app https://cdn.lordicon.com https://*.stripe.com",
+    "connect-src 'self' https://*.supabase.co https://*.googleapis.com https://maps.googleapis.com wss://*.vercel.app https://cdn.lordicon.com https://*.stripe.com https://*.google-analytics.com https://www.google-analytics.com https://*.analytics.google.com https://*.gstatic.com https://*.ggpht.com",
     // Media: restrict to same-origin
     "media-src 'self'",
     // Object: restrict to none

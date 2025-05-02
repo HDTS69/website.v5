@@ -55,10 +55,34 @@ export default function RootLayout({
 
         {/* Apple-specific meta tags */}
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
+
+        {/* Script to suppress specific Google Maps warnings */}
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            // Suppress Google Maps warnings
+            const originalConsoleWarn = console.warn;
+            console.warn = function() {
+              // Filter out specific Google Maps warnings
+              if (
+                arguments[0] && 
+                typeof arguments[0] === 'string' && 
+                (
+                  arguments[0].includes('google.maps.places.Autocomplete is not available to new customers') ||
+                  arguments[0].includes('Google Maps JavaScript API has been loaded directly without loading=async') ||
+                  arguments[0].includes('Google Maps already loaded outside @googlemaps/js-api-loader')
+                )
+              ) {
+                return;
+              }
+              originalConsoleWarn.apply(console, arguments);
+            };
+          `
+        }} />
 
         {/* Favicon links */}
         <link

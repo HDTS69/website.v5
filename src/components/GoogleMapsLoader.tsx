@@ -14,6 +14,8 @@ interface GoogleMapsLoaderProps {
 declare global {
   interface Window {
     googleMapsIsLoaded?: boolean;
+    initGoogleMaps?: () => void;
+    google?: typeof google;
   }
 }
 
@@ -46,8 +48,8 @@ export function GoogleMapsLoader({
   
   // Use our script loader hook to load the script only if not already loaded
   const { isLoading, error } = useScriptLoader(
-    (!isLoaded && isClient) ? 
-    `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places` : 
+    (!isLoaded && isClient && !window.googleMapsIsLoaded) ? 
+    `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&loading=async&callback=initGoogleMaps` : 
     '',
     {
       id: 'google-maps-script',
@@ -56,24 +58,32 @@ export function GoogleMapsLoader({
     }
   )
 
+  // Add a global callback function for the Google Maps API
   useEffect(() => {
     if (!isClient) return;
     
-    // If script is loaded but not marked as loaded yet
-    if (!isLoading && !isLoaded && typeof window !== 'undefined' && 
-        window.google && window.google.maps) {
-      // Set global flag to prevent duplicate loading
+    // Define the callback function that Google Maps will call when loaded
+    window.initGoogleMaps = function() {
       window.googleMapsIsLoaded = true;
-      
-      // Set local state
       setIsLoaded(true);
       
       // Dispatch a custom event to notify other components
       const event = new Event('google-maps-loaded');
       window.dispatchEvent(event);
-      console.log('Google Maps API loaded and initialized successfully');
-    }
+      console.log('Google Maps API loaded and initialized successfully via callback');
+    };
+    
+    return () => {
+      // Clean up the global callback when component unmounts
+      if (window.initGoogleMaps) {
+        delete window.initGoogleMaps;
+      }
+    };
+  }, [isClient]);
 
+  useEffect(() => {
+    if (!isClient) return;
+    
     // If there's an error from the script loader, set it
     if (error) {
       setLoadError(error);
