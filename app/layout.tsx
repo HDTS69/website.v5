@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#00E6CA', // Matches the PWA theme color
+  themeColor: '#000000', // Black status bar for mobile devices
   // You can add more viewport settings here if needed
 }
 
@@ -58,7 +58,7 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"
-          content="black-translucent"
+          content="black"
         />
 
         {/* Script to suppress specific Google Maps warnings */}
@@ -106,7 +106,7 @@ export default function RootLayout({
         {/* PWA specific tags */}
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/images/PWA/icon-192.png"></link>
-        <meta name="theme-color" content="#00E6CA" />
+        <meta name="theme-color" content="#000000" />
 
         {/* Lordicon Script */}
         <LordIconScript />
