@@ -1,12 +1,14 @@
 'use client'
 
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { scrollToElement } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 
 const SparklesCore = dynamic(() =>
   import('@/components/ui/SparklesCore').then((mod) => mod.SparklesCore),
+)
+const AnimatedButton = dynamic(() => 
+  import('@/components/ui/AnimatedButton').then((mod) => mod.AnimatedButton),
 )
 
 export const BannerCTA = () => {
@@ -44,13 +46,15 @@ export const BannerCTA = () => {
         <p className="mb-6 max-w-2xl text-base text-gray-300 md:text-lg">
           Book your appointment today and let us help you achieve your goals
         </p>
-        <Link
-          href="/book"
-          onClick={handleClick}
-          className="inline-flex transform items-center rounded-full bg-gradient-to-r from-[#00E6CA] to-[#14B8A6] px-8 py-3 text-base font-semibold text-black transition-all duration-300 hover:scale-105 hover:shadow-lg"
-        >
-          Book Online Now
-        </Link>
+        <div className="w-full max-w-[200px]">
+          <AnimatedButton
+            href="/book"
+            onClick={handleClick}
+            className="w-full justify-center py-3 text-base font-medium shadow-lg shadow-cyan-900/20"
+          >
+            Book Now
+          </AnimatedButton>
+        </div>
         
         <div className="mt-6 text-center text-sm text-gray-400">
           Transforming experiences, one appointment at a time
