@@ -5,8 +5,34 @@ import Image from 'next/image'
 import { SparklesCore } from '../ui/SparklesCore'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AnimatedButton } from '../ui/AnimatedButton'
+import { AnimatedBookNowButton } from '../ui/AnimatedBookNowButton'
 import { HeroBookingForm } from './HeroBookingForm'
 import { IMAGE_SIZES } from '@/utils/imageLoading'
+
+// Custom styles for the Call Now button to match other pages
+const callNowButtonStyles = `
+  .mobile-hero-call-now .points_wrapper .point {
+    background-color: #00E6CA !important;
+  }
+  
+  .mobile-hero-call-now {
+    background: white !important;
+  }
+  
+  .mobile-hero-call-now .inner {
+    color: #00E6CA !important;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .mobile-hero-call-now::after {
+    background: white !important;
+  }
+  
+  .mobile-hero-call-now:hover {
+    box-shadow: 0 0 25px 4px rgba(255, 255, 255, 0.5) !important;
+  }
+`
 
 export function Hero() {
   const [showBookingForm, setShowBookingForm] = useState(false)
@@ -16,10 +42,15 @@ export function Hero() {
     <div
       className="relative flex min-h-[100dvh] touch-auto flex-col overflow-x-hidden overscroll-none bg-black pb-20"
       style={{
-        paddingTop: '80px', // Reduced from 150px to move content closer to top
+        paddingTop: '150px', // Slightly reduced to better match desktop spacing
         overscrollBehavior: 'none', // Prevent bounce/rubber-band effect
       }}
     >
+      {/* Add styles for Call Now button */}
+      <style jsx global>
+        {callNowButtonStyles}
+      </style>
+      
       {/* Sparkles Animation */}
       <div className="pointer-events-none absolute inset-0 z-[2]">
         <SparklesCore
@@ -33,9 +64,9 @@ export function Hero() {
         />
       </div>
 
-      {/* Hero Images Container - Adjusted positioning */}
+      {/* Hero Images Container - Absolute position (fixed to hero section) */}
       <div
-        className="pointer-events-none absolute bottom-0 left-0 z-[3] h-[65%] w-[60%] will-change-transform"
+        className="pointer-events-none absolute bottom-0 left-0 z-[3] h-[70%] w-[60%] will-change-transform"
         style={{ transform: 'translateZ(0)' }}
       >
         <div className="relative h-full w-full">
@@ -59,21 +90,21 @@ export function Hero() {
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black to-transparent" />
       </div>
 
-      {/* Content Container - Moved up with reduced margins */}
-      <div className="container relative z-10 mx-auto mt-0 px-4 py-0">
+      {/* Content Container */}
+      <div className="container relative z-10 mx-auto px-4 py-0">
         <div
           className="flex flex-col items-center justify-center"
           style={{ marginTop: '0' }}
         >
-          {/* Hero Text - Reduced margin */}
-          <div className="mb-4 flex max-w-[100%] flex-col items-center text-center">
+          {/* Hero Text */}
+          <div className="mb-6 flex max-w-[100%] flex-col items-center text-center">
             {/* Main Headline */}
-            <div className="mb-3">
-              <h1 className="mb-3 text-[2.5rem] font-bold leading-tight tracking-tight text-white will-change-transform">
-                <span className="animation-delay-300 mb-1 block animate-mobile-fade-up opacity-0">
+            <div className="mb-4">
+              <h1 className="mb-4 text-[2.5rem] font-bold leading-tight tracking-tight text-white will-change-transform">
+                <span className="animation-delay-300 mb-2 block animate-mobile-fade-up opacity-0">
                   Brisbane
                 </span>
-                <span className="animation-delay-400 mb-1 inline-block animate-mobile-fade-up text-[#00E6CA] opacity-0">
+                <span className="animation-delay-400 mb-2 inline-block animate-mobile-fade-up text-[#00E6CA] opacity-0">
                   24/7 Emergency Repairs
                 </span>
                 <span className="animation-delay-500 block animate-mobile-fade-up opacity-0">
@@ -81,18 +112,18 @@ export function Hero() {
                 </span>
               </h1>
 
-              <p className="animation-delay-600 mx-auto mb-1 max-w-md animate-mobile-fade-up text-lg font-medium leading-relaxed text-gray-300 opacity-0 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
+              <p className="animation-delay-600 mx-auto mb-2 max-w-md animate-mobile-fade-up text-lg font-medium leading-relaxed text-gray-300 opacity-0 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
                 Professional plumbing, gas, roofing & air conditioning services.
               </p>
 
-              <p className="animation-delay-650 mx-auto mb-3 max-w-md animate-mobile-fade-up text-lg font-medium leading-relaxed text-gray-300 opacity-0 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
+              <p className="animation-delay-650 mx-auto mb-4 max-w-md animate-mobile-fade-up text-lg font-medium leading-relaxed text-gray-300 opacity-0 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
                 Fast response. Fair pricing. Guaranteed satisfaction.
               </p>
             </div>
 
-            {/* Star Review Component - Reduced margin */}
+            {/* Star Review Component */}
             <div
-              className="animation-delay-700 mb-5 max-w-sm transform-gpu animate-mobile-scale cursor-pointer rounded-lg px-6 py-2 opacity-0 transition-colors hover:bg-black/10"
+              className="animation-delay-700 mb-8 max-w-sm transform-gpu animate-mobile-scale cursor-pointer rounded-lg px-6 py-3 opacity-0 transition-colors hover:bg-black/10"
               onClick={() => {
                 const reviewsSection = document.getElementById('testimonials')
                 if (reviewsSection) {
@@ -157,22 +188,22 @@ export function Hero() {
                 </AnimatedButton>
               </div>
             )}
-
-            {/* Call Now Button */}
+            
+            {/* Call Now Button - Using the same AnimatedButton component as Book Online */}
             {!showBookingForm && (
-              <div className="animation-delay-775 mx-auto mt-3 w-full max-w-[200px] animate-mobile-fade-up opacity-0">
+              <div className="animation-delay-800 mx-auto mt-4 w-full max-w-[200px] animate-mobile-fade-up opacity-0">
                 <AnimatedButton
                   href="tel:1300HDTRADE"
                   variant="secondary"
-                  className="w-full justify-center bg-white py-3 text-base font-medium text-[#00E6CA] shadow-lg shadow-cyan-900/20"
+                  className="w-full justify-center bg-white py-3 text-base font-medium text-[#00E6CA] shadow-lg shadow-white/10"
                 >
                   Call Now
                 </AnimatedButton>
               </div>
             )}
 
-            {/* MOBILE: Guarantee Badges with Floating Animation - Reduced top margin */}
-            <div className="animation-delay-800 mt-5 flex w-full animate-mobile-fade-up items-center justify-center gap-3 opacity-0 md:hidden">
+            {/* MOBILE: Guarantee Badges with Floating Animation */}
+            <div className="animation-delay-800 mt-8 flex w-full animate-mobile-fade-up items-center justify-center gap-3 opacity-0 md:hidden">
               {[
                 /* Array of badge data */
                 {
