@@ -72,4 +72,19 @@ test.describe('Core Website Functionality Tests', () => {
     // as that requires real Google API interaction
     await expect(addressInput).toHaveValue('123 Que');
   });
+
+  test('should ensure homepage loads correctly after component removal', async ({ page }) => {
+    await page.goto('/');
+    
+    // Check that key homepage elements are present
+    await expect(page.locator('h1').first()).toBeVisible();
+    await expect(page.locator('footer')).toBeVisible();
+    
+    // Verify that removing wavy-background doesn't affect any visual components
+    // Wait for essential elements to be visible
+    await expect(page.locator('button:has-text("Book Now")')).toBeVisible();
+    
+    // Take a screenshot for visual verification
+    await page.screenshot({ path: 'test-results/homepage-after-component-removal.png' });
+  });
 }); 

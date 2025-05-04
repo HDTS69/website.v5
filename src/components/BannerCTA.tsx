@@ -1,6 +1,5 @@
 'use client'
 
-import { WavyBackground } from '@/components/ui/wavy-background'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { scrollToElement } from '@/lib/utils'
@@ -19,15 +18,8 @@ export const BannerCTA = () => {
 
   return (
     <div className="w-full overflow-hidden">
-      <WavyBackground
-        className="w-full px-4 py-8"
-        containerClassName="h-auto min-h-[200px] relative w-full overflow-hidden"
-        colors={['#00E6CA', '#1CD4A7', '#14B8A6']}
-        waveWidth={200}
-        backgroundFill="#000000"
-        blur={2}
-        waveOpacity={0.3}
-        speed="slow"
+      <div 
+        className="relative w-full overflow-hidden h-auto min-h-[200px] bg-gradient-to-r from-[#00E6CA] via-[#1CD4A7] to-[#14B8A6] px-4 py-8"
       >
         <div className="mx-auto flex max-w-4xl flex-col items-center justify-center text-center">
           <h2 className="mb-4 text-2xl font-bold text-white md:text-3xl">
@@ -39,15 +31,15 @@ export const BannerCTA = () => {
           <Link
             href="/book"
             onClick={handleClick}
-            className="inline-flex transform items-center rounded-full bg-[#00E6CA] px-6 py-3 text-base font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-[#1CD4A7]"
+            className="inline-flex transform items-center rounded-full bg-black px-6 py-3 text-base font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-gray-900"
           >
             Book Online Now
           </Link>
         </div>
-        <div className="mx-auto mt-6 max-w-4xl text-center text-sm text-gray-400">
+        <div className="mx-auto mt-6 max-w-4xl text-center text-sm text-gray-900">
           Transforming experiences, one appointment at a time
         </div>
-      </WavyBackground>
+      </div>
     </div>
   )
 }
