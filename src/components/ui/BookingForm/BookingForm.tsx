@@ -406,7 +406,15 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                 exit="exit"
                 className="w-full"
               >
-                <form onSubmit={handleSubmit} className="space-y-8" noValidate>
+                <form 
+                  onSubmit={handleSubmit} 
+                  className="space-y-8" 
+                  noValidate
+                  id="booking-form"
+                  name="booking-form"
+                  method="post"
+                  autoComplete="on"
+                >
                   <WaveInput
                     required
                     id="name"
@@ -416,6 +424,8 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                     onBlur={(e) => validateField('name', e.target.value)}
                     label="Name"
                     error={errors.name}
+                    autoComplete="name"
+                    form="booking-form"
                   />
 
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -430,6 +440,7 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                       label="Phone"
                       error={errors.phone}
                       pattern={PHONE_PATTERNS.HTML}
+                      autoComplete="tel"
                     />
 
                     <WaveInput
@@ -443,6 +454,7 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                       label="Email"
                       error={errors.email}
                       pattern={EMAIL_PATTERNS.HTML}
+                      autoComplete="email"
                     />
                   </div>
 

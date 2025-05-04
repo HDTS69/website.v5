@@ -368,29 +368,51 @@ export function AddressInput({
   }
 
   return (
-    <div className="relative mb-6 w-full">
-      <WaveInput
-        key={manualEntry ? 'manual-address' : 'auto-address'}
-        ref={addressRef}
-        id="address"
-        name="address"
-        type="text"
-        value={value}
-        onChange={handleInputChange}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        label="Address"
-        required
-        disabled={false}
-        autoComplete="off"
-        error={error}
-        className={cn(
-          'peer',
-          error && 'border-red-500 focus:border-red-500',
-          isGoogleAddress && 'border-green-500 focus:border-green-500',
+    <div className="relative w-full">
+      <AnimatePresence mode="wait">
+        {manualEntry ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            key="manual-address"
+          >
+            <WaveInput
+              id="address"
+              name="address"
+              value={value}
+              onChange={handleInputChange}
+              onBlur={handleBlur}
+              onFocus={handleFocus}
+              label="Address"
+              error={error}
+              required
+              autoComplete="street-address"
+            />
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            key="google-address"
+          >
+            <WaveInput
+              id="address"
+              name="address"
+              value={value}
+              onChange={handleInputChange}
+              onBlur={handleBlur}
+              onFocus={handleFocus}
+              label="Address"
+              error={error}
+              required
+              ref={addressRef}
+              autoComplete="street-address"
+            />
+          </motion.div>
         )}
-        data-google-address={!manualEntry}
-      />
+      </AnimatePresence>
 
       {showManualEntry && (
         <div ref={manualEntryRef} className="mt-2 flex items-center">

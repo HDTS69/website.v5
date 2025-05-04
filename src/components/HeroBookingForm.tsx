@@ -297,7 +297,15 @@ export function HeroBookingForm() {
             <h2 className="mb-4 text-center text-2xl font-semibold text-white">
               Book Your Service
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            <form 
+              onSubmit={handleSubmit} 
+              className="space-y-4" 
+              noValidate
+              id="hero-booking-form"
+              name="hero-booking-form"
+              method="post"
+              autoComplete="on"
+            >
               {/* Name Input */}
               <WaveInput
                 required
@@ -308,6 +316,8 @@ export function HeroBookingForm() {
                 onBlur={(e) => validateField('name', e.target.value)}
                 label="Name"
                 error={errors.name}
+                autoComplete="name"
+                form="hero-booking-form"
               />
               {/* Phone & Email */}
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -322,6 +332,7 @@ export function HeroBookingForm() {
                   label="Phone"
                   error={errors.phone}
                   pattern={PHONE_PATTERNS.HTML}
+                  autoComplete="tel"
                 />
                 <WaveInput
                   required
@@ -334,6 +345,7 @@ export function HeroBookingForm() {
                   label="Email"
                   error={errors.email}
                   pattern={EMAIL_PATTERNS.HTML}
+                  autoComplete="email"
                 />
               </div>
               {/* Address Section */}
@@ -679,9 +691,8 @@ export function HeroBookingForm() {
                       )}
                     />
                     <span className="text-sm text-gray-300">
-                      I accept the terms and conditions
+                      I accept the <a href="/terms" className="text-[#00E6CA] underline hover:text-[#00E6CA]/80">terms and conditions</a>
                     </span>
-                    {/* Add Link to terms later */}
                   </label>
                   {errors.termsAccepted && (
                     <div className="validation-message absolute -bottom-1 left-0 text-xs text-red-500">

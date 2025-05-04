@@ -96,7 +96,7 @@ export async function middleware(request: NextRequest) {
     // Default to only same-origin
     "default-src 'self'",
     // Scripts: allow same-origin and necessary third-party sources
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel.app https://*.vercel.com https://maps.googleapis.com https://*.googletagmanager.com https://*.google-analytics.com https://cdn.lordicon.com https://*.gstatic.com https://*.ggpht.com",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel.app https://*.vercel.com https://maps.googleapis.com https://*.googletagmanager.com https://*.google-analytics.com https://cdn.lordicon.com https://*.gstatic.com https://*.ggpht.com https://*.stripe.com https://js.stripe.com",
     // Styles: allow same-origin and inline styles (needed for shadcn and Next.js)
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.gstatic.com",
     // Images: allow same-origin and trusted sources

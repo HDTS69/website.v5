@@ -60,6 +60,8 @@ export default function RootLayout({
           name="apple-mobile-web-app-status-bar-style"
           content="black"
         />
+        <meta name="format-detection" content="telephone=yes" />
+        <meta name="format-detection" content="email=yes" />
 
         {/* Script to suppress specific Google Maps warnings */}
         <script dangerouslySetInnerHTML={{
@@ -110,6 +112,22 @@ export default function RootLayout({
 
         {/* Lordicon Script */}
         <LordIconScript />
+
+        {/* Style to fix autofill background colors in Safari/iOS */}
+        <style>
+          {`
+            /* Override webkit autofill background color */
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover, 
+            input:-webkit-autofill:focus,
+            input:-webkit-autofill:active {
+              -webkit-box-shadow: 0 0 0 30px #1a1a1a inset !important;
+              -webkit-text-fill-color: white !important;
+              transition: background-color 5000s;
+              caret-color: white;
+            }
+          `}
+        </style>
       </head>
       <body
         className="isolate touch-auto bg-black font-inter antialiased"
