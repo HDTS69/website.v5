@@ -42,7 +42,7 @@ export function Hero() {
     <div
       className="relative flex min-h-[100dvh] touch-auto flex-col overflow-x-hidden overscroll-none bg-black pb-20"
       style={{
-        paddingTop: '150px', // Slightly reduced to better match desktop spacing
+        paddingTop: '80px', // Reduced from 150px to decrease the gap
         overscrollBehavior: 'none', // Prevent bounce/rubber-band effect
       }}
     >
@@ -97,14 +97,14 @@ export function Hero() {
           style={{ marginTop: '0' }}
         >
           {/* Hero Text */}
-          <div className="mb-6 flex max-w-[100%] flex-col items-center text-center">
+          <div className="mb-3 flex max-w-[100%] flex-col items-center text-center">
             {/* Main Headline */}
-            <div className="mb-4">
-              <h1 className="mb-4 text-[2.5rem] font-bold leading-tight tracking-tight text-white will-change-transform">
-                <span className="animation-delay-300 mb-2 block animate-mobile-fade-up opacity-0">
+            <div className="mb-2">
+              <h1 className="mb-2 text-[2.5rem] font-bold leading-tight tracking-tight text-white will-change-transform">
+                <span className="animation-delay-300 mb-1 block animate-mobile-fade-up opacity-0">
                   Brisbane
                 </span>
-                <span className="animation-delay-400 mb-2 inline-block animate-mobile-fade-up text-[#00E6CA] opacity-0">
+                <span className="animation-delay-400 mb-1 inline-block animate-mobile-fade-up text-[#00E6CA] opacity-0">
                   24/7 Emergency Repairs
                 </span>
                 <span className="animation-delay-500 block animate-mobile-fade-up opacity-0">
@@ -112,18 +112,18 @@ export function Hero() {
                 </span>
               </h1>
 
-              <p className="animation-delay-600 mx-auto mb-2 max-w-md animate-mobile-fade-up text-lg font-medium leading-relaxed text-gray-300 opacity-0 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
+              <p className="animation-delay-600 mx-auto mb-1 max-w-md animate-mobile-fade-up text-lg font-medium leading-relaxed text-gray-300 opacity-0 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
                 Professional plumbing, gas, roofing & air conditioning services.
               </p>
 
-              <p className="animation-delay-650 mx-auto mb-4 max-w-md animate-mobile-fade-up text-lg font-medium leading-relaxed text-gray-300 opacity-0 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
+              <p className="animation-delay-650 mx-auto mb-2 max-w-md animate-mobile-fade-up text-lg font-medium leading-relaxed text-gray-300 opacity-0 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
                 Fast response. Fair pricing. Guaranteed satisfaction.
               </p>
             </div>
 
             {/* Star Review Component */}
             <div
-              className="animation-delay-700 mb-8 max-w-sm transform-gpu animate-mobile-scale cursor-pointer rounded-lg px-6 py-3 opacity-0 transition-colors hover:bg-black/10"
+              className="animation-delay-700 mb-4 max-w-sm transform-gpu animate-mobile-scale cursor-pointer rounded-lg px-6 py-2 opacity-0 transition-colors hover:bg-black/10"
               onClick={() => {
                 const reviewsSection = document.getElementById('testimonials')
                 if (reviewsSection) {
@@ -167,43 +167,8 @@ export function Hero() {
               </div>
             </div>
 
-            {/* Book Now Button */}
-            {!showBookingForm && (
-              <div className="animation-delay-750 mx-auto w-full max-w-[200px] animate-mobile-fade-up opacity-0">
-                <AnimatedButton
-                  href="#book"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    const bookingForm = document.getElementById('book')
-                    if (bookingForm) {
-                      bookingForm.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start',
-                      })
-                    }
-                  }}
-                  className="w-full justify-center py-3 text-base font-medium shadow-lg shadow-cyan-900/20"
-                >
-                  Book Online
-                </AnimatedButton>
-              </div>
-            )}
-            
-            {/* Call Now Button - Using the same AnimatedButton component as Book Online */}
-            {!showBookingForm && (
-              <div className="animation-delay-800 mx-auto mt-4 w-full max-w-[200px] animate-mobile-fade-up opacity-0">
-                <AnimatedButton
-                  href="tel:1300HDTRADE"
-                  variant="secondary"
-                  className="w-full justify-center bg-white py-3 text-base font-medium text-[#00E6CA] shadow-lg shadow-white/10"
-                >
-                  Call Now
-                </AnimatedButton>
-              </div>
-            )}
-
             {/* MOBILE: Guarantee Badges with Floating Animation */}
-            <div className="animation-delay-800 mt-8 flex w-full animate-mobile-fade-up items-center justify-center gap-3 opacity-0 md:hidden">
+            <div className="animation-delay-700 mt-1 mb-4 flex w-full animate-mobile-fade-up items-center justify-center gap-3 opacity-0 md:hidden">
               {[
                 /* Array of badge data */
                 {
@@ -243,6 +208,41 @@ export function Hero() {
                 </motion.div>
               ))}
             </div>
+
+            {/* Book Now Button */}
+            {!showBookingForm && (
+              <div className="animation-delay-750 mx-auto w-full max-w-[200px] animate-mobile-fade-up opacity-0">
+                <AnimatedButton
+                  href="#book"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    const bookingForm = document.getElementById('book')
+                    if (bookingForm) {
+                      bookingForm.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                      })
+                    }
+                  }}
+                  className="w-full justify-center py-3 text-base font-medium shadow-lg shadow-cyan-900/20"
+                >
+                  Book Online
+                </AnimatedButton>
+              </div>
+            )}
+            
+            {/* Call Now Button - Using the same AnimatedButton component as Book Online */}
+            {!showBookingForm && (
+              <div className="animation-delay-800 mx-auto mt-4 w-full max-w-[200px] animate-mobile-fade-up opacity-0">
+                <AnimatedButton
+                  href="tel:1300HDTRADE"
+                  variant="secondary"
+                  className="w-full justify-center bg-white py-3 text-base font-medium text-[#00E6CA] shadow-lg shadow-white/10"
+                >
+                  Call Now
+                </AnimatedButton>
+              </div>
+            )}
           </div>
 
           {/* Booking Form - Conditional rendering */}
