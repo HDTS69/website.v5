@@ -41,6 +41,9 @@ const BookingForm = dynamic(() =>
 const PaymentPlansCarousel = dynamic(
   () => import('@/components/ui/PaymentPlansCarousel'),
 )
+const BannerCTA = dynamic(() =>
+  import('@/components/BannerCTA').then((mod) => mod.BannerCTA),
+)
 
 export default function HomePageClientContent() {
   return (
@@ -78,6 +81,9 @@ export default function HomePageClientContent() {
 
       {/* Founder's Message Section */}
       <FoundersMessage imageSrc="/images/Home Page/Hayden with dogs..webp" />
+      
+      {/* Banner CTA */}
+      <BannerCTA />
 
       {/* Booking Section */}
       <section id="book" className="relative overflow-hidden bg-black py-20">
