@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { SparklesCore } from '@/components/ui/SparklesCore'
 import Marquee from 'react-fast-marquee'
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
+import { motion } from 'framer-motion'
 
 interface BrandLogo {
   src: string
@@ -168,22 +169,49 @@ export function BrandCarousel() {
   }
 
   return (
-    <div className="relative w-full overflow-hidden bg-black py-12">
-      <div className="relative z-10">
-        {/* Manufacturers Carousel */}
-        <Marquee {...marqueeSettings} className="mb-8 py-4">
-          {manufacturerLogos.map((logo, index) => (
-            <BrandLogoSlide key={index} src={logo.src} alt={logo.alt} />
-          ))}
-        </Marquee>
+    <section className="relative w-full overflow-hidden bg-black py-20">
+      <BackgroundSparkles useFixed={false} zIndex={5} />
+      
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.7 }}
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0 },
+          }}
+          className="mb-16 text-center"
+        >
+          <span className="mb-2 block text-center text-sm font-semibold uppercase tracking-wider text-[#00E6CA]">
+            OUR PARTNERS
+          </span>
+          <h2 className="relative mb-4 text-4xl font-bold text-white md:text-5xl">
+            Trusted by Brands
+            <div className="absolute -bottom-3 left-1/2 h-1 w-24 -translate-x-1/2 transform bg-gradient-to-r from-transparent via-[#00E6CA] to-transparent"></div>
+          </h2>
+          <p className="mx-auto mt-6 max-w-3xl text-xl text-gray-300">
+            Our exceptional service is supported by industry-leading manufacturers and quality suppliers
+          </p>
+        </motion.div>
 
-        {/* Suppliers Carousel */}
-        <Marquee {...marqueeSettings} className="py-4" direction="right">
-          {supplierLogos.map((logo, index) => (
-            <BrandLogoSlide key={index} src={logo.src} alt={logo.alt} />
-          ))}
-        </Marquee>
+        <div className="relative z-10">
+          {/* Manufacturers Carousel */}
+          <Marquee {...marqueeSettings} className="mb-8 py-4">
+            {manufacturerLogos.map((logo, index) => (
+              <BrandLogoSlide key={index} src={logo.src} alt={logo.alt} />
+            ))}
+          </Marquee>
+
+          {/* Suppliers Carousel */}
+          <Marquee {...marqueeSettings} className="py-4" direction="right">
+            {supplierLogos.map((logo, index) => (
+              <BrandLogoSlide key={index} src={logo.src} alt={logo.alt} />
+            ))}
+          </Marquee>
+        </div>
       </div>
-    </div>
+    </section>
   )
 }

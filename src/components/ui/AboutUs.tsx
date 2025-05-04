@@ -129,7 +129,7 @@ export function AboutUs() {
 
             <div className="pt-4">
               <AnimatedBookNowButton
-                href="/about"
+                href="/about/our-story"
                 className="relative rounded-lg border-2 border-[#00E6CA] bg-transparent px-8 py-3 text-sm font-medium text-[#00E6CA] transition-all duration-300 hover:bg-[#00E6CA] hover:text-black"
               >
                 Learn More About Us
