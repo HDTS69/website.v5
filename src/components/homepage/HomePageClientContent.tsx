@@ -15,10 +15,10 @@ const WhyChooseUsMobile = dynamic(() =>
 const Testimonials = dynamic(() =>
   import('@/components/ui/Testimonials').then((mod) => mod.Testimonials),
 )
-// const ServiceTabs = dynamic(() =>
-//   import('@/components/services/ServiceTabs').then(mod => mod.ServiceTabs),
-//   { ssr: false },
-// ); // Commented out for now
+const ServiceTabs = dynamic(() =>
+  import('@/components/services/ServiceTabs').then((mod) => mod.default),
+  { ssr: false },
+)
 const BrandCarousel = dynamic(() =>
   import('@/components/ui/BrandCarousel').then((mod) => mod.BrandCarousel),
 )
@@ -52,8 +52,7 @@ export default function HomePageClientContent() {
       <PaymentPlansCarousel />
 
       {/* Services Section */}
-      {/* <ServiceTabs /> */}
-      {/* Commented out usage */}
+      <ServiceTabs />
 
       {/* Why Choose Us Section - Conditionally rendered for mobile/desktop */}
       <ClientOnly>

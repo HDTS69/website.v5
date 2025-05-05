@@ -429,19 +429,6 @@ export function AddressInput({
           </label>
         </div>
       )}
-
-      <AnimatePresence>
-        {error && (
-          <motion.p
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="mt-1 text-xs text-red-500"
-          >
-            {error}
-          </motion.p>
-        )}
-      </AnimatePresence>
     </div>
   )
 }

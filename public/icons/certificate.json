@@ -1,0 +1,26 @@
+{
+  "icon": {
+    "body": "<g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M4 5h16v14H4z\" fill=\"#ccdaff\"/><path d=\"M12 4a8 8 0 0 1 8 8 8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8z\" fill=\"#99b2ff\"/><path d=\"M12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6 6 6 0 0 1-6-6 6 6 0 0 1 6-6z\" fill=\"#ccdaff\"/><path d=\"M14.167 9.224l-3.229 4.843-1.105-1.658a.866.866 0 0 0-1.443.961l1.791 2.687a.866.866 0 0 0 1.443 0l3.914-5.871a.866.866 0 0 0-1.443-.962l.072.104z\" fill=\"#1675e0\"/></g>",
+    "width": 24,
+    "height": 24
+  },
+  "properties": {
+    "colors": [
+      {
+        "color": "#ccdaff",
+        "name": "first",
+        "title": "First color"
+      },
+      {
+        "color": "#99b2ff",
+        "name": "second",
+        "title": "Second color"
+      },
+      {
+        "color": "#1675e0",
+        "name": "third",
+        "title": "Third color"
+      }
+    ]
+  }
+} 
