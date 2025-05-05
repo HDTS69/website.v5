@@ -55,6 +55,7 @@
     "aos": "3.0.0-beta.6",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.0",
+    "critters": "0.0.23",
     "framer-motion": "11.0.20",
     "isomorphic-dompurify": "2.4.0",
     "lord-icon-element": "4.1.2",

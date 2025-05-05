@@ -96,21 +96,21 @@ export async function middleware(request: NextRequest) {
     // Default to only same-origin
     "default-src 'self'",
     // Scripts: allow same-origin and necessary third-party sources
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel.app https://*.vercel.com https://maps.googleapis.com https://*.googletagmanager.com https://*.google-analytics.com https://cdn.lordicon.com https://*.gstatic.com https://*.ggpht.com https://*.stripe.com https://js.stripe.com",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel.app https://*.vercel.com https://maps.googleapis.com https://*.googletagmanager.com https://*.google-analytics.com https://cdn.lordicon.com https://*.gstatic.com https://*.ggpht.com https://*.stripe.com https://js.stripe.com https://*.google.com https://*.doubleclick.net https://googleads.g.doubleclick.net",
     // Styles: allow same-origin and inline styles (needed for shadcn and Next.js)
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.gstatic.com",
     // Images: allow same-origin and trusted sources
-    "img-src 'self' data: blob: https://*.googleusercontent.com https://*.googleapis.com https://maps.gstatic.com https://*.vercel.app https://*.google-analytics.com https://*.gstatic.com https://*.ggpht.com",
+    "img-src 'self' data: blob: https://*.googleusercontent.com https://*.googleapis.com https://maps.gstatic.com https://*.vercel.app https://*.google-analytics.com https://*.gstatic.com https://*.ggpht.com https://*.google.com https://*.doubleclick.net",
     // Fonts: allow specific sources
     "font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com https://rsms.me https://*.vercel.app https://cdn.lordicon.com *.stripe.com",
     // Connect: allow necessary APIs and WebSocket for Next.js
-    "connect-src 'self' https://*.supabase.co https://*.googleapis.com https://maps.googleapis.com wss://*.vercel.app https://cdn.lordicon.com https://*.stripe.com https://*.google-analytics.com https://www.google-analytics.com https://*.analytics.google.com https://*.gstatic.com https://*.ggpht.com",
+    "connect-src 'self' https://*.supabase.co https://*.googleapis.com https://maps.googleapis.com wss://*.vercel.app https://cdn.lordicon.com https://*.stripe.com https://*.google-analytics.com https://www.google-analytics.com https://*.analytics.google.com https://*.gstatic.com https://*.ggpht.com https://*.google.com https://*.doubleclick.net",
     // Media: restrict to same-origin
     "media-src 'self'",
     // Object: restrict to none
     "object-src 'none'",
     // Frame: allow Google Maps
-    "frame-src 'self' https://www.google.com https://maps.google.com https://*.stripe.com https://js.stripe.com",
+    "frame-src 'self' https://www.google.com https://maps.google.com https://*.stripe.com https://js.stripe.com https://*.doubleclick.net https://googleads.g.doubleclick.net https://*.googletagmanager.com",
     // Worker: allow same-origin and blob
     "worker-src 'self' blob:",
     // Manifest: allow same-origin
