@@ -415,8 +415,11 @@ const TestimonialColumn = ({
   )
 }
 
-// Mobile Testimonials Component - Single Column with scrolling animation
+// Mobile Testimonials Component - Static display instead of animation
 export const MobileTestimonials = () => {
+  // Select a limited number of reviews to display statically
+  const displayedReviews = reviews.slice(0, 5);
+
   return (
     <section className="relative py-16">
       <div className="container relative z-10 mx-auto px-4">
@@ -434,8 +437,13 @@ export const MobileTestimonials = () => {
           </p>
         </div>
 
-        <div className="relative mx-auto h-[500px] max-w-md overflow-hidden">
-          <TestimonialColumn reviews={reviews} direction="up" duration={3000} />
+        <div className="relative mx-auto max-w-md">
+          {/* Static display of testimonials */}
+          <div className="space-y-4">
+            {displayedReviews.map((review) => (
+              <TestimonialCard key={review.id} review={review} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
