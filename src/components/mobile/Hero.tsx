@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import { SparklesCore } from '../ui/SparklesCore'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -37,13 +37,68 @@ const callNowButtonStyles = `
 export function Hero() {
   const [showBookingForm, setShowBookingForm] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
+  const [hasScrolledDown, setHasScrolledDown] = useState(false)
+  const heroImageRef = useRef<HTMLDivElement>(null)
 
+  // Performance optimizations
+  useEffect(() => {
+    // Check if this is a mobile device
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+    // Mark as having performance issues to reduce animations
+    if (isMobile) {
+      localStorage.setItem('had-scroll-issues', 'true');
+      document.documentElement.classList.add('reduce-animations');
+    }
+    
+    // Optimize scroll listener with debounce and requestAnimationFrame
+    let ticking = false;
+    let lastScrollY = window.scrollY;
+    
+    const handleScroll = () => {
+      lastScrollY = window.scrollY;
+      
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // Apply transforms via requestAnimationFrame for better performance
+          if (heroImageRef.current && lastScrollY > 0) {
+            // Apply a subtle parallax effect to the hero image that won't cause jank
+            // Use transform instead of top/margin for better performance
+            const translateY = Math.min(lastScrollY * 0.1, 30);
+            heroImageRef.current.style.transform = `translate3d(0, ${translateY}px, 0)`;
+          }
+          
+          if (lastScrollY > 100 && !hasScrolledDown) {
+            setHasScrolledDown(true);
+          }
+          
+          ticking = false;
+        });
+        
+        ticking = true;
+      }
+    };
+    
+    // Use passive scroll listener for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [hasScrolledDown]);
+
+  // Disable sparkles on mobile completely
+  const shouldShowSparkles = false;
+  
   return (
     <div
       className="relative flex min-h-[100dvh] touch-auto flex-col overflow-x-hidden overscroll-none bg-black pb-20"
       style={{
-        paddingTop: '80px', // Reduced from 150px to decrease the gap
-        overscrollBehavior: 'none', // Prevent bounce/rubber-band effect
+        paddingTop: '80px',
+        overscrollBehavior: 'none',
+        willChange: 'transform', // Optimize compositing
+        transform: 'translateZ(0)', // Force GPU acceleration
+        contain: 'paint layout size' // Optimize rendering
       }}
     >
       {/* Add styles for Call Now button */}
@@ -51,23 +106,32 @@ export function Hero() {
         {callNowButtonStyles}
       </style>
       
-      {/* Sparkles Animation */}
-      <div className="pointer-events-none absolute inset-0 z-[2]">
-        <SparklesCore
-          background="transparent"
-          minSize={0.6}
-          maxSize={1.5}
-          particleDensity={80}
-          className="h-full w-full"
-          particleColor="#00E6CA"
-          speed={0.3}
-        />
-      </div>
+      {/* Conditional Sparkles Animation - only if performance allows */}
+      {shouldShowSparkles && (
+        <div className="pointer-events-none absolute inset-0 z-[2]">
+          <SparklesCore
+            background="transparent"
+            minSize={0.6}
+            maxSize={1.2}
+            particleDensity={20} // Reduced from 40
+            className="h-full w-full"
+            particleColor="#00E6CA"
+            speed={0.2}
+          />
+        </div>
+      )}
 
-      {/* Hero Images Container - Absolute position (fixed to hero section) */}
+      {/* Hero Images Container - with optimized performance properties */}
       <div
-        className="pointer-events-none absolute bottom-0 left-0 z-[3] h-[70%] w-[60%] will-change-transform"
-        style={{ transform: 'translateZ(0)' }}
+        ref={heroImageRef}
+        className="pointer-events-none absolute bottom-0 left-0 z-[3] h-[70%] w-[60%]"
+        style={{
+          willChange: 'transform', // Optimize compositing
+          transform: 'translateZ(0)', // Force GPU acceleration
+          transition: 'transform 0.1s linear', // Smooth subtle movements
+          contain: 'paint layout size', // Optimize rendering
+          contentVisibility: 'auto' // Enable content-visibility for better performance
+        }}
       >
         <div className="relative h-full w-full">
           <Image
@@ -78,16 +142,25 @@ export function Hero() {
             style={{
               objectFit: 'contain',
               objectPosition: 'left bottom',
-              filter: 'drop-shadow(0 0 10px rgba(0,230,202,0.15))',
+              filter: 'drop-shadow(0 0 8px rgba(0,230,202,0.1))',
+              willChange: 'transform', // Optimize painting
+              backfaceVisibility: 'hidden' // Prevent flickering
             }}
             className="select-none"
             priority
             draggable="false"
             onLoad={() => setImageLoaded(true)}
+            loading="eager"
           />
         </div>
-        {/* Bottom fade gradient */}
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black to-transparent" />
+        {/* Bottom fade gradient - simplified and optimized */}
+        <div 
+          className="absolute inset-x-0 bottom-0 h-40" 
+          style={{ 
+            background: 'linear-gradient(to top, #000 0%, transparent 100%)',
+            contain: 'paint' 
+          }} 
+        />
       </div>
 
       {/* Content Container */}
@@ -98,9 +171,9 @@ export function Hero() {
         >
           {/* Hero Text */}
           <div className="mb-3 flex max-w-[100%] flex-col items-center text-center">
-            {/* Main Headline */}
+            {/* Main Headline - with simplified animations that can be disabled */}
             <div className="mb-2">
-              <h1 className="mb-2 text-[2.5rem] font-bold leading-tight tracking-tight text-white will-change-transform">
+              <h1 className="mb-2 text-[2.5rem] font-bold leading-tight tracking-tight text-white">
                 <span className="animation-delay-300 mb-1 block animate-mobile-fade-up opacity-0">
                   Brisbane
                 </span>
@@ -112,25 +185,23 @@ export function Hero() {
                 </span>
               </h1>
 
-              <p className="animation-delay-600 mx-auto mb-1 max-w-md animate-mobile-fade-up text-lg font-medium leading-relaxed text-gray-300 opacity-0 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
+              <p className="animation-delay-600 mx-auto mb-1 max-w-md animate-mobile-fade-up text-lg font-medium leading-relaxed text-gray-300 opacity-0">
                 Professional plumbing, gas, roofing & air conditioning services.
               </p>
 
-              <p className="animation-delay-650 mx-auto mb-2 max-w-md animate-mobile-fade-up text-lg font-medium leading-relaxed text-gray-300 opacity-0 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
+              <p className="animation-delay-650 mx-auto mb-2 max-w-md animate-mobile-fade-up text-lg font-medium leading-relaxed text-gray-300 opacity-0">
                 Fast response. Fair pricing. Guaranteed satisfaction.
               </p>
             </div>
 
-            {/* Star Review Component */}
+            {/* Star Review Component - with simplified animation and click handling */}
             <div
-              className="animation-delay-700 mb-4 max-w-sm transform-gpu animate-mobile-scale cursor-pointer rounded-lg px-6 py-2 opacity-0 transition-colors hover:bg-black/10"
+              className="animation-delay-700 mb-4 max-w-sm animate-mobile-scale cursor-pointer rounded-lg px-6 py-2 opacity-0 transition-colors hover:bg-black/10"
               onClick={() => {
                 const reviewsSection = document.getElementById('testimonials')
                 if (reviewsSection) {
-                  reviewsSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start',
-                  })
+                  // Use native scrolling instead of smooth scrolling for better performance
+                  reviewsSection.scrollIntoView(true)
                 }
               }}
               role="button"
@@ -139,10 +210,7 @@ export function Hero() {
                 if (e.key === 'Enter' || e.key === ' ') {
                   const reviewsSection = document.getElementById('testimonials')
                   if (reviewsSection) {
-                    reviewsSection.scrollIntoView({
-                      behavior: 'smooth',
-                      block: 'start',
-                    })
+                    reviewsSection.scrollIntoView(true)
                   }
                 }
               }}
@@ -167,7 +235,7 @@ export function Hero() {
               </div>
             </div>
 
-            {/* MOBILE: Guarantee Badges with Floating Animation */}
+            {/* MOBILE: Guarantee Badges - use static positioning instead of animations on low-end devices */}
             <div className="animation-delay-700 mt-1 mb-4 flex w-full animate-mobile-fade-up items-center justify-center gap-3 opacity-0 md:hidden">
               {[
                 /* Array of badge data */
@@ -184,32 +252,47 @@ export function Hero() {
                   alt: 'Lifetime Guarantee Badge Design',
                 },
               ].map((badge, index) => (
-                <motion.div
-                  key={badge.src}
-                  animate={{
-                    y: ['0%', '-5%', '0%'], // Move up and down
-                  }}
-                  transition={{
-                    duration: 2.5,
-                    repeat: Infinity,
-                    repeatType: 'mirror',
-                    ease: 'easeInOut',
-                    delay: index * 0.3, // Stagger start times slightly
-                  }}
-                >
-                  <Image
-                    src={badge.src}
-                    alt={badge.alt}
-                    width={64} // Mobile size
-                    height={64}
-                    className="object-contain"
-                    priority
-                  />
-                </motion.div>
+                localStorage.getItem('had-scroll-issues') === 'true' ? (
+                  // Static version for low-performance devices
+                  <div key={badge.src}>
+                    <Image
+                      src={badge.src}
+                      alt={badge.alt}
+                      width={64}
+                      height={64}
+                      className="object-contain"
+                      priority={index === 0}
+                    />
+                  </div>
+                ) : (
+                  // Animated version for better devices
+                  <motion.div
+                    key={badge.src}
+                    animate={{
+                      y: ['0%', '-5%', '0%'],
+                    }}
+                    transition={{
+                      duration: 2.5,
+                      repeat: Infinity,
+                      repeatType: 'mirror',
+                      ease: 'easeInOut',
+                      delay: index * 0.3,
+                    }}
+                  >
+                    <Image
+                      src={badge.src}
+                      alt={badge.alt}
+                      width={64}
+                      height={64}
+                      className="object-contain"
+                      priority={index === 0}
+                    />
+                  </motion.div>
+                )
               ))}
             </div>
 
-            {/* Book Now Button */}
+            {/* Book Now Button - with simplified animation */}
             {!showBookingForm && (
               <div className="animation-delay-750 mx-auto w-full max-w-[200px] animate-mobile-fade-up opacity-0">
                 <AnimatedButton
@@ -218,10 +301,8 @@ export function Hero() {
                     e.preventDefault()
                     const bookingForm = document.getElementById('book')
                     if (bookingForm) {
-                      bookingForm.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start',
-                      })
+                      // Use native scrolling for better performance
+                      bookingForm.scrollIntoView(true)
                     }
                   }}
                   className="w-full justify-center py-3 text-base font-medium shadow-lg shadow-cyan-900/20"
@@ -235,7 +316,7 @@ export function Hero() {
             {!showBookingForm && (
               <div className="animation-delay-800 mx-auto mt-4 w-full max-w-[200px] animate-mobile-fade-up opacity-0">
                 <AnimatedButton
-                  href="tel:1300HDTRADE"
+                  href="tel:1300420911"
                   variant="secondary"
                   className="w-full justify-center bg-white py-3 text-base font-medium text-[#00E6CA] shadow-lg shadow-white/10"
                 >
