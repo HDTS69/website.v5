@@ -319,6 +319,11 @@ const TestimonialColumn = ({
       // Set the scroll height based on direction
       column.style.setProperty('--scroll-height', `-${height}px`)
       column.style.setProperty('--scroll-duration', `${duration}s`)
+      
+      // Force GPU acceleration and reduce animation jank
+      column.style.setProperty('will-change', 'transform')
+      column.style.setProperty('transform', 'translateZ(0)')
+      column.style.setProperty('backface-visibility', 'hidden')
     }
   }, [duration])
 
@@ -329,6 +334,9 @@ const TestimonialColumn = ({
     animationTimingFunction: 'linear',
     animationIterationCount: 'infinite',
     animationPlayState: 'running',
+    willChange: 'transform',
+    transform: 'translateZ(0)',
+    backfaceVisibility: 'hidden' as const
   }
 
   // Define keyframes in a style tag
@@ -341,16 +349,16 @@ const TestimonialColumn = ({
       document.head.appendChild(styleElement)
     }
 
-    // Define keyframes for both directions
+    // Define keyframes for both directions with more performant transforms
     styleElement.textContent = `
       @keyframes scroll-up {
-        from { transform: translateY(0); }
-        to { transform: translateY(var(--scroll-height)); }
+        from { transform: translate3d(0, 0, 0); }
+        to { transform: translate3d(0, var(--scroll-height), 0); }
       }
       
       @keyframes scroll-down {
-        from { transform: translateY(var(--scroll-height)); }
-        to { transform: translateY(0); }
+        from { transform: translate3d(0, var(--scroll-height), 0); }
+        to { transform: translate3d(0, 0, 0); }
       }
     `
 
@@ -427,7 +435,7 @@ export const MobileTestimonials = () => {
         </div>
 
         <div className="relative mx-auto h-[500px] max-w-md overflow-hidden">
-          <TestimonialColumn reviews={reviews} direction="up" duration={800} />
+          <TestimonialColumn reviews={reviews} direction="up" duration={3000} />
         </div>
       </div>
     </section>
