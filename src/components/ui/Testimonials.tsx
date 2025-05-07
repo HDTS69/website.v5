@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
@@ -409,6 +409,50 @@ const TestimonialColumn = ({
 
 // Mobile Testimonials Component - Single Column with scrolling animation
 export const MobileTestimonials = () => {
+  const [visibleReviews, setVisibleReviews] = useState<Review[]>(reviews.slice(0, 5));
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const reviewsContainerRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    // Set a fixed height for testimonial cards to prevent layout shifts
+    const container = reviewsContainerRef.current;
+    if (container && container.children.length > 0) {
+      const cardHeight = (container.children[0] as HTMLElement).offsetHeight;
+      container.style.minHeight = `${cardHeight}px`;
+    }
+  }, [visibleReviews]);
+  
+  // Smoother pagination handling
+  const handleNext = useCallback(() => {
+    if (isAnimating) return;
+    
+    setIsAnimating(true);
+    const nextIndex = (activeIndex + 1) % reviews.length;
+    setActiveIndex(nextIndex);
+    
+    // Create a new array with the current visible reviews plus the next one
+    const newVisibleReviews = [...visibleReviews.slice(1), reviews[nextIndex]];
+    setVisibleReviews(newVisibleReviews);
+    
+    setTimeout(() => setIsAnimating(false), 500);
+  }, [activeIndex, visibleReviews, isAnimating]);
+  
+  // Auto scroll with pause on hover/touch
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    const startTimer = () => {
+      timer = setTimeout(() => {
+        handleNext();
+        startTimer();
+      }, 5000);
+    };
+    
+    startTimer();
+    
+    return () => clearTimeout(timer);
+  }, [handleNext]);
+  
   return (
     <section className="relative py-16">
       <div className="container relative z-10 mx-auto px-4">
@@ -426,13 +470,78 @@ export const MobileTestimonials = () => {
           </p>
         </div>
 
-        <div className="relative mx-auto h-[500px] max-w-md overflow-hidden">
-          <TestimonialColumn reviews={reviews} direction="up" duration={150} />
+        <div className="relative mx-auto max-w-md overflow-hidden">
+          <div 
+            ref={reviewsContainerRef}
+            className="relative min-h-[400px]"
+          >
+            <AnimatePresence mode="sync">
+              {visibleReviews.map((review, index) => (
+                <motion.div
+                  key={`${review.id}-${index}`}
+                  className="absolute inset-0 p-2"
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -50 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <TestimonialCard review={review} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+          
+          {/* Pagination indicators */}
+          <div className="mt-6 flex justify-center space-x-2">
+            {reviews.slice(0, 10).map((_, index) => (
+              <button
+                key={index}
+                className={`h-2 w-2 rounded-full transition-all ${
+                  activeIndex % 10 === index ? 'bg-[#00E6CA] w-4' : 'bg-gray-600'
+                }`}
+                aria-label={`Go to review ${index + 1}`}
+                onClick={() => {
+                  if (isAnimating) return;
+                  setActiveIndex(index);
+                  setVisibleReviews([reviews[index]]);
+                }}
+              />
+            ))}
+          </div>
+          
+          {/* Navigation buttons */}
+          <div className="mt-6 flex justify-between">
+            <button
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white transition-colors hover:bg-[#00E6CA]/20"
+              onClick={() => {
+                if (isAnimating) return;
+                setIsAnimating(true);
+                const prevIndex = (activeIndex - 1 + reviews.length) % reviews.length;
+                setActiveIndex(prevIndex);
+                setVisibleReviews([reviews[prevIndex]]);
+                setTimeout(() => setIsAnimating(false), 500);
+              }}
+              aria-label="Previous review"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white transition-colors hover:bg-[#00E6CA]/20"
+              onClick={handleNext}
+              aria-label="Next review"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
 export const Testimonials = () => {
   const [isMobile, setIsMobile] = useState(false)
