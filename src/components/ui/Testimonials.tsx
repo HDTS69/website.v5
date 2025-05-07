@@ -427,7 +427,7 @@ export const MobileTestimonials = () => {
         </div>
 
         <div className="relative mx-auto h-[500px] max-w-md overflow-hidden">
-          <TestimonialColumn reviews={reviews} direction="up" duration={150} />
+          <TestimonialColumn reviews={reviews} direction="up" duration={400} />
         </div>
       </div>
     </section>
