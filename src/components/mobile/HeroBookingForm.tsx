@@ -16,6 +16,7 @@ import type { Service } from '../ui/BookingForm/types'
 import { SERVICES } from '@/config/services'
 import { AnimatedBookNowButton } from '../ui/AnimatedBookNowButton'
 import { PHONE_PATTERNS, EMAIL_PATTERNS } from '@/utils/security'
+import ConversionTracking from '@/components/ui/ConversionTracking'
 
 export function HeroBookingForm() {
   const [formData, setFormData] = useState({
@@ -270,6 +271,9 @@ export function HeroBookingForm() {
           >
             Book Another Service
           </button>
+          
+          {/* Google Ads Conversion Tracking */}
+          <ConversionTracking />
         </div>
       </div>
     )

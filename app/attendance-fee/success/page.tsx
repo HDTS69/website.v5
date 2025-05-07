@@ -5,6 +5,7 @@ import Header from '@/components/ui/header'
 import Footer from '@/components/ui/footer'
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 import { PaymentVerification } from './PaymentVerification'
+import ConversionTracking from '@/components/ui/ConversionTracking'
 
 export default function PaymentSuccessPage() {
   return (
@@ -20,10 +21,7 @@ export default function PaymentSuccessPage() {
           <div className="relative z-10 rounded-xl border border-gray-800 bg-gray-900/80 p-8 shadow-xl backdrop-blur-sm">
             <Suspense
               fallback={
-                <div className="py-8 text-center">
-                  <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-t-2 border-[#00E6CA]"></div>
-                  <p className="text-white">Loading...</p>
-                </div>
+                <div></div>
               }
             >
               <PaymentVerification />
@@ -33,6 +31,9 @@ export default function PaymentSuccessPage() {
       </main>
 
       <Footer showCTA={false} />
+      
+      {/* Google Ads Conversion Tracking */}
+      <ConversionTracking />
     </div>
   )
 }

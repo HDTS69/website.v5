@@ -1,4 +1,5 @@
 import './globals.css'
+import '../src/styles/performance.css'
 import { Inter } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
 import { ClientComponents } from './components/ClientComponents'
@@ -20,6 +21,7 @@ const inter = Inter({
   style: ['normal'],
   fallback: ['system-ui', 'sans-serif'],
   adjustFontFallback: true,
+  preload: true,
 })
 
 export const metadata: Metadata = {
@@ -63,9 +65,23 @@ export default function RootLayout({
         <meta name="format-detection" content="telephone=yes" />
         <meta name="format-detection" content="email=yes" />
 
-        {/* Script to suppress specific Google Maps warnings */}
+        {/* Performance monitoring script */}
         <script dangerouslySetInnerHTML={{
           __html: `
+            // Performance monitoring
+            const perfObserver = new PerformanceObserver((list) => {
+              list.getEntries().forEach((entry) => {
+                // Detect large layout shifts and mark device for reduced animations
+                if (entry.entryType === 'layout-shift' && entry.value > 0.1) {
+                  localStorage.setItem('had-scroll-issues', 'true');
+                  document.documentElement.classList.add('reduce-animations');
+                }
+              });
+            });
+            
+            // Register observer for layout shifts
+            perfObserver.observe({ type: 'layout-shift', buffered: true });
+
             // Suppress Google Maps warnings
             const originalConsoleWarn = console.warn;
             console.warn = function() {
@@ -110,7 +126,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/images/PWA/icon-192.png"></link>
         <meta name="theme-color" content="#000000" />
 
-        {/* Lordicon Script */}
+        {/* Lordicon Script - with loading optimization */}
         <LordIconScript />
 
         {/* Style to fix autofill background colors in Safari/iOS */}
@@ -126,12 +142,19 @@ export default function RootLayout({
               transition: background-color 5000s;
               caret-color: white;
             }
+            
+            /* Add overscroll behavior to improve scrolling */
+            html, body {
+              overscroll-behavior: none;
+              -webkit-overflow-scrolling: touch;
+            }
           `}
         </style>
       </head>
       <body
-        className="isolate touch-auto bg-black font-inter antialiased"
+        className="isolate touch-auto bg-black font-inter antialiased disable-hover"
         suppressHydrationWarning
+        style={{ touchAction: 'pan-y' }}
       >
         {/* Google Tag Manager (noscript) */}
         <noscript>
@@ -170,7 +193,7 @@ export default function RootLayout({
         </GoogleMapsLoader>
 
         {/* Google Analytics 4 */}
-        <GoogleAnalytics gaId="G-XXXXXXXXXX" />
+        <GoogleAnalytics gaId="G-6JW3MCR863" />
 
         {/* Google Tag Manager */}
         <Script id="google-tag-manager" strategy="afterInteractive">

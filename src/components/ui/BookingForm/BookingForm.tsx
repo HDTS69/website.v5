@@ -17,6 +17,7 @@ import type { BookingFormProps, Service } from './types'
 import { SERVICES, ServiceCategory } from '@/config/services'
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 import { PHONE_PATTERNS, EMAIL_PATTERNS } from '@/utils/security'
+import ConversionTracking from '@/components/ui/ConversionTracking'
 
 interface ConfigService {
   name: string
@@ -397,6 +398,9 @@ export function BookingForm({ brandName, onStateChange }: BookingFormProps) {
                 >
                   Make Another Booking
                 </button>
+                
+                {/* Google Ads Conversion Tracking */}
+                <ConversionTracking />
               </motion.div>
             ) : (
               <motion.div
