@@ -162,7 +162,7 @@ const BrandLogoSlide: React.FC<BrandLogo> = ({ src, alt }) => {
 export function BrandCarousel() {
   // Common marquee settings
   const marqueeSettings = {
-    speed: 50,
+    speed: 15,
     gradient: false,
     pauseOnHover: true,
     className: 'overflow-hidden',
