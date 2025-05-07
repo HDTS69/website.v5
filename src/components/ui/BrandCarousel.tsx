@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { SparklesCore } from '@/components/ui/SparklesCore'
+import Marquee from 'react-fast-marquee'
 import { BackgroundSparkles } from '@/components/ui/BackgroundSparkles'
 import { motion } from 'framer-motion'
 
@@ -109,7 +110,7 @@ const allLogos: BrandLogo[] = [
 const manufacturerLogos = allLogos.slice(0, 12) // First 12 logos (Manufacturers)
 const supplierLogos = allLogos.slice(12) // Remaining logos (Suppliers and Certifications)
 
-const BrandLogoStatic: React.FC<BrandLogo> = ({ src, alt }) => {
+const BrandLogoSlide: React.FC<BrandLogo> = ({ src, alt }) => {
   const [isLoaded, setIsLoaded] = React.useState(false)
   const [isHovered, setIsHovered] = React.useState(false)
 
@@ -120,7 +121,7 @@ const BrandLogoStatic: React.FC<BrandLogo> = ({ src, alt }) => {
 
   return (
     <div
-      className="relative flex h-[100px] w-full select-none items-center justify-center"
+      className="relative mx-3 flex h-[100px] w-[160px] select-none items-center justify-center"
       onContextMenu={preventInteraction}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -159,21 +160,13 @@ const BrandLogoStatic: React.FC<BrandLogo> = ({ src, alt }) => {
 }
 
 export function BrandCarousel() {
-  // Determine if mobile based on window width
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    
-    // Initial check
-    handleResize()
-    
-    // Listen for resize events
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  // Common marquee settings
+  const marqueeSettings = {
+    speed: 50,
+    gradient: false,
+    pauseOnHover: true,
+    className: 'overflow-hidden',
+  }
 
   return (
     <section className="relative w-full overflow-hidden bg-black py-20">
@@ -204,25 +197,19 @@ export function BrandCarousel() {
         </motion.div>
 
         <div className="relative z-10">
-          {/* Static grid for manufacturers */}
-          <div className="mb-10">
-            <h3 className="mb-6 text-center text-xl font-semibold text-[#00E6CA]">Manufacturers</h3>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-              {manufacturerLogos.map((logo, index) => (
-                <BrandLogoStatic key={index} src={logo.src} alt={logo.alt} />
-              ))}
-            </div>
-          </div>
-          
-          {/* Static grid for suppliers */}
-          <div>
-            <h3 className="mb-6 text-center text-xl font-semibold text-[#00E6CA]">Suppliers & Partners</h3>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-              {supplierLogos.map((logo, index) => (
-                <BrandLogoStatic key={index} src={logo.src} alt={logo.alt} />
-              ))}
-            </div>
-          </div>
+          {/* Manufacturers Carousel */}
+          <Marquee {...marqueeSettings} className="mb-8 py-4">
+            {manufacturerLogos.map((logo, index) => (
+              <BrandLogoSlide key={index} src={logo.src} alt={logo.alt} />
+            ))}
+          </Marquee>
+
+          {/* Suppliers Carousel */}
+          <Marquee {...marqueeSettings} className="py-4" direction="right">
+            {supplierLogos.map((logo, index) => (
+              <BrandLogoSlide key={index} src={logo.src} alt={logo.alt} />
+            ))}
+          </Marquee>
         </div>
       </div>
     </section>

@@ -319,11 +319,6 @@ const TestimonialColumn = ({
       // Set the scroll height based on direction
       column.style.setProperty('--scroll-height', `-${height}px`)
       column.style.setProperty('--scroll-duration', `${duration}s`)
-      
-      // Force GPU acceleration and reduce animation jank
-      column.style.setProperty('will-change', 'transform')
-      column.style.setProperty('transform', 'translateZ(0)')
-      column.style.setProperty('backface-visibility', 'hidden')
     }
   }, [duration])
 
@@ -334,9 +329,6 @@ const TestimonialColumn = ({
     animationTimingFunction: 'linear',
     animationIterationCount: 'infinite',
     animationPlayState: 'running',
-    willChange: 'transform',
-    transform: 'translateZ(0)',
-    backfaceVisibility: 'hidden' as const
   }
 
   // Define keyframes in a style tag
@@ -349,16 +341,16 @@ const TestimonialColumn = ({
       document.head.appendChild(styleElement)
     }
 
-    // Define keyframes for both directions with more performant transforms
+    // Define keyframes for both directions
     styleElement.textContent = `
       @keyframes scroll-up {
-        from { transform: translate3d(0, 0, 0); }
-        to { transform: translate3d(0, var(--scroll-height), 0); }
+        from { transform: translateY(0); }
+        to { transform: translateY(var(--scroll-height)); }
       }
       
       @keyframes scroll-down {
-        from { transform: translate3d(0, var(--scroll-height), 0); }
-        to { transform: translate3d(0, 0, 0); }
+        from { transform: translateY(var(--scroll-height)); }
+        to { transform: translateY(0); }
       }
     `
 
@@ -415,11 +407,8 @@ const TestimonialColumn = ({
   )
 }
 
-// Mobile Testimonials Component - Static display instead of animation
+// Mobile Testimonials Component - Single Column with scrolling animation
 export const MobileTestimonials = () => {
-  // Select a limited number of reviews to display statically
-  const displayedReviews = reviews.slice(0, 5);
-
   return (
     <section className="relative py-16">
       <div className="container relative z-10 mx-auto px-4">
@@ -437,13 +426,8 @@ export const MobileTestimonials = () => {
           </p>
         </div>
 
-        <div className="relative mx-auto max-w-md">
-          {/* Static display of testimonials */}
-          <div className="space-y-4">
-            {displayedReviews.map((review) => (
-              <TestimonialCard key={review.id} review={review} />
-            ))}
-          </div>
+        <div className="relative mx-auto h-[500px] max-w-md overflow-hidden">
+          <TestimonialColumn reviews={reviews} direction="up" duration={150} />
         </div>
       </div>
     </section>
