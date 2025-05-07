@@ -6,12 +6,18 @@ import { ClientComponents } from './components/ClientComponents'
 import { Providers } from '@/components/providers'
 import { Toaster } from '@/components/ui/toaster'
 import 'swiper/css'
-import { LordIconScript } from '@/components/LordIconScript'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/react'
 import ClientBackground from './components/ClientBackground'
 import { GoogleMapsLoader } from '@/components/GoogleMapsLoader'
+import dynamic from 'next/dynamic'
+
+// Dynamically import LordIconScript with no SSR to prevent hydration issues
+const LordIconScript = dynamic(
+  () => import('@/components/LordIconScript').then(mod => mod.LordIconScript),
+  { ssr: false, loading: () => null }
+)
 
 const inter = Inter({
   subsets: ['latin'],
