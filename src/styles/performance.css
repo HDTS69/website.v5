@@ -1,0 +1,58 @@
+/* Performance optimizations for animation effects */
+
+/* Enable animations across all devices */
+html, body {
+  /* Ensure smooth animations */
+  transition-duration: 0.3s;
+  animation-duration: 0.3s;
+}
+
+/* Override disable animations class to ensure animations always play */
+.reduce-animations * {
+  transition-duration: 0.3s !important;
+  animation-duration: 0.3s !important;
+}
+
+/* Respect users with motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    /* Still provide some minimal animation for those with reduced motion preference */
+    animation-duration: 0.15s !important;
+    transition-duration: 0.15s !important;
+  }
+}
+
+/* Force hardware acceleration on key elements */
+.mobile-navigation,
+.mobile-hero,
+.mobile-menu,
+.sticky-header,
+.animated-element {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize scrolling performance while maintaining smooth animations */
+body {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Optimize box shadows for better animations */
+.optimize-shadows {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Optimize image rendering */
+img {
+  image-rendering: auto;
+  transform: translateZ(0);
+}
+
+/* Ensure hover effects work properly on touch devices */
+@media (max-width: 768px) {
+  .disable-hover {
+    pointer-events: auto !important;
+  }
+} 
