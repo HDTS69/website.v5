@@ -92,13 +92,15 @@ export function Hero() {
   
   return (
     <div
-      className="relative flex min-h-[100dvh] touch-auto flex-col overflow-x-hidden overscroll-none bg-black pb-20"
+      className="relative flex min-h-[100dvh] flex-col bg-black pb-20"
       style={{
         paddingTop: '80px',
         overscrollBehavior: 'none',
         willChange: 'transform', // Optimize compositing
         transform: 'translateZ(0)', // Force GPU acceleration
-        contain: 'paint layout size' // Optimize rendering
+        contain: 'paint layout size', // Optimize rendering
+        touchAction: 'pan-y pinch-zoom', // Allow only vertical scrolling
+        overflow: 'hidden' // Prevent any scrolling within this container
       }}
     >
       {/* Add styles for Call Now button */}
@@ -164,10 +166,19 @@ export function Hero() {
       </div>
 
       {/* Content Container */}
-      <div className="container relative z-10 mx-auto px-4 py-0">
+      <div className="container relative z-10 mx-auto px-4 py-0"
+        style={{
+          overflow: 'visible', // Ensure content isn't creating scroll containers
+          touchAction: 'pan-y pinch-zoom' // Allow only vertical scrolling
+        }}
+      >
         <div
           className="flex flex-col items-center justify-center"
-          style={{ marginTop: '0' }}
+          style={{ 
+            marginTop: '0',
+            overflowX: 'hidden',
+            overflowY: 'visible'
+          }}
         >
           {/* Hero Text */}
           <div className="mb-3 flex max-w-[100%] flex-col items-center text-center">
