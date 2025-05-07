@@ -104,7 +104,7 @@ export async function middleware(request: NextRequest) {
     // Fonts: allow specific sources
     "font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com https://rsms.me https://*.vercel.app https://cdn.lordicon.com *.stripe.com",
     // Connect: allow necessary APIs and WebSocket for Next.js
-    "connect-src 'self' https://*.supabase.co https://*.googleapis.com https://maps.googleapis.com wss://*.vercel.app https://cdn.lordicon.com https://*.stripe.com https://*.google-analytics.com https://www.google-analytics.com https://*.analytics.google.com https://*.gstatic.com https://*.ggpht.com https://*.google.com https://*.google.com.au https://*.doubleclick.net",
+    "connect-src 'self' https://*.supabase.co https://*.googleapis.com https://maps.googleapis.com wss://*.vercel.app https://cdn.lordicon.com https://*.stripe.com https://*.google-analytics.com https://www.google-analytics.com https://*.analytics.google.com https://*.gstatic.com https://*.ggpht.com https://*.google.com https://google.com https://*.google.com.au https://*.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com",
     // Media: restrict to same-origin
     "media-src 'self'",
     // Object: restrict to none
