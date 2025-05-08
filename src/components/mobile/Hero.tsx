@@ -6,8 +6,11 @@ import { SparklesCore } from '../ui/SparklesCore'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AnimatedButton } from '../ui/AnimatedButton'
 import { AnimatedBookNowButton } from '../ui/AnimatedBookNowButton'
-import { HeroBookingForm } from './HeroBookingForm'
 import { IMAGE_SIZES } from '@/utils/imageLoading'
+import dynamic from 'next/dynamic'
+
+// Dynamically import HeroBookingForm
+const HeroBookingForm = dynamic(() => import('./HeroBookingForm').then(mod => mod.HeroBookingForm))
 
 // Custom styles for the Call Now button to match other pages
 const callNowButtonStyles = `
@@ -37,6 +40,7 @@ const callNowButtonStyles = `
 export function Hero() {
   const [showBookingForm, setShowBookingForm] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
+  const [animationsReady, setAnimationsReady] = useState(false)
   const heroImageRef = useRef<HTMLDivElement>(null)
 
   // Performance optimizations
@@ -70,6 +74,16 @@ export function Hero() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  // Effect to trigger animations after image load + delay
+  useEffect(() => {
+    if (imageLoaded) {
+      const timer = setTimeout(() => {
+        setAnimationsReady(true);
+      }, 300); // 300ms delay
+      return () => clearTimeout(timer); // Cleanup timer
+    }
+  }, [imageLoaded]);
 
   // Disable sparkles on mobile completely
   const shouldShowSparkles = false;
@@ -160,7 +174,7 @@ export function Hero() {
         >
           <motion.div
             initial="hidden"
-            animate="visible"
+            animate={animationsReady ? "visible" : "hidden"}
             variants={{
               visible: {
                 transition: {
