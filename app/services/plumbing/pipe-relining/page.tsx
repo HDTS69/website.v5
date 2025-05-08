@@ -20,7 +20,7 @@ export default function PipeReliningPage() {
           subtitle: 'No-Dig Pipe Repair Solutions',
           description: `Our team provides <span class="font-bold text-white">advanced pipe relining services</span> with guaranteed results. We use <span class="font-bold text-white">state-of-the-art technology</span> for efficient, non-invasive pipe repairs.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Our Service',
@@ -144,7 +144,7 @@ export default function PipeReliningPage() {
           subtitle: "Don't Wait - Call Now",
           description: `Don't let pipe damage worsen. Our <span class="font-bold text-white">expert team</span> is ready to help with advanced relining solutions.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Why Trust Our Service',

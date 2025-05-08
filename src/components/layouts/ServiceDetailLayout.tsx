@@ -200,7 +200,7 @@ const defaultContent = {
     subtitle: 'Expert Solutions & Service',
     description: `Our team of <span class="font-bold text-white">licensed professionals</span> provides <span class="font-bold text-white">expert hot water solutions</span> with guaranteed workmanship. We ensure <span class="font-bold text-white">reliable, efficient</span>, and compliant installations and repairs.`,
     bookOnlineLink: '#book',
-    callNowLink: 'tel:1300HDTRADE',
+    callNowLink: 'tel:1300420911',
   },
   bentoGridData: {
     title: 'Why Choose',
@@ -333,7 +333,7 @@ const defaultContent = {
     subtitle: 'Emergency?',
     description: `No hot water? Don't wait! Our <span class="font-bold text-white">expert team</span> is ready to help <span class="font-bold text-white">24/7</span>.`,
     buttonText: 'Call Now',
-    buttonLink: 'tel:1300HDTRADE',
+    buttonLink: 'tel:1300420911',
   },
   trustData: {
     title: 'Your Trusted Hot Water',
@@ -458,7 +458,7 @@ export function ServiceDetailLayout({
                         Book Online
                       </AnimatedBookNowButton>
                       <AnimatedBookNowButton
-                        href={heroData.callNowLink || 'tel:1300HDTRADE'}
+                        href={heroData.callNowLink || 'tel:1300420911'}
                         className="call-now-btn bg-white text-[#00E6CA]"
                       >
                         Call Now
@@ -1190,7 +1190,7 @@ export function ServiceDetailLayout({
                   >
                     {/* Replaced Link with AnimatedBookNowButton styled as Call Now */}
                     <AnimatedBookNowButton
-                      href={ctaData.buttonLink || 'tel:1300HDTRADE'}
+                      href={ctaData.buttonLink || 'tel:1300420911'}
                       className="call-now-btn bg-white text-[#00E6CA]"
                       // Apply similar width constraints as hero buttons if needed
                       // style={{ maxWidth: '175px' }}

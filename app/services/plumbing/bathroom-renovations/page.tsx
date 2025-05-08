@@ -21,7 +21,7 @@ export default function BathroomRenovationsPage() {
           subtitle: 'Renovation Services',
           description: `Our team provides <span class="font-bold text-white">professional bathroom renovations</span> with stunning results. We handle <span class="font-bold text-white">complete transformations</span> with expert care and precision.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Us',
@@ -150,7 +150,7 @@ export default function BathroomRenovationsPage() {
           subtitle: 'Your Bathroom?',
           description: `Contact our <span class="font-bold text-white">expert team</span> today to start your renovation. We ensure <span class="font-bold text-white">stunning results</span>.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Your Trusted Local',

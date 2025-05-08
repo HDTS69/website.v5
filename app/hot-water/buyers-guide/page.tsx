@@ -15,7 +15,7 @@ const pageData = {
     subtitle: 'Buyers Guide',
     description: `Get <span class="font-bold text-white">expert advice</span> on choosing the perfect hot water system. Our comprehensive guide helps you make an <span class="font-bold text-white">informed decision</span>.`,
     bookOnlineLink: '#book',
-    callNowLink: 'tel:1300HDTRADE',
+    callNowLink: 'tel:1300420911',
   },
   bentoGridData: {
     title: 'Why Trust',

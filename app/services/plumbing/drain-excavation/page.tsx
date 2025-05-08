@@ -21,7 +21,7 @@ export default function DrainExcavationPage() {
           subtitle: 'Excavation Services',
           description: `Our team provides <span class="font-bold text-white">professional drain excavation</span> with minimal disruption. We use <span class="font-bold text-white">advanced equipment</span> for precise and efficient excavation.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Us',
@@ -150,7 +150,7 @@ export default function DrainExcavationPage() {
           subtitle: 'Excavation?',
           description: `Contact our <span class="font-bold text-white">expert team</span> today to book your service. We ensure <span class="font-bold text-white">precise results</span>.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Your Trusted Local',

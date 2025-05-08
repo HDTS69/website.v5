@@ -20,7 +20,7 @@ export default function SewerStormwaterPage() {
           subtitle: 'Expert Drainage Solutions',
           description: `Our team provides <span class="font-bold text-white">professional drainage services</span> with guaranteed results. We handle all <span class="font-bold text-white">sewer and stormwater</span> needs efficiently.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Our Service',
@@ -144,7 +144,7 @@ export default function SewerStormwaterPage() {
           subtitle: "Don't Wait - Call Now",
           description: `Don't let drainage problems worsen. Our <span class="font-bold text-white">expert team</span> is ready to help with professional solutions.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Why Trust Our Service',

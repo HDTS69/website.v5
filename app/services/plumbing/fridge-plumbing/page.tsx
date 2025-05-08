@@ -21,7 +21,7 @@ export default function FridgePlumbingPage() {
           subtitle: 'Installation Services',
           description: `Our team provides <span class="font-bold text-white">expert fridge plumbing installation</span> for all refrigerator brands. From <span class="font-bold text-white">water lines to ice makers</span>, we ensure <span class="font-bold text-white">proper setup and connection</span>.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Us',
@@ -154,7 +154,7 @@ export default function FridgePlumbingPage() {
           subtitle: 'Installation?',
           description: `Contact our <span class="font-bold text-white">expert team</span> now for professional fridge plumbing installation. We ensure <span class="font-bold text-white">proper setup and connection</span>.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Your Trusted Local',

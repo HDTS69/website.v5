@@ -20,7 +20,7 @@ export default function ShowerInstallationsPage() {
           subtitle: 'Expert Installation Solutions',
           description: `Our team provides <span class="font-bold text-white">professional shower installation services</span> with guaranteed results. We ensure <span class="font-bold text-white">quality workmanship</span> for every installation.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Our Service',
@@ -145,7 +145,7 @@ export default function ShowerInstallationsPage() {
           subtitle: "Don't Wait - Call Now",
           description: `Get your shower installation done right. Our <span class="font-bold text-white">expert team</span> is ready to help with professional solutions.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Why Trust Our Service',

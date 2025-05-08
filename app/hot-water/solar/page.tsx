@@ -15,7 +15,7 @@ const pageData = {
     subtitle: 'Eco-Friendly Solutions',
     description: `Our team of <span class="font-bold text-white">certified technicians</span> provides <span class="font-bold text-white">expert solar hot water solutions</span> with guaranteed workmanship. We ensure <span class="font-bold text-white">efficient, reliable</span>, and environmentally friendly installations.`,
     bookOnlineLink: '#book',
-    callNowLink: 'tel:1300HDTRADE',
+    callNowLink: 'tel:1300420911',
   },
   bentoGridData: {
     title: 'Why Choose',
@@ -148,7 +148,7 @@ const pageData = {
     subtitle: 'Solar?',
     description: `Switch to an eco-friendly solar hot water system today! Our <span class="font-bold text-white">expert team</span> is ready to help you <span class="font-bold text-white">save on energy costs</span>.`,
     buttonText: 'Call Now',
-    buttonLink: 'tel:1300HDTRADE',
+    buttonLink: 'tel:1300420911',
   },
   trustData: {
     title: 'Your Trusted Solar Hot Water',

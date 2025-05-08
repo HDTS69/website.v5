@@ -19,7 +19,7 @@ const pageData: ServiceDetailLayoutProps = {
     subtitle: 'Expert Solutions',
     description: `Our team of <span class="font-bold text-white">licensed plumbers</span> provides <span class="font-bold text-white">expert system replacement</span> with guaranteed workmanship. We help you choose and install the <span class="font-bold text-white">perfect system</span> for your needs.`,
     bookOnlineLink: '#book',
-    callNowLink: 'tel:1300HDTRADE',
+    callNowLink: 'tel:1300420911',
   },
   bentoGridData: {
     title: 'Why Choose Our',
@@ -149,7 +149,7 @@ const pageData: ServiceDetailLayoutProps = {
     subtitle: 'Your System?',
     description: `Get expert advice on the best system for your needs. Our <span class="font-bold text-white">replacement team</span> is ready to help.`,
     buttonText: 'Call Now',
-    buttonLink: 'tel:1300HDTRADE',
+    buttonLink: 'tel:1300420911',
   },
   trustData: {
     title: 'Your Trusted Hot Water',

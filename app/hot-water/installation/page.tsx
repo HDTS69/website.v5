@@ -15,7 +15,7 @@ const pageData = {
     subtitle: 'Installation',
     description: `Professional <span class="font-bold text-white">hot water system installation</span> by licensed technicians. We install all types of systems with <span class="font-bold text-white">expert precision</span> and quality guarantees.`,
     bookOnlineLink: '#book',
-    callNowLink: 'tel:1300HDTRADE',
+    callNowLink: 'tel:1300420911',
   },
   bentoGridData: {
     title: 'Why Choose',

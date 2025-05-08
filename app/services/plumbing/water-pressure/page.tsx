@@ -20,7 +20,7 @@ export default function WaterPressurePage() {
           subtitle: 'Expert Pressure Services',
           description: `Our team provides <span class="font-bold text-white">professional water pressure services</span> with guaranteed results. We ensure <span class="font-bold text-white">optimal pressure</span> for your property.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Our Service',
@@ -144,7 +144,7 @@ export default function WaterPressurePage() {
           subtitle: "Don't Wait - Call Now",
           description: `Get your water pressure optimized professionally. Our <span class="font-bold text-white">expert team</span> is ready to help with advanced solutions.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Why Trust Our Service',

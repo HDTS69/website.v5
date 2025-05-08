@@ -79,7 +79,7 @@ const LocationLayout: React.FC<LocationLayoutProps> = ({
                   Book Online
                 </Link>
                 <Link
-                  href="tel:1300HDTRADE"
+                  href="tel:1300420911"
                   className="rounded-lg bg-white px-8 py-3 font-semibold text-black transition-colors hover:bg-gray-100"
                 >
                   Call Now

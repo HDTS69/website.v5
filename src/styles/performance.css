@@ -7,10 +7,36 @@ html, body {
   animation-duration: 0.3s;
 }
 
-/* Override disable animations class to ensure animations always play */
+/* Animation duration overrides for specific components */
+.testimonial-column-animation {
+  animation-duration: var(--scroll-duration, 300s) !important;
+  transition-duration: var(--scroll-duration, 300s) !important;
+  animation-play-state: running !important;
+  animation-timing-function: linear !important;
+  animation-delay: 0s !important;
+}
+
+/* Apply specific overrides for react-fast-marquee */
+.marquee-slow .marquee-container {
+  animation-duration: var(--scroll-duration, 300s) !important;
+  transition-duration: var(--scroll-duration, 300s) !important;
+  animation-play-state: running !important;
+  animation-timing-function: linear !important;
+  animation-delay: 0s !important;
+}
+
+/* Override disable animations class but keep durations appropriate */
 .reduce-animations * {
   transition-duration: 0.3s !important;
   animation-duration: 0.3s !important;
+}
+
+/* Never override long animations that need to be slow */
+.reduce-animations .testimonial-column-animation,
+.reduce-animations .marquee-slow .marquee-container {
+  animation-duration: var(--scroll-duration, 300s) !important;
+  transition-duration: var(--scroll-duration, 300s) !important;
+  animation-play-state: running !important;
 }
 
 /* Respect users with motion preferences */
@@ -19,6 +45,14 @@ html, body {
     /* Still provide some minimal animation for those with reduced motion preference */
     animation-duration: 0.15s !important;
     transition-duration: 0.15s !important;
+  }
+  
+  /* Even with reduced motion, keep certain animations at appropriate speeds */
+  .testimonial-column-animation,
+  .marquee-slow .marquee-container {
+    animation-duration: var(--scroll-duration, 300s) !important;
+    transition-duration: var(--scroll-duration, 300s) !important;
+    animation-play-state: running !important;
   }
 }
 

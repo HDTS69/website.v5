@@ -188,47 +188,44 @@ const MobileTestimonials = () => {
 
   return (
     <section
-      className="relative overflow-hidden bg-black py-16 md:hidden"
+      className="relative overflow-hidden bg-black py-12 md:hidden"
       aria-label="Customer testimonials section"
+      id="testimonials"
     >
       <div className="absolute inset-0 z-0">
         <SparklesCore
           background="transparent"
-          minSize={0.4}
-          maxSize={2}
-          particleDensity={100}
+          minSize={0.3}
+          maxSize={1.5}
+          particleDensity={40}
           className="h-full w-full"
           particleColor="#1CD4A7"
-          speed={0.3}
+          speed={0.25}
         />
       </div>
 
-      <div className="z-1 absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/80"></div>
-
       <div className="container relative z-10 mx-auto max-w-7xl px-4">
-        {/* Header with animation */}
         <motion.header
           className="mb-8 text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <h2 className="mb-2 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-3xl font-bold text-transparent text-white">
+          <h2 className="mb-2 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-3xl font-semibold text-transparent sm:text-4xl">
             What Our Customers Say
           </h2>
-          <p className="text-base text-[#00E6CA]">
-            Read what our satisfied customers have to say
+          <p className="text-md text-[#00E6CA]">
+            Trusted by homeowners across Brisbane
           </p>
         </motion.header>
 
-        {/* Testimonials carousel */}
         <div
-          className="relative px-4 py-2"
+          className="relative px-2 py-2 sm:px-4"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          <div className="relative h-[400px] overflow-hidden rounded-xl bg-black/20 backdrop-blur-sm">
+          <div className="relative h-[380px] overflow-hidden rounded-xl bg-black/30 shadow-xl backdrop-blur-md sm:h-[400px]">
             <AnimatePresence mode="wait">
               <TestimonialCard
                 key={reviews[currentIndex].id}
@@ -236,9 +233,8 @@ const MobileTestimonials = () => {
               />
             </AnimatePresence>
 
-            {/* Navigation buttons */}
             <button
-              className="absolute left-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm"
+              className="absolute left-1 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 sm:left-2"
               onClick={() => {
                 handlePrev()
                 setIsAutoPlaying(false)
@@ -250,7 +246,7 @@ const MobileTestimonials = () => {
             </button>
 
             <button
-              className="absolute right-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm"
+              className="absolute right-1 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 sm:right-2"
               onClick={() => {
                 handleNext()
                 setIsAutoPlaying(false)
@@ -262,20 +258,25 @@ const MobileTestimonials = () => {
             </button>
           </div>
 
-          {/* Pagination */}
           {renderPaginationDots()}
         </div>
 
-        {/* Interactive CTA */}
         <motion.div
-          className="mt-10 text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
+          className="mt-8 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
         >
           <a
             href="#book"
-            className="inline-block transform rounded-lg bg-gradient-to-r from-[#00E6CA] to-[#00E6CA]/80 px-6 py-3 font-medium text-black shadow-lg shadow-[#00E6CA]/20 transition-all duration-300 hover:scale-105 hover:shadow-[#00E6CA]/30"
+            onClick={(e) => {
+              e.preventDefault();
+              const bookingForm = document.getElementById('book') || document.getElementById('booking-form');
+              if (bookingForm) {
+                bookingForm.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="inline-block transform rounded-lg bg-gradient-to-r from-[#00E6CA] to-[#00c7ae] px-8 py-3.5 text-base font-semibold text-black shadow-lg shadow-[#00E6CA]/30 transition-all duration-300 hover:scale-105 hover:shadow-[#00E6CA]/40 active:scale-100"
           >
             Book Your Service Today
           </a>

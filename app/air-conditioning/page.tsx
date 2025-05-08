@@ -18,7 +18,7 @@ export default function AirConditioningPage() {
       subtitle: 'Specialists',
       description: `Our team of <span class="font-bold text-white">licensed technicians</span> provides <span class="font-bold text-white">expert air conditioning solutions</span> for all your cooling needs. We ensure <span class="font-bold text-white">reliable, efficient</span>, and professional service for your complete comfort.`,
       bookOnlineLink: '#book',
-      callNowLink: 'tel:1300HDTRADE',
+      callNowLink: 'tel:1300420911',
     },
     bentoGridData: {
       title: 'Why Choose',

@@ -16,7 +16,7 @@ export default function ACServicingPage() {
       subtitle: 'Expert Solutions & Maintenance',
       description: `Our team provides <span class="font-bold text-white">professional air conditioning servicing</span> with guaranteed results. We ensure <span class="font-bold text-white">optimal performance</span> for your system.`,
       bookOnlineLink: '#book',
-      callNowLink: 'tel:1300HDTRADE',
+      callNowLink: 'tel:1300420911',
     },
     bentoGridData: {
       title: 'Why Choose',

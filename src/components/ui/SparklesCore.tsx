@@ -7,6 +7,13 @@ import { loadSlim } from 'tsparticles-slim'
 import { cn } from '@/lib/utils'
 import { motion, useAnimation } from 'framer-motion'
 
+// Extending Navigator interface to include the deviceMemory property
+declare global {
+  interface Navigator {
+    deviceMemory?: number
+  }
+}
+
 type ParticlesProps = {
   id?: string
   className?: string
@@ -35,45 +42,43 @@ export const SparklesCore = (props: ParticlesProps) => {
   const controls = useAnimation()
   const generatedId = useId()
 
+  // Check device type to adjust performance parameters
   useEffect(() => {
-    // Check if we're on a mobile device initially and on resize
     if (typeof window !== 'undefined') {
-      const checkMobile = () => {
-        setIsMobile(
-          window.innerWidth < 768 ||
-            'ontouchstart' in window ||
-            navigator.maxTouchPoints > 0,
-        )
-      }
-      checkMobile() // Initial check
-
-      window.addEventListener('resize', checkMobile)
-      return () => window.removeEventListener('resize', checkMobile)
+      const mobileDevice = 
+        window.innerWidth < 768 || 
+        /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0
+      
+      setIsMobile(mobileDevice)
+      
+      // Clear any performance issue flags to ensure animations always run
+      localStorage.removeItem('had-scroll-issues')
+      document.documentElement.classList.remove('reduce-animations')
     }
   }, [])
 
   // Define the init function for the Particles component
   const particlesInit = useCallback(async (engine: Engine) => {
-    console.log('Initializing particles engine...')
     // Loads the slim preset
     await loadSlim(engine)
-    console.log('Particles engine initialized.')
   }, [])
 
   // Define the loaded function for the Particles component
   const particlesLoaded = useCallback(
     async (container?: Container) => {
-      console.log('Particles container loaded:', container)
       if (container) {
         await controls.start({
           opacity: 1,
-          transition: { duration: 0.2 },
+          transition: { duration: 0.3 },
         })
       }
     },
     [controls],
-  ) // Added controls to dependency array
+  )
 
+  // Configure particle options based on device capabilities
   const options = useMemo(
     () => ({
       background: {
@@ -88,16 +93,9 @@ export const SparklesCore = (props: ParticlesProps) => {
       fpsLimit: isMobile ? 30 : 60,
       interactivity: {
         events: {
-          onClick: {
-            enable: false,
-          },
-          onHover: {
-            enable: false,
-          },
-          resize: {
-            enable: true,
-            delay: 0.5,
-          },
+          onClick: { enable: false },
+          onHover: { enable: false },
+          resize: { enable: true, delay: isMobile ? 2 : 0 },
         },
       },
       particles: {
@@ -107,41 +105,40 @@ export const SparklesCore = (props: ParticlesProps) => {
         move: {
           direction: 'none' as const,
           enable: true,
-          outModes: {
-            default: 'bounce' as const,
-          },
+          outModes: { default: 'bounce' as const },
           random: true,
-          speed: isMobile ? (speed ? speed * 0.7 : 1.4) : speed || 2,
+          speed: isMobile ? (speed ? speed * 0.7 : 1) : speed || 2,
           straight: false,
           warp: false,
         },
         number: {
-          value: isMobile
-            ? particleDensity
-              ? Math.floor(particleDensity * 0.6)
-              : 48
-            : particleDensity || 80,
+          value: isMobile 
+            ? (particleDensity ? Math.floor(particleDensity * 0.5) : 30)
+            : (particleDensity || 60),
           density: {
             enable: true,
-            area: isMobile ? 600 : 800,
+            area: isMobile ? 900 : 800,
           },
         },
         opacity: {
-          value: { min: 0.3, max: 0.9 },
+          value: { min: 0.3, max: 0.7 },
           animation: {
             enable: true,
             speed: isMobile ? 0.3 : 0.5,
-            minimumValue: 0.3,
+            minimumValue: 0.1,
           },
         },
         shape: {
           type: 'circle',
         },
         size: {
-          value: { min: minSize || 1, max: maxSize || 3 },
+          value: { 
+            min: minSize || 1, 
+            max: isMobile ? (maxSize ? maxSize * 0.8 : 2) : maxSize || 3 
+          },
         },
       },
-      detectRetina: true,
+      detectRetina: !isMobile,
     }),
     [
       background,
@@ -159,14 +156,11 @@ export const SparklesCore = (props: ParticlesProps) => {
       initial={{ opacity: 0 }}
       animate={controls}
       className={cn('h-full w-full', className)}
-      style={{
-        willChange: 'transform, opacity',
-        backfaceVisibility: 'hidden',
-      }}
+      style={{ willChange: 'opacity' }}
     >
       <Particles
         id={id || generatedId}
-        className={cn('h-full w-full')}
+        className="h-full w-full"
         init={particlesInit}
         loaded={particlesLoaded}
         options={options}

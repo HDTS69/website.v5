@@ -46,6 +46,7 @@ const NavItem: React.FC<NavItemProps> = ({
             "absolute top-full left-0 mt-0 w-48 bg-white rounded-md shadow-lg py-1",
             "opacity-0 invisible group-hover:opacity-100 group-hover:visible",
             "transition-all duration-200 ease-in-out",
+            "z-10",
             "before:content-[''] before:absolute before:top-0 before:right-[-16px] before:w-16 before:h-full"
           )}
           onMouseEnter={() => onDropdownHover(item)}
@@ -70,7 +71,9 @@ const NavItem: React.FC<NavItemProps> = ({
                     "absolute left-full top-0 w-48 bg-white rounded-md shadow-lg py-1",
                     "opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible",
                     "transition-all duration-200 ease-in-out",
-                    "before:content-[''] before:absolute before:top-0 before:right-[-16px] before:w-16 before:h-full"
+                    "z-20",
+                    "ml-2",
+                    "before:content-[''] before:absolute before:top-0 before:left-[-10px] before:w-10 before:h-full"
                   )}
                 >
                   {dropdownItem.subDropdownItems.map((subItem: NavigationItem, subIndex: number) => (

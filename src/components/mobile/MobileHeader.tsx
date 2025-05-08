@@ -7,6 +7,18 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { OpenNowIndicator } from '../ui/OpenNowIndicator'
 
+// Throttle function to limit how often a callback can fire
+const throttle = (callback: Function, delay: number) => {
+  let lastCall = 0
+  return (...args: any[]) => {
+    const now = Date.now()
+    if (now - lastCall >= delay) {
+      lastCall = now
+      callback(...args)
+    }
+  }
+}
+
 export function MobileHeader() {
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
@@ -14,91 +26,104 @@ export function MobileHeader() {
   const openNowRef = useRef<HTMLDivElement>(null)
   const mainHeaderRef = useRef<HTMLDivElement>(null)
 
+  // Use a single useEffect to set up all header styles and event listeners
   useEffect(() => {
-    const setupHeader = () => {
-      if (!openNowRef.current || !mainHeaderRef.current) return
+    // Simple static header setup without dynamic style changes
+    if (!openNowRef.current || !mainHeaderRef.current) return
 
-      const openNowHeight = openNowRef.current.offsetHeight
-
-      // Set styling for Open Now indicator
-      Object.assign(openNowRef.current.style, {
-        position: 'absolute',
-        top: '0',
-        left: '0',
-        right: '0',
-        width: '100%',
-        zIndex: '9999',
-        willChange: 'transform',
-        WebkitBackfaceVisibility: 'hidden',
-        backgroundImage:
-          'linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.9))',
-        backdropFilter: 'blur(4px)',
-      })
-
-      // Set styling for main header
-      Object.assign(mainHeaderRef.current.style, {
-        position: 'absolute',
-        top: `${openNowHeight}px`,
-        left: '0',
-        right: '0',
-        width: '100%',
-        zIndex: '9998',
-        willChange: 'transform',
-        WebkitBackfaceVisibility: 'hidden',
-        backgroundImage:
-          'linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.8))',
-        backdropFilter: 'blur(4px)',
-      })
-
-      // Add meta viewport tag for proper mobile rendering
-      let viewportMeta = document.querySelector('meta[name="viewport"]')
-      if (!viewportMeta) {
-        viewportMeta = document.createElement('meta')
-        viewportMeta.setAttribute('name', 'viewport')
-        document.head.appendChild(viewportMeta)
+    // Function to update header positioning
+    const updateHeaderPositioning = () => {
+      const openNowHeight = openNowRef.current?.offsetHeight || 0
+      const mainHeaderHeight = mainHeaderRef.current?.offsetHeight || 0
+      
+      // Update main header position
+      if (mainHeaderRef.current) {
+        mainHeaderRef.current.style.position = 'fixed'
+        mainHeaderRef.current.style.top = `${openNowHeight}px`
+        mainHeaderRef.current.style.left = '0'
+        mainHeaderRef.current.style.right = '0'
+        mainHeaderRef.current.style.width = '100%'
+        mainHeaderRef.current.style.zIndex = '49'
       }
-      viewportMeta.setAttribute(
-        'content',
-        'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover',
-      )
-
+      
+      // Ensure OpenNow is fixed at the top
+      if (openNowRef.current) {
+        openNowRef.current.style.position = 'fixed'
+        openNowRef.current.style.top = '0'
+        openNowRef.current.style.left = '0'
+        openNowRef.current.style.right = '0'
+        openNowRef.current.style.width = '100%'
+        openNowRef.current.style.zIndex = '50'
+      }
+      
       // Calculate header height for CSS variable
-      const totalHeaderHeight =
-        openNowHeight + (mainHeaderRef.current?.offsetHeight || 0)
+      const totalHeaderHeight = openNowHeight + mainHeaderHeight
       document.documentElement.style.setProperty(
         '--mobile-header-height',
-        `${totalHeaderHeight}px`,
+        `${totalHeaderHeight}px`
       )
+      
+      // Add padding to the top of the body to prevent content from being hidden
+      document.body.style.paddingTop = `${totalHeaderHeight}px`
     }
 
-    // Run immediately
-    setupHeader()
+    // Update positioning after a short delay to ensure all elements are rendered
+    const initialPositionTimer = setTimeout(() => {
+      updateHeaderPositioning()
+    }, 100)
 
-    // Run on resize and orientation change
-    window.addEventListener('resize', setupHeader, { passive: true })
-    window.addEventListener('orientationchange', setupHeader)
-
-    // Check again after short delays
-    const timer1 = setTimeout(setupHeader, 100)
-    const timer2 = setTimeout(setupHeader, 1000)
-
-    return () => {
-      window.removeEventListener('resize', setupHeader)
-      window.removeEventListener('orientationchange', setupHeader)
-      clearTimeout(timer1)
-      clearTimeout(timer2)
+    // Add meta viewport tag for proper mobile rendering
+    let viewportMeta = document.querySelector('meta[name="viewport"]')
+    if (!viewportMeta) {
+      viewportMeta = document.createElement('meta')
+      viewportMeta.setAttribute('name', 'viewport')
+      document.head.appendChild(viewportMeta)
     }
-  }, [])
-
-  useEffect(() => {
-    const handleScroll = () => {
+    viewportMeta.setAttribute(
+      'content',
+      'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover',
+    )
+    
+    // Throttled scroll handler to reduce execution frequency
+    const handleScroll = throttle(() => {
       setIsScrolled(window.scrollY > 0)
+      // Update positioning after scroll to ensure header stays fixed
+      setTimeout(() => {
+        updateHeaderPositioning()
+      }, 50)
+    }, 150) // Only check every 150ms instead of on every scroll event
+    
+    // Simple resize handler - only recalculate when dimensions actually change
+    let lastWidth = window.innerWidth
+    let lastHeight = window.innerHeight
+    
+    const handleResize = throttle(() => {
+      const currentWidth = window.innerWidth
+      const currentHeight = window.innerHeight
+      
+      // Only run this if dimensions actually changed
+      if (currentWidth !== lastWidth || currentHeight !== lastHeight) {
+        lastWidth = currentWidth
+        lastHeight = currentHeight
+        
+        updateHeaderPositioning()
+      }
+    }, 250)
+
+    // Initial positioning
+    updateHeaderPositioning()
+
+    // Attach event listeners with passive option where possible
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleResize, { passive: true })
+    window.addEventListener('orientationchange', handleResize, { passive: true })
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('orientationchange', handleResize)
+      clearTimeout(initialPositionTimer)
     }
-
-    window.addEventListener('scroll', handleScroll)
-    handleScroll() // Check initial scroll position
-
-    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const LogoContent = () => (
@@ -149,10 +174,9 @@ export function MobileHeader() {
           right: 0,
           width: '100%',
           zIndex: 50,
-          backgroundImage:
-            'linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.9))',
-          backdropFilter: 'blur(4px)',
-          paddingTop: 'max(env(safe-area-inset-top), 0.5rem)',
+          backgroundColor: 'rgba(0,0,0,0.95)',
+          paddingTop: 'env(safe-area-inset-top)',
+          paddingBottom: '0.25rem',
           paddingLeft: 'env(safe-area-inset-left)',
           paddingRight: 'env(safe-area-inset-right)',
         }}
@@ -167,21 +191,21 @@ export function MobileHeader() {
         ref={mainHeaderRef}
         id="mobile-main-header"
         className={cn(
-          'fixed block shadow-md md:hidden',
+          'fixed block shadow-md md:hidden sticky top-0',
           'transition-all duration-300 ease-in-out',
         )}
         style={{
           position: 'fixed',
           top: openNowRef.current
-            ? `calc(${openNowRef.current.offsetHeight}px + env(safe-area-inset-top))`
-            : 'env(safe-area-inset-top)',
-          left: 'env(safe-area-inset-left)',
-          right: 'env(safe-area-inset-right)',
+            ? `${openNowRef.current.offsetHeight}px`
+            : '30px', // Fallback height if ref not available
+          left: 0,
+          right: 0,
           width: '100%',
           zIndex: 49,
-          backgroundImage:
-            'linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.8))',
-          backdropFilter: 'blur(4px)',
+          backgroundColor: 'rgba(0,0,0,0.85)',
+          paddingLeft: 'env(safe-area-inset-left)',
+          paddingRight: 'env(safe-area-inset-right)',
         }}
       >
         <div className="py-3">

@@ -20,7 +20,7 @@ export default function RoofReportsPage() {
           subtitle: 'Expert Documentation',
           description: `Our team provides <span class="font-bold text-white">professional roof reports</span> with guaranteed accuracy. We ensure <span class="font-bold text-white">detailed and comprehensive</span> documentation.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Our Service',
@@ -144,7 +144,7 @@ export default function RoofReportsPage() {
           subtitle: "We're Here to Help",
           description: `Get your professional roof report today. Our <span class="font-bold text-white">expert team</span> is ready to help with detailed documentation.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Why Trust Our Team',

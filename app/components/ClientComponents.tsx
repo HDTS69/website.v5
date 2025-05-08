@@ -2,12 +2,17 @@
 
 import { useEffect } from 'react'
 import Analytics from '@/components/ui/Analytics'
+import { applyPerformanceOptimizations } from '@/lib/performance'
 
-// Silent version of the particle debugger without console logs
-function ParticleDebugger() {
+// Performance monitor component
+function PerformanceMonitor() {
   useEffect(() => {
-    // No console logs
-    return () => {}
+    // Apply performance optimizations on component mount
+    applyPerformanceOptimizations();
+    
+    return () => {
+      // Cleanup if needed
+    }
   }, [])
 
   return null
@@ -17,7 +22,7 @@ export function ClientComponents() {
   return (
     <>
       <Analytics />
-      <ParticleDebugger />
+      <PerformanceMonitor />
     </>
   )
 }

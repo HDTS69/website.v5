@@ -20,7 +20,7 @@ export default function RoofTileRepairsPage() {
           subtitle: 'Expert Solutions',
           description: `Our team provides <span class="font-bold text-white">professional tile repairs</span> with guaranteed results. We ensure <span class="font-bold text-white">quality and durability</span> in every repair.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Our Service',
@@ -144,7 +144,7 @@ export default function RoofTileRepairsPage() {
           subtitle: "We're Here to Help",
           description: `Get your professional tile repairs today. Our <span class="font-bold text-white">expert team</span> is ready to help with quality solutions.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Why Trust Our Team',

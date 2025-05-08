@@ -17,7 +17,7 @@ export default function SplitSystemInstallationPage() {
       subtitle: 'Expert Solutions & Service',
       description: `Our team provides <span class="font-bold text-white">professional split system installation services</span> with guaranteed results. We ensure <span class="font-bold text-white">perfect comfort</span> for your property.`,
       bookOnlineLink: '#book',
-      callNowLink: 'tel:1300HDTRADE',
+      callNowLink: 'tel:1300420911',
     },
     bentoGridData: {
       title: 'Why Choose',
@@ -153,7 +153,7 @@ export default function SplitSystemInstallationPage() {
       subtitle: 'New AC?',
       description: `Don't wait to enjoy perfect comfort. Our <span class="font-bold text-white">expert team</span> is ready to help with your split system installation.`,
       buttonText: 'Call Now',
-      buttonLink: 'tel:1300HDTRADE',
+      buttonLink: 'tel:1300420911',
     },
     trustData: {
       title: 'Why Trust',

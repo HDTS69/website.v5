@@ -19,7 +19,7 @@ const pageData: ServiceDetailLayoutProps = {
     subtitle: 'Energy Efficient Solutions',
     description: `Our team of <span class="font-bold text-white">licensed specialists</span> provides <span class="font-bold text-white">expert heat pump hot water solutions</span> with guaranteed workmanship. We ensure <span class="font-bold text-white">efficient, sustainable</span>, and reliable installations and repairs.`,
     bookOnlineLink: '#book',
-    callNowLink: 'tel:1300HDTRADE',
+    callNowLink: 'tel:1300420911',
   },
   bentoGridData: {
     title: 'Why Choose Our',
@@ -152,7 +152,7 @@ const pageData: ServiceDetailLayoutProps = {
     subtitle: 'on Energy Costs?',
     description: `Start saving today! Our <span class="font-bold text-white">heat pump experts</span> are ready to help you <span class="font-bold text-white">reduce your energy bills</span>.`,
     buttonText: 'Call Now',
-    buttonLink: 'tel:1300HDTRADE',
+    buttonLink: 'tel:1300420911',
   },
   trustData: {
     title: 'Your Trusted Heat Pump',

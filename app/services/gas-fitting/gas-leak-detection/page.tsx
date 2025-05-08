@@ -20,7 +20,7 @@ export default function GasLeakDetectionPage() {
           subtitle: 'Expert Detection Services',
           description: `Our team provides <span class="font-bold text-white">professional gas leak detection services</span> with guaranteed results. We ensure <span class="font-bold text-white">safe and thorough</span> inspections.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Our Service',
@@ -144,7 +144,7 @@ export default function GasLeakDetectionPage() {
           subtitle: "We're Here to Help",
           description: `Get your gas system checked professionally. Our <span class="font-bold text-white">expert team</span> is ready to help with quality solutions.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Why Trust Our Team',

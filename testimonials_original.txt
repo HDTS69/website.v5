@@ -310,7 +310,6 @@ const TestimonialColumn = ({
   duration: number
 }) => {
   const columnRef = useRef<HTMLDivElement>(null)
-  const [isPaused, setIsPaused] = useState(false)
 
   useEffect(() => {
     if (columnRef.current) {
@@ -329,9 +328,7 @@ const TestimonialColumn = ({
     animationDuration: `${duration}s`,
     animationTimingFunction: 'linear',
     animationIterationCount: 'infinite',
-    animationPlayState: isPaused ? 'paused' : 'running',
-    // Force animation to always run by using inline styles
-    animation: `${direction === 'down' ? 'scroll-down' : 'scroll-up'} ${duration}s linear infinite ${isPaused ? 'paused' : 'running'}`,
+    animationPlayState: 'running',
   }
 
   // Define keyframes in a style tag
@@ -366,11 +363,15 @@ const TestimonialColumn = ({
   }, [])
 
   const pauseScrolling = () => {
-    setIsPaused(true)
+    if (columnRef.current) {
+      columnRef.current.style.setProperty('--play-state', 'paused')
+    }
   }
 
   const resumeScrolling = () => {
-    setIsPaused(false)
+    if (columnRef.current) {
+      columnRef.current.style.setProperty('--play-state', 'running')
+    }
   }
 
   return (
@@ -385,8 +386,12 @@ const TestimonialColumn = ({
     >
       <div
         ref={columnRef}
-        className="flex flex-col gap-6 testimonial-column-animation"
-        style={animationStyle}
+        className="flex flex-col gap-6"
+        style={{
+          ...animationStyle,
+          // Pause animation on hover/touch
+          ...{ animationPlayState: 'var(--play-state, running)' },
+        }}
         onMouseEnter={pauseScrolling}
         onMouseLeave={resumeScrolling}
         onTouchStart={pauseScrolling}
@@ -422,7 +427,7 @@ export const MobileTestimonials = () => {
         </div>
 
         <div className="relative mx-auto h-[500px] max-w-md overflow-hidden">
-          <TestimonialColumn reviews={reviews} direction="up" duration={450} />
+          <TestimonialColumn reviews={reviews} direction="up" duration={150} />
         </div>
       </div>
     </section>
@@ -480,13 +485,13 @@ export const Testimonials = () => {
         </div>
 
         <div className="mx-auto grid h-[800px] max-w-6xl grid-cols-1 gap-6 md:grid-cols-3">
-          <TestimonialColumn reviews={column1} direction="up" duration={360} />
+          <TestimonialColumn reviews={column1} direction="up" duration={120} />
           <TestimonialColumn
             reviews={column2}
             direction="down"
-            duration={330}
+            duration={100}
           />
-          <TestimonialColumn reviews={column3} direction="up" duration={300} />
+          <TestimonialColumn reviews={column3} direction="up" duration={80} />
         </div>
       </div>
     </section>

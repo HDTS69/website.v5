@@ -20,7 +20,7 @@ export default function EmergencyPlumbingPage() {
           subtitle: 'Fast Response & Expert Solutions',
           description: `Our team of <span class="font-bold text-white">licensed plumbers</span> provides <span class="font-bold text-white">rapid response</span> with guaranteed workmanship. We ensure <span class="font-bold text-white">safe, effective</span> emergency repairs.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Our Service',
@@ -145,7 +145,7 @@ export default function EmergencyPlumbingPage() {
           subtitle: "Don't Wait - Call Now",
           description: `Don't wait with plumbing emergencies. Our <span class="font-bold text-white">expert team</span> is ready to help immediately.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Why Trust Our Service',

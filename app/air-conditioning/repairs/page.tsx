@@ -16,7 +16,7 @@ export default function ACRepairsPage() {
       subtitle: 'Expert Solutions & Service',
       description: `Our team provides <span class="font-bold text-white">professional air conditioning repair services</span> with guaranteed results. We ensure <span class="font-bold text-white">reliable cooling</span> for your property.`,
       bookOnlineLink: '#book',
-      callNowLink: 'tel:1300HDTRADE',
+      callNowLink: 'tel:1300420911',
     },
     bentoGridData: {
       title: 'Why Choose',
@@ -152,7 +152,7 @@ export default function ACRepairsPage() {
       subtitle: 'Repairs?',
       description: `Don't suffer in the heat. Our <span class="font-bold text-white">expert team</span> is available 24/7 for emergency AC repairs.`,
       buttonText: 'Call Now',
-      buttonLink: 'tel:1300HDTRADE',
+      buttonLink: 'tel:1300420911',
     },
     trustData: {
       title: 'Why Trust',

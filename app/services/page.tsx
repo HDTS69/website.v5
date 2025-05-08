@@ -571,11 +571,11 @@ export default function ServicesPage() {
 
                 <div className="mt-10">
                   <Link
-                    href="tel:1300123456"
+                    href="tel:1300420911"
                     className="inline-flex items-center gap-2 rounded-full border border-[#00E6CA] px-8 py-4 font-semibold text-[#00E6CA] transition-all duration-300 hover:bg-[#00E6CA]/10"
                   >
                     <Phone className="h-5 w-5" />
-                    Call Now: 1300 123 456
+                    Call Now: 1300 420 911
                   </Link>
                 </div>
               </div>

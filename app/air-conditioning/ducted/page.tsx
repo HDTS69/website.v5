@@ -16,7 +16,7 @@ export default function DuctedACPage() {
       subtitle: 'Expert Installation & Service',
       description: `Our team delivers <span class="font-bold text-white">professional ducted air conditioning services</span> with guaranteed results. We ensure <span class="font-bold text-white">whole-home comfort</span> for your property.`,
       bookOnlineLink: '#book',
-      callNowLink: 'tel:1300HDTRADE',
+      callNowLink: 'tel:1300420911',
     },
     bentoGridData: {
       title: 'Why Choose',

@@ -288,7 +288,7 @@ const navigationItems = [
   },
   {
     name: 'Call Now',
-    url: 'tel:1300000000',
+    url: 'tel:1300420911',
     icon: Phone,
   },
   {

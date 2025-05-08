@@ -17,7 +17,7 @@ export default function ACCleaningPage() {
       subtitle: 'Expert Deep Clean & Service',
       description: `Our team delivers <span class="font-bold text-white">professional air conditioning cleaning</span> with guaranteed results. We ensure <span class="font-bold text-white">optimal hygiene</span> for your system.`,
       bookOnlineLink: '#book',
-      callNowLink: 'tel:1300HDTRADE',
+      callNowLink: 'tel:1300420911',
     },
     bentoGridData: {
       title: 'Why Choose',

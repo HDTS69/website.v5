@@ -19,7 +19,7 @@ const serviceTemplateData: ServiceDetailLayoutProps = {
     subtitle: 'Reliable, Professional, and Guaranteed',
     description: `Facing issues with your [System]? HD Trade Services provides <span class="font-bold text-white">top-tier [Service Name] services</span> you can depend on. Our <span class="font-bold text-white">certified experts</span> offer <span class="font-bold text-white">prompt arrivals</span>, lasting solutions, and <span class="font-bold text-white">clear pricing</span>, ensuring your needs are met efficiently and effectively.`,
     bookOnlineLink: '#book',
-    callNowLink: 'tel:1300HDTRADE',
+    callNowLink: 'tel:1300420911',
   },
   // --- Bento Grid ---
   bentoGridData: {
@@ -156,7 +156,7 @@ const serviceTemplateData: ServiceDetailLayoutProps = {
     subtitle: 'Get Started Today',
     description: `Contact HD Trade Services today for a consultation or emergency call-out. Experience the difference professional care makes.`,
     buttonText: 'Call Us Now: 1300 HD TRADE',
-    buttonLink: 'tel:1300HDTRADE',
+    buttonLink: 'tel:1300420911',
   },
   // --- Trust Section ---
   trustData: {

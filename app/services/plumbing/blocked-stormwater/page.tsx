@@ -20,7 +20,7 @@ export default function BlockedStormwaterPage() {
           subtitle: 'Expert Drainage Solutions',
           description: `Our team provides <span class="font-bold text-white">professional stormwater solutions</span> with guaranteed results. We ensure <span class="font-bold text-white">proper drainage</span> for your property.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Our Service',
@@ -145,7 +145,7 @@ export default function BlockedStormwaterPage() {
           subtitle: "Don't Wait - Call Now",
           description: `Get your stormwater system fixed right. Our <span class="font-bold text-white">expert team</span> is ready to help with professional solutions.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Why Trust Our Service',

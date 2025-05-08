@@ -20,7 +20,7 @@ export default function EmergencyGasRepairsPage() {
           subtitle: '24/7 Emergency Service',
           description: `Our team provides <span class="font-bold text-white">rapid emergency gas repair services</span> with guaranteed results. We ensure <span class="font-bold text-white">fast and safe</span> solutions.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Our Service',
@@ -144,7 +144,7 @@ export default function EmergencyGasRepairsPage() {
           subtitle: "We're Here 24/7",
           description: `Get your gas emergency handled professionally. Our <span class="font-bold text-white">expert team</span> is ready to help with rapid solutions.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Why Trust Our Team',

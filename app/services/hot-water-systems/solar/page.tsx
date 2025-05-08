@@ -19,7 +19,7 @@ const pageData: ServiceDetailLayoutProps = {
     subtitle: 'Eco-Friendly Solutions',
     description: `Our team of <span class="font-bold text-white">licensed specialists</span> provides <span class="font-bold text-white">expert solar hot water solutions</span> with guaranteed workmanship. We ensure <span class="font-bold text-white">sustainable, efficient</span>, and reliable installations and repairs.`,
     bookOnlineLink: '#book',
-    callNowLink: 'tel:1300HDTRADE',
+    callNowLink: 'tel:1300420911',
   },
   bentoGridData: {
     title: 'Why Choose Our',
@@ -152,7 +152,7 @@ const pageData: ServiceDetailLayoutProps = {
     subtitle: 'Today?',
     description: `Start saving with solar! Our <span class="font-bold text-white">solar experts</span> are ready to help you <span class="font-bold text-white">reduce your energy bills</span>.`,
     buttonText: 'Call Now',
-    buttonLink: 'tel:1300HDTRADE',
+    buttonLink: 'tel:1300420911',
   },
   trustData: {
     title: 'Your Trusted Solar Hot Water',

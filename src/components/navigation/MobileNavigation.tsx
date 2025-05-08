@@ -112,14 +112,21 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
           </div>
 
           {hasChildren && (
-            <AnimatePresence>
+            <AnimatePresence initial={false}>
               {isExpanded && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ 
+                    duration: 0.2,
+                    ease: "easeOut"
+                  }}
                   className="overflow-hidden"
+                  style={{
+                    willChange: 'height, opacity',
+                    transform: 'translateZ(0)'
+                  }}
                 >
                   {item.dropdownItems && (
                     <div className={cn('ml-6 border-l-2 border-gray-200')}>
@@ -147,7 +154,16 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+          transition={{ 
+            type: 'spring', 
+            stiffness: 200,
+            damping: 20,
+            duration: 0.2
+          }}
+          style={{
+            willChange: 'transform, opacity',
+            transform: 'translateZ(0)'
+          }}
         >
           <Button
             variant="default"
@@ -161,14 +177,18 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
       </div>
 
       {/* Fullscreen Overlay */}
-      <AnimatePresence>
+      <AnimatePresence initial={false} mode="wait">
         {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 md:hidden"
+            transition={{ duration: 0.15 }}
+            className="fixed inset-0 z-40 overscroll-none md:hidden"
+            style={{
+              willChange: 'opacity',
+              transform: 'translateZ(0)'
+            }}
           >
             {/* Backdrop */}
             <motion.div
@@ -177,6 +197,10 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              style={{
+                willChange: 'opacity',
+                transform: 'translateZ(0)'
+              }}
             />
 
             {/* Menu Panel */}
@@ -185,7 +209,16 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              transition={{ 
+                type: 'spring', 
+                damping: 25,
+                stiffness: 250,
+                duration: 0.2
+              }}
+              style={{
+                willChange: 'transform',
+                transform: 'translateZ(0)'
+              }}
             >
               <div className="flex items-center justify-between border-b border-gray-100 p-4">
                 {/* Logo area */}
@@ -217,10 +250,17 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
               </div>
 
               <motion.nav
-                className="h-[calc(100vh-80px)] overflow-y-auto pb-20 pt-2"
-                initial={{ opacity: 0, y: 20 }}
+                className="h-[calc(100vh-80px)] overflow-y-auto overscroll-none pb-20 pt-2"
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
+                transition={{ 
+                  duration: 0.15,
+                  ease: "easeOut"
+                }}
+                style={{
+                  willChange: 'transform, opacity',
+                  transform: 'translateZ(0)'
+                }}
               >
                 {renderNavLinks(items)}
 
@@ -230,10 +270,10 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
                     Contact Us
                   </h3>
                   <a
-                    href="tel:1300136336"
+                    href="tel:1300420911"
                     className="flex items-center py-2 text-lg font-bold text-[#28DF99]"
                   >
-                    1300 136 336
+                    1300 420 911
                   </a>
                   <div className="mt-2 text-sm text-gray-500">
                     <p>Available 24/7 for emergency service</p>

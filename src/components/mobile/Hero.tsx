@@ -37,70 +37,53 @@ const callNowButtonStyles = `
 export function Hero() {
   const [showBookingForm, setShowBookingForm] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
-  const [hasScrolledDown, setHasScrolledDown] = useState(false)
   const heroImageRef = useRef<HTMLDivElement>(null)
 
   // Performance optimizations
   useEffect(() => {
-    // Check if this is a mobile device
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    
-    // Mark as having performance issues to reduce animations
     if (isMobile) {
-      localStorage.setItem('had-scroll-issues', 'true');
       document.documentElement.classList.add('reduce-animations');
     }
     
-    // Optimize scroll listener with debounce and requestAnimationFrame
     let ticking = false;
-    let lastScrollY = window.scrollY;
     
     const handleScroll = () => {
-      lastScrollY = window.scrollY;
-      
+      const lastScrollY = window.scrollY;
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          // Apply transforms via requestAnimationFrame for better performance
-          if (heroImageRef.current && lastScrollY > 0) {
-            // Apply a subtle parallax effect to the hero image that won't cause jank
-            // Use transform instead of top/margin for better performance
-            const translateY = Math.min(lastScrollY * 0.1, 30);
+          if (heroImageRef.current && lastScrollY >= 0) {
+            const translateY = Math.min(lastScrollY * 0.1, 50);
             heroImageRef.current.style.transform = `translate3d(0, ${translateY}px, 0)`;
           }
-          
-          if (lastScrollY > 100 && !hasScrolledDown) {
-            setHasScrolledDown(true);
-          }
-          
           ticking = false;
         });
-        
         ticking = true;
       }
     };
     
-    // Use passive scroll listener for better performance
     window.addEventListener('scroll', handleScroll, { passive: true });
     
+    handleScroll();
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [hasScrolledDown]);
+  }, []);
 
   // Disable sparkles on mobile completely
   const shouldShowSparkles = false;
   
   return (
     <div
-      className="relative flex min-h-[100dvh] flex-col bg-black pb-20"
+      className="relative flex min-h-[100dvh] flex-col bg-black pb-12"
       style={{
-        paddingTop: '80px',
         overscrollBehavior: 'none',
-        willChange: 'transform', // Optimize compositing
-        transform: 'translateZ(0)', // Force GPU acceleration
-        contain: 'paint layout size', // Optimize rendering
-        touchAction: 'pan-y pinch-zoom', // Allow only vertical scrolling
-        overflow: 'hidden' // Prevent any scrolling within this container
+        willChange: 'transform',
+        transform: 'translateZ(0)',
+        contain: 'paint layout style',
+        touchAction: 'pan-y pinch-zoom',
+        overflow: 'hidden'
       }}
     >
       {/* Add styles for Call Now button */}
@@ -108,14 +91,13 @@ export function Hero() {
         {callNowButtonStyles}
       </style>
       
-      {/* Conditional Sparkles Animation - only if performance allows */}
       {shouldShowSparkles && (
         <div className="pointer-events-none absolute inset-0 z-[2]">
           <SparklesCore
             background="transparent"
             minSize={0.6}
             maxSize={1.2}
-            particleDensity={20} // Reduced from 40
+            particleDensity={20}
             className="h-full w-full"
             particleColor="#00E6CA"
             speed={0.2}
@@ -123,16 +105,15 @@ export function Hero() {
         </div>
       )}
 
-      {/* Hero Images Container - with optimized performance properties */}
       <div
         ref={heroImageRef}
-        className="pointer-events-none absolute bottom-0 left-0 z-[3] h-[70%] w-[60%]"
+        className="pointer-events-none absolute bottom-10 left-0 z-[3] h-[65vh] w-[70vw] sm:h-[70vh] sm:w-[60vw]"
         style={{
-          willChange: 'transform', // Optimize compositing
-          transform: 'translateZ(0)', // Force GPU acceleration
-          transition: 'transform 0.1s linear', // Smooth subtle movements
-          contain: 'paint layout size', // Optimize rendering
-          contentVisibility: 'auto' // Enable content-visibility for better performance
+          willChange: 'transform',
+          transform: 'translateZ(0)',
+          transition: 'transform 0.1s linear',
+          contain: 'paint layout style',
+          contentVisibility: 'auto'
         }}
       >
         <div className="relative h-full w-full">
@@ -145,8 +126,8 @@ export function Hero() {
               objectFit: 'contain',
               objectPosition: 'left bottom',
               filter: 'drop-shadow(0 0 8px rgba(0,230,202,0.1))',
-              willChange: 'transform', // Optimize painting
-              backfaceVisibility: 'hidden' // Prevent flickering
+              willChange: 'transform',
+              backfaceVisibility: 'hidden'
             }}
             className="select-none"
             priority
@@ -155,7 +136,6 @@ export function Hero() {
             loading="eager"
           />
         </div>
-        {/* Bottom fade gradient - simplified and optimized */}
         <div 
           className="absolute inset-x-0 bottom-0 h-40" 
           style={{ 
@@ -165,54 +145,60 @@ export function Hero() {
         />
       </div>
 
-      {/* Content Container */}
-      <div className="container relative z-10 mx-auto px-4 py-0"
+      <div className="container relative z-10 mx-auto flex flex-1 flex-col px-4 py-0"
         style={{
-          overflow: 'visible', // Ensure content isn't creating scroll containers
-          touchAction: 'pan-y pinch-zoom' // Allow only vertical scrolling
+          overflow: 'visible',
+          touchAction: 'pan-y pinch-zoom'
         }}
       >
         <div
-          className="flex flex-col items-center justify-center"
+          className="flex flex-col items-center justify-center text-center"
           style={{ 
-            marginTop: '0',
             overflowX: 'hidden',
             overflowY: 'visible'
           }}
         >
-          {/* Hero Text */}
-          <div className="mb-3 flex max-w-[100%] flex-col items-center text-center">
-            {/* Main Headline - with simplified animations that can be disabled */}
-            <div className="mb-2">
-              <h1 className="mb-2 text-[2.5rem] font-bold leading-tight tracking-tight text-white">
-                <span className="animation-delay-300 mb-1 block animate-mobile-fade-up opacity-0">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.1,
+                },
+              },
+            }}
+            className="mb-6 flex w-full flex-col items-center text-center"
+          >
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="mb-3">
+              <h1 className="mb-2 text-[2.3rem] font-bold leading-tight tracking-tight text-white sm:text-[2.5rem]">
+                <span className="mb-1 block">
                   Brisbane
                 </span>
-                <span className="animation-delay-400 mb-1 inline-block animate-mobile-fade-up text-[#00E6CA] opacity-0">
+                <span className="mb-1 inline-block text-[#00E6CA]">
                   24/7 Emergency Repairs
                 </span>
-                <span className="animation-delay-500 block animate-mobile-fade-up opacity-0">
+                <span className="block">
                   & Installations
                 </span>
               </h1>
 
-              <p className="animation-delay-600 mx-auto mb-1 max-w-md animate-mobile-fade-up text-lg font-medium leading-relaxed text-gray-300 opacity-0">
+              <motion.p variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="mx-auto mb-1 max-w-md text-md font-medium leading-relaxed text-gray-300 sm:text-lg">
                 Professional plumbing, gas, roofing & air conditioning services.
-              </p>
+              </motion.p>
 
-              <p className="animation-delay-650 mx-auto mb-2 max-w-md animate-mobile-fade-up text-lg font-medium leading-relaxed text-gray-300 opacity-0">
+              <motion.p variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="mx-auto mb-3 max-w-md text-md font-medium leading-relaxed text-gray-300 sm:text-lg">
                 Fast response. Fair pricing. Guaranteed satisfaction.
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
 
-            {/* Star Review Component - with simplified animation and click handling */}
-            <div
-              className="animation-delay-700 mb-4 max-w-sm animate-mobile-scale cursor-pointer rounded-lg px-6 py-2 opacity-0 transition-colors hover:bg-black/10"
+            <motion.div
+              variants={{ hidden: { opacity: 0, scale: 0.8 }, visible: { opacity: 1, scale: 1 } }}
+              className="mb-5 max-w-sm cursor-pointer rounded-lg px-6 py-2 transition-colors hover:bg-black/20"
               onClick={() => {
                 const reviewsSection = document.getElementById('testimonials')
                 if (reviewsSection) {
-                  // Use native scrolling instead of smooth scrolling for better performance
-                  reviewsSection.scrollIntoView(true)
+                  reviewsSection.scrollIntoView({ behavior: 'smooth' })
                 }
               }}
               role="button"
@@ -244,12 +230,13 @@ export function Hero() {
                   5.0 (36 Reviews)
                 </span>
               </div>
-            </div>
+            </motion.div>
 
-            {/* MOBILE: Guarantee Badges - use static positioning instead of animations on low-end devices */}
-            <div className="animation-delay-700 mt-1 mb-4 flex w-full animate-mobile-fade-up items-center justify-center gap-3 opacity-0 md:hidden">
+            <motion.div
+              variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
+              className="mt-1 mb-6 flex w-full items-center justify-center gap-3 md:hidden"
+            >
               {[
-                /* Array of badge data */
                 {
                   src: '/Gold Badges/Lifetime Labour Guarantee Badge Mar 30 2025_result.webp',
                   alt: 'Lifetime Labour Guarantee',
@@ -263,79 +250,63 @@ export function Hero() {
                   alt: 'Lifetime Guarantee Badge Design',
                 },
               ].map((badge, index) => (
-                localStorage.getItem('had-scroll-issues') === 'true' ? (
-                  // Static version for low-performance devices
-                  <div key={badge.src}>
-                    <Image
-                      src={badge.src}
-                      alt={badge.alt}
-                      width={64}
-                      height={64}
-                      className="object-contain"
-                      priority={index === 0}
-                    />
-                  </div>
-                ) : (
-                  // Animated version for better devices
-                  <motion.div
-                    key={badge.src}
-                    animate={{
-                      y: ['0%', '-5%', '0%'],
-                    }}
-                    transition={{
-                      duration: 2.5,
-                      repeat: Infinity,
-                      repeatType: 'mirror',
-                      ease: 'easeInOut',
-                      delay: index * 0.3,
-                    }}
-                  >
-                    <Image
-                      src={badge.src}
-                      alt={badge.alt}
-                      width={64}
-                      height={64}
-                      className="object-contain"
-                      priority={index === 0}
-                    />
-                  </motion.div>
-                )
+                <motion.div
+                  key={badge.src}
+                  initial={{ y: 0 }}
+                  animate={{ y: ['0%', '-8%', '0%'] }}
+                  transition={{
+                    duration: 2.2,
+                    repeat: Infinity,
+                    repeatType: 'mirror',
+                    ease: 'easeInOut',
+                    delay: index * 0.25,
+                  }}
+                  className="h-14 w-14 sm:h-16 sm:w-16"
+                >
+                  <Image
+                    src={badge.src}
+                    alt={badge.alt}
+                    width={64}
+                    height={64}
+                    className="object-contain"
+                    priority={index === 0}
+                  />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            {/* Book Now Button - with simplified animation */}
-            {!showBookingForm && (
-              <div className="animation-delay-750 mx-auto w-full max-w-[200px] animate-mobile-fade-up opacity-0">
+            {/* CTAs - Wrapped in a motion.div for final staggered animation */}
+            <motion.div 
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} 
+              className="mx-auto w-full max-w-[220px] space-y-3"
+            >
+              {!showBookingForm && (
                 <AnimatedButton
                   href="#book"
                   onClick={(e) => {
                     e.preventDefault()
                     const bookingForm = document.getElementById('book')
                     if (bookingForm) {
-                      // Use native scrolling for better performance
-                      bookingForm.scrollIntoView(true)
+                      bookingForm.scrollIntoView({ behavior: 'smooth' })
                     }
                   }}
-                  className="w-full justify-center py-3 text-base font-medium shadow-lg shadow-cyan-900/20"
+                  className="w-full justify-center py-3.5 text-md font-semibold shadow-lg shadow-cyan-900/20"
                 >
                   Book Online
                 </AnimatedButton>
-              </div>
-            )}
+              )}
             
-            {/* Call Now Button - Using the same AnimatedButton component as Book Online */}
-            {!showBookingForm && (
-              <div className="animation-delay-800 mx-auto mt-4 w-full max-w-[200px] animate-mobile-fade-up opacity-0">
+              {!showBookingForm && (
                 <AnimatedButton
                   href="tel:1300420911"
                   variant="secondary"
-                  className="w-full justify-center bg-white py-3 text-base font-medium text-[#00E6CA] shadow-lg shadow-white/10"
+                  className="w-full justify-center bg-white py-3.5 text-md font-semibold text-[#00E6CA] shadow-lg shadow-white/10"
                 >
                   Call Now
                 </AnimatedButton>
-              </div>
-            )}
-          </div>
+              )}
+            </motion.div>
+          </motion.div> {/* End of Hero Text motion.div wrapper */}
 
           {/* Booking Form - Conditional rendering */}
           <AnimatePresence mode="wait">

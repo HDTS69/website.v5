@@ -20,7 +20,7 @@ export default function RoofVentilationPage() {
           subtitle: 'Expert Solutions',
           description: `Our team provides <span class="font-bold text-white">professional ventilation</span> with guaranteed results. We ensure <span class="font-bold text-white">optimal airflow</span> and temperature control.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Our Service',
@@ -144,7 +144,7 @@ export default function RoofVentilationPage() {
           subtitle: "We're Here to Help",
           description: `Get your professional ventilation service today. Our <span class="font-bold text-white">expert team</span> is ready to help with quality solutions.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Why Trust Our Team',

@@ -19,7 +19,7 @@ const pageData: ServiceDetailLayoutProps = {
     subtitle: 'Fast & Efficient Solutions',
     description: `Our team of <span class="font-bold text-white">licensed gas fitters</span> provides <span class="font-bold text-white">expert gas hot water solutions</span> with guaranteed workmanship. We ensure <span class="font-bold text-white">fast, efficient</span>, and reliable installations and repairs.`,
     bookOnlineLink: '#book',
-    callNowLink: 'tel:1300HDTRADE',
+    callNowLink: 'tel:1300420911',
   },
   bentoGridData: {
     title: 'Why Choose Our',
@@ -152,7 +152,7 @@ const pageData: ServiceDetailLayoutProps = {
     subtitle: 'Emergency?',
     description: `No hot water? Don't wait! Our <span class="font-bold text-white">licensed gas fitters</span> are ready to help <span class="font-bold text-white">24/7</span>.`,
     buttonText: 'Call Now',
-    buttonLink: 'tel:1300HDTRADE',
+    buttonLink: 'tel:1300420911',
   },
   trustData: {
     title: 'Your Trusted Gas Hot Water',

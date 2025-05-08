@@ -19,7 +19,7 @@ const pageData: ServiceDetailLayoutProps = {
     subtitle: 'Expert Advice',
     description: `Our team of <span class="font-bold text-white">licensed experts</span> provides <span class="font-bold text-white">professional guidance</span> to help you choose the perfect hot water system. We consider your <span class="font-bold text-white">needs, budget, and efficiency goals</span>.`,
     bookOnlineLink: '#book',
-    callNowLink: 'tel:1300HDTRADE',
+    callNowLink: 'tel:1300420911',
   },
   bentoGridData: {
     title: 'Why Choose Our',
@@ -149,7 +149,7 @@ const pageData: ServiceDetailLayoutProps = {
     subtitle: 'Advice?',
     description: `Get professional guidance on choosing your perfect hot water system. Our <span class="font-bold text-white">expert team</span> is ready to help.`,
     buttonText: 'Call Now',
-    buttonLink: 'tel:1300HDTRADE',
+    buttonLink: 'tel:1300420911',
   },
   trustData: {
     title: 'Your Trusted Hot Water',

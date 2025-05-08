@@ -20,7 +20,7 @@ export default function LeakDetectionPage() {
           subtitle: 'Advanced Detection Solutions',
           description: `Our team uses <span class="font-bold text-white">state-of-the-art equipment</span> to locate hidden leaks with precision. We provide <span class="font-bold text-white">non-invasive solutions</span> with guaranteed results.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Our Service',
@@ -144,7 +144,7 @@ export default function LeakDetectionPage() {
           subtitle: "Don't Wait - Call Now",
           description: `Don't let leaks cause damage. Our <span class="font-bold text-white">expert team</span> is ready to help with advanced detection.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Why Trust Our Service',

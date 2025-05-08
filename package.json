@@ -106,6 +106,7 @@
     "eslint-plugin-security": "2.1.1",
     "eslint-plugin-xss": "0.1.12",
     "https": "1.0.0",
+    "image-webpack-loader": "8.1.0",
     "jest": "29.7.0",
     "lint-staged": "15.5.1",
     "local-ssl-proxy": "2.0.5",

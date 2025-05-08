@@ -83,7 +83,7 @@ export default function DefaultLayout({
   children: React.ReactNode
 }) {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div></div>}>
       <DefaultLayoutInner>{children}</DefaultLayoutInner>
     </Suspense>
   )

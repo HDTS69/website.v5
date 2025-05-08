@@ -27,10 +27,10 @@ const nextConfig = {
     ],
     // Only use unoptimized images for static export
     unoptimized: process.env.NODE_ENV === 'production',
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    formats: ['image/webp', 'image/avif'],
-    minimumCacheTTL: 60,
+    deviceSizes: [320, 480, 640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    formats: ['image/webp'],
+    minimumCacheTTL: 60 * 60 * 24 * 7,
     dangerouslyAllowSVG: true,
   },
   reactStrictMode: true,
@@ -41,10 +41,16 @@ const nextConfig = {
   // } : {}),
   experimental: {
     appDocumentPreloading: false,
-    optimizePackageImports: ['framer-motion'],
+    optimizePackageImports: [
+      'framer-motion',
+      'react-dom',
+      'lucide-react',
+      '@radix-ui/react-icons',
+    ],
     // Remove unrecognized optimizeFonts option
     // optimizeFonts: true,
     scrollRestoration: true,
+    optimizeCss: true,
   },
   compiler: {
     styledComponents: true,

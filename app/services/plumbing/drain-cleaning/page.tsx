@@ -20,7 +20,7 @@ export default function DrainCleaningPage() {
           subtitle: 'Expert Cleaning Solutions',
           description: `Our team provides <span class="font-bold text-white">professional drain cleaning services</span> with guaranteed results. We use <span class="font-bold text-white">advanced equipment</span> to clear any blockage.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Our Service',
@@ -144,7 +144,7 @@ export default function DrainCleaningPage() {
           subtitle: "Don't Wait - Call Now",
           description: `Get your drains cleaned professionally. Our <span class="font-bold text-white">expert team</span> is ready to help with advanced solutions.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Why Trust Our Service',

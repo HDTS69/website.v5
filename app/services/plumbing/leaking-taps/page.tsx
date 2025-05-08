@@ -20,7 +20,7 @@ export default function LeakingTapsPage() {
           subtitle: 'Expert Repair Solutions',
           description: `Our team provides <span class="font-bold text-white">professional tap repair services</span> with guaranteed results. We fix all types of <span class="font-bold text-white">leaking taps and faucets</span> quickly and effectively.`,
           bookOnlineLink: '#book',
-          callNowLink: 'tel:1300HDTRADE',
+          callNowLink: 'tel:1300420911',
         }}
         bentoGridData={{
           title: 'Why Choose Our Service',
@@ -144,7 +144,7 @@ export default function LeakingTapsPage() {
           subtitle: "Don't Wait - Call Now",
           description: `Don't waste water with leaking taps. Our <span class="font-bold text-white">expert team</span> is ready to help with fast repairs.`,
           buttonText: 'Call Now',
-          buttonLink: 'tel:1300HDTRADE',
+          buttonLink: 'tel:1300420911',
         }}
         trustData={{
           title: 'Why Trust Our Service',

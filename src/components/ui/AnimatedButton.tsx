@@ -43,12 +43,10 @@ export function AnimatedButton({
       bg-gradient-to-r from-[#00E6CA] via-[#00C7AE] to-[#00E6CA]
       bg-[length:200%_100%] hover:bg-[length:100%_100%]
       text-white shadow-lg shadow-[#00E6CA]/20
-      hover:animate-float
     `,
     secondary: `
       bg-white text-[#00E6CA] border border-[#00E6CA]/20
       hover:border-[#00E6CA]/40 hover:shadow-[#00E6CA]/20
-      hover:animate-float
     `,
   }
 
