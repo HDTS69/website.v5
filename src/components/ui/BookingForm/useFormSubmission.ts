@@ -8,7 +8,6 @@ interface UseFormSubmissionProps {
   formData: FormData
   setIsSubmitting: (value: boolean) => void
   setSubmitStatus: (value: 'idle' | 'success' | 'error') => void
-  setShowThankYou: (value: boolean) => void
   resetForm: () => void
 }
 
@@ -16,7 +15,6 @@ export const useFormSubmission = ({
   formData,
   setIsSubmitting,
   setSubmitStatus,
-  setShowThankYou,
   resetForm,
 }: UseFormSubmissionProps) => {
   const submitForm = useCallback(async () => {
@@ -79,15 +77,16 @@ export const useFormSubmission = ({
       }
 
       setSubmitStatus('success')
-      setShowThankYou(true)
       console.log('Form submission completed successfully')
+      return true
     } catch (error) {
       console.error('Form submission error:', error)
       setSubmitStatus('error')
+      return false
     } finally {
       setIsSubmitting(false)
     }
-  }, [formData, setIsSubmitting, setSubmitStatus, setShowThankYou, resetForm])
+  }, [formData, setIsSubmitting, setSubmitStatus])
 
   return {
     submitForm,

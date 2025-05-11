@@ -296,12 +296,15 @@ export function Hero() {
             >
               {!showBookingForm && (
                 <AnimatedButton
-                  href="#book"
+                  href="#booking-form-name"
                   onClick={(e) => {
-                    e.preventDefault()
-                    const bookingForm = document.getElementById('book')
-                    if (bookingForm) {
-                      bookingForm.scrollIntoView({ behavior: 'smooth' })
+                    e.preventDefault();
+                    const nameInput = document.getElementById('booking-form-name');
+                    if (nameInput) {
+                      const yOffset = -8; // Adjust if you have a sticky header, otherwise 0
+                      const y = nameInput.getBoundingClientRect().top + window.scrollY + yOffset;
+                      window.scrollTo({ top: y, behavior: 'smooth' });
+                      nameInput.focus();
                     }
                   }}
                   className="w-full justify-center py-3.5 text-md font-semibold shadow-lg shadow-cyan-900/20"
