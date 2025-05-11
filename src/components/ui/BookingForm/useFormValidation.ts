@@ -28,8 +28,10 @@ const validationRules: ValidationRules = {
   },
   phone: (value) => {
     if (!value.trim()) return 'Phone is required'
+    // Clean the phone number by removing extra spaces
+    const cleanedValue = value.replace(/\s+/g, ' ').trim()
     const phoneRegex = new RegExp(PHONE_PATTERNS.JS)
-    return !phoneRegex.test(value.trim()) ? 'Enter a valid phone number' : null
+    return !phoneRegex.test(cleanedValue) ? 'Enter a valid Australian phone number' : null
   },
   address: (value) => {
     if (!value.trim()) return 'Address is required'
@@ -126,9 +128,10 @@ export const useFormValidation = (hasAttemptedSubmit: boolean) => {
 
     if (
       formData.phone &&
-      !/^(?:\+61|0)[2-478](?:[ -]?\d{4}[ -]?\d{4}|\d{8})$/.test(formData.phone)
+      !new RegExp(PHONE_PATTERNS.JS).test(formData.phone.replace(/\s+/g, ' ').trim())
     ) {
-      newErrors.phone = 'Enter a valid phone number'
+      console.log('Phone format validation failed')
+      newErrors.phone = 'Enter a valid Australian phone number'
       hasErrors = true
     }
 

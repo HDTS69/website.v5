@@ -40,10 +40,10 @@ export function sanitizeInput(input: string): string {
  * Phone number validation patterns
  */
 export const PHONE_PATTERNS = {
-  // Simple pattern for HTML5 pattern attribute
-  HTML: "^(\\+61|0)[2478][0-9]{8}$",
-  // Full pattern for JavaScript validation
-  JS: "^(?:\\+61|0)[2-478](?:[ -]?\\d{4}[ -]?\\d{4}|\\d{8})$"
+  // Simple pattern for HTML5 pattern attribute - allows spaces and optional formatting
+  HTML: "^(?:\\+61\\s*|0)[2478](?:\\s*[0-9]){8}$",
+  // Full pattern for JavaScript validation - more flexible with spaces and formatting
+  JS: "^(?:\\+61\\s*|0)[2-478](?:\\s*\\d){8}$"
 } as const;
 
 /**
